@@ -1,0 +1,30 @@
+"use client";
+
+import { environment } from "@/environment/environment";
+import { fetcher } from "@/config/axios.config";
+import useSWR from "swr";
+import { usePathname } from "next/navigation";
+import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
+
+export default function ProcesosJudiciales() {
+  const pathname: string = usePathname();
+
+  const { data, error, isLoading } = useSWR<GetSubmoduleDto[]>(
+    `${environment.baseUrl}/modules/submodules?slug=${pathname.split("/")[2]}`,
+    fetcher,
+  );
+
+  return (
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4 items-center">
+        <h1 className="text-3xl font-bold text-cerulean-950">
+          ¿Qué te gustaría gestionar hoy?
+        </h1>
+        <h2 className="text-base font-semibold text-slate-700">
+          Explora todas las herramientas disponibles y agiliza tus tareas
+          diarias.
+        </h2>
+      </div>
+    </div>
+  );
+}

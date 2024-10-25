@@ -1,0 +1,6 @@
+trailingComma: "all"
+tabWidth: 2
+printWidth: 75
+endOfLine: 'auto'
+semi: true
+singleQuote: true
