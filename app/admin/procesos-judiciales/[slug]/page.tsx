@@ -21,7 +21,6 @@ import {
 } from "@/app/api/judicial-process/judicial-process";
 import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edit-judicial-process.dto";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
-import { ToggleJudicialProcessDto } from "@/app/dto/submodule/judicial_process/toggle-judicial-process.dto";
 
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();
@@ -102,10 +101,20 @@ export default function ProcesoJudicialSlug() {
       demanded: "",
       coDefendant: "",
       plaintiff: "",
-      submoduleId: 0,
     });
     resetFormData();
     onOpenChange();
+  };
+
+  const handleConfirmModalClose = () => {
+    setJudicialProcess({
+      fileCode: "",
+      demanded: "",
+      coDefendant: "",
+      plaintiff: "",
+    });
+    resetFormData();
+    setConfirm(false);
   };
 
   const { data, error, isLoading } = useSWR<GetJudicialProcessDto[]>(
@@ -130,12 +139,13 @@ export default function ProcesoJudicialSlug() {
             __html: `Estás seguro de realizar esta acción, este expediente no será eliminado y tampoco podrá utilizarse como medio de extracción para la plataforma <b>CEJ</b>.`,
           }}
           isOpen={confirm}
-          onClose={() => setConfirm(false)}
+          onClose={handleConfirmModalClose}
           onConfirm={toggleJudicialProcessHelper}
         />
         <JudicialProcessModal
           isOpen={isOpen}
           onClose={handleClose}
+          title={_ ? `Editar expediente` : "Nuevo expediente"}
           judicialFields={
             <ReusableFields
               fields={judicialProcessFields}

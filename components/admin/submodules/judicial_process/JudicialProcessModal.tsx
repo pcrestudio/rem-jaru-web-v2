@@ -13,6 +13,7 @@ export interface JudicialProcessModalProps {
   isOpen: boolean;
   onClose: (isOpen: boolean) => void;
   judicialFields: ReactNode;
+  title: string;
   handleSubmit?: (event: FormEvent) => void;
   isFormValid?: boolean;
 }
@@ -23,15 +24,14 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
   judicialFields,
   handleSubmit,
   isFormValid,
+  title,
 }) => {
   return (
     <Modal isOpen={isOpen} onOpenChange={onClose} placement="top-center">
       <ModalContent>
         {(onClose) => (
           <ReusableForm handleSubmit={handleSubmit}>
-            <ModalHeader className="flex flex-col gap-1">
-              Nuevo Expediente
-            </ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
             <ModalBody>{judicialFields}</ModalBody>
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>

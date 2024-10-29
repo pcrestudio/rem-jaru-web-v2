@@ -38,8 +38,8 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
               <h1 dangerouslySetInnerHTML={description}></h1>
             </ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
-                Cerrar
+              <Button color="danger" variant="light" onClick={onClose}>
+                Cancelar
               </Button>
               <Button className="standard-btn" onClick={onConfirm}>
                 Confirmar
