@@ -1,15 +1,29 @@
 "use client";
 
-import ReusableForm from "@/components/form/ReusableForm";
+import ReusableFields from "@/components/form/ReusableFields";
 import { loginFields } from "@/app/auth/constants/login-fields.constant";
 import { UserAuthDto } from "@/app/dto/user-auth.dto";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Button } from "@nextui-org/button";
+import useCustomForm from "@/components/states/useCustomForm";
+import { FormEvent } from "react";
+import ReusableForm from "@/components/form/ReusableForm";
 
 export default function Auth() {
   const router = useRouter();
+  const {
+    handleSubmit,
+    inputValid,
+    isFormValid,
+    errors,
+    onInputChange,
+    onBlurChange,
+  } = useCustomForm(loginFields);
 
-  const onSubmit = async (payload: UserAuthDto) => {
+  const onSubmit = async (event: FormEvent) => {
+    const payload = handleSubmit(event);
+
     const res = await signIn("credentials", {
       username: payload.email,
       password: payload.password,
@@ -30,7 +44,23 @@ export default function Auth() {
               Bienvenido a <b className="text-cerulean-900">Jaru Software</b>
             </h1>
           </div>
-          <ReusableForm onSubmit={onSubmit} fields={loginFields} />
+          <ReusableForm handleSubmit={onSubmit} className="flex flex-col gap-6">
+            <ReusableFields
+              fields={loginFields}
+              errors={errors}
+              inputValid={inputValid}
+              onInputChange={onInputChange}
+              onBlurChange={onBlurChange}
+            />
+            <Button
+              color="primary"
+              type="submit"
+              disabled={!isFormValid}
+              className="standard-btn w-full"
+            >
+              Iniciar sesión
+            </Button>
+          </ReusableForm>
         </div>
       </div>
       <div className="relative hidden lg:flex lg:flex-grow">

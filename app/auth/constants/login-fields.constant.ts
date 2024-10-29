@@ -1,5 +1,5 @@
 import validateEmail from "@/utils/validate_email";
-import { CustomFormField } from "@/components/form/ReusableForm";
+import { CustomFormField } from "@/components/form/ReusableFields";
 
 export const loginFields: CustomFormField[] = [
   {

@@ -9,9 +9,10 @@ import ModulesCard from "@/components/admin/modules/ModulesCard";
 
 export default function ProcesosJudiciales() {
   const pathname: string = usePathname();
+  const slug: string = pathname.split("/")[2];
 
   const { data, error, isLoading } = useSWR<GetSubmoduleDto[]>(
-    `${environment.baseUrl}/modules/submodules?slug=${pathname.split("/")[2]}`,
+    `${environment.baseUrl}/modules/submodules?slug=${slug}`,
     fetcher,
   );
 

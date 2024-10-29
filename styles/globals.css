@@ -23,3 +23,7 @@ h2[data-open="true"] {
 div[data-orientation="vertical"] {
   @apply !px-0;
 }
+
+.standard-btn {
+  @apply bg-cerulean-500 disabled:opacity-50 hover:bg-cerulean-600 disabled:cursor-not-allowed;
+}

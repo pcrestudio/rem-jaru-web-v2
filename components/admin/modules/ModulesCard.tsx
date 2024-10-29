@@ -5,6 +5,7 @@ import { RiAuctionLine } from "react-icons/ri";
 import { RiEye2Line } from "react-icons/ri";
 import Link from "next/link";
 import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
+import { mappingSubmodules } from "@/config/mapping_submodules";
 
 export interface ModulesCardProps {
   module: GetSubmoduleDto;
@@ -18,7 +19,7 @@ const renderIcon: Record<number, ReactNode> = {
 
 const ModulesCard: FC<ModulesCardProps> = ({ module, pathname }) => {
   return (
-    <Link href={`${pathname}/${module?.slug}`}>
+    <Link href={`${pathname}/${mappingSubmodules[module?.slug]}`}>
       <Card className="cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
         <CardBody className="flex flex-row gap-2 items-center transition">
           <div className="flex flex-col gap-4 lg:max-w-[180px]">
