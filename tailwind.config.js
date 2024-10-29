@@ -26,6 +26,7 @@ module.exports = {
           800: "#0d5b7f",
           900: "#114c69",
           950: "#0b3046",
+          hover: "#0A2A3E",
         },
         error: {
           500: "#ffb4ab",

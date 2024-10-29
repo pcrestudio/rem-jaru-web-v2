@@ -54,7 +54,7 @@ export const menuOptions: MenuOptions[] = [
   },
   {
     title: "Ajustes",
-    role: allRoles,
+    role: [Role["super-admin"]],
     redirectTo: "/admin/ajustes",
     Icon: () => <AiOutlineSetting size={iconSize} />,
   },

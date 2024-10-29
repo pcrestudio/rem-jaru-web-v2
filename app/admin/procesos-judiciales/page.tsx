@@ -18,14 +18,14 @@ export default function ProcesosJudiciales() {
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold text-cerulean-950">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-bold text-cerulean-950">
           ¿Qué te gustaría gestionar hoy?
         </h1>
-        <h2 className="text-base font-semibold text-slate-700">
+        <p className="text-base text-slate-700">
           Explora todas las herramientas disponibles y agiliza tus tareas
           diarias.
-        </h2>
+        </p>
       </div>
       {data && (
         <div className="grid grid-cols-3 gap-8">

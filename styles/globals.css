@@ -25,5 +25,5 @@ div[data-orientation="vertical"] {
 }
 
 .standard-btn {
-  @apply bg-cerulean-500 disabled:opacity-50 hover:bg-cerulean-600 disabled:cursor-not-allowed;
+  @apply bg-cerulean-900 disabled:opacity-50 hover:bg-cerulean-hover disabled:cursor-not-allowed;
 }

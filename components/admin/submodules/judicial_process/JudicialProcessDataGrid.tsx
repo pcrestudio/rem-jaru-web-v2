@@ -108,7 +108,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
             onValueChange={onSearchChange}
           />
           <Button
-            className="standard-btn w-auto"
+            className="standard-btn w-auto text-white"
             endContent={<AiOutlinePlus />}
             onClick={onOpenChange}
           >
@@ -148,7 +148,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
 
         case "isActive":
           return (
-            <Chip color={cellValue ? "primary" : "danger"}>
+            <Chip className={cellValue ? "bg-green-100 text-green-900" : ""}>
               {cellValue ? "Activo" : "Inactivo"}
             </Chip>
           );

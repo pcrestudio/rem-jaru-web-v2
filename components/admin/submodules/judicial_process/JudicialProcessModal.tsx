@@ -34,11 +34,11 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
             <ModalBody>{judicialFields}</ModalBody>
             <ModalFooter>
-              <Button color="danger" variant="light" onPress={onClose}>
+              <Button color="default" variant="light" onPress={onClose}>
                 Cerrar
               </Button>
               <Button
-                className="standard-btn"
+                className="standard-btn text-white"
                 type="submit"
                 disabled={!isFormValid}
               >

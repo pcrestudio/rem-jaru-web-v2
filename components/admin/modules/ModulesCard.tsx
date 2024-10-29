@@ -22,16 +22,14 @@ const ModulesCard: FC<ModulesCardProps> = ({ module, pathname }) => {
     <Link href={`${pathname}/${mappingSubmodules[module?.slug]}`}>
       <Card className="cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
         <CardBody className="flex flex-row gap-2 items-center transition">
-          <div className="flex flex-col gap-4 lg:max-w-[180px]">
+          <div className="flex flex-col gap-4 lg:max-w-[180px] p-2">
             <h1 className="text-cerulean-950 font-bold">{module?.name}</h1>
             <div className="flex flex-row gap-2 text-cerulean-400 hover:text-cerulean-600 transition cursor-pointer">
               <p className="text-xs">Ver módulo</p>
               <AiOutlineArrowRight size="14" />
             </div>
           </div>
-          <div className="flex-grow flex justify-center">
-            {renderIcon[module?.order]}
-          </div>
+          <div className="flex justify-center">{renderIcon[module?.order]}</div>
         </CardBody>
       </Card>
     </Link>

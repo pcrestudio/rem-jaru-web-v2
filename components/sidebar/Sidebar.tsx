@@ -11,6 +11,7 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { TfiAngleLeft } from "react-icons/tfi";
 import { RiAuctionLine, RiEye2Line } from "react-icons/ri";
+import { validatePathname } from "@/utils/validate_pathname";
 
 export interface SidebarProps {
   user: User;
@@ -29,7 +30,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
   );
 
   return (
-    <aside className="flex min-w-[280px] bg-cerulean-950 px-8 py-4 border border-b-0 border-l-0 border-r-0 border-t-gray-500">
+    <aside className="flex min-w-[280px] bg-cerulean-900 px-8 py-4 border border-b-0 border-l-0 border-r-0 border-t-gray-500">
       <Listbox aria-label="Actions" className="[&_ul]:gap-4">
         {menuOptions.map(
           ({ title, Icon, role, redirectTo, isMultiple }, index) =>
@@ -37,7 +38,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
             (!isMultiple ? (
               <ListboxItem
                 key={index}
-                className={`text-white ${pathname === redirectTo ? "bg-cerulean-200 text-cerulean-950" : "data-[hover=true]:bg-transparent"} data-[hover=true]:bg-cerulean-200 data-[hover=true]:text-cerulean-950`}
+                className={`text-white ${pathname.includes(redirectTo) || validatePathname(pathname, redirectTo) ? "bg-cerulean-950 text-white" : "data-[hover=true]:bg-transparent"} data-[hover=true]:bg-cerulean-950 data-[hover=true]:text-white`}
                 startContent={<Icon />}
               >
                 <Link href={redirectTo}>
