@@ -23,7 +23,7 @@ const renderIcon: Record<number, ReactNode> = {
 const OptionsCard: FC<OptionsCardProps> = ({ option, pathname }) => {
   return (
     <Link href={`${pathname}/${option?.path}`}>
-      <Card className="cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
+      <Card className="min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
         <CardBody className="flex flex-row gap-2 items-center transition justify-between p-4 w-full">
           <div className="flex flex-col gap-4">
             <h1 className="text-cerulean-950 font-bold">{option?.name}</h1>

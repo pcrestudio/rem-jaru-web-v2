@@ -34,6 +34,7 @@ export default function ProcesosJudiciales() {
               key={module.name}
               module={module}
               pathname={pathname}
+              isSubmodule={true}
             />
           ))}
         </div>

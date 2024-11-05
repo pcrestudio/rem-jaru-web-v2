@@ -6,6 +6,7 @@ export interface VerticalDotsIconProps {
   height?: number | string;
   color?: string;
   className?: string;
+  as?: string;
 }
 
 export const VerticalDotsIcon: FC<VerticalDotsIconProps> = (props) => {

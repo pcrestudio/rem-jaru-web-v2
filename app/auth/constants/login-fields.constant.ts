@@ -6,7 +6,7 @@ export const loginFields: CustomFormField[] = [
     name: "email",
     label: "Correo electrónico",
     type: "email",
-    value: "piero.cusi@estudiorodrigo.com",
+    value: "piero.cusi@jaru.pe",
     required: true,
     validate: validateEmail,
     messages: {

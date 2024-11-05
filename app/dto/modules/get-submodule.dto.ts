@@ -2,7 +2,7 @@ export interface GetSubmoduleDto {
   name: string;
   order: number;
   slug: string;
-  moduleId: number;
+  moduleId?: number;
   isActive?: boolean;
   id?: number;
 }

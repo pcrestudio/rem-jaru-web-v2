@@ -9,10 +9,7 @@ import { usePathname } from "next/navigation";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { useDisclosure } from "@nextui-org/react";
 import JudicialProcessModal from "@/components/admin/submodules/judicial_process/JudicialProcessModal";
-import ReusableFields from "@/components/form/ReusableFields";
-import useCustomForm from "@/components/states/useCustomForm";
-import { FormEvent, useEffect, useState } from "react";
-import { judicialProcessFields } from "@/app/admin/procesos-judiciales/constants/judicial-process-fields.constant";
+import { useState } from "react";
 import { CreateJudicialProcessDto } from "@/app/dto/submodule/judicial_process/create-judicial-process.dto";
 import {
   createJudicialProcess,
@@ -27,28 +24,11 @@ export default function ProcesoJudicialSlug() {
   const slug: string = pathname.split("/")[3];
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [confirm, setConfirm] = useState<boolean>(false);
-  const [_, setJudicialProcess] = useState<GetJudicialProcessDto | null>(null);
-  const {
-    handleSubmit,
-    inputValid,
-    isFormValid,
-    errors,
-    onInputChange,
-    onBlurChange,
-    setFormData,
-    resetFormData,
-  } = useCustomForm(judicialProcessFields);
+  const [judicialProcess, setJudicialProcess] =
+    useState<GetJudicialProcessDto | null>(null);
 
   const setSelectedItem = (judicialProcess: GetJudicialProcessDto) => {
     setJudicialProcess(judicialProcess);
-    judicialProcessFields.forEach((field) => {
-      if (judicialProcess[field.name]) {
-        setFormData((prevData) => ({
-          ...prevData,
-          [field.name]: judicialProcess[field.name],
-        }));
-      }
-    });
     setTimeout(() => onOpenChange(), 100);
   };
 
@@ -59,8 +39,8 @@ export default function ProcesoJudicialSlug() {
 
   const toggleJudicialProcessHelper = async () => {
     const { data } = await toggleJudicialProcess({
-      id: _.id,
-      isActive: Boolean(_.isActive),
+      id: judicialProcess.id,
+      isActive: Boolean(judicialProcess.isActive),
     });
 
     if (data) {
@@ -68,27 +48,24 @@ export default function ProcesoJudicialSlug() {
     }
   };
 
-  const onSubmit = async (event: FormEvent) => {
-    const payload = handleSubmit(event);
-
-    if (_) {
+  const onSubmit = async (payload: CreateJudicialProcessDto) => {
+    if (judicialProcess) {
       const { data } = await editJudicialProcess(
         {
-          ...(payload as unknown as EditJudicialProcessDto),
-          id: _.id,
+          ...(payload as EditJudicialProcessDto),
+          id: judicialProcess.id,
         },
         slug,
       );
+
+      setJudicialProcess(undefined);
 
       onOpenChange();
 
       return data;
     }
 
-    const { data } = await createJudicialProcess(
-      payload as unknown as CreateJudicialProcessDto,
-      slug,
-    );
+    const { data } = await createJudicialProcess(payload, slug);
 
     onOpenChange();
 
@@ -96,24 +73,12 @@ export default function ProcesoJudicialSlug() {
   };
 
   const handleClose = () => {
-    setSelectedItem({
-      fileCode: "",
-      demanded: "",
-      coDefendant: "",
-      plaintiff: "",
-    });
-    resetFormData();
+    setSelectedItem(undefined);
     onOpenChange();
   };
 
   const handleConfirmModalClose = () => {
-    setJudicialProcess({
-      fileCode: "",
-      demanded: "",
-      coDefendant: "",
-      plaintiff: "",
-    });
-    resetFormData();
+    setJudicialProcess(undefined);
     setConfirm(false);
   };
 
@@ -122,19 +87,11 @@ export default function ProcesoJudicialSlug() {
     fetcher,
   );
 
-  useEffect(() => {
-    if (_) {
-      judicialProcessFields.forEach((field) => {
-        field.value = _[field.name] || "";
-      });
-    }
-  }, [_]);
-
   return (
     data && (
       <>
         <ConfirmModal
-          title={`${_ ? `¿Deseas ${_.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}
+          title={`${judicialProcess ? `¿Deseas ${judicialProcess.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}
           description={{
             __html: `Estás seguro de realizar esta acción, este expediente no será eliminado y tampoco podrá utilizarse como medio de extracción para la plataforma <b>CEJ</b>.`,
           }}
@@ -145,18 +102,9 @@ export default function ProcesoJudicialSlug() {
         <JudicialProcessModal
           isOpen={isOpen}
           onClose={handleClose}
-          title={_ ? `Editar expediente` : "Nuevo expediente"}
-          judicialFields={
-            <ReusableFields
-              fields={judicialProcessFields}
-              inputValid={inputValid}
-              errors={errors}
-              onInputChange={onInputChange}
-              onBlurChange={onBlurChange}
-            />
-          }
+          title={judicialProcess ? `Editar expediente` : "Nuevo expediente"}
           handleSubmit={onSubmit}
-          isFormValid={isFormValid}
+          judicialProcess={judicialProcess}
         />
         <JudicialProcessDataGrid
           judicialProcesses={data}

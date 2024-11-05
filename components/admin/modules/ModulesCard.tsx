@@ -10,6 +10,7 @@ import { mappingSubmodules } from "@/config/mapping_submodules";
 export interface ModulesCardProps {
   module: GetSubmoduleDto;
   pathname?: string;
+  isSubmodule?: boolean;
 }
 
 const renderIcon: Record<number, ReactNode> = {
@@ -17,12 +18,18 @@ const renderIcon: Record<number, ReactNode> = {
   2: <RiEye2Line size="64" className="text-cerulean-950" />,
 };
 
-const ModulesCard: FC<ModulesCardProps> = ({ module, pathname }) => {
+const ModulesCard: FC<ModulesCardProps> = ({
+  module,
+  isSubmodule = false,
+  pathname,
+}) => {
   return (
-    <Link href={`${pathname}/${mappingSubmodules[module?.slug]}`}>
-      <Card className="cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
-        <CardBody className="flex flex-row gap-2 items-center transition">
-          <div className="flex flex-col gap-4 lg:max-w-[180px] p-2">
+    <Link
+      href={`${isSubmodule ? `${pathname}/${mappingSubmodules[module?.slug]}` : `/admin/${module.slug}`}`}
+    >
+      <Card className="min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
+        <CardBody className="flex flex-row gap-2 items-center justify-between transition">
+          <div className="flex flex-col gap-4 lg:max-w-[180px] p-1">
             <h1 className="text-cerulean-950 font-bold">{module?.name}</h1>
             <div className="flex flex-row gap-2 text-cerulean-400 hover:text-cerulean-600 transition cursor-pointer">
               <p className="text-xs">Ver módulo</p>
