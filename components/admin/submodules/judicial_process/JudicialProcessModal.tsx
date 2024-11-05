@@ -11,10 +11,12 @@ import ReactiveForm from "@/components/form/ReactiveForm";
 import ReactiveField from "@/components/form/ReactiveField";
 import judicialProcessSchema from "@/app/validations/create-judicial-process.validation";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import CargoStudioAutocomplete from "@/components/shared/master-options-autocompletes/CargoStudioAutocomplete";
 
 export interface JudicialProcessModalProps {
   isOpen: boolean;
-  onClose: (isOpen: boolean) => void;
+  onOpenChange: (isOpen: boolean) => void;
+  onCloseChange: () => void;
   title: string;
   handleSubmit?: (data: any) => void;
   judicialProcess?: GetJudicialProcessDto;
@@ -22,20 +24,28 @@ export interface JudicialProcessModalProps {
 
 const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
   isOpen,
-  onClose,
+  onOpenChange,
+  onCloseChange,
   handleSubmit,
   title,
   judicialProcess,
 }) => {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onClose} placement="center" size="xl">
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      placement="center"
+      size="xl"
+    >
       <ReactiveForm
         onSubmit={handleSubmit}
         validationSchema={judicialProcessSchema}
-        options={{ mode: "onTouched" }}
         initialValues={judicialProcess}
+        options={{
+          mode: "onTouched",
+        }}
       >
-        {({ register, errors, isValid, touchedFields }) => (
+        {({ register, errors, isValid, touchedFields, control }) => (
           <ModalContent>
             {(onClose) => (
               <>
@@ -72,17 +82,27 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
                       className="col-span-4"
                     />
                     <ReactiveField
-                      isRequired={true}
                       name="coDefendant"
                       label="Co Demandado"
                       register={register}
                       errors={errors}
                       className="col-span-4"
                     />
+                    <CargoStudioAutocomplete
+                      isRequired={true}
+                      name="cargoStudioId"
+                      label="Estudio a cargo"
+                      className="col-span-12"
+                      control={control}
+                    />
                   </div>
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="default" variant="light" onPress={onClose}>
+                  <Button
+                    color="default"
+                    variant="light"
+                    onPress={onCloseChange}
+                  >
                     Cerrar
                   </Button>
                   <Button

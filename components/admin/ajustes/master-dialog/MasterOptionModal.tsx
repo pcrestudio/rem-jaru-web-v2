@@ -52,11 +52,6 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
                     {...register("masterId")}
                     value={masterId}
                   />
-                  <input
-                    type="hidden"
-                    {...register("masterId")}
-                    value={masterOption.masterId}
-                  />
                   <ReactiveField
                     isRequired={true}
                     name="name"

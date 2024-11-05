@@ -2,6 +2,7 @@ import { FC, InputHTMLAttributes } from "react";
 import { Input } from "@nextui-org/input";
 import { InputConfig } from "@/config/input-config";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import { Control } from "react-hook-form";
 
 export interface ReactiveFieldProps {
   name: string;
@@ -17,6 +18,7 @@ export interface ReactiveFieldProps {
   isRequired?: boolean;
   touched?: boolean;
   className?: string;
+  control?: Control<any>;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({

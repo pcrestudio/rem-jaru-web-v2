@@ -7,9 +7,8 @@ import { fetcher } from "@/config/axios.config";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import { usePathname } from "next/navigation";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
-import { useDisclosure } from "@nextui-org/react";
 import JudicialProcessModal from "@/components/admin/submodules/judicial_process/JudicialProcessModal";
-import { useState } from "react";
+import React, { useState } from "react";
 import { CreateJudicialProcessDto } from "@/app/dto/submodule/judicial_process/create-judicial-process.dto";
 import {
   createJudicialProcess,
@@ -22,14 +21,14 @@ import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();
   const slug: string = pathname.split("/")[3];
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
   const [judicialProcess, setJudicialProcess] =
     useState<GetJudicialProcessDto | null>(null);
 
   const setSelectedItem = (judicialProcess: GetJudicialProcessDto) => {
     setJudicialProcess(judicialProcess);
-    setTimeout(() => onOpenChange(), 100);
+    setTimeout(() => setIsOpen(true), 100);
   };
 
   const toggleSelectedItem = (judicialProcess: GetJudicialProcessDto) => {
@@ -50,9 +49,11 @@ export default function ProcesoJudicialSlug() {
 
   const onSubmit = async (payload: CreateJudicialProcessDto) => {
     if (judicialProcess) {
+      const editPayload = payload as unknown as EditJudicialProcessDto;
+
       const { data } = await editJudicialProcess(
         {
-          ...(payload as EditJudicialProcessDto),
+          ...editPayload,
           id: judicialProcess.id,
         },
         slug,
@@ -60,21 +61,21 @@ export default function ProcesoJudicialSlug() {
 
       setJudicialProcess(undefined);
 
-      onOpenChange();
+      setIsOpen(false);
 
       return data;
     }
 
-    const { data } = await createJudicialProcess(payload, slug);
+    const { data } = await createJudicialProcess(
+      {
+        ...payload,
+      },
+      slug,
+    );
 
-    onOpenChange();
+    setIsOpen(false);
 
     return data;
-  };
-
-  const handleClose = () => {
-    setSelectedItem(undefined);
-    onOpenChange();
   };
 
   const handleConfirmModalClose = () => {
@@ -101,14 +102,18 @@ export default function ProcesoJudicialSlug() {
         />
         <JudicialProcessModal
           isOpen={isOpen}
-          onClose={handleClose}
+          onOpenChange={() => setIsOpen(true)}
+          onCloseChange={() => {
+            setIsOpen(false);
+            setJudicialProcess(null);
+          }}
           title={judicialProcess ? `Editar expediente` : "Nuevo expediente"}
           handleSubmit={onSubmit}
           judicialProcess={judicialProcess}
         />
         <JudicialProcessDataGrid
           judicialProcesses={data}
-          onOpenChange={onOpenChange}
+          onOpenChange={() => setIsOpen(true)}
           setSelectedItem={setSelectedItem}
           toggleSelectedItem={toggleSelectedItem}
         />

@@ -4,4 +4,5 @@ export interface EditJudicialProcessDto {
   plaintiff: string;
   coDefendant: string;
   id: number;
+  cargoStudioId: number;
 }

@@ -18,6 +18,7 @@ interface ReactiveFormProps {
     isValid: ReturnType<typeof useReactiveForm>["isValid"];
     touchedFields: ReturnType<typeof useReactiveForm>["touchedFields"];
     initialValues: ReturnType<typeof useReactiveForm>["touchedFields"];
+    control: ReturnType<typeof useReactiveForm>["control"];
   }) => ReactNode;
   options?: any;
 }
@@ -33,6 +34,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     register,
     handleSubmit,
     reset,
+    control,
     formState: { isValid, errors, touchedFields },
   } = useForm({
     resolver: validationSchema ? yupResolver(validationSchema) : undefined,
@@ -55,6 +57,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
         touchedFields,
         isValid,
         initialValues: initialValues,
+        control,
       })}
     </form>
   );

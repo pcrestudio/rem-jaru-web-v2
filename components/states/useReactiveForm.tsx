@@ -10,6 +10,7 @@ interface FormValues {
 export const useReactiveForm = (validationSchema: Yup.ObjectSchema<any>) => {
   const {
     register,
+    control,
     formState: { errors, isValid, touchedFields },
   } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
@@ -20,5 +21,6 @@ export const useReactiveForm = (validationSchema: Yup.ObjectSchema<any>) => {
     errors,
     isValid,
     touchedFields,
+    control,
   };
 };
