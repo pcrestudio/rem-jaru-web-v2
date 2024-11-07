@@ -8,9 +8,6 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { ReactNode } from "react";
 import JaruProvider from "@/app/provider/JaruProvider";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import theme from "@/theme/theme";
 
 export const metadata: Metadata = {
   title: {
@@ -33,19 +30,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           fontSans.variable,
         )}
       >
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            <JaruProvider>
-              <Providers
-                themeProps={{ attribute: "class", defaultTheme: "light" }}
-              >
-                <div className="flex flex-col h-screen overflow-hidden w-full relative bg-cerulean-50/[.45]">
-                  {children}
-                </div>
-              </Providers>
-            </JaruProvider>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
+        <JaruProvider>
+          <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+            <div className="flex flex-col h-screen overflow-hidden w-full relative bg-cerulean-50/[.45]">
+              {children}
+            </div>
+          </Providers>
+        </JaruProvider>
       </body>
     </html>
   );

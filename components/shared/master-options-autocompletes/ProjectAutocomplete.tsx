@@ -13,7 +13,7 @@ import {
 import { Controller } from "react-hook-form";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 
-const CargoStudioAutocomplete: FC<ReactiveFieldProps> = ({
+const ProjectAutocomplete: FC<ReactiveFieldProps> = ({
   name,
   label,
   className,
@@ -25,9 +25,7 @@ const CargoStudioAutocomplete: FC<ReactiveFieldProps> = ({
     fetcher,
   );
 
-  const listCargoStudio = data?.find(
-    (master) => master.slug === "estudios-a-cargo",
-  );
+  const listProjects = data?.find((master) => master.slug === "proyectos");
 
   return (
     <Controller
@@ -36,13 +34,11 @@ const CargoStudioAutocomplete: FC<ReactiveFieldProps> = ({
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
           fullWidth
-          options={listCargoStudio ? listCargoStudio.masterOption : []}
+          options={listProjects ? listProjects.masterOption : []}
           getOptionLabel={(option: GetMasterOptionsDto) => option.name || ""}
           value={
-            value && listCargoStudio
-              ? listCargoStudio.masterOption.find(
-                  (option) => option.id === value,
-                )
+            value && listProjects
+              ? listProjects.masterOption.find((option) => option.id === value)
               : null
           }
           sx={autocompleteStyle}
@@ -67,4 +63,4 @@ const CargoStudioAutocomplete: FC<ReactiveFieldProps> = ({
   );
 };
 
-export default CargoStudioAutocomplete;
+export default ProjectAutocomplete;

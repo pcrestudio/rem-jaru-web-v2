@@ -4,11 +4,11 @@ import * as Yup from "yup";
 import { useReactiveForm } from "@/components/states/useReactiveForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-interface FormValues {
+export interface FormValues {
   [key: string]: any;
 }
 
-interface ReactiveFormProps {
+export interface ReactiveFormProps {
   onSubmit: SubmitHandler<FormValues>;
   validationSchema: Yup.ObjectSchema<any>;
   initialValues?: any;

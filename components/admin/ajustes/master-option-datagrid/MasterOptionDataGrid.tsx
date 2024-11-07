@@ -21,19 +21,24 @@ import { CreateMasterOptionDto } from "@/app/dto/masters/create-master-option.dt
 import {
   createMasterOption,
   editMasterOption,
+  toggleMasterOption,
 } from "@/app/api/master-option/master-option";
 import { EditMasterOptionDto } from "@/app/dto/masters/edit-master-option.dto";
+import { Button } from "@mui/material";
+import { AiOutlinePlus } from "react-icons/ai";
+import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 
 export interface MasterOptionDataGridProps {
   masterId?: number;
 }
 
 const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
-  const { data, error, isLoading } = useSWR<GetMasterOptionsDto[]>(
+  const { data } = useSWR<GetMasterOptionsDto[]>(
     `${environment.baseUrl}/masters/options?id=${masterId}`,
     fetcher,
   );
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpenChange } = useDisclosure();
+  const [confirm, setConfirm] = useState<boolean>(false);
   const [masterOption, setMasterOption] = useState<GetMasterOptionsDto | null>(
     null,
   );
@@ -41,6 +46,22 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
   const selectedItem = (option: GetMasterOptionsDto) => {
     setMasterOption(option);
     onOpenChange();
+  };
+
+  const toggleSelectedItem = (masterOption: GetMasterOptionsDto) => {
+    setMasterOption(masterOption);
+    setConfirm(true);
+  };
+
+  const toggleMasterOptionHelper = async () => {
+    const { data } = await toggleMasterOption({
+      id: masterOption.id,
+      isActive: Boolean(masterOption.isActive),
+    });
+
+    if (data) {
+      setConfirm(false);
+    }
   };
 
   const renderCell = useCallback(
@@ -59,8 +80,14 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
                   <EditIcon />
                 </span>
               </Tooltip>
-              <Tooltip color="danger" content="Desactivar expediente">
-                <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <Tooltip
+                color="danger"
+                content={item.isActive ? "Desactivar opción" : "Activar opción"}
+              >
+                <span
+                  className="text-lg text-danger cursor-pointer active:opacity-50"
+                  onClick={() => toggleSelectedItem(item)}
+                >
                   <DeleteIcon />
                 </span>
               </Tooltip>
@@ -99,11 +126,27 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
       masterId: Number(masterId),
     });
 
+    onOpenChange();
+
     return data;
+  };
+
+  const handleConfirmModalClose = () => {
+    setMasterOption(null);
+    setConfirm(false);
   };
 
   return (
     <>
+      <ConfirmModal
+        title={`${masterOption ? `¿Deseas ${masterOption.isActive ? "desactivar" : "activar"} esta opción?` : ""}`}
+        description={{
+          __html: `Estás seguro de realizar esta acción, esta opción no será eliminada y tampoco podrá utilizarse en ningún módulo.`,
+        }}
+        isOpen={confirm}
+        onClose={handleConfirmModalClose}
+        onConfirm={toggleMasterOptionHelper}
+      />
       <MasterOptionModal
         isOpen={isOpen}
         onClose={onOpenChange}
@@ -113,10 +156,24 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
         masterOption={masterOption}
       />
       <Table
-        aria-label="Example table with client side pagination"
         classNames={{
-          wrapper: "min-h-[222px] mb-2",
+          wrapper:
+            "bg-transparent shadow-none p-0 border border-gray-200 gap-1",
+          table: "",
+          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
+          thead: "[&>tr]:first:rounded-none rounded-lg",
         }}
+        bottomContent={
+          <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
+            <Button
+              className="text-cerulean-500 text-sm flex flex-row gap-1"
+              endIcon={<AiOutlinePlus />}
+              onClick={onOpenChange}
+            >
+              Agregar otra opción
+            </Button>
+          </div>
+        }
       >
         <TableHeader columns={masterOptionColumns}>
           {(column) => (

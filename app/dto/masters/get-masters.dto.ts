@@ -7,7 +7,7 @@ export interface GetMastersDto {
   createdAt?: Date;
   updatedAt?: Date;
   module?: GetModuleDto;
-  MasterOption?: GetMasterOptionsDto[];
+  masterOption?: GetMasterOptionsDto[];
   id?: number;
   isActive?: number;
 }
