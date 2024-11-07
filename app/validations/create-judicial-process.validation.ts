@@ -17,6 +17,10 @@ const judicialProcessSchema = Yup.object().shape({
   demanded: Yup.string().required("El demandado es obligatorio."),
   plaintiff: Yup.string().required("El demandante es obligatorio."),
   cargoStudioId: Yup.number().required("El estudio a cargo es obligatorio."),
+  projectId: Yup.number().required("El proyecto es obligatorio."),
+  controversialMatter: Yup.string().required(
+    "La materia controvertida es obligatorial.",
+  ),
 });
 
 export default judicialProcessSchema;

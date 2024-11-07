@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import ReactiveField from "@/components/form/ReactiveField";
 import judicialProcessSchema from "@/app/validations/create-judicial-process.validation";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
-import CargoStudioAutocomplete from "@/components/shared/master-options-autocompletes/CargoStudioAutocomplete";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
-import ProjectAutocomplete from "@/components/shared/master-options-autocompletes/ProjectAutocomplete";
+import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
+import { MasterOptionConfig } from "@/config/master-option.config";
 
 export interface JudicialProcessModalProps {
   isOpen: boolean;
@@ -67,18 +67,29 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             errors={errors}
             className="col-span-4"
           />
-          <ProjectAutocomplete
+          <DynamicAutocomplete
             isRequired={true}
             name="projectId"
             label="Proyectos"
             className="col-span-6"
+            slug={MasterOptionConfig.proyectos}
             control={control}
           />
-          <CargoStudioAutocomplete
+          <DynamicAutocomplete
             isRequired={true}
             name="cargoStudioId"
             label="Estudio a cargo"
             className="col-span-6"
+            slug={MasterOptionConfig.estudios}
+            control={control}
+          />
+          <DynamicAutocomplete
+            isRequired={true}
+            name="controversialMatter"
+            label="Materia controvertida"
+            className="col-span-12"
+            optionValue="name"
+            slug={MasterOptionConfig.materia}
             control={control}
           />
         </div>

@@ -13,19 +13,26 @@ import {
 import { Controller } from "react-hook-form";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 
-const ProjectAutocomplete: FC<ReactiveFieldProps> = ({
+export interface DynamicAutocompleteProps extends ReactiveFieldProps {
+  slug: string;
+  optionValue?: string;
+}
+
+const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
   name,
   label,
   className,
   control,
   isRequired,
+  slug,
+  optionValue = "id",
 }) => {
   const { data } = useSWR<GetMasterOptionAutoComplete[]>(
     `${environment.baseUrl}/masters/options/autocomplete`,
     fetcher,
   );
 
-  const listProjects = data?.find((master) => master.slug === "proyectos");
+  const list = data?.find((master) => master.slug === slug);
 
   return (
     <Controller
@@ -34,15 +41,19 @@ const ProjectAutocomplete: FC<ReactiveFieldProps> = ({
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
           fullWidth
-          options={listProjects ? listProjects.masterOption : []}
+          options={list ? list.masterOption : []}
           getOptionLabel={(option: GetMasterOptionsDto) => option.name || ""}
           value={
-            value && listProjects
-              ? listProjects.masterOption.find((option) => option.id === value)
+            value && list
+              ? list.masterOption.find(
+                  (option) => option[optionValue] === value,
+                )
               : null
           }
           sx={autocompleteStyle}
-          onChange={(_, newValue) => onChange(newValue ? newValue.id : "")}
+          onChange={(_, newValue) =>
+            onChange(newValue ? newValue[optionValue] : "")
+          }
           className={className}
           isOptionEqualToValue={(option, value) => option === value}
           renderInput={(params) => (
@@ -63,4 +74,4 @@ const ProjectAutocomplete: FC<ReactiveFieldProps> = ({
   );
 };
 
-export default ProjectAutocomplete;
+export default DynamicAutocomplete;

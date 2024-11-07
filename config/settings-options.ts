@@ -15,4 +15,9 @@ export const settingsOptions: OptionCard[] = [
     path: "terminos",
     name: "Términos y Condiciones",
   },
+  {
+    order: 3,
+    path: "personalizar",
+    name: "Personalizar formularios",
+  },
 ];
