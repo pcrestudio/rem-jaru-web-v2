@@ -9,6 +9,7 @@ interface FormDialogProps extends ReactiveFormProps {
   title: string;
   isOpen: boolean;
   onCloseChange: () => void;
+  buttonSubmitTitle?: string;
 }
 
 const FormDialog: FC<FormDialogProps> = ({
@@ -19,6 +20,7 @@ const FormDialog: FC<FormDialogProps> = ({
   title,
   isOpen,
   onCloseChange,
+  buttonSubmitTitle = "Guardar",
 }) => {
   return (
     <Dialog
@@ -32,14 +34,14 @@ const FormDialog: FC<FormDialogProps> = ({
         {title}
       </DialogTitle>
       <ReactiveForm
-        onSubmit={onSubmit}
+        onSubmit={(values, reset) => onSubmit(values, reset)}
         validationSchema={validationSchema}
         initialValues={initialValues}
         options={{
           mode: "onTouched",
         }}
       >
-        {({ register, errors, touchedFields, control, isValid }) => (
+        {({ register, errors, touchedFields, control, isValid, reset }) => (
           <>
             {children({
               register,
@@ -47,7 +49,7 @@ const FormDialog: FC<FormDialogProps> = ({
               touchedFields,
               control,
               isValid,
-              initialValues,
+              reset,
             })}
             <DialogActions className="!px-6 !pt-4">
               <Button onClick={onCloseChange} className="bg-transparent">
@@ -58,7 +60,7 @@ const FormDialog: FC<FormDialogProps> = ({
                 className="standard-btn text-white"
                 disabled={!isValid}
               >
-                Guardar
+                {buttonSubmitTitle}
               </Button>
             </DialogActions>
           </>

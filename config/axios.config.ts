@@ -1,3 +1,5 @@
+"use client";
+
 import axios, { AxiosInstance } from "axios";
 import { environment } from "@/environment/environment";
 
@@ -7,7 +9,10 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token: string = document.cookie.split("=")[1];
+    const token: string = document.cookie
+      .split("; ")
+      .find((cookie) => cookie.startsWith("JWToken="))
+      .split("=")[1];
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

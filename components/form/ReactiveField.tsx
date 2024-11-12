@@ -1,13 +1,13 @@
-import { FC, InputHTMLAttributes } from "react";
+import { FC } from "react";
 import { Input } from "@nextui-org/input";
 import { InputConfig } from "@/config/input-config";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { Control } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 export interface ReactiveFieldProps {
   name: string;
   label: string;
-  defaultValue?: string;
+  defaultValue?: string | number | any;
   register?: any;
   errors?: any;
   type?: string;
@@ -35,6 +35,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   isRequired,
   touched,
   className,
+  control,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
@@ -62,13 +63,21 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
       )}
 
       {!type && (
-        <Input
-          isRequired={isRequired}
-          label={label}
-          {...register(name)}
-          isInvalid={!!errors[name] && touched}
-          errorMessage={errorMessage}
-          className={className}
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue}
+          render={({ field }) => (
+            <Input
+              isRequired={isRequired}
+              label={label}
+              {...field}
+              isInvalid={!!errors[name] && touched}
+              errorMessage={errorMessage}
+              className={className}
+              defaultValue={defaultValue}
+            />
+          )}
         />
       )}
     </>
