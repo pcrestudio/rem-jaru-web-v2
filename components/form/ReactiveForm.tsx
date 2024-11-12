@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { useReactiveForm } from "@/components/states/useReactiveForm";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,7 +9,7 @@ export interface FormValues {
 }
 
 export interface ReactiveFormProps {
-  onSubmit: SubmitHandler<FormValues>;
+  onSubmit: (values: FormValues, reset: () => void) => void;
   validationSchema: Yup.ObjectSchema<any>;
   initialValues?: any;
   children: (props: {
@@ -17,8 +17,8 @@ export interface ReactiveFormProps {
     errors: ReturnType<typeof useReactiveForm>["errors"];
     isValid: ReturnType<typeof useReactiveForm>["isValid"];
     touchedFields: ReturnType<typeof useReactiveForm>["touchedFields"];
-    initialValues: ReturnType<typeof useReactiveForm>["touchedFields"];
     control: ReturnType<typeof useReactiveForm>["control"];
+    reset: ReturnType<typeof useReactiveForm>["reset"];
   }) => ReactNode;
   options?: any;
 }
@@ -43,6 +43,10 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     ...options,
   });
 
+  const handleFormSubmit = (values: FormValues) => {
+    onSubmit(values, reset);
+  };
+
   useEffect(() => {
     if (initialValues) {
       reset(initialValues);
@@ -50,14 +54,14 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
   }, [initialValues, reset]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
       {children({
         errors,
         register,
         touchedFields,
         isValid,
-        initialValues: initialValues,
         control,
+        reset,
       })}
     </form>
   );

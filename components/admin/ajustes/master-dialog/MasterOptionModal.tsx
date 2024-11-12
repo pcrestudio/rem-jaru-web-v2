@@ -39,7 +39,7 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
         options={{ mode: "onTouched" }}
         initialValues={masterOption}
       >
-        {({ register, errors, isValid, touchedFields }) => (
+        {({ register, errors, isValid, touchedFields, control }) => (
           <ModalContent>
             {(onClose) => (
               <>
@@ -59,6 +59,7 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
                     register={register}
                     errors={errors}
                     touched={touchedFields.name}
+                    control={control}
                   />
                   <ReactiveField
                     isRequired={true}
@@ -67,6 +68,7 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
                     register={register}
                     errors={errors}
                     touched={touchedFields.slug}
+                    control={control}
                   />
                 </ModalBody>
                 <ModalFooter>
