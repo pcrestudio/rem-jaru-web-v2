@@ -40,6 +40,12 @@ const dataTypeChigBG = (
         label: "Listado",
       };
 
+    case DataType.TEXTAREA:
+      return {
+        background: "bg-blue-100",
+        label: "Texto en área",
+      };
+
     default:
       return {
         background: "bg-green-100",

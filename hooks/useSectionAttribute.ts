@@ -3,18 +3,22 @@ import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
 import { CreateSectionAttributeOptionDto } from "@/app/dto/attribute-values/create-section-attribute-option.dto";
 import {
+  createSectionAttribute,
   createSectionAttributeOption,
+  editSectionAttribute,
   editSectionAttributeOption,
 } from "@/app/api/attribute-values/atrribute-values";
+import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
 
 interface UseSectionAttributeProps {
   isOpenSectionAttributeModal: boolean;
   isOpen: boolean;
   attribute: GetSectionAttributesDto | null;
+  sectionId: number;
   attributeOption: GetSectionAttributeOptionDto | null;
   selectedAttribute: (sectionAttribute: GetSectionAttributesDto) => void;
   selectedAttributeOption: (option: GetSectionAttributeOptionDto) => void;
-  onSectionAttributeModalOpenChange: () => void;
+  onSectionAttributeModalOpenChange: (sectionId?: number) => void;
   onSectionAttributeModalClose: () => void;
   onSectionAttributeOptionModalOpenChange: () => void;
   onSectionAttributeOptionModalClose: () => void;
@@ -23,6 +27,10 @@ interface UseSectionAttributeProps {
   ) => void;
   handleSubmit: (
     payload: CreateSectionAttributeOptionDto,
+    reset: () => void,
+  ) => void;
+  handleAttributeSubmit: (
+    payload: CreateSectionAttributeDto,
     reset: () => void,
   ) => void;
 }
@@ -35,6 +43,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     sectionAttributeOptionId: 0,
   };
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [sectionId, setSectionId] = useState<number>(0);
   const [isOpenSectionAttributeModal, setOpenSectionAttributeModal] =
     useState<boolean>(false);
   const [attribute, setAttribute] = useState<GetSectionAttributesDto | null>(
@@ -83,8 +92,44 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     }
   };
 
-  const onSectionAttributeModalOpenChange = () =>
+  const handleAttributeSubmit = async (
+    payload: CreateSectionAttributeDto,
+    reset: () => void,
+  ) => {
+    if (attribute) {
+      delete payload["options"];
+
+      const { data } = await editSectionAttribute({
+        ...payload,
+        sectionAttributeId: Number(payload.sectionAttributeId),
+        sectionId: Number(payload.sectionId),
+        order: Number(payload.order),
+      });
+
+      if (data) {
+        setAttributeOption(initialValues);
+        setOpenSectionAttributeModal(false);
+        return reset();
+      }
+    }
+
+    const { data } = await createSectionAttribute({
+      ...payload,
+      sectionId: Number(payload.sectionId),
+      order: Number(payload.order),
+    });
+
+    if (data) {
+      setAttributeOption(initialValues);
+      setOpenSectionAttributeModal(false);
+      return reset();
+    }
+  };
+
+  const onSectionAttributeModalOpenChange = (sectionId: number) => {
     setOpenSectionAttributeModal(true);
+    setSectionId(sectionId);
+  };
 
   const onSectionAttributeOptionModalOpenChange = () => setIsOpen(true);
 
@@ -105,6 +150,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     attribute,
     attributeOption,
     handleSubmit,
+    handleAttributeSubmit,
     selectedAttribute,
     selectedAttributeOption,
     selectedModalConfigureOption,
@@ -112,6 +158,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     onSectionAttributeModalClose,
     onSectionAttributeOptionModalClose,
     onSectionAttributeOptionModalOpenChange,
+    sectionId,
   };
 };
 

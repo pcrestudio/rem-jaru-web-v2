@@ -23,10 +23,8 @@ const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
 };
 
 const BreadcrumbsPath: FC<BreadcrumbsPathProps> = ({ pathname }) => {
-  const breads = pathname.split("/").filter((path) => path !== "");
-
   return (
-    <Breadcrumbs>
+    <Breadcrumbs size="lg">
       {generateBreadcrumbsPath(pathname).map((bread) => (
         <BreadcrumbItem
           key={bread.name}

@@ -1,17 +1,47 @@
 import { FC } from "react";
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
-import createSectionAttributeOptionSchema from "@/app/validations/create-section-attribute-option.validation";
-import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-attributes.dto";
+import {
+  DataType,
+  GetSectionAttributesDto,
+} from "@/app/dto/attribute-values/get-section-attributes.dto";
+import createSectionAttributeSchema from "@/app/validations/create-section-attribute.validation";
+import LocalAutocomplete, {
+  LocalAutocompleteOption,
+} from "@/components/autocompletes/LocalAutocomplete";
 
 export interface SectionAttributeModalProps {
   isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
+  onOpenChange: () => void;
   onCloseChange: () => void;
   title: string;
   handleSubmit?: (data: any, reset: () => void) => void;
   attribute?: GetSectionAttributesDto;
+  sectionId?: number;
 }
+
+const options: LocalAutocompleteOption[] = [
+  {
+    label: "Texto",
+    value: DataType.TEXT,
+  },
+  {
+    label: "Texto en área",
+    value: DataType.TEXTAREA,
+  },
+  {
+    label: "Númerico",
+    value: DataType.INTEGER,
+  },
+  {
+    label: "Númerico en decimales",
+    value: DataType.FLOAT,
+  },
+  {
+    label: "Archivo",
+    value: DataType.FILE,
+  },
+];
 
 const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
   isOpen,
@@ -19,6 +49,7 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
   handleSubmit,
   title,
   attribute,
+  sectionId,
 }) => {
   return (
     <>
@@ -27,16 +58,23 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
         onCloseChange={onCloseChange}
         onSubmit={(values, reset) => handleSubmit(values, reset)}
         title={title}
-        validationSchema={createSectionAttributeOptionSchema}
+        validationSchema={createSectionAttributeSchema}
         initialValues={attribute}
       >
         {({ register, errors, touchedFields, control, reset }) => (
           <>
             <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">
+              {attribute && (
+                <input
+                  type="hidden"
+                  {...register("sectionAttributeId")}
+                  value={attribute?.sectionAttributeId}
+                />
+              )}
               <input
                 type="hidden"
-                {...register("sectionAttributeOptionId")}
-                value={attribute?.sectionAttributeId}
+                {...register("sectionId")}
+                value={sectionId}
               />
               <ReactiveField
                 isRequired={true}
@@ -46,7 +84,6 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 register={register}
                 errors={errors}
                 touched={touchedFields.label}
-                defaultValue={attribute?.label}
                 className="col-span-12"
               />
               <ReactiveField
@@ -57,7 +94,6 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 register={register}
                 errors={errors}
                 touched={touchedFields.slug}
-                defaultValue={attribute?.slug}
                 className="col-span-12"
               />
               <ReactiveField
@@ -68,7 +104,6 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 register={register}
                 errors={errors}
                 touched={touchedFields.order}
-                defaultValue={attribute?.order}
                 className="col-span-6"
               />
               <ReactiveField
@@ -79,8 +114,17 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 register={register}
                 errors={errors}
                 touched={touchedFields.rowLayout}
-                defaultValue={attribute?.rowLayout}
                 className="col-span-6"
+              />
+              <LocalAutocomplete
+                isRequired={true}
+                name="dataType"
+                label="Tipo de dato"
+                options={options}
+                register={register}
+                errors={errors}
+                control={control}
+                className="col-span-12"
               />
             </div>
           </>

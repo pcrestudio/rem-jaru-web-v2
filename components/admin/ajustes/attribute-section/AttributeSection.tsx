@@ -23,6 +23,7 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
     isOpen,
     isOpenSectionAttributeModal,
     handleSubmit,
+    handleAttributeSubmit,
     attribute,
     attributeOption,
     selectedAttribute,
@@ -32,26 +33,31 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
     onSectionAttributeModalClose,
     onSectionAttributeOptionModalOpenChange,
     onSectionAttributeOptionModalClose,
+    sectionId,
   } = useSectionAttribute();
 
   return (
     <>
-      <SectionAttributeOptionModal
-        isOpen={isOpen}
-        onOpenChange={onSectionAttributeOptionModalOpenChange}
-        onCloseChange={onSectionAttributeOptionModalClose}
-        title={`Configurar opciones`}
-        handleSubmit={handleSubmit}
-        sectionAttributeId={attribute?.sectionAttributeId}
-        selectedConfigureOption={selectedAttributeOption}
-        attributeOption={attributeOption}
-      />
+      {isOpen && (
+        <SectionAttributeOptionModal
+          isOpen={isOpen}
+          onOpenChange={onSectionAttributeOptionModalOpenChange}
+          onCloseChange={onSectionAttributeOptionModalClose}
+          title={`Configurar opciones`}
+          handleSubmit={handleSubmit}
+          sectionAttributeId={attribute?.sectionAttributeId}
+          selectedConfigureOption={selectedAttributeOption}
+          attributeOption={attributeOption}
+        />
+      )}
       <SectionAttributeModal
         isOpen={isOpenSectionAttributeModal}
         onOpenChange={onSectionAttributeModalOpenChange}
         onCloseChange={onSectionAttributeModalClose}
         title={attribute ? "Editar atributo" : `Agregar atributo`}
+        handleSubmit={handleAttributeSubmit}
         attribute={attribute}
+        sectionId={sectionId}
       />
       {data &&
         data.map((section) => (
@@ -75,8 +81,8 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
                 attributes={section.attributes}
                 selectedAttribute={selectedAttribute}
                 selectedConfigureOption={selectedModalConfigureOption}
-                onSectionAttributeModalOpenChange={
-                  onSectionAttributeModalOpenChange
+                onSectionAttributeModalOpenChange={() =>
+                  onSectionAttributeModalOpenChange(section.sectionId)
                 }
               />
             </AccordionItem>
