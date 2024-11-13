@@ -3,8 +3,8 @@ import { Input } from "@nextui-org/input";
 import { Control, Controller } from "react-hook-form";
 
 export interface ReactiveFieldProps {
-  name: string;
-  label: string;
+  name?: string;
+  label?: string;
   defaultValue?: string | number | any;
   register?: any;
   errors?: any;

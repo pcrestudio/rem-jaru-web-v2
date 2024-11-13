@@ -1,14 +1,17 @@
+import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
+
 export interface GetSectionAttributesDto {
   sectionId: number;
   label: string;
   slug: string;
   isActive: boolean;
   order: number;
-  rowLayout: string;
+  rowLayout: RowLayout;
   submoduleId: number;
   dataType: DataType;
   moduleId: number;
   sectionAttributeId: number;
+  options?: GetSectionAttributeOptionDto[];
 }
 
 export enum DataType {
@@ -21,4 +24,10 @@ export enum DataType {
   FILE = "FILE",
   EMAIL = "EMAIL",
   BOOLEAN = "BOOLEAN",
+}
+
+export enum RowLayout {
+  single = "single",
+  twoColumns = "twoColumns",
+  threeColumns = "threeColumns",
 }

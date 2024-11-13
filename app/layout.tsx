@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 import { ReactNode } from "react";
 import JaruProvider from "@/app/provider/JaruProvider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {
@@ -31,6 +32,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         )}
       >
         <JaruProvider>
+          <Toaster
+            position="bottom-left"
+            toastOptions={{
+              duration: 5000,
+            }}
+          />
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
             <div className="flex flex-col h-screen overflow-hidden w-full relative bg-cerulean-50/[.45]">
               {children}

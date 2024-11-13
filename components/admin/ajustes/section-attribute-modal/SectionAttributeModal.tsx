@@ -4,6 +4,7 @@ import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import {
   DataType,
   GetSectionAttributesDto,
+  RowLayout,
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import createSectionAttributeSchema from "@/app/validations/create-section-attribute.validation";
 import LocalAutocomplete, {
@@ -40,6 +41,21 @@ const options: LocalAutocompleteOption[] = [
   {
     label: "Archivo",
     value: DataType.FILE,
+  },
+];
+
+const rowLayoutOptions: LocalAutocompleteOption[] = [
+  {
+    label: "Único",
+    value: RowLayout.single,
+  },
+  {
+    label: "Dos columnas",
+    value: RowLayout.twoColumns,
+  },
+  {
+    label: "Tres columnas",
+    value: RowLayout.threeColumns,
   },
 ];
 
@@ -106,14 +122,14 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 touched={touchedFields.order}
                 className="col-span-6"
               />
-              <ReactiveField
+              <LocalAutocomplete
                 isRequired={true}
                 name="rowLayout"
-                control={control}
                 label="Grilla"
+                options={rowLayoutOptions}
                 register={register}
                 errors={errors}
-                touched={touchedFields.rowLayout}
+                control={control}
                 className="col-span-6"
               />
               <LocalAutocomplete

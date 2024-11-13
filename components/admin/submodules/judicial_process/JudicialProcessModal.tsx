@@ -5,6 +5,7 @@ import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 import { MasterOptionConfig } from "@/config/master-option.config";
+import SectionAttributeFields from "@/components/shared/section-attribute-fields/SectionAttributeFields";
 
 export interface JudicialProcessModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ export interface JudicialProcessModalProps {
   title: string;
   handleSubmit?: (data: any) => void;
   judicialProcess?: GetJudicialProcessDto;
+  pathname?: string;
 }
 
 const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
@@ -21,6 +23,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
   handleSubmit,
   title,
   judicialProcess,
+  pathname,
 }) => {
   return (
     <FormDialog
@@ -94,6 +97,11 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             className="col-span-12"
             optionValue="name"
             slug={MasterOptionConfig.materia}
+            control={control}
+          />
+          <SectionAttributeFields
+            pathname={pathname}
+            register={register}
             control={control}
           />
         </div>

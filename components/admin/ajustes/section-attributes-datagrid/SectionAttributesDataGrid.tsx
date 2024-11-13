@@ -15,6 +15,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import {
   DataType,
   GetSectionAttributesDto,
+  RowLayout,
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { sectionAttributesOptionColumns } from "@/components/admin/ajustes/section-attributes-datagrid/columns/section-attribute.columns";
 import { SettingsIcon } from "lucide-react";
@@ -50,6 +51,33 @@ const dataTypeChigBG = (
       return {
         background: "bg-green-100",
         label: "Texto",
+      };
+  }
+};
+
+const rowLayoutBG = (
+  rowLayout: RowLayout,
+): {
+  background: string;
+  label: string;
+} => {
+  switch (rowLayout) {
+    case RowLayout.single:
+      return {
+        background: "bg-cerulean-100",
+        label: "Único",
+      };
+
+    case RowLayout.twoColumns:
+      return {
+        background: "bg-blue-100",
+        label: "Dos columnas",
+      };
+
+    default:
+      return {
+        background: "bg-green-100",
+        label: "Tres columnas",
       };
   }
 };
@@ -92,6 +120,15 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
                 </span>
               </Tooltip>
             </div>
+          );
+
+        case "rowLayout":
+          return (
+            <Chip
+              className={`${rowLayoutBG(cellValue as RowLayout).background}`}
+            >
+              {rowLayoutBG(cellValue as RowLayout).label}
+            </Chip>
           );
 
         case "dataType":

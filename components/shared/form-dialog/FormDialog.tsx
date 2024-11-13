@@ -25,6 +25,7 @@ const FormDialog: FC<FormDialogProps> = ({
   return (
     <Dialog
       open={isOpen}
+      fullWidth
       onClose={onCloseChange}
       PaperProps={{
         className: "!rounded-2xl",
