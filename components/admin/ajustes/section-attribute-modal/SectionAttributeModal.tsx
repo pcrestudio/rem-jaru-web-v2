@@ -31,6 +31,10 @@ const options: LocalAutocompleteOption[] = [
     value: DataType.TEXTAREA,
   },
   {
+    label: "Listado",
+    value: DataType.LIST,
+  },
+  {
     label: "Númerico",
     value: DataType.INTEGER,
   },
