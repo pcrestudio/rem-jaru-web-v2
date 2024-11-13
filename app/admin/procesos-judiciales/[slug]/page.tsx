@@ -17,6 +17,7 @@ import {
 } from "@/app/api/judicial-process/judicial-process";
 import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edit-judicial-process.dto";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import toast from "react-hot-toast";
 
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();
@@ -43,6 +44,7 @@ export default function ProcesoJudicialSlug() {
     });
 
     if (data) {
+      toast.success("El expediente se actualizó correctamente.");
       setConfirm(false);
     }
   };
@@ -59,9 +61,11 @@ export default function ProcesoJudicialSlug() {
         slug,
       );
 
-      setJudicialProcess(undefined);
-
-      setIsOpen(false);
+      if (data) {
+        toast.success("Expediente modificado con éxito");
+        setJudicialProcess(null);
+        setIsOpen(false);
+      }
 
       return data;
     }
@@ -73,17 +77,20 @@ export default function ProcesoJudicialSlug() {
       slug,
     );
 
-    setIsOpen(false);
+    if (data) {
+      toast.success("Expediente creado con éxito");
+      setIsOpen(false);
+    }
 
     return data;
   };
 
   const handleConfirmModalClose = () => {
-    setJudicialProcess(undefined);
+    setJudicialProcess(null);
     setConfirm(false);
   };
 
-  const { data, error, isLoading } = useSWR<GetJudicialProcessDto[]>(
+  const { data } = useSWR<GetJudicialProcessDto[]>(
     `${environment.baseUrl}/judicial_processes?slug=${mappingRevertSubmodules[slug]}`,
     fetcher,
   );
@@ -110,6 +117,7 @@ export default function ProcesoJudicialSlug() {
           title={judicialProcess ? `Editar expediente` : "Nuevo expediente"}
           handleSubmit={onSubmit}
           judicialProcess={judicialProcess}
+          pathname={pathname}
         />
         <JudicialProcessDataGrid
           judicialProcesses={data}

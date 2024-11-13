@@ -12,6 +12,10 @@ export const sectionAttributesOptionColumns = [
     label: "Orden",
   },
   {
+    key: "rowLayout",
+    label: "Grilla",
+  },
+  {
     key: "dataType",
     label: "Tipo de atributo",
   },

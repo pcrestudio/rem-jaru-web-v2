@@ -27,6 +27,7 @@ import { EditMasterOptionDto } from "@/app/dto/masters/edit-master-option.dto";
 import { Button } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import toast from "react-hot-toast";
 
 export interface MasterOptionDataGridProps {
   masterId?: number;
@@ -61,6 +62,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
 
     if (data) {
       setConfirm(false);
+      toast.success("El maestro se actualizó correctamente.");
     }
   };
 
@@ -115,8 +117,11 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
         masterId: Number(masterId),
       });
 
-      onOpenChange();
-      setMasterOption(null);
+      if (data) {
+        toast.success("El maestro se editó correctamente.");
+        onOpenChange();
+        setMasterOption(null);
+      }
 
       return data;
     }
@@ -126,7 +131,10 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
       masterId: Number(masterId),
     });
 
-    onOpenChange();
+    if (data) {
+      toast.success("El maestro se creó correctamente.");
+      onOpenChange();
+    }
 
     return data;
   };
