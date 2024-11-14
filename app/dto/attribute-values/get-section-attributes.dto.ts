@@ -1,4 +1,5 @@
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
+import { GetSectionAttributesValuesDto } from "@/app/dto/attribute-values/get-section-attributes-values.dto";
 
 export interface GetSectionAttributesDto {
   sectionId: number;
@@ -12,6 +13,7 @@ export interface GetSectionAttributesDto {
   moduleId: number;
   sectionAttributeId: number;
   options?: GetSectionAttributeOptionDto[];
+  values?: GetSectionAttributesValuesDto[];
 }
 
 export enum DataType {

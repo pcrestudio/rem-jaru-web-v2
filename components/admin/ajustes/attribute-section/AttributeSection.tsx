@@ -16,13 +16,13 @@ interface AttributeSectionProps {
 
 const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
   const { data } = useSWR<GetSectionDto[]>(
-    `${environment.baseUrl}/attribute-values/sections?moduleId=${moduleId}`,
+    `${environment.baseUrl}/extended/sections?moduleId=${moduleId}`,
     fetcher,
   );
   const {
     isOpen,
     isOpenSectionAttributeModal,
-    handleSubmit,
+    handleAttributeOptionSubmit,
     handleAttributeSubmit,
     attribute,
     attributeOption,
@@ -44,7 +44,7 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
           onOpenChange={onSectionAttributeOptionModalOpenChange}
           onCloseChange={onSectionAttributeOptionModalClose}
           title={`Configurar opciones`}
-          handleSubmit={handleSubmit}
+          handleSubmit={handleAttributeOptionSubmit}
           sectionAttributeId={attribute?.sectionAttributeId}
           selectedConfigureOption={selectedAttributeOption}
           attributeOption={attributeOption}

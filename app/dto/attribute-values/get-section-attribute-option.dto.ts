@@ -1,7 +1,7 @@
 export interface GetSectionAttributeOptionDto {
   optionLabel: string;
   optionValue: string;
-  attributeId: number;
   sectionAttributeOptionId?: number;
+  attributeId?: number;
   isActive?: boolean;
 }

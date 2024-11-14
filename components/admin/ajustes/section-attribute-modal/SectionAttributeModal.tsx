@@ -31,6 +31,10 @@ const options: LocalAutocompleteOption[] = [
     value: DataType.TEXTAREA,
   },
   {
+    label: "Fecha",
+    value: DataType.DATE,
+  },
+  {
     label: "Listado",
     value: DataType.LIST,
   },

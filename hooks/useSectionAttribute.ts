@@ -26,7 +26,7 @@ interface UseSectionAttributeProps {
   selectedModalConfigureOption: (
     sectionAttribute: GetSectionAttributesDto,
   ) => void;
-  handleSubmit: (
+  handleAttributeOptionSubmit: (
     payload: CreateSectionAttributeOptionDto,
     reset: () => void,
   ) => void;
@@ -40,8 +40,6 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
   const initialValues: GetSectionAttributeOptionDto = {
     optionValue: "",
     optionLabel: "",
-    attributeId: 0,
-    sectionAttributeOptionId: 0,
   };
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [sectionId, setSectionId] = useState<number>(0);
@@ -66,11 +64,11 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     setAttributeOption(option);
   };
 
-  const handleSubmit = async (
+  const handleAttributeOptionSubmit = async (
     payload: CreateSectionAttributeOptionDto,
     reset: () => void,
   ) => {
-    if (attributeOption) {
+    if (attributeOption.attributeId) {
       const { data } = await editSectionAttributeOption({
         ...payload,
         attributeId: Number(payload.attributeId),
@@ -82,6 +80,8 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
         return reset();
       }
     }
+
+    delete payload["sectionAttributeOptionId"];
 
     const { data } = await createSectionAttributeOption({
       ...payload,
@@ -154,7 +154,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     isOpenSectionAttributeModal,
     attribute,
     attributeOption,
-    handleSubmit,
+    handleAttributeOptionSubmit,
     handleAttributeSubmit,
     selectedAttribute,
     selectedAttributeOption,

@@ -18,6 +18,12 @@ import {
 import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edit-judicial-process.dto";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import toast from "react-hot-toast";
+import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
+import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
+import {
+  createSectionAttributeValue,
+  editSectionAttributeValue,
+} from "@/app/api/attribute-values/atrribute-values";
 
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();
@@ -50,6 +56,8 @@ export default function ProcesoJudicialSlug() {
   };
 
   const onSubmit = async (payload: CreateJudicialProcessDto) => {
+    const customFields = getSectionAttributesSlug(payload);
+
     if (judicialProcess) {
       const editPayload = payload as unknown as EditJudicialProcessDto;
 
@@ -62,9 +70,18 @@ export default function ProcesoJudicialSlug() {
       );
 
       if (data) {
-        toast.success("Expediente modificado con éxito");
-        setJudicialProcess(null);
-        setIsOpen(false);
+        if (customFields.length > 0) {
+          const response = await createSectionAttributeValue({
+            attributes: customFields,
+            entityReference: judicialProcess?.id,
+          });
+
+          if (response.data) {
+            toast.success("Expediente modificado con éxito");
+            setJudicialProcess(null);
+            setIsOpen(false);
+          }
+        }
       }
 
       return data;
@@ -78,8 +95,17 @@ export default function ProcesoJudicialSlug() {
     );
 
     if (data) {
-      toast.success("Expediente creado con éxito");
-      setIsOpen(false);
+      if (customFields.length > 0) {
+        const response = await createSectionAttributeValue({
+          attributes: customFields,
+          entityReference: data["id"],
+        });
+
+        if (response.data) {
+          toast.success("Expediente creado con éxito");
+          setIsOpen(false);
+        }
+      }
     }
 
     return data;
@@ -97,7 +123,8 @@ export default function ProcesoJudicialSlug() {
 
   return (
     data && (
-      <>
+      <div className="flex flex-col gap-6">
+        <BreadcrumbsPath pathname={pathname} />
         <ConfirmModal
           title={`${judicialProcess ? `¿Deseas ${judicialProcess.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}
           description={{
@@ -125,7 +152,7 @@ export default function ProcesoJudicialSlug() {
           setSelectedItem={setSelectedItem}
           toggleSelectedItem={toggleSelectedItem}
         />
-      </>
+      </div>
     )
   );
 }

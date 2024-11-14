@@ -47,6 +47,12 @@ const dataTypeChigBG = (
         label: "Texto en área",
       };
 
+    case DataType.DATE:
+      return {
+        background: "bg-sky-100",
+        label: "Fecha",
+      };
+
     default:
       return {
         background: "bg-green-100",

@@ -10,13 +10,22 @@ interface BreadcrumbsPathState {
   name: string;
 }
 
+const mappingNamePath: Record<string, string> = {
+  "procesos-judiciales": "Procesos Judiciales",
+  "procesos-judiciales-administrativos": "Procesos Judiciales Administrativos",
+  "procesos-judiciales-laborales": "Procesos Judiciales Laborales",
+  "procesos-judiciales-penales": "Procesos Judiciales Penales",
+  ajustes: "Ajustes",
+  personalizar: "Personalizar",
+};
+
 const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
   const breads = pathname
     .split("/")
     .filter((path) => path !== "" && path !== "admin");
   const breadsPath: BreadcrumbsPathState[] = breads.map((path) => ({
     href: `/admin/${path}`,
-    name: path,
+    name: mappingNamePath[path],
   }));
 
   return [{ href: "/admin", name: "Inicio" }, ...breadsPath];
