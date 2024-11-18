@@ -8,7 +8,15 @@ interface BreadcrumbsPathProps {
 interface BreadcrumbsPathState {
   href: string;
   name: string;
+  disabled: boolean;
 }
+
+const validRoutes = {
+  "": true,
+  ajustes: true,
+  personalizar: true,
+  reglas: false,
+};
 
 const mappingNamePath: Record<string, string> = {
   "procesos-judiciales": "Procesos Judiciales",
@@ -17,18 +25,24 @@ const mappingNamePath: Record<string, string> = {
   "procesos-judiciales-penales": "Procesos Judiciales Penales",
   ajustes: "Ajustes",
   personalizar: "Personalizar",
+  reglas: "Reglas",
 };
 
 const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
   const breads = pathname
     .split("/")
     .filter((path) => path !== "" && path !== "admin");
-  const breadsPath: BreadcrumbsPathState[] = breads.map((path) => ({
-    href: `/admin/${path}`,
-    name: mappingNamePath[path],
-  }));
 
-  return [{ href: "/admin", name: "Inicio" }, ...breadsPath];
+  const breadsPath: BreadcrumbsPathState[] = breads.map((path, index) => {
+    const href = `/admin/${breads.slice(0, index + 1).join("/")}`;
+    return {
+      href,
+      name: mappingNamePath[path] ?? path,
+      disabled: !validRoutes[path] && index !== breads.length - 1,
+    };
+  });
+
+  return [...breadsPath];
 };
 
 const BreadcrumbsPath: FC<BreadcrumbsPathProps> = ({ pathname }) => {
@@ -36,9 +50,13 @@ const BreadcrumbsPath: FC<BreadcrumbsPathProps> = ({ pathname }) => {
     <Breadcrumbs size="lg">
       {generateBreadcrumbsPath(pathname).map((bread) => (
         <BreadcrumbItem
-          key={bread.name}
-          href={bread.href}
+          key={bread.href}
+          href={!bread.disabled ? bread.href : undefined}
           className="capitalize"
+          style={{
+            color: bread.disabled ? "gray" : "blue",
+            cursor: bread.disabled ? "not-allowed" : "pointer",
+          }}
         >
           {bread.name}
         </BreadcrumbItem>

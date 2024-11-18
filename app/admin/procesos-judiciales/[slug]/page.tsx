@@ -20,10 +20,7 @@ import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import toast from "react-hot-toast";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
-import {
-  createSectionAttributeValue,
-  editSectionAttributeValue,
-} from "@/app/api/attribute-values/atrribute-values";
+import { createSectionAttributeValue } from "@/app/api/attribute-values/atrribute-values";
 
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();

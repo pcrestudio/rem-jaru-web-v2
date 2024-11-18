@@ -14,6 +14,7 @@ export interface ReactiveFieldProps {
   touched?: boolean;
   className?: string;
   control?: Control<any>;
+  disabled?: boolean;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({

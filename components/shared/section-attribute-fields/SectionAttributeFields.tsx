@@ -113,6 +113,34 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                             />
                           )}
 
+                          {attribute.dataType === DataType.INTEGER && (
+                            <Controller
+                              name={customFieldIndicator(
+                                attribute.slug,
+                                attribute.dataType,
+                              )}
+                              defaultValue={attribute.values[0]?.value ?? ""}
+                              control={control}
+                              render={({ field }) => (
+                                <Input
+                                  isRequired={true}
+                                  label={attribute.label}
+                                  type="number"
+                                  placeholder="0.0"
+                                  min={0}
+                                  endContent={
+                                    <div className="pointer-events-none flex items-center">
+                                      <span className="text-default-400 text-small">
+                                        %
+                                      </span>
+                                    </div>
+                                  }
+                                  {...field}
+                                />
+                              )}
+                            />
+                          )}
+
                           {attribute.dataType === DataType.TEXTAREA && (
                             <Controller
                               name={customFieldIndicator(

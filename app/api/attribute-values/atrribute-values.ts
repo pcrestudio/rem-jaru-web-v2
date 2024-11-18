@@ -7,6 +7,7 @@ import {
   CreateSectionAttributeValueDto,
   CreateSectionAttributeValueGroup,
 } from "@/app/dto/attribute-values/create-section-attribute-value.dto";
+import { CreateAttributeRuleDto } from "@/app/dto/attribute-values/create-attribute-rule.dto";
 
 const apiUrl: string = `${environment.baseUrl}/extended`;
 
@@ -43,8 +44,8 @@ export async function createSectionAttributeValue(
   return api.post(`${apiUrl}/attribute/values`, sectionAttributeValue);
 }
 
-export async function editSectionAttributeValue(
-  sectionAttributeValue: CreateSectionAttributeValueGroup,
+export async function upsertAttributeRule(
+  attributeRule: CreateAttributeRuleDto,
 ) {
-  return api.patch(`${apiUrl}/attribute/values/edit`, sectionAttributeValue);
+  return api.post(`${apiUrl}/attribute/rule`, attributeRule);
 }
