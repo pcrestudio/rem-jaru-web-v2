@@ -12,7 +12,7 @@ export interface ReactiveFormProps {
   onSubmit: (values: FormValues, reset: () => void) => void;
   validationSchema: Yup.ObjectSchema<any>;
   initialValues?: any;
-  children: (props: {
+  children?: (props: {
     register: ReturnType<typeof useReactiveForm>["register"];
     errors: ReturnType<typeof useReactiveForm>["errors"];
     isValid: ReturnType<typeof useReactiveForm>["isValid"];

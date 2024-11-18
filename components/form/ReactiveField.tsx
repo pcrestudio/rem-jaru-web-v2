@@ -14,6 +14,7 @@ export interface ReactiveFieldProps {
   touched?: boolean;
   className?: string;
   control?: Control<any>;
+  disabled?: boolean;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({
@@ -41,6 +42,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               isRequired={isRequired}
               label={label}
               {...field}
+              type={type}
               isInvalid={!!errors[name] && touched}
               errorMessage={errorMessage}
               className={className}

@@ -1,7 +1,7 @@
 export const autocompleteStyle = {
   ".MuiInputBase-root": {
     background: "transparent",
-    fontSize: "12px",
+    fontSize: "14px",
     border: "none",
   },
   "& .MuiInputBase-root:hover": {
@@ -9,10 +9,19 @@ export const autocompleteStyle = {
   },
   ".MuiFormLabel-root": {
     color: "text-foreground-500",
-    fontSize: "14px",
+    fontSize: "15px",
+  },
+  "& .MuiFormLabel-asterisk": {
+    color: "red",
   },
   ".Mui-focused": {
     color: "var(--nextui-default-foreground)",
+  },
+  "& .Mui-disabled": {
+    background: "transparent !important",
+  },
+  "& .Mui-disabled:before": {
+    borderBottom: "none !important",
   },
   "& .MuiFilledInput-underline:before": {
     borderBottom: "none",

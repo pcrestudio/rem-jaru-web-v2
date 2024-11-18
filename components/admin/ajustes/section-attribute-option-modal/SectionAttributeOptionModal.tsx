@@ -31,7 +31,7 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
   attributeOption,
 }) => {
   const { data } = useSWR<GetSectionAttributeOptionDto[]>(
-    `${environment.baseUrl}/attribute-values/options?attributeId=${sectionAttributeId}`,
+    `${environment.baseUrl}/extended/options?attributeId=${sectionAttributeId}`,
     fetcher,
   );
 
@@ -44,7 +44,9 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
         title={title}
         validationSchema={createSectionAttributeOptionSchema}
         initialValues={attributeOption}
-        buttonSubmitTitle={attributeOption ? "Actualizar" : "Guardar"}
+        buttonSubmitTitle={
+          attributeOption.attributeId ? "Actualizar" : "Guardar"
+        }
       >
         {({ register, errors, touchedFields, control, reset }) => {
           useEffect(() => {
@@ -56,8 +58,8 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
               <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">
                 <input
                   type="hidden"
-                  {...register("attributeId")}
-                  value={sectionAttributeId}
+                  {...register("attributeId", { value: sectionAttributeId })}
+                  defaultValue={sectionAttributeId}
                 />
                 <input
                   type="hidden"

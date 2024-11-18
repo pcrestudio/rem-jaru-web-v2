@@ -103,6 +103,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             pathname={pathname}
             register={register}
             control={control}
+            entityReference={judicialProcess?.id}
           />
         </div>
       )}

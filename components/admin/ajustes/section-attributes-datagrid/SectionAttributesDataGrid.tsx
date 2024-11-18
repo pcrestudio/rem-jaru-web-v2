@@ -11,7 +11,7 @@ import {
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@mui/material";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineSisternode } from "react-icons/ai";
 import {
   DataType,
   GetSectionAttributesDto,
@@ -19,6 +19,7 @@ import {
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { sectionAttributesOptionColumns } from "@/components/admin/ajustes/section-attributes-datagrid/columns/section-attribute.columns";
 import { SettingsIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
 export interface SectionAttributesDataGridProps {
   attributes: GetSectionAttributesDto[];
@@ -45,6 +46,18 @@ const dataTypeChigBG = (
       return {
         background: "bg-blue-100",
         label: "Texto en área",
+      };
+
+    case DataType.DATE:
+      return {
+        background: "bg-sky-100",
+        label: "Fecha",
+      };
+
+    case DataType.INTEGER || DataType.FLOAT:
+      return {
+        background: "bg-purple-100",
+        label: "Númerico",
       };
 
     default:
@@ -88,6 +101,9 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
   onSectionAttributeModalOpenChange,
   selectedConfigureOption,
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const renderCell = useCallback(
     (item: GetSectionAttributesDto, columnKey: string | number) => {
       const cellValue = item[columnKey];
@@ -111,6 +127,23 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
                   <EditIcon onClick={() => selectedAttribute(item)} />
                 </span>
               </Tooltip>
+              {(item.dataType === DataType.INTEGER ||
+                item.dataType === DataType.TEXT ||
+                item.dataType === DataType.FLOAT) && (
+                <Tooltip content={"Configurar reglas y condiciones"}>
+                  <span
+                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    onClick={() =>
+                      router.push(
+                        `${pathname}/reglas/${item.sectionAttributeId}?name=${item.label}&moduleId=${item.moduleId}`,
+                        {},
+                      )
+                    }
+                  >
+                    <AiOutlineSisternode size={18} />
+                  </span>
+                </Tooltip>
+              )}
               <Tooltip
                 color="danger"
                 content={item.isActive ? "Desactivar opción" : "Activar opción"}
@@ -181,7 +214,7 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={attributes ?? []} emptyContent={"Sin opciones."}>
+        <TableBody items={attributes ?? []} emptyContent={"Sin atributos."}>
           {(item) => (
             <TableRow key={item.sectionAttributeId}>
               {(columnKey) => (

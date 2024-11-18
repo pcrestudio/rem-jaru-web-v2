@@ -22,7 +22,7 @@ const AppBar: FC<AppBarProps> = ({ user }) => {
   };
 
   return (
-    <header className="w-full py-4 px-8 bg-cerulean-900 flex flex-row justify-between">
+    <header className="w-full py-4 px-8 bg-cerulean-950 flex flex-row justify-between">
       <img src="/jaru-logo.svg" alt="Jaru Software" />
       <Dropdown backdrop="blur">
         <DropdownTrigger>

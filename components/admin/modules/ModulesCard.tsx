@@ -16,6 +16,8 @@ export interface ModulesCardProps {
 const renderIcon: Record<number, ReactNode> = {
   1: <RiAuctionLine size="64" className="text-cerulean-950" />,
   2: <RiEye2Line size="64" className="text-cerulean-950" />,
+  3: <RiEye2Line size="64" className="text-cerulean-950" />,
+  4: <RiAuctionLine size="64" className="text-cerulean-950" />,
 };
 
 const ModulesCard: FC<ModulesCardProps> = ({
