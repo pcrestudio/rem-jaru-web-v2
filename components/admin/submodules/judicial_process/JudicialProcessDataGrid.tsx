@@ -130,6 +130,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
               <Tooltip content="Editar expediente">
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  role="presentation"
                   onClick={() => setSelectedItem(judicialProcess)}
                 >
                   <EditIcon />
@@ -138,6 +139,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
               <Tooltip color="danger" content="Desactivar expediente">
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50"
+                  role="presentation"
                   onClick={() => toggleSelectedItem(judicialProcess)}
                 >
                   <DeleteIcon />

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback } from "react";
 import {
   Table,
   TableHeader,
@@ -9,14 +9,11 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { EditIcon } from "@nextui-org/shared-icons";
-import { Button, Popover } from "@mui/material";
+import { Button } from "@mui/material";
 import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 import { GetAttributeRulesDto } from "@/app/dto/attribute-values/get-attribute-rules.dto";
 import { attributeRulesColumns } from "@/components/admin/ajustes/attribute-rules-datagrid/columns/attribute-rules.columns";
 import { Input } from "@nextui-org/input";
-import AttributeRulesConditionForm from "@/components/admin/ajustes/attribute-rules-condition-form/AttributeRulesConditionForm";
-import attributeRuleConditionSchema from "@/app/validations/create-attribute-rule-condition.validation";
-import attributeRuleSchema from "@/app/validations/create-attribute-rule.validation";
 
 export interface AttributeRulesDataGridProps {
   rules: GetAttributeRulesDto[];
@@ -31,27 +28,6 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
   onSelectionChange,
   loading,
 }) => {
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
-    null,
-  );
-  const [attributeRule, setAttributeRule] =
-    useState<GetAttributeRulesDto | null>(null);
-
-  const handleClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    item: GetAttributeRulesDto,
-  ) => {
-    setAnchorEl(event.currentTarget);
-    setAttributeRule(item);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
-
   const renderCell = useCallback(
     (item: GetAttributeRulesDto, columnKey: string | number) => {
       const cellValue = item[columnKey];
@@ -65,13 +41,6 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
                   <EditIcon />
                 </span>
               </Tooltip>
-              <Button
-                data-popover-button
-                aria-describedby={id}
-                onClick={(event) => handleClick(event, item)}
-              >
-                Presiona
-              </Button>
             </div>
           );
 
@@ -112,31 +81,6 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
 
   return (
     <>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        sx={{
-          "& .MuiPopover-root": {
-            zIndex: 1500,
-          },
-        }}
-        disablePortal={false}
-      >
-        <AttributeRulesConditionForm
-          onSubmit={(data) => console.log(data)}
-          validationSchema={attributeRuleSchema}
-        />
-      </Popover>
       <Table
         topContent={topContent}
         selectionMode="single"

@@ -49,10 +49,6 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
         }
       >
         {({ register, errors, touchedFields, control, reset }) => {
-          useEffect(() => {
-            reset(attributeOption);
-          }, [attributeOption, sectionAttributeId, reset]);
-
           return (
             <>
               <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">

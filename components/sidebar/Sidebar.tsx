@@ -56,6 +56,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       <div
         className="bg-cerulean-50 shadow-inner rounded-full absolute -right-3 top-2 flex items-center justify-center p-2 cursor-pointer"
         onClick={collapseSidebar}
+        role="presentation"
       >
         <AiOutlineArrowsAlt size={16} className="text-black" />
       </div>

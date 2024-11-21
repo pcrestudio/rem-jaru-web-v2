@@ -15,6 +15,7 @@ import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
+import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
@@ -111,6 +112,17 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                 />
                               )}
                             />
+                          )}
+
+                          {attribute.dataType === DataType.FILE && (
+                            <ReactiveFieldFile
+                              name={customFieldIndicator(
+                                attribute.slug,
+                                attribute.dataType,
+                              )}
+                              defaultValue={attribute.values[0]?.value ?? ""}
+                              control={control}
+                            ></ReactiveFieldFile>
                           )}
 
                           {attribute.dataType === DataType.INTEGER && (

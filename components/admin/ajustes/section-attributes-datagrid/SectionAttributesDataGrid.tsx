@@ -60,6 +60,12 @@ const dataTypeChigBG = (
         label: "Númerico",
       };
 
+    case DataType.FILE:
+      return {
+        background: "bg-indigo-100",
+        label: "Archivo",
+      };
+
     default:
       return {
         background: "bg-green-100",
@@ -133,6 +139,7 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
                 <Tooltip content={"Configurar reglas y condiciones"}>
                   <span
                     className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    role="presentation"
                     onClick={() =>
                       router.push(
                         `${pathname}/reglas/${item.sectionAttributeId}?name=${item.label}&moduleId=${item.moduleId}`,
