@@ -7,16 +7,6 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (!session) {
-    const requestedPage = request.nextUrl.pathname;
-    const url = request.nextUrl.clone();
-
-    url.pathname = "/auth";
-    url.search = `p=${requestedPage}`;
-
-    return NextResponse.redirect(url);
-  }
-
   if (session?.name && !request.nextUrl.pathname.startsWith("/admin")) {
     return NextResponse.redirect(new URL("/admin", request.nextUrl));
   }
