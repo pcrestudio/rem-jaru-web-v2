@@ -41,7 +41,11 @@ export async function editSectionAttributeOption(
 export async function createSectionAttributeValue(
   sectionAttributeValue: CreateSectionAttributeValueGroup,
 ) {
-  return api.post(`${apiUrl}/attribute/values`, sectionAttributeValue);
+  return api.post(`${apiUrl}/attribute/values`, sectionAttributeValue, {
+    headers: {
+      contentType: "multipart/form-data",
+    },
+  });
 }
 
 export async function upsertAttributeRule(

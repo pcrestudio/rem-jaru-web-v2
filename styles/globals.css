@@ -32,6 +32,60 @@ div[data-orientation="vertical"] {
   @apply relative w-full inline-flex tap-highlight-transparent shadow-sm px-3 bg-default-100 data-[hover=true]:bg-default-200 group-data-[focus=true]:bg-default-100 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background motion-reduce:transition-none !duration-150 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background h-14 py-2;
 }
 
+.custom-file-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.file-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.custom-file-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+  @apply bg-default-100 border-none p-3 text-base rounded-medium shadow-sm;
+}
+
+.custom-file-wrapper:hover {
+  border-color: #007bff;
+}
+
+.custom-file-text {
+  flex-grow: 1;
+  font-size: 14px;
+  @apply text-foreground;
+  padding-right: 10px;
+}
+
+.custom-file-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.custom-file-button:hover {
+  background-color: #0056b3;
+}
+
+.file-error-message {
+  font-size: 12px;
+  color: red;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

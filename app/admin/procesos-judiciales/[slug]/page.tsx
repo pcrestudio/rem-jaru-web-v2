@@ -55,6 +55,26 @@ export default function ProcesoJudicialSlug() {
   const onSubmit = async (payload: CreateJudicialProcessDto) => {
     const customFields = getSectionAttributesSlug(payload);
 
+    let formData = new FormData();
+
+    const fileAttributes = customFields.filter(
+      (attribute) => attribute.type === "FILE",
+    );
+
+    fileAttributes.forEach((attribute) => {
+      const fileList = attribute.value;
+      if (fileList && fileList.length > 0) {
+        Object.keys(fileList).forEach((key) => {
+          const file = fileList[key];
+          formData.append(attribute.attributeSlug, file);
+        });
+      }
+    });
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
     if (judicialProcess) {
       const editPayload = payload as unknown as EditJudicialProcessDto;
 

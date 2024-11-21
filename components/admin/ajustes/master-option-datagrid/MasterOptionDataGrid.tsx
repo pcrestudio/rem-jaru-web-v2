@@ -77,6 +77,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
               <Tooltip content="Editar expediente">
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  role="presentation"
                   onClick={() => selectedItem(item)}
                 >
                   <EditIcon />
@@ -88,6 +89,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
               >
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50"
+                  role="presentation"
                   onClick={() => toggleSelectedItem(item)}
                 >
                   <DeleteIcon />

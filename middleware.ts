@@ -17,9 +17,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (session?.name && !request.nextUrl.pathname.startsWith("/admin")) {
+    return NextResponse.redirect(new URL("/admin", request.nextUrl));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/auth"],
 };

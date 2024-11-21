@@ -1,5 +1,5 @@
 export interface CreateSectionAttributeValueGroup {
-  attributes: any[];
+  attributes: any;
   entityReference: number;
 }
 
