@@ -7,10 +7,24 @@ export async function middleware(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (session?.name && !request.nextUrl.pathname.startsWith("/admin")) {
+  const pathname = request.nextUrl.pathname;
+
+  // Allow requests to `/auth` if there's no session (login/logout flow)
+  if (pathname === "/auth" && !session) {
+    return NextResponse.next();
+  }
+
+  // Redirect logged-in users from `/auth` to `/admin`
+  if (pathname === "/auth" && session) {
     return NextResponse.redirect(new URL("/admin", request.nextUrl));
   }
 
+  // Redirect unauthorized users trying to access `/admin/*` to `/auth`
+  if (pathname.startsWith("/admin") && !session) {
+    return NextResponse.redirect(new URL("/auth", request.nextUrl));
+  }
+
+  // Allow requests to proceed
   return NextResponse.next();
 }
 
