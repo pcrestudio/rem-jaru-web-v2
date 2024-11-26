@@ -62,7 +62,6 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
               required={isRequired}
               variant="filled"
               size="medium"
-              className="nextui-input"
               label={label}
               error={!!error}
               helperText={error ? error.message : ""}

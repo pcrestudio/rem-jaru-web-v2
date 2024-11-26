@@ -32,25 +32,23 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
 
   return (
     <>
-      {!type && (
-        <Controller
-          name={name}
-          control={control}
-          defaultValue={defaultValue}
-          render={({ field }) => (
-            <Input
-              isRequired={isRequired}
-              label={label}
-              {...field}
-              type={type}
-              isInvalid={!!errors[name] && touched}
-              errorMessage={errorMessage}
-              className={className}
-              defaultValue={defaultValue}
-            />
-          )}
-        />
-      )}
+      <Controller
+        name={name}
+        control={control}
+        defaultValue={defaultValue}
+        render={({ field }) => (
+          <Input
+            isRequired={isRequired}
+            label={label}
+            {...field}
+            type={type}
+            isInvalid={!!errors[name] && touched}
+            errorMessage={errorMessage}
+            className={className}
+            defaultValue={defaultValue}
+          />
+        )}
+      />
     </>
   );
 };

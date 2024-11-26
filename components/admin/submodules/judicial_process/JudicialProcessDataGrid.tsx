@@ -15,18 +15,15 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
+import { useRouter } from "next/navigation";
 
 export interface JudicialProcessDataGridProps {
   judicialProcesses: GetJudicialProcessDto[];
-  onOpenChange: () => void;
-  setSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
 }
 
 const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
   judicialProcesses,
-  onOpenChange,
-  setSelectedItem,
   toggleSelectedItem,
 }) => {
   const [page, setPage] = React.useState(1);
@@ -34,6 +31,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
   const [filterValue, setFilterValue] = React.useState("");
   const hasSearchFilter = Boolean(filterValue);
   const [statusFilter, setStatusFilter] = React.useState("all");
+  const router = useRouter();
 
   const onSearchChange = React.useCallback((value: string) => {
     if (value) {
@@ -110,7 +108,10 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
           <Button
             className="standard-btn w-auto text-white"
             endContent={<AiOutlinePlus />}
-            onClick={onOpenChange}
+            onClick={() => {
+              const currentPath = window.location.pathname;
+              router.push(`${currentPath}/create`);
+            }}
           >
             Nuevo Expediente
           </Button>
@@ -131,7 +132,10 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
                   role="presentation"
-                  onClick={() => setSelectedItem(judicialProcess)}
+                  onClick={() => {
+                    const currentPath = window.location.pathname;
+                    router.push(`${currentPath}/edit/${judicialProcess?.id}`);
+                  }}
                 >
                   <EditIcon />
                 </span>

@@ -32,6 +32,10 @@ div[data-orientation="vertical"] {
   @apply relative w-full inline-flex tap-highlight-transparent shadow-sm px-3 bg-default-100 data-[hover=true]:bg-default-200 group-data-[focus=true]:bg-default-100 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background motion-reduce:transition-none !duration-150 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background h-14 py-2;
 }
 
+.nextui-input-nomodal {
+  @apply relative w-full inline-flex tap-highlight-transparent px-3 !bg-white shadow-none border border-slate-200 data-[hover=true]:bg-default-200 group-data-[focus=true]:bg-transparent min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background motion-reduce:transition-none !duration-150 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background h-14 py-2;
+}
+
 .custom-file-container {
   display: flex;
   flex-direction: column;
@@ -84,6 +88,14 @@ div[data-orientation="vertical"] {
 .file-error-message {
   font-size: 12px;
   color: red;
+}
+
+.short-form-layout {
+  @apply min-w-[60%] flex flex-col gap-6;
+}
+
+.nextui-input-nomodal div[data-slot="input-wrapper"] {
+  @apply !bg-transparent !shadow-none !py-0;
 }
 
 @layer base {
