@@ -16,6 +16,8 @@ const validRoutes = {
   ajustes: true,
   personalizar: true,
   reglas: false,
+  create: false,
+  edit: false,
 };
 
 const mappingNamePath: Record<string, string> = {
@@ -23,6 +25,8 @@ const mappingNamePath: Record<string, string> = {
   "procesos-judiciales-administrativos": "Procesos Judiciales Administrativos",
   "procesos-judiciales-laborales": "Procesos Judiciales Laborales",
   "procesos-judiciales-penales": "Procesos Judiciales Penales",
+  create: "Nuevo",
+  edit: "Editar",
   ajustes: "Ajustes",
   personalizar: "Personalizar",
   reglas: "Reglas",
@@ -33,28 +37,45 @@ const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
     .split("/")
     .filter((path) => path !== "" && path !== "admin");
 
-  const breadsPath: BreadcrumbsPathState[] = breads.map((path, index) => {
+  return breads.map((path, index) => {
     const href = `/admin/${breads.slice(0, index + 1).join("/")}`;
+
+    let disabled = false;
+
+    if (validRoutes[path] === false) {
+      disabled = true;
+    }
+
+    let name = mappingNamePath[path] ?? path;
+
+    const idMatch = path.match(/^(\d+)$/); // Busca si el path es un número (ID)
+    if (idMatch) {
+      name = `Detalle para ${idMatch[1]}`; // Usar el ID en el nombre, ejemplo: "Detalle 1"
+    }
+
     return {
-      href,
-      name: mappingNamePath[path] ?? path,
-      disabled: !validRoutes[path] && index !== breads.length - 1,
+      href: disabled ? undefined : href,
+      name,
+      disabled: disabled,
     };
   });
-
-  return [...breadsPath];
 };
 
 const BreadcrumbsPath: FC<BreadcrumbsPathProps> = ({ pathname }) => {
+  console.log(generateBreadcrumbsPath(pathname));
+
   return (
     <Breadcrumbs size="lg">
       {generateBreadcrumbsPath(pathname).map((bread) => (
         <BreadcrumbItem
           key={bread.href}
           href={!bread.disabled ? bread.href : undefined}
+          onClick={(e) => {
+            if (bread.disabled) e.preventDefault();
+          }}
           className="capitalize"
           style={{
-            color: bread.disabled ? "gray" : "blue",
+            color: bread.disabled ? "red" : "blue",
             cursor: bread.disabled ? "not-allowed" : "pointer",
           }}
         >

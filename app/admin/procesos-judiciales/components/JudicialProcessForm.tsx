@@ -1,42 +1,31 @@
-import React, { FC } from "react";
-import ReactiveField from "@/components/form/ReactiveField";
 import judicialProcessSchema from "@/app/validations/create-judicial-process.validation";
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
-import FormDialog from "@/components/shared/form-dialog/FormDialog";
+import ReactiveField from "@/components/form/ReactiveField";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 import { MasterOptionConfig } from "@/config/master-option.config";
 import SectionAttributeFields from "@/components/shared/section-attribute-fields/SectionAttributeFields";
-import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
+import ReactiveForm from "@/components/form/ReactiveForm";
+import React, { FC } from "react";
+import { Button } from "@nextui-org/button";
 
-export interface JudicialProcessModalProps {
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-  onCloseChange: () => void;
-  title: string;
+interface JudicialProcessFormProps {
   handleSubmit?: (data: any) => void;
-  judicialProcess?: GetJudicialProcessDto;
+  initialValues?: any;
   pathname?: string;
 }
 
-const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
-  isOpen,
-  onCloseChange,
-  handleSubmit,
-  title,
-  judicialProcess,
+const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
+  initialValues,
   pathname,
+  handleSubmit,
 }) => {
   return (
-    <FormDialog
-      isOpen={isOpen}
-      onCloseChange={onCloseChange}
+    <ReactiveForm
       onSubmit={handleSubmit}
-      title={title}
       validationSchema={judicialProcessSchema}
-      initialValues={judicialProcess}
+      initialValues={initialValues}
     >
       {({ register, errors, touchedFields, control, isValid }) => (
-        <div className="grid grid-cols-12 gap-4 px-6">
+        <div className="grid grid-cols-12 gap-4">
           <ReactiveField
             isRequired={true}
             name="fileCode"
@@ -45,7 +34,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             control={control}
             errors={errors}
             touched={touchedFields.fileCode}
-            className="col-span-12"
+            className="col-span-12 nextui-input-nomodal"
           />
           <ReactiveField
             isRequired={true}
@@ -55,7 +44,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             control={control}
             errors={errors}
             touched={touchedFields.demanded}
-            className="col-span-4"
+            className="col-span-4 nextui-input-nomodal"
           />
           <ReactiveField
             isRequired={true}
@@ -65,7 +54,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             control={control}
             errors={errors}
             touched={touchedFields.plaintiff}
-            className="col-span-4"
+            className="col-span-4 nextui-input-nomodal"
           />
           <ReactiveField
             name="coDefendant"
@@ -73,13 +62,13 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             register={register}
             control={control}
             errors={errors}
-            className="col-span-4"
+            className="col-span-4 nextui-input-nomodal"
           />
           <DynamicAutocomplete
             isRequired={true}
             name="projectId"
             label="Proyectos"
-            className="col-span-6"
+            className="col-span-6 nextui-input-nomodal"
             slug={MasterOptionConfig.proyectos}
             control={control}
           />
@@ -87,7 +76,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             isRequired={true}
             name="cargoStudioId"
             label="Estudio a cargo"
-            className="col-span-6"
+            className="col-span-6 nextui-input-nomodal"
             slug={MasterOptionConfig.estudios}
             control={control}
           />
@@ -95,7 +84,7 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             isRequired={true}
             name="controversialMatter"
             label="Materia controvertida"
-            className="col-span-12"
+            className="col-span-12 nextui-input-nomodal"
             optionValue="name"
             slug={MasterOptionConfig.materia}
             control={control}
@@ -104,18 +93,19 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             pathname={pathname}
             register={register}
             control={control}
-            entityReference={judicialProcess?.entityReference}
+            entityReference={initialValues?.entityReference}
           />
-          {judicialProcess && (
-            <DynamicStepper
-              entityReference={judicialProcess?.entityReference}
-              className="col-span-12 mt-4"
-            />
-          )}
+          <Button
+            type="submit"
+            className="standard-btn text-white col-span-12 w-fit"
+            disabled={!isValid}
+          >
+            Guardar
+          </Button>
         </div>
       )}
-    </FormDialog>
+    </ReactiveForm>
   );
 };
 
-export default JudicialProcessModal;
+export default JudicialProcessForm;

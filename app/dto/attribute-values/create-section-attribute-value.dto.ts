@@ -1,6 +1,6 @@
 export interface CreateSectionAttributeValueGroup {
   attributes: any;
-  entityReference: number;
+  entityReference: string;
 }
 
 export interface CreateSectionAttributeValueDto {

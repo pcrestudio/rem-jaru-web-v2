@@ -19,7 +19,7 @@ import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
-  entityReference?: number;
+  entityReference?: string;
   touchedFields?: ReturnType<typeof useReactiveForm>["touchedFields"];
 }
 

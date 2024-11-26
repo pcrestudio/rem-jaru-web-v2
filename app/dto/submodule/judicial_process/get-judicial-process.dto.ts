@@ -8,4 +8,5 @@ export interface GetJudicialProcessDto {
   createdAt?: Date;
   updatedAt?: Date;
   id?: number;
+  entityReference?: string;
 }
