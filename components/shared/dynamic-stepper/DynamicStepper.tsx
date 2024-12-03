@@ -1,10 +1,16 @@
 import { GetInstanceDto } from "@/app/dto/instance/get-instance.dto";
 import Stepper from "@mui/material/Stepper";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Step, StepContent, StepLabel } from "@mui/material";
 import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
+import InstanceForm from "@/app/admin/procesos-judiciales/components/InstanceForm";
+import useStore from "@/lib/store";
+import {
+  QontoConnector,
+  QontoStepIcon,
+} from "@/components/shared/dynamic-stepper/DynamicStepperConnector/DynamicStepperConnector";
 
 interface DynamicStepperProps {
   entityReference?: string;
@@ -25,13 +31,30 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     data?.map(() => 0) || [],
   );
 
-  const handleStepClick = (stepIndex: number, isCompleted: boolean) => {
-    if (isCompleted) {
-      setActiveStep(stepIndex);
-    }
+  const { updateStepData, updateStepDataArray } = useStore();
+
+  const handleStepDataChange = (
+    stepId: number,
+    fieldName: string,
+    value: string,
+  ) => {
+    const newData = { [fieldName]: value, stepId, entityReference };
+
+    updateStepData(stepId, newData);
+    updateStepDataArray(stepId, newData);
   };
 
-  const handleInnerStepClick = (outerIndex: number, innerIndex: number) => {
+  const getInitialValuesForStep = (stepId: number) => {
+    const storeState = useStore.getState();
+
+    return storeState.stepData[stepId] || {};
+  };
+
+  const handleNextInstance = (stepIndex: number) => {
+    setActiveStep(stepIndex);
+  };
+
+  const handleNextInstanceStep = (outerIndex: number, innerIndex: number) => {
     setActiveInnerSteps((prev) => {
       const newInnerSteps = [...prev];
       newInnerSteps[outerIndex] = innerIndex;
@@ -39,23 +62,41 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     });
   };
 
+  useEffect(() => {
+    if (data) {
+      data.forEach(({ id, steps }) => {
+        steps.forEach((step) => {
+          const initialValues = step.stepData?.[0] || {};
+
+          updateStepData(step.id, {
+            ...initialValues,
+            stepId: step.id,
+            entityReference,
+          });
+
+          updateStepDataArray(step.id, {
+            ...initialValues,
+            stepId: step.id,
+            entityReference,
+          });
+        });
+      });
+    }
+  }, [data, entityReference, updateStepData]);
+
   return (
-    <Stepper activeStep={activeStep} alternativeLabel className={className}>
+    <Stepper
+      alternativeLabel
+      nonLinear
+      activeStep={activeStep}
+      className={className}
+      connector={<QontoConnector />}
+    >
       {data &&
         data.map(({ id, name, steps }, outerIndex) => {
-          const allStepsCompleted = steps.every(
-            (step) =>
-              step.stepData.length > 0 &&
-              step.stepData.every((data) => data.completed),
-          );
-
           return (
-            <Step
-              key={id}
-              onClick={() => handleStepClick(outerIndex, allStepsCompleted)}
-              completed={allStepsCompleted}
-            >
-              <StepLabel>
+            <Step key={id} onClick={() => handleNextInstance(outerIndex)}>
+              <StepLabel StepIconComponent={QontoStepIcon}>
                 {name}
                 {activeStep === outerIndex && (
                   <Stepper
@@ -64,24 +105,29 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
                     activeStep={activeInnerSteps[outerIndex] || 0}
                   >
                     {steps.map((step, innerIndex) => {
-                      const stepCompleted =
-                        step.stepData.length > 0 &&
-                        step.stepData.every((data) => data.completed);
-
                       return (
                         <Step
                           key={`${step.id}-step`}
                           onClick={() =>
-                            handleInnerStepClick(outerIndex, innerIndex)
+                            handleNextInstanceStep(outerIndex, innerIndex)
                           }
-                          completed={stepCompleted}
                           style={{
                             cursor: "pointer",
                           }}
                         >
-                          <StepLabel>{step.name}</StepLabel>
+                          <StepLabel StepIconComponent={QontoStepIcon}>
+                            {step.name}
+                          </StepLabel>
                           <StepContent>
-                            <p>hola mundo</p>
+                            <InstanceForm
+                              step={step}
+                              onChange={handleStepDataChange}
+                              initialValues={
+                                step.stepData.length > 0
+                                  ? step.stepData[0]
+                                  : getInitialValuesForStep(step?.id)
+                              }
+                            />
                           </StepContent>
                         </Step>
                       );
@@ -97,8 +143,3 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
 };
 
 export default DynamicStepper;
-
-/*
- * <StepContent className="border border-red-700"></StepContent>
- *
- * */

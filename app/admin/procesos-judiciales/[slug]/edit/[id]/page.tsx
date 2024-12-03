@@ -12,6 +12,9 @@ import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import useStore from "@/lib/store";
+import { upsertInstanceStepData } from "@/app/api/instances/instances";
+import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -22,6 +25,8 @@ export default function ProcesosJudicialesSlugEdit() {
     `${environment.baseUrl}/judicial_processes/${id}`,
     fetcher,
   );
+
+  const { stepDataArray } = useStore();
 
   const onSubmit = async (payload: EditJudicialProcessDto) => {
     const customFields = getSectionAttributesSlug(payload);
@@ -35,6 +40,14 @@ export default function ProcesosJudicialesSlugEdit() {
     );
 
     if (data) {
+      const instanceResponse = await upsertInstanceStepData({
+        stepData: stepDataArray as InstanceStepDataDto[],
+      });
+
+      if (instanceResponse.data) {
+        toast.success("Instancias modificadas con éxito");
+      }
+
       if (customFields.length > 0) {
         const response = await createSectionAttributeValue({
           attributes: customFields,
@@ -58,7 +71,7 @@ export default function ProcesosJudicialesSlugEdit() {
       <BreadcrumbsPath pathname={pathname} />
       <JudicialProcessForm
         handleSubmit={onSubmit}
-        initialValues={data}
+        judicialProcess={data}
         pathname={pathname}
       />
     </div>

@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Input } from "@nextui-org/input";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, set } from "react-hook-form";
 
 export interface ReactiveFieldProps {
   name?: string;
@@ -15,6 +15,7 @@ export interface ReactiveFieldProps {
   className?: string;
   control?: Control<any>;
   disabled?: boolean;
+  onBlur?: (value: any) => void;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({
@@ -27,6 +28,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   touched,
   className,
   control,
+  onBlur,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
@@ -36,18 +38,29 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
         name={name}
         control={control}
         defaultValue={defaultValue}
-        render={({ field }) => (
-          <Input
-            isRequired={isRequired}
-            label={label}
-            {...field}
-            type={type}
-            isInvalid={!!errors[name] && touched}
-            errorMessage={errorMessage}
-            className={className}
-            defaultValue={defaultValue}
-          />
-        )}
+        render={({ field }) => {
+          const handleBlur = (e: any) => {
+            if (onBlur && field?.value !== undefined) {
+              onBlur(field.value);
+            }
+            field.onBlur();
+          };
+
+          return (
+            <Input
+              {...field}
+              isRequired={isRequired}
+              label={label}
+              type={type}
+              isInvalid={!!errors[name] && touched}
+              errorMessage={errorMessage}
+              className={className}
+              value={field.value || ""}
+              onBlur={handleBlur}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          );
+        }}
       />
     </>
   );

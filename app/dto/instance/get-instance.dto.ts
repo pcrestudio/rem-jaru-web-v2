@@ -25,11 +25,11 @@ export interface GetStepDto {
 }
 
 export interface GetStepDataDto {
-  id: number;
   comments: string;
-  file: string;
-  stepId: number;
-  entityReference: string;
-  entityId: string;
-  completed: boolean;
+  id?: number;
+  stepId?: number;
+  entityReference?: string;
+  entityId?: string;
+  completed?: boolean;
+  file?: string;
 }
