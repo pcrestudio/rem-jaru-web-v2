@@ -6,15 +6,17 @@ import SectionAttributeFields from "@/components/shared/section-attribute-fields
 import ReactiveForm from "@/components/form/ReactiveForm";
 import React, { FC } from "react";
 import { Button } from "@nextui-org/button";
+import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any) => void;
-  initialValues?: any;
+  judicialProcess?: GetJudicialProcessDto;
   pathname?: string;
 }
 
 const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
-  initialValues,
+  judicialProcess,
   pathname,
   handleSubmit,
 }) => {
@@ -22,9 +24,9 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
     <ReactiveForm
       onSubmit={handleSubmit}
       validationSchema={judicialProcessSchema}
-      initialValues={initialValues}
+      initialValues={judicialProcess}
     >
-      {({ register, errors, touchedFields, control, isValid }) => (
+      {({ register, errors, touchedFields, control, isValid, reset }) => (
         <div className="grid grid-cols-12 gap-4">
           <ReactiveField
             isRequired={true}
@@ -89,18 +91,30 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             slug={MasterOptionConfig.materia}
             control={control}
           />
-          <SectionAttributeFields
-            pathname={pathname}
-            register={register}
-            control={control}
-            entityReference={initialValues?.entityReference}
-          />
+          {judicialProcess && judicialProcess?.entityReference && (
+            <>
+              <SectionAttributeFields
+                pathname={pathname}
+                register={register}
+                control={control}
+                entityReference={judicialProcess?.entityReference}
+              />
+              <div className="col-span-12 mt-4">
+                <DynamicStepper
+                  entityReference={judicialProcess?.entityReference}
+                />
+              </div>
+            </>
+          )}
+
           <Button
             type="submit"
             className="standard-btn text-white col-span-12 w-fit"
             disabled={!isValid}
           >
-            Guardar
+            {judicialProcess && judicialProcess.entityReference
+              ? "Guardar y continuar"
+              : "Guardar"}
           </Button>
         </div>
       )}

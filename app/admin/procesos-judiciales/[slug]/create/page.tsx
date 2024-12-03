@@ -9,7 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ProcesosJudicialesSlugCreate() {
   const pathname: string = usePathname();
@@ -42,12 +42,12 @@ export default function ProcesosJudicialesSlugCreate() {
     );
 
     if (data) {
-      setJudicialProcessId(data["id"]);
+      setJudicialProcessId(Number(data["result"]["id"]));
 
       if (customFields.length > 0) {
         const response = await createSectionAttributeValue({
           attributes: customFields,
-          entityReference: judicialProcessId.toString(),
+          entityReference: data["result"]["entityReference"],
         });
 
         if (response.data) {
@@ -63,6 +63,14 @@ export default function ProcesosJudicialesSlugCreate() {
     return data;
   };
 
+  useEffect(() => {
+    if (judicialProcessId !== null) {
+      console.log(judicialProcessId);
+
+      return;
+    }
+  }, [judicialProcessId]);
+
   return (
     <div className="short-form-layout">
       <h1 className="text-2xl font-bold">Nuevo Proceso Judicial</h1>
@@ -76,11 +84,7 @@ export default function ProcesosJudicialesSlugCreate() {
         onConfirm={redirectToEdit}
       />
       <BreadcrumbsPath pathname={pathname} />
-      <JudicialProcessForm
-        handleSubmit={onSubmit}
-        initialValues={{}}
-        pathname={pathname}
-      />
+      <JudicialProcessForm handleSubmit={onSubmit} pathname={pathname} />
     </div>
   );
 }

@@ -62,13 +62,11 @@ const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
 };
 
 const BreadcrumbsPath: FC<BreadcrumbsPathProps> = ({ pathname }) => {
-  console.log(generateBreadcrumbsPath(pathname));
-
   return (
     <Breadcrumbs size="lg">
       {generateBreadcrumbsPath(pathname).map((bread) => (
         <BreadcrumbItem
-          key={bread.href}
+          key={`${bread.href}-yes`}
           href={!bread.disabled ? bread.href : undefined}
           onClick={(e) => {
             if (bread.disabled) e.preventDefault();

@@ -3,10 +3,7 @@ import { environment } from "@/environment/environment";
 import api from "@/config/axios.config";
 import { CreateSectionAttributeOptionDto } from "@/app/dto/attribute-values/create-section-attribute-option.dto";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
-import {
-  CreateSectionAttributeValueDto,
-  CreateSectionAttributeValueGroup,
-} from "@/app/dto/attribute-values/create-section-attribute-value.dto";
+import { CreateSectionAttributeValueGroup } from "@/app/dto/attribute-values/create-section-attribute-value.dto";
 import { CreateAttributeRuleDto } from "@/app/dto/attribute-values/create-attribute-rule.dto";
 
 const apiUrl: string = `${environment.baseUrl}/extended`;
