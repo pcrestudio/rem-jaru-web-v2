@@ -107,10 +107,11 @@ const JudicialProcessModal: FC<JudicialProcessModalProps> = ({
             entityReference={judicialProcess?.entityReference}
           />
           {judicialProcess && (
-            <DynamicStepper
-              entityReference={judicialProcess?.entityReference}
-              className="col-span-12 mt-4"
-            />
+            <div className="col-span-12 mt-4">
+              <DynamicStepper
+                entityReference={judicialProcess?.entityReference}
+              />
+            </div>
           )}
         </div>
       )}

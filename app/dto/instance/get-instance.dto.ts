@@ -31,5 +31,6 @@ export interface GetStepDataDto {
   entityReference?: string;
   entityId?: string;
   completed?: boolean;
+  todos: any;
   file?: string;
 }

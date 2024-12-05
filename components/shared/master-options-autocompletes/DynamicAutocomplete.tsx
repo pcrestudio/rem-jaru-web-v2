@@ -61,6 +61,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
               {...params}
               required={isRequired}
               variant="filled"
+              className="nextui-input"
               size="medium"
               label={label}
               error={!!error}

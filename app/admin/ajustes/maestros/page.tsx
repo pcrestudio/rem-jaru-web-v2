@@ -33,7 +33,7 @@ export default function Maestros() {
             <AccordionItem
               key={master.id}
               aria-label={`Accordion ${master.id}`}
-              title={master.module.name}
+              title={master.module ? master.module.name : "General"}
             >
               <Accordion
                 variant="splitted"

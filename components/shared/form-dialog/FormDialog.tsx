@@ -20,13 +20,14 @@ const FormDialog: FC<FormDialogProps> = ({
   title,
   isOpen,
   onCloseChange,
+  stopEventPropagation = false,
+  formId,
   buttonSubmitTitle = "Guardar",
 }) => {
   return (
     <Dialog
       open={isOpen}
       fullWidth
-      onClose={onCloseChange}
       PaperProps={{
         className: "!rounded-2xl",
       }}
@@ -35,9 +36,11 @@ const FormDialog: FC<FormDialogProps> = ({
         {title}
       </DialogTitle>
       <ReactiveForm
-        onSubmit={(values, reset) => onSubmit(values, reset)}
+        onSubmit={(values, reset, event) => onSubmit(values, reset, event)}
         validationSchema={validationSchema}
         initialValues={initialValues}
+        stopEventPropagation={stopEventPropagation}
+        formId={formId}
         options={{
           mode: "onTouched",
         }}

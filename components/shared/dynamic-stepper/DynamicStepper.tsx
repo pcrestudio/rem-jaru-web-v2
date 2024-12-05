@@ -85,60 +85,62 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   }, [data, entityReference, updateStepData]);
 
   return (
-    <Stepper
-      alternativeLabel
-      nonLinear
-      activeStep={activeStep}
-      className={className}
-      connector={<QontoConnector />}
-    >
-      {data &&
-        data.map(({ id, name, steps }, outerIndex) => {
-          return (
-            <Step key={id} onClick={() => handleNextInstance(outerIndex)}>
-              <StepLabel StepIconComponent={QontoStepIcon}>
-                {name}
-                {activeStep === outerIndex && (
-                  <Stepper
-                    className="mt-4"
-                    orientation="vertical"
-                    activeStep={activeInnerSteps[outerIndex] || 0}
-                  >
-                    {steps.map((step, innerIndex) => {
-                      return (
-                        <Step
-                          key={`${step.id}-step`}
-                          onClick={() =>
-                            handleNextInstanceStep(outerIndex, innerIndex)
-                          }
-                          style={{
-                            cursor: "pointer",
-                          }}
-                        >
-                          <StepLabel StepIconComponent={QontoStepIcon}>
-                            {step.name}
-                          </StepLabel>
-                          <StepContent>
-                            <InstanceForm
-                              step={step}
-                              onChange={handleStepDataChange}
-                              initialValues={
-                                step.stepData.length > 0
-                                  ? step.stepData[0]
-                                  : getInitialValuesForStep(step?.id)
-                              }
-                            />
-                          </StepContent>
-                        </Step>
-                      );
-                    })}
-                  </Stepper>
-                )}
-              </StepLabel>
-            </Step>
-          );
-        })}
-    </Stepper>
+    <div className={`dynamic-stepper ${className || ""}`}>
+      {/* Stepper Horizontal */}
+      <div className="horizontal-stepper">
+        <Stepper
+          alternativeLabel
+          nonLinear
+          activeStep={activeStep}
+          connector={<QontoConnector />}
+        >
+          {data &&
+            data.map(({ id, name }, outerIndex) => (
+              <Step key={id} onClick={() => handleNextInstance(outerIndex)}>
+                <StepLabel StepIconComponent={QontoStepIcon}>{name}</StepLabel>
+              </Step>
+            ))}
+        </Stepper>
+      </div>
+
+      <div className="vertical-stepper-container">
+        {data && data[activeStep] && (
+          <Stepper
+            className="vertical-stepper mt-4"
+            orientation="vertical"
+            activeStep={activeInnerSteps[activeStep] || 0}
+          >
+            {data[activeStep].steps.map((step, innerIndex) => (
+              <Step
+                key={`${step.id}-step`}
+                onClick={() => handleNextInstanceStep(activeStep, innerIndex)}
+              >
+                <StepLabel StepIconComponent={QontoStepIcon}>
+                  {step.name}
+                </StepLabel>
+                <StepContent
+                  sx={{
+                    paddingTop: 4,
+                  }}
+                >
+                  <InstanceForm
+                    step={step}
+                    onChange={handleStepDataChange}
+                    initialValues={
+                      step.stepData.length > 0
+                        ? step.stepData[0]
+                        : getInitialValuesForStep(step.id)
+                    }
+                    entityReference={step.stepData[0]?.entityId}
+                    stepDataId={step.stepData[0]?.id}
+                  />
+                </StepContent>
+              </Step>
+            ))}
+          </Stepper>
+        )}
+      </div>
+    </div>
   );
 };
 
