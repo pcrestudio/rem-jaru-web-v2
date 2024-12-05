@@ -44,9 +44,7 @@ div[data-orientation="vertical"] {
 }
 
 .file-label {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  @apply text-sm text-foreground;
 }
 
 .custom-file-wrapper {
@@ -72,7 +70,7 @@ div[data-orientation="vertical"] {
 }
 
 .custom-file-button {
-  background-color: #007bff;
+  @apply bg-cerulean-900;
   color: white;
   border: none;
   border-radius: 5px;
@@ -82,7 +80,7 @@ div[data-orientation="vertical"] {
 }
 
 .custom-file-button:hover {
-  background-color: #0056b3;
+  @apply hover:bg-cerulean-hover;
 }
 
 .file-error-message {
@@ -96,6 +94,26 @@ div[data-orientation="vertical"] {
 
 .nextui-input-nomodal div[data-slot="input-wrapper"] {
   @apply !bg-transparent !shadow-none !py-0;
+}
+
+.dynamic-stepper {
+  display: flex;
+  flex-direction: column;
+}
+
+.horizontal-stepper {
+  width: 100%; /* Mantén el ancho del horizontal independiente */
+  flex-shrink: 0; /* Evita que el contenido lo haga crecer */
+}
+
+.vertical-stepper-container {
+  margin-top: 1rem;
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.vertical-stepper {
+  width: 100%;
 }
 
 @layer base {

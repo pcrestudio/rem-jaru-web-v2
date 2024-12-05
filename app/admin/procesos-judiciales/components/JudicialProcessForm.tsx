@@ -10,7 +10,7 @@ import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-
 import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
 
 interface JudicialProcessFormProps {
-  handleSubmit?: (data: any) => void;
+  handleSubmit?: (data: any, reset: any, event: any) => void;
   judicialProcess?: GetJudicialProcessDto;
   pathname?: string;
 }
@@ -25,6 +25,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
       onSubmit={handleSubmit}
       validationSchema={judicialProcessSchema}
       initialValues={judicialProcess}
+      formId="judicial-process-edit"
     >
       {({ register, errors, touchedFields, control, isValid, reset }) => (
         <div className="grid grid-cols-12 gap-4">

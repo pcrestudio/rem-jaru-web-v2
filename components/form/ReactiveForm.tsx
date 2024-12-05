@@ -9,7 +9,7 @@ export interface FormValues {
 }
 
 export interface ReactiveFormProps {
-  onSubmit: (values: FormValues, reset: () => void) => void;
+  onSubmit: (values: FormValues, reset: () => void, event: any) => void;
   validationSchema: Yup.ObjectSchema<any>;
   initialValues?: any;
   children?: (props: {
@@ -21,6 +21,8 @@ export interface ReactiveFormProps {
     reset: ReturnType<typeof useReactiveForm>["reset"];
   }) => ReactNode;
   options?: any;
+  stopEventPropagation?: boolean;
+  formId?: string;
 }
 
 const ReactiveForm: FC<ReactiveFormProps> = ({
@@ -29,6 +31,8 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
   children,
   options,
   initialValues,
+  stopEventPropagation = false,
+  formId,
 }) => {
   const {
     register,
@@ -43,8 +47,15 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     ...options,
   });
 
-  const handleFormSubmit = (values: FormValues) => {
-    onSubmit(values, reset);
+  const handleFormSubmit = (
+    values: FormValues,
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
+    if (stopEventPropagation) {
+      event.stopPropagation();
+      event.stopPropagation();
+    }
+    onSubmit(values, reset, event);
   };
 
   useEffect(() => {
@@ -54,7 +65,12 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
   }, [initialValues, reset]);
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)}>
+    <form
+      id={formId}
+      onSubmit={handleSubmit((values, event) =>
+        handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>),
+      )}
+    >
       {children({
         errors,
         register,

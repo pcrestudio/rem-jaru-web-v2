@@ -28,41 +28,43 @@ export default function ProcesosJudicialesSlugEdit() {
 
   const { stepDataArray } = useStore();
 
-  const onSubmit = async (payload: EditJudicialProcessDto) => {
-    const customFields = getSectionAttributesSlug(payload);
+  const onSubmit = async (payload: EditJudicialProcessDto, reset, event) => {
+    if (event.target.id === "judicial-process-edit") {
+      const customFields = getSectionAttributesSlug(payload);
 
-    const { data } = await editJudicialProcess(
-      {
-        ...payload,
-        id: Number(id),
-      },
-      slug,
-    );
+      const { data } = await editJudicialProcess(
+        {
+          ...payload,
+          id: Number(id),
+        },
+        slug,
+      );
 
-    if (data) {
-      const instanceResponse = await upsertInstanceStepData({
-        stepData: stepDataArray as InstanceStepDataDto[],
-      });
-
-      if (instanceResponse.data) {
-        toast.success("Instancias modificadas con éxito");
-      }
-
-      if (customFields.length > 0) {
-        const response = await createSectionAttributeValue({
-          attributes: customFields,
-          entityReference: data?.entityReference,
+      if (data) {
+        const instanceResponse = await upsertInstanceStepData({
+          stepData: stepDataArray as InstanceStepDataDto[],
         });
 
-        if (response.data) {
+        if (instanceResponse.data) {
+          toast.success("Instancias modificadas con éxito");
+        }
+
+        if (customFields.length > 0) {
+          const response = await createSectionAttributeValue({
+            attributes: customFields,
+            entityReference: data?.entityReference,
+          });
+
+          if (response.data) {
+            toast.success("Expediente modificado con éxito");
+          }
+        } else {
           toast.success("Expediente modificado con éxito");
         }
-      } else {
-        toast.success("Expediente modificado con éxito");
       }
-    }
 
-    return data;
+      return data;
+    }
   };
 
   return (
