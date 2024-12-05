@@ -9,7 +9,7 @@ export interface FormValues {
 }
 
 export interface ReactiveFormProps {
-  onSubmit: (values: FormValues, reset: () => void, event: any) => void;
+  onSubmit: (values: FormValues, reset: () => void, event?: any) => void;
   validationSchema: Yup.ObjectSchema<any>;
   initialValues?: any;
   children?: (props: {

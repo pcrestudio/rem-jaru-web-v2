@@ -56,7 +56,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
   return (
     <div className="grid grid-cols-12 gap-6">
       <div className={`col-span-12 custom-file-container`}>
-        <label className="file-label self-start text-foreground">
+        <label className="file-label self-start text-foreground" htmlFor="file">
           Documento
         </label>
 
