@@ -16,6 +16,7 @@ import { autocompleteStyle } from "@/theme/autocompleteStyle";
 export interface DynamicAutocompleteProps extends ReactiveFieldProps {
   slug: string;
   optionValue?: string;
+  noModal?: boolean;
 }
 
 const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
@@ -26,6 +27,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
   isRequired,
   slug,
   optionValue = "id",
+  noModal,
 }) => {
   const { data } = useSWR<GetMasterOptionAutoComplete[]>(
     `${environment.baseUrl}/masters/options/autocomplete`,
@@ -61,7 +63,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
               {...params}
               required={isRequired}
               variant="filled"
-              className="nextui-input"
+              className={noModal ? "nextui-input" : ""}
               size="medium"
               label={label}
               error={!!error}

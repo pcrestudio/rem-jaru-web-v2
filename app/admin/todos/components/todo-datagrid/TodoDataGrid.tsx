@@ -4,36 +4,23 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import React, { FC, useState } from "react";
-import { todoInstanceColumns } from "@/app/admin/todos/components/todo-datagrid/columns/todoInstanceColumns";
 import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalForm";
-import { createPortal } from "react-dom";
-import useStore from "@/lib/store";
 import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { upsertTodo } from "@/app/api/todo/todo";
 import { Tooltip } from "@nextui-org/react";
-import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
+import { EditIcon } from "@nextui-org/shared-icons";
 import toast from "react-hot-toast";
 import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
-import { it } from "node:test";
+import { todoColumns } from "@/app/admin/todos/components/todo-datagrid/columns/todoColumns";
 
-interface TodoDataGridProps {
-  stepDataId: number;
-  stepId: number;
-  entityReference?: string;
-}
+interface TodoDataGridProps {}
 
-const TodoDataGrid: FC<TodoDataGridProps> = ({
-  entityReference,
-  stepDataId,
-  stepId,
-}) => {
+const TodoDataGrid: FC<TodoDataGridProps> = () => {
   const { data } = useSWR<GetTodosInstanceDto[]>(
-    `${environment.baseUrl}/todos/instance?entityReference=${entityReference}`,
+    `${environment.baseUrl}/todos`,
     fetcher,
   );
   const [todo, setTodo] = useState<GetTodoDto>(null);
-  let { updateStepTodos, updateStepDataArray, stepTodos } = useStore();
-
   const [open, setOpen] = useState<boolean>(false);
 
   const selectTodo = (todo: GetTodoDto) => {
@@ -46,6 +33,15 @@ const TodoDataGrid: FC<TodoDataGridProps> = ({
       const cellValue = item[columnKey];
 
       switch (columnKey) {
+        case "module":
+          return item.detail.submodule.module.name;
+
+        case "submodule":
+          return item.detail.submodule.name;
+
+        case "responsible":
+          return `${item.responsible.firstName} ${item.responsible.lastName}`;
+
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
@@ -69,55 +65,39 @@ const TodoDataGrid: FC<TodoDataGridProps> = ({
   );
 
   const onSubmit = async (payload: UpsertTodoDto) => {
-    updateStepTodos(payload.title, stepDataId, entityReference, payload);
+    const { data } = await upsertTodo({
+      title: payload.title,
+      description: payload.description,
+      entityReference: todo.entityReference,
+      todoStateId: Number(payload.todoStateId),
+      responsibleId: Number(payload.responsibleId),
+      id: todo ? todo.id : 0,
+    });
 
-    if (stepDataId) {
-      const { data } = await upsertTodo({
-        title: payload.title,
-        description: payload.description,
-        entityReference: entityReference,
-        todoStateId: Number(payload.todoStateId),
-        responsibleId: Number(payload.responsibleId),
-        id: todo ? todo.id : 0,
-      });
-
-      if (data) {
-        toast.success("Todo agregado con éxito");
-        return setOpen(false);
-      }
-    } else {
-      return updateStepDataArray(stepId, { todos: stepTodos });
+    if (data) {
+      toast.success("Todo modificado con éxito");
+      return setOpen(false);
     }
   };
 
   return (
     <>
-      {createPortal(
-        <TodoModal
-          stepDataId={stepDataId}
-          isOpen={open}
-          handleSubmit={onSubmit}
-          onCloseChange={() => setOpen(false)}
-          title="Todo"
-          todo={todo}
-        />,
-        document.body,
-      )}
+      <TodoModal
+        isOpen={open}
+        handleSubmit={onSubmit}
+        onCloseChange={() => setOpen(false)}
+        title="Todo"
+        todo={todo}
+      />
 
-      <div className="col-span-12 flex flex-col gap-4">
-        <p className="text-foreground text-sm">Todos</p>
-
-        <CustomDataGrid<GetTodosInstanceDto>
-          columns={todoInstanceColumns}
-          dataGridKey="id"
-          items={data ?? []}
-          cells={renderCell}
-          emptyContent="Sin tareas por completar."
-          onAddChange={() => setOpen(true)}
-          hasAddButton
-          addButtonText="Nuevo todo"
-        />
-      </div>
+      <CustomDataGrid<GetTodosInstanceDto>
+        columns={todoColumns}
+        dataGridKey="id"
+        items={data ?? []}
+        cells={renderCell}
+        emptyContent="Sin tareas por completar."
+        onAddChange={() => setOpen(true)}
+      />
     </>
   );
 };

@@ -1,5 +1,4 @@
 import {
-  getKeyValue,
   Table,
   TableBody,
   TableCell,
@@ -35,7 +34,7 @@ const CustomDataGrid = <T extends object>({
   const topContent = React.useMemo(() => {
     return (
       hasAddButton && (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-1">
           <div className="flex justify-between gap-3 items-end">
             <p></p>
             <Button
@@ -56,8 +55,7 @@ const CustomDataGrid = <T extends object>({
       className="col-span-12"
       topContent={topContent}
       classNames={{
-        wrapper:
-          "min-h-[222px] bg-transparent shadow-none border border-slate-200",
+        wrapper: "bg-white shadow-none border border-slate-200",
       }}
     >
       <TableHeader columns={columns}>
