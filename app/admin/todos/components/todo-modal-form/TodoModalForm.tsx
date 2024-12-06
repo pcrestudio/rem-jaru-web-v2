@@ -11,10 +11,10 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 
 export interface TodoModalProps {
-  stepDataId: number;
   isOpen: boolean;
   onCloseChange: () => void;
   title: string;
+  stepDataId?: number;
   handleSubmit?: (data: any) => void;
   todo?: GetTodoDto;
   stopEventPropagation?: boolean;
@@ -26,7 +26,6 @@ const TodoModal: FC<TodoModalProps> = ({
   handleSubmit,
   title,
   todo,
-  stepDataId,
   stopEventPropagation = true,
 }) => {
   const { data } = useSWR<any>(`${environment.baseUrl}/auth/users`, fetcher);
@@ -83,10 +82,11 @@ const TodoModal: FC<TodoModalProps> = ({
           <DynamicAutocomplete
             isRequired={true}
             name="todoStateId"
-            label="Proyectos"
+            label="Estado"
             className="col-span-6"
             slug={MasterOptionConfig.todoEstados}
             control={control}
+            noModal
           />
         </div>
       )}

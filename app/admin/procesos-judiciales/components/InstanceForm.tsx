@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import { Textarea } from "@nextui-org/input";
-import TodoDataGrid from "@/app/admin/todos/components/todo-datagrid/TodoDataGrid";
+import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";
 
 interface InstanceFormProps {
   onChange: (stepId: number, fieldName: string, value: any) => void;
@@ -61,7 +61,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
         </label>
 
         <div
-          className="custom-file-wrapper"
+          className="custom-file-wrapper !bg-white"
           onClick={handleClick}
           role="presentation"
         >
@@ -83,7 +83,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
         />
       </div>
 
-      <TodoDataGrid
+      <TodoStepDataGrid
         stepDataId={stepDataId}
         stepId={step.id}
         entityReference={entityReference}
@@ -93,7 +93,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
         onChange={handleInputChange}
         label="Comentarios"
         name="comments"
-        className="col-span-12"
+        className="col-span-12 nextui-textarea-nomodal"
         value={formData.comments || ""}
       />
     </div>

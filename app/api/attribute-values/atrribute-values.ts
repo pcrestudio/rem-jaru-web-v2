@@ -5,6 +5,7 @@ import { CreateSectionAttributeOptionDto } from "@/app/dto/attribute-values/crea
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
 import { CreateSectionAttributeValueGroup } from "@/app/dto/attribute-values/create-section-attribute-value.dto";
 import { CreateAttributeRuleDto } from "@/app/dto/attribute-values/create-attribute-rule.dto";
+import { DataType } from "@/app/dto/attribute-values/get-section-attributes.dto";
 
 const apiUrl: string = `${environment.baseUrl}/extended`;
 
@@ -38,7 +39,24 @@ export async function editSectionAttributeOption(
 export async function createSectionAttributeValue(
   sectionAttributeValue: CreateSectionAttributeValueGroup,
 ) {
-  return api.post(`${apiUrl}/attribute/values`, sectionAttributeValue, {
+  const formData = new FormData();
+
+  formData.append(
+    "attributes",
+    JSON.stringify(sectionAttributeValue.attributes),
+  );
+
+  sectionAttributeValue.attributes.forEach((item: any) => {
+    if (item.type === "FILE" && item.value instanceof File) {
+      formData.append(item.attributeSlug, item.value);
+    } else {
+      formData.append(item.attributeSlug, item.value);
+    }
+  });
+
+  formData.append("entityReference", sectionAttributeValue.entityReference);
+
+  return api.post(`${apiUrl}/attribute/values`, formData, {
     headers: {
       contentType: "multipart/form-data",
     },

@@ -65,8 +65,6 @@ export default function ProcesosJudicialesSlugCreate() {
 
   useEffect(() => {
     if (judicialProcessId !== null) {
-      console.log(judicialProcessId);
-
       return;
     }
   }, [judicialProcessId]);

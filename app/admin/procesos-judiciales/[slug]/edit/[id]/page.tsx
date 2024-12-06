@@ -1,7 +1,7 @@
 "use client";
 
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
 import { editJudicialProcess } from "@/app/api/judicial-process/judicial-process";
@@ -28,7 +28,11 @@ export default function ProcesosJudicialesSlugEdit() {
 
   const { stepDataArray } = useStore();
 
-  const onSubmit = async (payload: EditJudicialProcessDto, reset, event) => {
+  const onSubmit = async (
+    payload: EditJudicialProcessDto,
+    _: any,
+    event: any,
+  ) => {
     if (event.target.id === "judicial-process-edit") {
       const customFields = getSectionAttributesSlug(payload);
 

@@ -18,9 +18,17 @@ const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setSelectedFile(file ? file.name : null);
+  const handleFileChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    onChange: any,
+  ) => {
+    const { files } = e.target;
+
+    if (files && files.length > 0) {
+      const file = files[0];
+      setSelectedFile(file.name);
+      onChange(file);
+    }
   };
 
   const handleClick = () => {
@@ -44,7 +52,7 @@ const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
             role="presentation"
           >
             <span className="custom-file-text">
-              {selectedFile || "Seleccionar archivo"}
+              {selectedFile || defaultValue || "Seleccionar archivo"}
             </span>
             <button type="button" className="custom-file-button">
               Examinar
@@ -53,12 +61,10 @@ const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
 
           <input
             type="file"
-            id={name}
+            name={name}
+            accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
             ref={inputRef}
-            onChange={(e) => {
-              handleFileChange(e);
-              field.onChange(e.target.files);
-            }}
+            onChange={(e) => handleFileChange(e, field.onChange)}
             style={{ display: "none" }}
           />
 

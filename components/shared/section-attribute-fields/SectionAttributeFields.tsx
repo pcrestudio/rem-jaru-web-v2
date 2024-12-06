@@ -122,7 +122,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               )}
                               defaultValue={attribute.values[0]?.value ?? ""}
                               control={control}
-                            ></ReactiveFieldFile>
+                            />
                           )}
 
                           {attribute.dataType === DataType.INTEGER && (

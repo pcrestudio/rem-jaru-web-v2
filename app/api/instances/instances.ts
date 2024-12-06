@@ -25,7 +25,10 @@ export async function upsertInstanceStepData(
     }
 
     if (stepData.todos && stepData.todos.length > 0) {
-      formData.append(`stepData[${index}][todos]`, stepData.todos);
+      formData.append(
+        `stepData[${index}][todos]`,
+        JSON.stringify(stepData.todos),
+      );
     }
   });
 
