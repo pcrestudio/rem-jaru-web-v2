@@ -180,7 +180,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
               endIcon={<AiOutlinePlus />}
               onClick={onOpenChange}
             >
-              Agregar otra opción
+              Agregar opción
             </Button>
           </div>
         }

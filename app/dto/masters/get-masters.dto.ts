@@ -11,3 +11,7 @@ export interface GetMastersDto {
   id?: number;
   isActive?: number;
 }
+
+export interface GetGroupedMastersDto {
+  [moduleName: string]: GetMastersDto[];
+}
