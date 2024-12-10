@@ -11,7 +11,6 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <AppBar user={data?.user} />
       <SWRConfig
         value={{
           refreshInterval: 3000,
@@ -20,10 +19,11 @@ export default function Layout({ children }: { children: ReactNode }) {
         }}
       >
         <JaruProvider>
-          <main className="flex overflow-hidden items-stretch flex-1 bg-cerulean-50/[.45]">
+          <main className="flex overflow-hidden items-stretch flex-1 bg-jaruColor-white">
             <Sidebar user={data?.user} />
             <section className="flex-1 flex flex-col items-stretch min-w-0">
-              <div className="flex-1 flex flex-col overflow-auto p-10">
+              <AppBar user={data?.user} />
+              <div className="flex-1 flex flex-col overflow-auto p-6">
                 {children}
               </div>
             </section>

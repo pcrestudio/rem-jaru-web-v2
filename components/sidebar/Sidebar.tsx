@@ -1,12 +1,13 @@
 "use client";
 
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
-import { menuOptions } from "@/config/menu-options";
+import { grouped, MenuOptions } from "@/config/menu-options";
 import { User } from "next-auth";
 import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { validatePathname } from "@/utils/validate_pathname";
+import AppBarUser from "@/components/appbar/AppBarUser";
 
 export interface SidebarProps {
   user: User;
@@ -51,7 +52,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
 
   return (
     <aside
-      className={`${minWidth} sidebar-transition bg-cerulean-950 px-8 py-4 border border-b-gray-500 h-screen border-l-0 border-r-0 border-t-gray-500 flex relative transition-all`}
+      className={`${minWidth} sidebar-transition bg-cerulean-950 px-8 py-4 h-screen flex relative transition-all`}
     >
       <div
         className="bg-cerulean-50 shadow-inner rounded-full absolute -right-3 top-2 flex items-center justify-center p-2 cursor-pointer"
@@ -60,21 +61,47 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       >
         <AiOutlineArrowsAlt size={16} className="text-black" />
       </div>
-      <Listbox aria-label="Actions" className="[&_ul]:gap-6">
-        {menuOptions.map(
-          ({ title, Icon, role, redirectTo, isMultiple }, index) =>
-            role.includes(user?.role) && (
-              <ListboxItem
-                key={index}
-                className={`${isCollapsed ? "flex-col" : "flex-row"} text-white ${validatePathname(pathname, redirectTo) ? "bg-cerulean-500 text-white" : "data-[hover=true]:bg-transparent"} data-[hover=true]:bg-cerulean-500 data-[hover=true]:text-white`}
-                startContent={<Icon />}
-                href={redirectTo}
-              >
-                <p className="text-base">{title}</p>
-              </ListboxItem>
+      <div className="flex flex-col gap-6 w-full">
+        <>
+          <AppBarUser user={user} />
+
+          {grouped.map(
+            ([groupName, options]: [string, Array<MenuOptions>], index) => (
+              <>
+                <div
+                  className="flex flex-col gap-2"
+                  key={`${groupName}-${Math.random()}`}
+                >
+                  <p
+                    className={`text-medium text-jaruColor-white ${isCollapsed ? "text-center" : ""} uppercase font-bold`}
+                  >
+                    {groupName}
+                  </p>
+                  <Listbox aria-label="Actions" className="[&_ul]:gap-3">
+                    {options.map(
+                      ({ title, Icon, role, redirectTo, onEvent }, index) =>
+                        role.includes(user?.role) && (
+                          <ListboxItem
+                            key={index}
+                            className={`${isCollapsed ? "flex-col" : "flex-row"} gap-4 text-white ${validatePathname(pathname, redirectTo) ? "bg-cerulean-500 text-white" : "data-[hover=true]:bg-transparent"} data-[hover=true]:bg-cerulean-500 data-[hover=true]:text-white`}
+                            startContent={<Icon />}
+                            href={redirectTo !== undefined ? redirectTo : ""}
+                            onClick={
+                              redirectTo === undefined ? onEvent : () => {}
+                            }
+                          >
+                            <p className="text-sm">{title}</p>
+                          </ListboxItem>
+                        ),
+                    )}
+                  </Listbox>
+                </div>
+                <div className="bg-cerulean-500 opacity-20 h-[1px] w-full" />
+              </>
             ),
-        )}
-      </Listbox>
+          )}
+        </>
+      </div>
     </aside>
   );
 };

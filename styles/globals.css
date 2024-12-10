@@ -128,6 +128,26 @@ div[data-orientation="vertical"] {
   width: 100%;
 }
 
+.master-accordion div[data-orientation="vertical"] {
+  @apply !px-4;
+}
+
+.master-global-accordion div button {
+  @apply px-4;
+}
+
+.master-option-global-accordion div button {
+  @apply !px-0;
+}
+
+.master-option-global-accordion div h2 button {
+  @apply !px-0;
+}
+
+.master-global-accordion > div > h2[data-open="true"] button {
+  @apply !px-4;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

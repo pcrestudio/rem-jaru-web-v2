@@ -55,7 +55,7 @@ const CustomDataGrid = <T extends object>({
       className="col-span-12"
       topContent={topContent}
       classNames={{
-        wrapper: "bg-white shadow-none border border-slate-200",
+        wrapper: "bg-white",
       }}
     >
       <TableHeader columns={columns}>

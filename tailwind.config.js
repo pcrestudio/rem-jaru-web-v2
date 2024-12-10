@@ -31,6 +31,10 @@ module.exports = {
           950: "#17293c",
           hover: "#0A2A3E",
         },
+        jaruColor: {
+          white: "#f7f9ff",
+          "on-surface": "#181c20",
+        },
         error: {
           500: "#ffb4ab",
           600: "#73342d",
