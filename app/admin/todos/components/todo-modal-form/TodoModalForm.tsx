@@ -14,7 +14,6 @@ export interface TodoModalProps {
   isOpen: boolean;
   onCloseChange: () => void;
   title: string;
-  stepDataId?: number;
   handleSubmit?: (data: any) => void;
   todo?: GetTodoDto;
   stopEventPropagation?: boolean;

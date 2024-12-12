@@ -49,7 +49,7 @@ export default function ProcesoJudicialSlug() {
 
   return (
     data && (
-      <div className="flex flex-col gap-6">
+      <div className="short-form-layout">
         <BreadcrumbsPath pathname={pathname} />
         <ConfirmModal
           title={`${judicialProcess ? `¿Deseas ${judicialProcess.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}

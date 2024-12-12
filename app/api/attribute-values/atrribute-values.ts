@@ -6,6 +6,7 @@ import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-sec
 import { CreateSectionAttributeValueGroup } from "@/app/dto/attribute-values/create-section-attribute-value.dto";
 import { CreateAttributeRuleDto } from "@/app/dto/attribute-values/create-attribute-rule.dto";
 import { DataType } from "@/app/dto/attribute-values/get-section-attributes.dto";
+import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
 
 const apiUrl: string = `${environment.baseUrl}/extended`;
 
@@ -67,4 +68,10 @@ export async function upsertAttributeRule(
   attributeRule: CreateAttributeRuleDto,
 ) {
   return api.post(`${apiUrl}/attribute/rule`, attributeRule);
+}
+
+export async function createSettingSection(
+  settingSection: CreateSettingSectionDto,
+) {
+  return api.post(`${apiUrl}/section`, settingSection);
 }

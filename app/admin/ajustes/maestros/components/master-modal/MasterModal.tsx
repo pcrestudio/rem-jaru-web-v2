@@ -1,10 +1,15 @@
 "use client";
 
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ReactiveField from "@/components/form/ReactiveField";
 import { GetMastersDto } from "@/app/dto/masters/get-masters.dto";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import masterSchema from "@/app/validations/create-master.validation";
+import useSWR from "swr";
+import { environment } from "@/environment/environment";
+import { fetcher } from "@/config/axios.config";
+import { Switch } from "@nextui-org/switch";
+import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
 
 export interface MasterModalProps {
   isOpen: boolean;
@@ -12,6 +17,7 @@ export interface MasterModalProps {
   title: string;
   handleSubmit?: (data: any) => void;
   master?: GetMastersDto;
+  isSettingSection?: boolean;
 }
 
 const MasterModal: FC<MasterModalProps> = ({
@@ -20,7 +26,19 @@ const MasterModal: FC<MasterModalProps> = ({
   title,
   onCloseChange,
   master,
+  isSettingSection,
 }) => {
+  const [isSelectedModule, setIsSelectedModule] = useState(false);
+  const [isSelectedSubmodule, setIsSelectedSubmodule] = useState(false);
+  const { data: modules } = useSWR<any>(
+    `${environment.baseUrl}/modules`,
+    fetcher,
+  );
+  const { data: submodules } = useSWR<any>(
+    `${environment.baseUrl}/modules/submodules/all`,
+    fetcher,
+  );
+
   return (
     <FormDialog
       isOpen={isOpen}
@@ -52,6 +70,56 @@ const MasterModal: FC<MasterModalProps> = ({
             control={control}
             className="col-span-12"
           />
+
+          {isSettingSection && (
+            <>
+              <Switch
+                className="col-span-12"
+                isSelected={isSelectedModule}
+                onValueChange={setIsSelectedModule}
+              >
+                ¿Pertenecerá a un módulo?
+              </Switch>
+
+              {isSelectedModule && (
+                <AsyncAutocomplete
+                  name="moduleId"
+                  isRequired={true}
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  items={modules ?? []}
+                  className="col-span-12 nextui-input"
+                  label="Módulos"
+                  itemLabel="name"
+                  itemValue="id"
+                />
+              )}
+
+              <Switch
+                className="col-span-12"
+                isSelected={isSelectedSubmodule}
+                onValueChange={setIsSelectedSubmodule}
+              >
+                ¿Pertenecerá a un submódulo?
+              </Switch>
+
+              {isSelectedSubmodule && (
+                <AsyncAutocomplete
+                  name="submoduleId"
+                  isRequired={true}
+                  control={control}
+                  register={register}
+                  errors={errors}
+                  items={submodules ?? []}
+                  className="col-span-12 nextui-input"
+                  label="Submódulos"
+                  itemLabel="name"
+                  itemValue="id"
+                />
+              )}
+            </>
+          )}
         </div>
       )}
     </FormDialog>

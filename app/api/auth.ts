@@ -6,7 +6,7 @@ import * as https from "https";
 const apiUrl: string = environment.baseUrl;
 
 const httpsAgent = new https.Agent({
-  rejectUnauthorized: false, // Disable SSL verification (development only)
+  rejectUnauthorized: false,
 });
 
 export default async function auth(user: UserAuthDto) {

@@ -1,7 +1,5 @@
 export interface CreateMasterOptionDto {
   name: string;
-
   slug: string;
-
-  masterId: number;
+  masterId?: number;
 }
