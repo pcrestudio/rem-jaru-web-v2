@@ -107,7 +107,6 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
     <>
       {createPortal(
         <TodoModal
-          stepDataId={stepDataId}
           isOpen={open}
           handleSubmit={onSubmit}
           onCloseChange={() => setOpen(false)}
