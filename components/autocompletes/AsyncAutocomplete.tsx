@@ -23,6 +23,7 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
   itemValue,
   defaultValue,
   disabled,
+  noModal,
 }) => {
   return (
     <Controller
@@ -53,7 +54,7 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
               disabled={disabled}
               variant="filled"
               size="medium"
-              className="nextui-input"
+              className={noModal ? "nextui-input" : ""}
               label={label}
               error={!!error}
               helperText={error ? error.message : ""}

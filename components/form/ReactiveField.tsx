@@ -16,6 +16,7 @@ export interface ReactiveFieldProps {
   control?: Control<any>;
   disabled?: boolean;
   onBlur?: (value: any) => void;
+  noModal?: boolean;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({

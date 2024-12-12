@@ -42,6 +42,8 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
     fetcher,
   );
 
+  console.log({ data, pathname });
+
   return (
     <div className="col-span-12">
       {data &&

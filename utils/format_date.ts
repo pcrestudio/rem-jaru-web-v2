@@ -16,7 +16,7 @@ export default format;
 export function convertToZonedDateTime(
   dateString: string,
 ): ZonedDateTime | null {
-  const date = new Date(dateString); // Este es el valor de la base de datos (ej. "Thu, 14 Nov 2024 00:00:00 GMT")
+  const date = new Date(dateString);
 
   if (date instanceof Date && !isNaN(date.getTime())) {
     const utcDate = new Date(

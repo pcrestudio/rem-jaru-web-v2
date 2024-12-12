@@ -3,7 +3,7 @@
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { grouped, MenuOptions } from "@/config/menu-options";
 import { User } from "next-auth";
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { validatePathname } from "@/utils/validate_pathname";
@@ -67,11 +67,8 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
 
           {grouped.map(
             ([groupName, options]: [string, Array<MenuOptions>], index) => (
-              <>
-                <div
-                  className="flex flex-col gap-2"
-                  key={`${groupName}-${Math.random()}`}
-                >
+              <Fragment key={`${groupName}-${Math.random()}`}>
+                <div className="flex flex-col gap-2">
                   <p
                     className={`text-medium text-jaruColor-white ${isCollapsed ? "text-center" : ""} uppercase font-bold`}
                   >
@@ -82,7 +79,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                       ({ title, Icon, role, redirectTo, onEvent }, index) =>
                         role.includes(user?.role) && (
                           <ListboxItem
-                            key={index}
+                            key={`${index}-${Math.random()}`}
                             className={`${isCollapsed ? "flex-col" : "flex-row"} gap-4 text-white ${validatePathname(pathname, redirectTo) ? "bg-cerulean-500 text-white" : "data-[hover=true]:bg-transparent"} data-[hover=true]:bg-cerulean-500 data-[hover=true]:text-white`}
                             startContent={<Icon />}
                             href={redirectTo !== undefined ? redirectTo : ""}
@@ -97,7 +94,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                   </Listbox>
                 </div>
                 <div className="bg-cerulean-500 opacity-20 h-[1px] w-full" />
-              </>
+              </Fragment>
             ),
           )}
         </>

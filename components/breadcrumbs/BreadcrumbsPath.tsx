@@ -25,6 +25,10 @@ const mappingNamePath: Record<string, string> = {
   "procesos-judiciales-administrativos": "Procesos Judiciales Administrativos",
   "procesos-judiciales-laborales": "Procesos Judiciales Laborales",
   "procesos-judiciales-penales": "Procesos Judiciales Penales",
+  "supervisiones-administrativos-laborales":
+    "Supervisiones Administrativos Laborales",
+  "supervisiones-administrativos-sancionadores":
+    "Supervisiones Administrativos Sancionadores",
   create: "Nuevo",
   edit: "Editar",
   ajustes: "Ajustes",

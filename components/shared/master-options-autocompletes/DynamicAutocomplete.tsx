@@ -16,7 +16,7 @@ import { autocompleteStyle } from "@/theme/autocompleteStyle";
 export interface DynamicAutocompleteProps extends ReactiveFieldProps {
   slug: string;
   optionValue?: string;
-  noModal?: boolean;
+  filter?: object;
 }
 
 const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
@@ -28,11 +28,13 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
   slug,
   optionValue = "id",
   noModal,
+  filter,
 }) => {
-  const { data } = useSWR<GetMasterOptionAutoComplete[]>(
-    `${environment.baseUrl}/masters/options/autocomplete`,
-    fetcher,
-  );
+  const filterUrl = filter
+    ? `${environment.baseUrl}/masters/options/autocomplete?slug=${slug}&slugSubmodule=${filter["slugSubmodule"]}`
+    : `${environment.baseUrl}/masters/options/autocomplete`;
+
+  const { data } = useSWR<GetMasterOptionAutoComplete[]>(filterUrl, fetcher);
 
   const list = data?.find((master) => master.slug === slug);
 
