@@ -35,7 +35,15 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
       initialValues={supervision}
       formId="judicial-process-edit"
     >
-      {({ register, errors, touchedFields, control, isValid, reset }) => (
+      {({
+        register,
+        errors,
+        touchedFields,
+        control,
+        isValid,
+        reset,
+        getValues,
+      }) => (
         <div className="grid grid-cols-12 gap-4">
           <DynamicAutocomplete
             isRequired={true}
@@ -86,6 +94,8 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 pathname={pathname}
                 register={register}
                 control={control}
+                reset={reset}
+                getValues={getValues}
                 entityReference={supervision?.entityReference}
               />
               <div className="col-span-12 mt-4">

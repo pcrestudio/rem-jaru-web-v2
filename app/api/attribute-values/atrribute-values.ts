@@ -50,8 +50,6 @@ export async function createSectionAttributeValue(
   sectionAttributeValue.attributes.forEach((item: any) => {
     if (item.type === DataType.FILE && item.value instanceof File) {
       formData.append(item.attributeSlug, item.value);
-    } else {
-      formData.append(item.attributeSlug, item.value);
     }
   });
 

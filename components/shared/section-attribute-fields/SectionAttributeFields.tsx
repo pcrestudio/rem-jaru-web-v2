@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -21,6 +21,8 @@ export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
   entityReference?: string;
   touchedFields?: ReturnType<typeof useReactiveForm>["touchedFields"];
+  reset?: any;
+  getValues?: any;
 }
 
 const mappingRowLayout: Record<RowLayout, string> = {
@@ -36,13 +38,38 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
   pathname,
   entityReference,
   control,
+  reset,
+  getValues,
 }) => {
   const { data } = useSWR<GetSectionAttributesBySlugDto[]>(
     `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}`,
     fetcher,
   );
 
-  console.log({ data, pathname });
+  useEffect(() => {
+    if (data) {
+      const formValues = {};
+      const currentValues = getValues();
+
+      data.forEach((section) => {
+        section.attributes.forEach((attribute) => {
+          const fieldName = `${attribute.slug}-custom-${attribute.dataType}`;
+
+          if (attribute.dataType === "DATE" && attribute.values[0]?.value) {
+            formValues[fieldName] = convertToZonedDateTime(
+              attribute.values[0]?.value,
+            );
+          } else {
+            formValues[fieldName] = attribute.values[0]?.value || "";
+          }
+        });
+      });
+
+      const combinedValues = { ...currentValues, ...formValues };
+
+      reset(combinedValues);
+    }
+  }, [data]);
 
   return (
     <div className="col-span-12">
@@ -54,6 +81,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                 selectionMode="multiple"
                 variant="splitted"
                 key={`${section.label}`}
+                className="mb-4"
                 itemClasses={{
                   title: "text-cerulean-950 font-bold text-lg",
                   base: "pb-4 shadow-none border border-slate-200",
@@ -161,8 +189,8 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              defaultValue={attribute.values[0]?.value ?? ""}
                               control={control}
+                              defaultValue={attribute.values[0]?.value ?? ""}
                               render={({ field }) => (
                                 <Textarea
                                   isRequired={true}

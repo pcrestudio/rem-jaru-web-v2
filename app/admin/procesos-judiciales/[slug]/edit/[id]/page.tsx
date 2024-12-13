@@ -15,6 +15,7 @@ import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-
 import useStore from "@/lib/store";
 import { upsertInstanceStepData } from "@/app/api/instances/instances";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
+import { useEffect } from "react";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -45,12 +46,14 @@ export default function ProcesosJudicialesSlugEdit() {
       );
 
       if (data) {
-        const instanceResponse = await upsertInstanceStepData({
-          stepData: stepDataArray as InstanceStepDataDto[],
-        });
+        if (stepDataArray.length > 0) {
+          const instanceResponse = await upsertInstanceStepData({
+            stepData: stepDataArray as InstanceStepDataDto[],
+          });
 
-        if (instanceResponse.data) {
-          toast.success("Instancias modificadas con éxito");
+          if (instanceResponse.data) {
+            toast.success("Instancias modificadas con éxito");
+          }
         }
 
         if (customFields.length > 0) {

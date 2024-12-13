@@ -1,5 +1,6 @@
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import { FC } from "react";
+import { mappingNamePath } from "@/config/mapping_submodules";
 
 interface BreadcrumbsPathProps {
   pathname: string;
@@ -19,23 +20,6 @@ const validRoutes = {
   create: false,
   edit: false,
 };
-
-const mappingNamePath: Record<string, string> = {
-  "procesos-judiciales": "Procesos Judiciales",
-  "procesos-judiciales-administrativos": "Procesos Judiciales Administrativos",
-  "procesos-judiciales-laborales": "Procesos Judiciales Laborales",
-  "procesos-judiciales-penales": "Procesos Judiciales Penales",
-  "supervisiones-administrativos-laborales":
-    "Supervisiones Administrativos Laborales",
-  "supervisiones-administrativos-sancionadores":
-    "Supervisiones Administrativos Sancionadores",
-  create: "Nuevo",
-  edit: "Editar",
-  ajustes: "Ajustes",
-  personalizar: "Personalizar",
-  reglas: "Reglas",
-};
-
 const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
   const breads = pathname
     .split("/")

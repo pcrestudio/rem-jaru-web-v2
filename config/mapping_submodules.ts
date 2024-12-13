@@ -3,10 +3,10 @@ export const mappingSubmodules: Record<string, string> = {
   judicial_process_labor_court: "procesos-judiciales-laborales",
   judicial_process_civil_court: "procesos-judiciales-civiles",
   judicial_process_criminal: "procesos-judiciales-penales",
-  supervision_administrative_processes:
-    "supervisiones-administrativos-laborales",
-  supervision_administrative_sanctioning:
-    "supervisiones-administrativos-sancionadores",
+  supervision_oefa: "supervisiones-oefa",
+  supervision_osinergmin: "supervisiones-osinergmin",
+  supervision_sunafil: "supervisiones-sunafil",
+  supervision_ana: "supervisiones-ana",
 };
 
 export const mappingRevertSubmodules: Record<string, string> = {
@@ -14,8 +14,24 @@ export const mappingRevertSubmodules: Record<string, string> = {
   "procesos-judiciales-laborales": "judicial_process_labor_court",
   "procesos-judiciales-civiles": "judicial_process_civil_court",
   "procesos-judiciales-penales": "judicial_process_criminal",
-  "supervisiones-administrativos-laborales":
-    "supervision_administrative_processes",
-  "supervisiones-administrativos-sancionadores":
-    "supervision_administrative_sanctioning",
+  "supervisiones-oefa": "supervision_oefa",
+  "supervisiones-osinergmin": "supervision_osinergmin",
+  "supervisiones-sunafil": "supervision_sunafil",
+  "supervisiones-ana": "supervision_ana",
+};
+
+export const mappingNamePath: Record<string, string> = {
+  "procesos-judiciales": "Procesos Judiciales",
+  "procesos-judiciales-administrativos": "Procesos Judiciales Administrativos",
+  "procesos-judiciales-laborales": "Procesos Judiciales Laborales",
+  "procesos-judiciales-penales": "Procesos Judiciales Penales",
+  "supervisiones-oefa": "Supervisiones OEFA",
+  "supervisiones-osinergmin": "Supervisiones OSINERGMIN",
+  "supervisiones-sunafil": "Supervisiones SUNAFIL",
+  "supervisiones-ana": "Supervisiones ANA",
+  create: "Nuevo",
+  edit: "Editar",
+  ajustes: "Ajustes",
+  personalizar: "Personalizar",
+  reglas: "Reglas",
 };

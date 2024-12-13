@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <Sidebar user={data?.user} />
             <section className="flex-1 flex flex-col items-stretch min-w-0">
               <AppBar user={data?.user} />
-              <div className="flex-1 flex flex-col overflow-auto p-6">
+              <div className="flex-1 flex flex-col overflow-auto">
                 {children}
               </div>
             </section>

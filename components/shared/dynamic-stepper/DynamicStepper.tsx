@@ -67,6 +67,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
       data.forEach(({ id, steps }) => {
         steps.forEach((step) => {
           const initialValues = step.stepData?.[0] || {};
+          console.log(step);
 
           updateStepData(step.id, {
             ...initialValues,

@@ -27,7 +27,15 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
       initialValues={judicialProcess}
       formId="judicial-process-edit"
     >
-      {({ register, errors, touchedFields, control, isValid, reset }) => (
+      {({
+        register,
+        errors,
+        touchedFields,
+        control,
+        isValid,
+        reset,
+        getValues,
+      }) => (
         <div className="grid grid-cols-12 gap-4">
           <ReactiveField
             isRequired={true}
@@ -98,6 +106,8 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 pathname={pathname}
                 register={register}
                 control={control}
+                reset={reset}
+                getValues={getValues}
                 entityReference={judicialProcess?.entityReference}
               />
               <div className="col-span-12 mt-4">
