@@ -4,7 +4,7 @@ import TodoDataGrid from "@/app/admin/todos/components/todo-datagrid/TodoDataGri
 
 export default function Todo() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="page">
       <h1 className="text-2xl font-bold">To-Dos</h1>
       <TodoDataGrid />
     </div>

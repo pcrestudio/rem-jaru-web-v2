@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { Input } from "@nextui-org/input";
 import { Control, Controller, set } from "react-hook-form";
 

@@ -3,7 +3,7 @@ import UserDataGrid from "@/app/admin/usuarios/components/user-datagrid/UserData
 export default function Usuarios() {
   return (
     <>
-      <div className="flex flex-col gap-6">
+      <div className="page">
         <h1 className="text-2xl font-bold text-jaruColor-on-surface">
           Usuarios
         </h1>

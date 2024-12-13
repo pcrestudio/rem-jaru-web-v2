@@ -7,11 +7,12 @@ import { fetcher } from "@/config/axios.config";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import { usePathname } from "next/navigation";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toggleJudicialProcess } from "@/app/api/judicial-process/judicial-process";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import toast from "react-hot-toast";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
+import useStore from "@/lib/store";
 
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();
@@ -42,29 +43,29 @@ export default function ProcesoJudicialSlug() {
     setConfirm(false);
   };
 
+  const { filter } = useStore();
+
   const { data } = useSWR<GetJudicialProcessDto[]>(
-    `${environment.baseUrl}/judicial_processes?slug=${mappingRevertSubmodules[slug]}`,
+    `${environment.baseUrl}/judicial_processes?slug=${mappingRevertSubmodules[slug]}${filter.search ? `&search=${filter.search}` : ""}`,
     fetcher,
   );
 
   return (
-    data && (
-      <div className="short-form-layout">
-        <BreadcrumbsPath pathname={pathname} />
-        <ConfirmModal
-          title={`${judicialProcess ? `¿Deseas ${judicialProcess.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}
-          description={{
-            __html: `Estás seguro de realizar esta acción, este expediente no será eliminado y tampoco podrá utilizarse como medio de extracción para la plataforma <b>CEJ</b>.`,
-          }}
-          isOpen={confirm}
-          onClose={handleConfirmModalClose}
-          onConfirm={toggleJudicialProcessHelper}
-        />
-        <JudicialProcessDataGrid
-          judicialProcesses={data}
-          toggleSelectedItem={toggleSelectedItem}
-        />
-      </div>
-    )
+    <div className="short-form-layout">
+      <BreadcrumbsPath pathname={pathname} />
+      <ConfirmModal
+        title={`${judicialProcess ? `¿Deseas ${judicialProcess.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}
+        description={{
+          __html: `Estás seguro de realizar esta acción, este expediente no será eliminado y tampoco podrá utilizarse como medio de extracción para la plataforma <b>CEJ</b>.`,
+        }}
+        isOpen={confirm}
+        onClose={handleConfirmModalClose}
+        onConfirm={toggleJudicialProcessHelper}
+      />
+      <JudicialProcessDataGrid
+        judicialProcesses={data ?? []}
+        toggleSelectedItem={toggleSelectedItem}
+      />
+    </div>
   );
 }

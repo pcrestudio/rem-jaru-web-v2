@@ -30,7 +30,7 @@ export default function Maestros() {
         isSettingSection={isSettingSection}
       />
 
-      <div className="flex flex-col gap-6">
+      <div className="page-settings">
         <BreadcrumbsPath pathname={pathname} />
 
         <div className="flex flex-row justify-between items-center">

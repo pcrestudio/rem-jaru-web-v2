@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -10,9 +10,6 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
-import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
 import { useRouter } from "next/navigation";
@@ -26,23 +23,14 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
   judicialProcesses,
   toggleSelectedItem,
 }) => {
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
   const rowsPerPage = 5;
-  const [filterValue, setFilterValue] = React.useState("");
+  const [filterValue, setFilterValue] = useState("");
   const hasSearchFilter = Boolean(filterValue);
-  const [statusFilter, setStatusFilter] = React.useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const router = useRouter();
 
-  const onSearchChange = React.useCallback((value: string) => {
-    if (value) {
-      setFilterValue(value);
-      setPage(1);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
-
-  const filteredItems = React.useMemo(() => {
+  const filteredItems = useMemo(() => {
     let filteredJudicialProcess = [...judicialProcesses];
 
     if (hasSearchFilter) {
@@ -56,7 +44,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
-  const items = React.useMemo(() => {
+  const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
@@ -87,40 +75,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
     { key: "actions", label: "Opciones" },
   ];
 
-  const onClear = React.useCallback(() => {
-    setFilterValue("");
-    setPage(1);
-  }, []);
-
-  const topContent = React.useMemo(() => {
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end">
-          <Input
-            isClearable
-            className="w-full sm:max-w-[46%]"
-            placeholder="Buscar por código de expediente, demandado, demandante, etc ..."
-            startContent={<AiOutlineSearch />}
-            value={filterValue}
-            onClear={() => onClear()}
-            onValueChange={onSearchChange}
-          />
-          <Button
-            className="standard-btn w-auto text-white"
-            endContent={<AiOutlinePlus />}
-            onClick={() => {
-              const currentPath = window.location.pathname;
-              router.push(`${currentPath}/create`);
-            }}
-          >
-            Nuevo Expediente
-          </Button>
-        </div>
-      </div>
-    );
-  }, [filterValue, judicialProcesses.length]);
-
-  const renderCell = React.useCallback(
+  const renderCell = useCallback(
     (judicialProcess: GetJudicialProcessDto, columnKey: string | number) => {
       const cellValue = judicialProcess[columnKey];
 
@@ -169,7 +124,6 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
   return (
     <Table
       aria-label="Example table with client side pagination"
-      topContent={topContent}
       bottomContent={
         <div className="flex w-full justify-center">
           <Pagination

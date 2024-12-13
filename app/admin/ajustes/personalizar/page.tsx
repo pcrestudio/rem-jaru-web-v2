@@ -16,7 +16,7 @@ export default function Personalizar() {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="page-settings">
       <BreadcrumbsPath pathname={pathname} />
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold text-cerulean-950">

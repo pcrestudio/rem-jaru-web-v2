@@ -8,7 +8,7 @@ export default function Ajustes() {
   const pathname: string = usePathname();
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="page">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold text-cerulean-950">
           Personaliza tu entorno y seguridad.

@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { GetStepDataDto } from "@/app/dto/instance/get-instance.dto";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
+import { FilterType } from "@/lib/types/filter.type";
 
 interface AppState {
   stepData: Record<number, Partial<GetStepDataDto>>;
@@ -16,12 +17,22 @@ interface AppState {
     entityReference: string,
     data: Partial<GetTodosInstanceDto>,
   ) => void;
+  updateFilter?: (filter: FilterType) => void;
+  filter?: FilterType;
 }
 
 const useStore = create<AppState>((set) => ({
   stepData: {},
   stepDataArray: [],
   stepTodos: [],
+  filter: {
+    search: "",
+  },
+  updateFilter: (filter: FilterType) => {
+    set((state) => ({
+      filter,
+    }));
+  },
   updateStepData: (stepId, data) =>
     set((state) => ({
       stepData: {
