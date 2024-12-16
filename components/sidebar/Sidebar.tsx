@@ -15,7 +15,7 @@ export interface SidebarProps {
 
 const mappingWidth: Record<string, string> = {
   collapsed: "min-w-[60px]",
-  expanded: "min-w-[300px]",
+  expanded: "min-w-[260px]",
 };
 
 const Sidebar: FC<SidebarProps> = ({ user }) => {
