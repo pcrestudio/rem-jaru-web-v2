@@ -118,8 +118,8 @@ div[data-orientation="vertical"] {
 }
 
 .horizontal-stepper {
-  width: 100%; /* Mantén el ancho del horizontal independiente */
-  flex-shrink: 0; /* Evita que el contenido lo haga crecer */
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .vertical-stepper-container {

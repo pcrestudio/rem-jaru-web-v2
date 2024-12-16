@@ -10,7 +10,7 @@ export default function SupervisionSlug() {
   const slug: string = pathname.split("/")[3];
 
   return (
-    <div className="flex flex-col gap-6 min-w-[70%] max-w-[80%]">
+    <div className="page min-w-[70%] max-w-[80%]">
       <BreadcrumbsPath pathname={pathname} />
       <SupervisionDataGrid slug={slug} />
     </div>
