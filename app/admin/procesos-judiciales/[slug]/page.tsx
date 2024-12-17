@@ -1,6 +1,6 @@
 "use client";
 
-import JudicialProcessDataGrid from "@/components/admin/submodules/judicial_process/JudicialProcessDataGrid";
+import JudicialProcessDataGrid from "@/app/admin/procesos-judiciales/components/judicial-process-datagrid/JudicialProcessDataGrid";
 import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -13,6 +13,7 @@ import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import toast from "react-hot-toast";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import useStore from "@/lib/store";
+import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 
 export default function ProcesoJudicialSlug() {
   const pathname: string = usePathname();
@@ -45,8 +46,8 @@ export default function ProcesoJudicialSlug() {
 
   const { filter } = useStore();
 
-  const { data } = useSWR<GetJudicialProcessDto[]>(
-    `${environment.baseUrl}/judicial_processes?slug=${mappingRevertSubmodules[slug]}${filter.search ? `&search=${filter.search}` : ""}`,
+  const { data } = useSWR<CustomDataGridPagination<GetJudicialProcessDto>>(
+    `${environment.baseUrl}/judicial_processes?slug=${mappingRevertSubmodules[slug]}&page=1&pageSize=10${filter.search ? `&search=${filter.search}` : ""}`,
     fetcher,
   );
 
@@ -63,7 +64,7 @@ export default function ProcesoJudicialSlug() {
         onConfirm={toggleJudicialProcessHelper}
       />
       <JudicialProcessDataGrid
-        judicialProcesses={data ?? []}
+        judicialProcesses={data ? data?.results : []}
         toggleSelectedItem={toggleSelectedItem}
       />
     </div>

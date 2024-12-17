@@ -160,6 +160,14 @@ div[data-orientation="vertical"] {
   @apply flex flex-col gap-6 p-6;
 }
 
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

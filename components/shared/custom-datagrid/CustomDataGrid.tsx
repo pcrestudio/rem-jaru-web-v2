@@ -1,4 +1,5 @@
 import {
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -6,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Button } from "@nextui-org/button";
 
@@ -31,6 +32,10 @@ const CustomDataGrid = <T extends object>({
   hasAddButton,
   addButtonText,
 }: CustomDataGridProps<T>) => {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 5;
+  const pages = Math.ceil(items.length / rowsPerPage);
+
   const topContent = React.useMemo(() => {
     return (
       hasAddButton && (
@@ -54,6 +59,19 @@ const CustomDataGrid = <T extends object>({
     <Table
       className="col-span-12"
       topContent={topContent}
+      bottomContent={
+        <div className="flex w-full justify-center">
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color="primary"
+            page={page}
+            total={pages}
+            onChange={(page) => setPage(page)}
+          />
+        </div>
+      }
       classNames={{
         wrapper: "bg-white",
       }}
