@@ -168,6 +168,10 @@ div[data-orientation="vertical"] {
   scrollbar-width: none;
 }
 
+.excel-btn {
+  @apply bg-transparent border border-green-700 text-green-700 hover:bg-green-700/5 transition delay-500;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

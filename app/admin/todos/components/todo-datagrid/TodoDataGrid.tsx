@@ -91,9 +91,9 @@ const TodoDataGrid: FC<TodoDataGridProps> = () => {
       />
 
       <CustomDataGrid<GetTodosInstanceDto>
+        endpointUrl="todos"
         columns={todoColumns}
         dataGridKey="id"
-        items={data ?? []}
         cells={renderCell}
         emptyContent="Sin tareas por completar."
         onAddChange={() => setOpen(true)}

@@ -19,6 +19,7 @@ const validRoutes = {
   reglas: false,
   create: false,
   edit: false,
+  cej: false,
 };
 const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
   const breads = pathname
@@ -36,7 +37,7 @@ const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
 
     let name = mappingNamePath[path] ?? path;
 
-    const idMatch = path.match(/^(\d+)$/); // Busca si el path es un número (ID)
+    const idMatch = path.match(/^(\d+)$/);
     if (idMatch) {
       name = `Detalle para ${idMatch[1]}`; // Usar el ID en el nombre, ejemplo: "Detalle 1"
     }

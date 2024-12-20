@@ -73,6 +73,7 @@ const TodoModal: FC<TodoModalProps> = ({
             touched={touchedFields.targetAttributeId}
             items={data ?? []}
             className="col-span-6"
+            noModal
             label="Responsable"
             itemLabel="firstName"
             itemValue="id"

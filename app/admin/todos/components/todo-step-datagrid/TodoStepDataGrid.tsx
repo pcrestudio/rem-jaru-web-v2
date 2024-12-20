@@ -1,7 +1,4 @@
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import useSWR from "swr";
-import { environment } from "@/environment/environment";
-import { fetcher } from "@/config/axios.config";
 import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import React, { FC, useEffect, useState } from "react";
 import { todoInstanceColumns } from "@/app/admin/todos/components/todo-step-datagrid/columns/todoInstanceColumns";
@@ -26,10 +23,6 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
   stepDataId,
   stepId,
 }) => {
-  const { data } = useSWR<GetTodosInstanceDto[]>(
-    `${environment.baseUrl}/todos/instance?entityReference=${entityReference}`,
-    fetcher,
-  );
   const [todo, setTodo] = useState<GetTodoDto>(null);
   let { updateStepTodos, updateStepDataArray, updateStepData, stepTodos } =
     useStore();
@@ -39,6 +32,11 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
   const selectTodo = (todo: GetTodoDto) => {
     setTodo(todo);
     setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setTodo(null);
   };
 
   const renderCell = React.useCallback(
@@ -109,7 +107,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         <TodoModal
           isOpen={open}
           handleSubmit={onSubmit}
-          onCloseChange={() => setOpen(false)}
+          onCloseChange={handleClose}
           title="Todo"
           todo={todo}
         />,
@@ -120,18 +118,15 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         <p className="text-foreground text-sm">To-Dos</p>
 
         <CustomDataGrid<GetTodosInstanceDto>
+          endpointUrl={`todos/instance?entityReference=${entityReference}&`}
           columns={todoInstanceColumns}
           dataGridKey="id"
-          items={
-            data && data.length > 0
-              ? data
-              : (stepTodos as GetTodosInstanceDto[])
-          }
           cells={renderCell}
           emptyContent="Sin tareas por completar."
           onAddChange={() => setOpen(true)}
           hasAddButton
           addButtonText="Nuevo To-Do"
+          totalItemsText="Tareas totales:"
         />
       </div>
     </>

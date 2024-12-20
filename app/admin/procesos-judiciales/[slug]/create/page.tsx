@@ -42,7 +42,7 @@ export default function ProcesosJudicialesSlugCreate() {
     );
 
     if (data) {
-      setJudicialProcessId(Number(data["result"]["id"]));
+      setJudicialProcessId(Number(data["id"]));
 
       if (customFields.length > 0) {
         const response = await createSectionAttributeValue({

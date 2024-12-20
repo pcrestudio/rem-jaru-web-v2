@@ -16,6 +16,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
+import { parseDate } from "@internationalized/date";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
@@ -59,6 +60,11 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
             formValues[fieldName] = convertToZonedDateTime(
               attribute.values[0]?.value,
             );
+          } else if (
+            attribute.dataType === "DATE" &&
+            !attribute.values[0]?.value
+          ) {
+            formValues[fieldName] = attribute.values[0]?.value || null;
           } else {
             formValues[fieldName] = attribute.values[0]?.value || "";
           }

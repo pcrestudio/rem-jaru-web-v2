@@ -1,9 +1,6 @@
 "use client";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import useSWR from "swr";
-import { environment } from "@/environment/environment";
-import { fetcher } from "@/config/axios.config";
 import React, { FC, useCallback, useState } from "react";
 import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { Tooltip } from "@nextui-org/react";
@@ -16,10 +13,6 @@ import { mappingRole } from "@/config/mapping_role";
 interface UserDataGridProps {}
 
 const UserDataGrid: FC<UserDataGridProps> = () => {
-  const { data } = useSWR<GetUserDto[]>(
-    `${environment.baseUrl}/auth/users`,
-    fetcher,
-  );
   const [user, setUser] = useState<GetUserDto>(null);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -75,11 +68,12 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
   return (
     <>
       <CustomDataGrid<GetUserDto>
+        endpointUrl={`auth/users?`}
         columns={userColumns}
         dataGridKey="id"
-        items={data ?? []}
         cells={renderCell}
         emptyContent="Sin usuarios."
+        totalItemsText="Usuarios totales:"
         onAddChange={() => setOpen(true)}
       />
     </>

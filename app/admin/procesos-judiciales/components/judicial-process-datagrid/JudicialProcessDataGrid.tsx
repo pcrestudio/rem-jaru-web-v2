@@ -6,15 +6,16 @@ import { Chip } from "@nextui-org/chip";
 import { useRouter } from "next/navigation";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/judicial-process-datagrid/columns/judicialProcessColumns";
+import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 
 export interface JudicialProcessDataGridProps {
-  judicialProcesses: GetJudicialProcessDto[];
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
+  slug?: string;
 }
 
 const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
-  judicialProcesses,
   toggleSelectedItem,
+  slug,
 }) => {
   const router = useRouter();
 
@@ -66,12 +67,17 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
 
   return (
     <CustomDataGrid<GetJudicialProcessDto>
-      items={judicialProcesses}
+      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&`}
       columns={judicialProcessColumns}
       cells={renderCell}
       addButtonText="Nuevo proceso judicial"
       emptyContent="Sin procesos judiciales."
       hasAddButton
+      hasExcelButton
+      onAddChange={() => {
+        const currentPath = window.location.pathname;
+        router.push(`${currentPath}/create`);
+      }}
     />
   );
 };

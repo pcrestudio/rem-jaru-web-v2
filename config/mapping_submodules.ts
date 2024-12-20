@@ -29,6 +29,7 @@ export const mappingNamePath: Record<string, string> = {
   "supervisiones-osinergmin": "Supervisiones OSINERGMIN",
   "supervisiones-sunafil": "Supervisiones SUNAFIL",
   "supervisiones-ana": "Supervisiones ANA",
+  cej: "CEJ",
   create: "Nuevo",
   edit: "Editar",
   ajustes: "Ajustes",

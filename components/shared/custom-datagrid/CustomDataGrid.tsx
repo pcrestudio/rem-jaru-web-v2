@@ -7,69 +7,81 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import React, { ReactNode, useMemo, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { Button } from "@nextui-org/button";
+import React, { ReactNode } from "react";
+import useCustomDataGrid from "@/components/states/useCustomDataGrid";
 
 interface CustomDataGridProps<T extends object> {
+  endpointUrl: string;
   columns: any;
-  items: T[];
   dataGridKey?: string;
   cells?: (item: any, columnKey: string | number) => ReactNode;
   onAddChange?: () => void;
   emptyContent?: string;
   hasAddButton?: boolean;
+  hasExcelButton?: boolean;
   addButtonText?: string;
+  totalItemsText?: string;
+  items?: T[];
 }
 
 const CustomDataGrid = <T extends object>({
   columns,
-  items,
   onAddChange,
   dataGridKey,
   cells,
   emptyContent,
   hasAddButton,
+  hasExcelButton,
   addButtonText,
+  endpointUrl,
+  totalItemsText,
 }: CustomDataGridProps<T>) => {
-  const [page, setPage] = useState(1);
-  const rowsPerPage = 5;
-  const pages = Math.ceil(items.length / rowsPerPage);
-
-  const topContent = React.useMemo(() => {
-    return (
-      hasAddButton && (
-        <div className="flex flex-col gap-1">
-          <div className="flex justify-between gap-3 items-end">
-            <p></p>
-            <Button
-              className="standard-btn w-auto text-white"
-              endContent={<AiOutlinePlus />}
-              onClick={onAddChange}
-            >
-              {addButtonText}
-            </Button>
-          </div>
-        </div>
-      )
-    );
-  }, [items.length]);
+  const {
+    items,
+    topContent,
+    page,
+    onChangePage,
+    totalPages,
+    onRowsPerPageChange,
+  } = useCustomDataGrid<T>({
+    endpointUrl,
+    hasAddButton,
+    hasExcelButton,
+    addButtonText,
+    onAddChange,
+  });
 
   return (
     <Table
       className="col-span-12"
       topContent={topContent}
       bottomContent={
-        <div className="flex w-full justify-center">
+        <div className="flex w-full justify-between">
+          <div className="flex flex-row gap-4 items-center">
+            <p className="text-foreground text-small">
+              {totalItemsText ?? "Fichas totales:"} <b>{items?.length}</b>
+            </p>
+          </div>
           <Pagination
             isCompact
             showControls
             showShadow
             color="primary"
             page={page}
-            total={pages}
-            onChange={(page) => setPage(page)}
+            total={totalPages}
+            onChange={onChangePage}
           />
+          <label className="flex items-center text-foreground text-small">
+            Datos entre:
+            <select
+              className="bg-transparent outline-none text-foreground text-small"
+              onChange={onRowsPerPageChange}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+            </select>
+          </label>
         </div>
       }
       classNames={{
@@ -78,7 +90,13 @@ const CustomDataGrid = <T extends object>({
     >
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn key={column["key"]}>{column["label"]}</TableColumn>
+          <TableColumn
+            key={column["key"]}
+            width={column["width"] ? column["width"] : null}
+            allowsSorting={column["sortable"] ?? null}
+          >
+            {column["label"]}
+          </TableColumn>
         )}
       </TableHeader>
       <TableBody items={items} emptyContent={emptyContent}>

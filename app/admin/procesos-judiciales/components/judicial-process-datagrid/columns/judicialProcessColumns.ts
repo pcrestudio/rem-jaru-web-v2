@@ -6,14 +6,17 @@ const judicialProcessColumns = [
   {
     key: "demanded",
     label: "Demandante",
+    sortable: true,
   },
   {
     key: "plaintiff",
     label: "Demandado",
+    sortable: true,
   },
   {
     key: "coDefendant",
     label: "Co-Demandado",
+    sortable: true,
   },
   {
     key: "isActive",

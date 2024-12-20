@@ -8,6 +8,12 @@ import React, { FC } from "react";
 import { Button } from "@nextui-org/button";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
+import { Alert } from "@nextui-org/alert";
+import useSWR from "swr";
+import { environment } from "@/environment/environment";
+import { fetcher } from "@/config/axios.config";
+import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto";
+import { useRouter } from "next/navigation";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -20,6 +26,12 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   pathname,
   handleSubmit,
 }) => {
+  const { data } = useSWR<GetCejDossierDetailDto>(
+    `${environment.baseUrl}/cej/detail?fileCode=${judicialProcess?.fileCode}`,
+    fetcher,
+  );
+  const router = useRouter();
+
   return (
     <ReactiveForm
       onSubmit={handleSubmit}
@@ -110,6 +122,38 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 getValues={getValues}
                 entityReference={judicialProcess?.entityReference}
               />
+
+              <div className="col-span-12">
+                <Alert
+                  color={data?.updated ? "primary" : "warning"}
+                  endContent={
+                    <div className="flex my-auto">
+                      <Button
+                        color={data?.updated ? "primary" : "warning"}
+                        size="sm"
+                        className="bg-transparent"
+                        variant="flat"
+                        onClick={() => {
+                          const currentPath = window.location.pathname;
+                          const cej_route = currentPath.replace(
+                            /edit\/\d+/,
+                            "cej",
+                          );
+
+                          router.push(
+                            `${cej_route}/${judicialProcess?.fileCode}`,
+                          );
+                        }}
+                      >
+                        Ver detalle
+                      </Button>
+                    </div>
+                  }
+                  title={data?.message}
+                  description={data?.alternativeMessage}
+                />
+              </div>
+
               <div className="col-span-12 mt-4">
                 <DynamicStepper
                   entityReference={judicialProcess?.entityReference}
