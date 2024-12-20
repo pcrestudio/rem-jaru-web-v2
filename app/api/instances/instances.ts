@@ -38,3 +38,9 @@ export async function upsertInstanceStepData(
     },
   });
 }
+
+export async function exportDocument(fileName: string) {
+  return api.get(`${apiUrl}/export?fileName=${fileName}`, {
+    responseType: "blob",
+  });
+}

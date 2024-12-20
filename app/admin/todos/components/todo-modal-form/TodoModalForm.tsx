@@ -71,7 +71,7 @@ const TodoModal: FC<TodoModalProps> = ({
             register={register}
             errors={errors}
             touched={touchedFields.targetAttributeId}
-            items={data ?? []}
+            items={data?.results ?? []}
             className="col-span-6"
             noModal
             label="Responsable"

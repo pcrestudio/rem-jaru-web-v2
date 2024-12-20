@@ -21,7 +21,11 @@ const judicialProcessCEJColumns = [
     key: "sumilla",
     label: "Sumilla",
   },
-  { key: "actions", label: "Opciones" },
+  {
+    key: "resolucion_archivo",
+    label: "Expediente",
+    width: 100,
+  },
 ];
 
 export default judicialProcessCEJColumns;

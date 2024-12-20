@@ -91,7 +91,7 @@ const TodoDataGrid: FC<TodoDataGridProps> = () => {
       />
 
       <CustomDataGrid<GetTodosInstanceDto>
-        endpointUrl="todos"
+        endpointUrl="todos?"
         columns={todoColumns}
         dataGridKey="id"
         cells={renderCell}

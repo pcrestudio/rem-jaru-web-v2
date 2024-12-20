@@ -120,6 +120,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         <CustomDataGrid<GetTodosInstanceDto>
           endpointUrl={`todos/instance?entityReference=${entityReference}&`}
           columns={todoInstanceColumns}
+          storeItems={stepTodos as GetTodosInstanceDto[]}
           dataGridKey="id"
           cells={renderCell}
           emptyContent="Sin tareas por completar."

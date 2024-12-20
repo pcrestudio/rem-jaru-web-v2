@@ -13,6 +13,8 @@ interface UseCustomDataGridProps<T extends object> {
   onChangePage: (page: number) => void;
   page: number;
   totalPages: number;
+  pageSize: number;
+  total: number;
   onRowsPerPageChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -22,6 +24,7 @@ interface UseCustomDataGridParams {
   hasExcelButton?: boolean;
   addButtonText?: string;
   onAddChange?: () => void;
+  onExportableExcel?: () => void;
 }
 
 const useCustomDataGrid = <T extends object>(
@@ -54,7 +57,7 @@ const useCustomDataGrid = <T extends object>(
                 <Button
                   className="excel-btn"
                   startContent={<AiOutlineFileExcel />}
-                  onClick={params.onAddChange}
+                  onClick={params.onExportableExcel}
                 >
                   Exportar excel
                 </Button>
@@ -83,6 +86,8 @@ const useCustomDataGrid = <T extends object>(
     onChangePage: handlePageChange,
     page,
     totalPages: data ? data?.totalPages : 1,
+    total: data ? data?.total : 0,
+    pageSize,
     onRowsPerPageChange,
   };
 };

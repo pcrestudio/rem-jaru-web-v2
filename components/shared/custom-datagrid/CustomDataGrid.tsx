@@ -16,17 +16,20 @@ interface CustomDataGridProps<T extends object> {
   dataGridKey?: string;
   cells?: (item: any, columnKey: string | number) => ReactNode;
   onAddChange?: () => void;
+  onExportableExcel?: () => void;
   emptyContent?: string;
   hasAddButton?: boolean;
   hasExcelButton?: boolean;
   addButtonText?: string;
   totalItemsText?: string;
   items?: T[];
+  storeItems?: T[];
 }
 
 const CustomDataGrid = <T extends object>({
   columns,
   onAddChange,
+  onExportableExcel,
   dataGridKey,
   cells,
   emptyContent,
@@ -35,13 +38,16 @@ const CustomDataGrid = <T extends object>({
   addButtonText,
   endpointUrl,
   totalItemsText,
+  storeItems = [],
 }: CustomDataGridProps<T>) => {
   const {
     items,
     topContent,
     page,
     onChangePage,
+    pageSize,
     totalPages,
+    total,
     onRowsPerPageChange,
   } = useCustomDataGrid<T>({
     endpointUrl,
@@ -49,6 +55,7 @@ const CustomDataGrid = <T extends object>({
     hasExcelButton,
     addButtonText,
     onAddChange,
+    onExportableExcel,
   });
 
   return (
@@ -59,7 +66,7 @@ const CustomDataGrid = <T extends object>({
         <div className="flex w-full justify-between">
           <div className="flex flex-row gap-4 items-center">
             <p className="text-foreground text-small">
-              {totalItemsText ?? "Fichas totales:"} <b>{items?.length}</b>
+              {totalItemsText ?? "Fichas totales:"} <b>{total}</b>
             </p>
           </div>
           <Pagination
@@ -71,10 +78,11 @@ const CustomDataGrid = <T extends object>({
             total={totalPages}
             onChange={onChangePage}
           />
-          <label className="flex items-center text-foreground text-small">
-            Datos entre:
+          <label className="flex items-center gap-1 text-foreground text-small">
+            Filas de:
             <select
-              className="bg-transparent outline-none text-foreground text-small"
+              className="bg-transparent outline-none text-foreground text-xs"
+              defaultValue={pageSize}
               onChange={onRowsPerPageChange}
             >
               <option value="5">5</option>
@@ -99,7 +107,10 @@ const CustomDataGrid = <T extends object>({
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody items={items} emptyContent={emptyContent}>
+      <TableBody
+        items={items && items.length === 0 ? storeItems : items}
+        emptyContent={emptyContent}
+      >
         {(item) => (
           <TableRow key={item[dataGridKey]}>
             {(columnKey) => <TableCell>{cells(item, columnKey)}</TableCell>}

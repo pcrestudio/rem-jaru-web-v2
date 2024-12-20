@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/judicial-process-datagrid/columns/judicialProcessColumns";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
+import { exportJudicialProcessExcel } from "@/app/api/judicial-process/judicial-process";
+import exportableExcel from "@/utils/exportable_excel";
 
 export interface JudicialProcessDataGridProps {
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
@@ -77,6 +79,11 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
       onAddChange={() => {
         const currentPath = window.location.pathname;
         router.push(`${currentPath}/create`);
+      }}
+      onExportableExcel={async () => {
+        const response = await exportJudicialProcessExcel();
+
+        exportableExcel(response);
       }}
     />
   );

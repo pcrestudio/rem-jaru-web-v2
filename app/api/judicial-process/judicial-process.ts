@@ -7,6 +7,7 @@ import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edi
 import { ToggleJudicialProcessDto } from "@/app/dto/submodule/judicial_process/toggle-judicial-process.dto";
 
 const apiUrl: string = `${environment.baseUrl}/judicial_processes`;
+const apiCEJUrl: string = `${environment.baseUrl}/cej`;
 
 export async function createJudicialProcess(
   judicialProcess: CreateJudicialProcessDto,
@@ -32,4 +33,14 @@ export async function toggleJudicialProcess(
   judicialProcess: ToggleJudicialProcessDto,
 ) {
   return api.patch(`${apiUrl}/toggle`, judicialProcess);
+}
+
+export async function exportJudicialProcessExcel() {
+  return api.get(`${apiUrl}/export/excel`, { responseType: "blob" });
+}
+
+export async function exportCEJDossier(fileName: string) {
+  return api.get(`${apiCEJUrl}/export?fileName=${fileName}`, {
+    responseType: "blob",
+  });
 }
