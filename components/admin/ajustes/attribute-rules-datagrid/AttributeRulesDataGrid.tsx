@@ -11,9 +11,10 @@ import {
 import { EditIcon } from "@nextui-org/shared-icons";
 import { Button } from "@mui/material";
 import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
+import { Input } from "@nextui-org/input";
+
 import { GetAttributeRulesDto } from "@/app/dto/attribute-values/get-attribute-rules.dto";
 import { attributeRulesColumns } from "@/components/admin/ajustes/attribute-rules-datagrid/columns/attribute-rules.columns";
-import { Input } from "@nextui-org/input";
 
 export interface AttributeRulesDataGridProps {
   rules: GetAttributeRulesDto[];
@@ -69,8 +70,8 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
           />
           <Button
             className="text-cerulean-500 text-sm flex flex-row items-center !normal-case"
-            onClick={onOpenChange}
             endIcon={<AiOutlinePlus size={16} />}
+            onClick={onOpenChange}
           >
             Agregar regla
           </Button>
@@ -82,8 +83,14 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
   return (
     <>
       <Table
-        topContent={topContent}
+        classNames={{
+          wrapper: "shadow-none border border-gray-200 gap-1",
+          table: "mt-5",
+          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
+          thead: "[&>tr]:first:rounded-none rounded-lg",
+        }}
         selectionMode="single"
+        topContent={topContent}
         onSelectionChange={(key) => {
           const isPopoverButtonClick = (event: any) => {
             return event.target.closest("[data-popover-button]");
@@ -93,12 +100,6 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
             onSelectionChange(JSON.stringify(key["anchorKey"]));
           }
         }}
-        classNames={{
-          wrapper: "shadow-none border border-gray-200 gap-1",
-          table: "mt-5",
-          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
-          thead: "[&>tr]:first:rounded-none rounded-lg",
-        }}
       >
         <TableHeader columns={attributeRulesColumns}>
           {(column) => (
@@ -106,9 +107,9 @@ const AttributeRulesDataGrid: FC<AttributeRulesDataGridProps> = ({
           )}
         </TableHeader>
         <TableBody
-          items={rules ?? []}
           emptyContent={"Sin reglas para este atributo."}
           isLoading={loading}
+          items={rules ?? []}
         >
           {(item) => (
             <TableRow key={JSON.stringify(item)}>

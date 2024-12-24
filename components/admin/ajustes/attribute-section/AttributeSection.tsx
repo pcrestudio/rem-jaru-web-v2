@@ -1,8 +1,9 @@
 import useSWR from "swr";
-import { environment } from "@/environment/environment";
-import { fetcher } from "@/config/axios.config";
 import { FC } from "react";
 import { Accordion, AccordionItem } from "@nextui-org/react";
+
+import { environment } from "@/environment/environment";
+import { fetcher } from "@/config/axios.config";
 import { GetSectionDto } from "@/app/dto/attribute-values/get-section.dto";
 import SectionAttributesDataGrid from "@/components/admin/ajustes/section-attributes-datagrid/SectionAttributesDataGrid";
 import SectionAttributeOptionModal from "@/components/admin/ajustes/section-attribute-option-modal/SectionAttributeOptionModal";
@@ -40,43 +41,43 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
     <>
       {isOpen && (
         <SectionAttributeOptionModal
-          isOpen={isOpen}
-          onOpenChange={onSectionAttributeOptionModalOpenChange}
-          onCloseChange={onSectionAttributeOptionModalClose}
-          title={`Configurar opciones`}
-          handleSubmit={handleAttributeOptionSubmit}
           attributeId={
             attribute?.sectionAttributeId ?? attribute?.globalAttributeId
           }
-          selectedConfigureOption={selectedAttributeOption}
           attributeOption={attributeOption}
+          handleSubmit={handleAttributeOptionSubmit}
+          isOpen={isOpen}
+          selectedConfigureOption={selectedAttributeOption}
+          title={`Configurar opciones`}
+          onCloseChange={onSectionAttributeOptionModalClose}
+          onOpenChange={onSectionAttributeOptionModalOpenChange}
         />
       )}
       <SectionAttributeModal
-        isOpen={isOpenSectionAttributeModal}
-        onOpenChange={onSectionAttributeModalOpenChange}
-        onCloseChange={onSectionAttributeModalClose}
-        title={attribute ? "Editar atributo" : `Agregar atributo`}
-        handleSubmit={handleAttributeSubmit}
         attribute={attribute}
+        handleSubmit={handleAttributeSubmit}
+        isOpen={isOpenSectionAttributeModal}
         sectionId={sectionId}
+        title={attribute ? "Editar atributo" : `Agregar atributo`}
+        onCloseChange={onSectionAttributeModalClose}
+        onOpenChange={onSectionAttributeModalOpenChange}
       />
       {data &&
         data.map((section) => (
           <Accordion
-            selectionMode="multiple"
-            variant="splitted"
             key={`${section.label}`}
             itemClasses={{
               base: "mb-4",
               title: "text-cerulean-950 font-semibold text-base",
             }}
+            selectionMode="multiple"
+            variant="splitted"
           >
             <AccordionItem
               key={section.sectionId}
               aria-label={`Accordion ${section.sectionId}`}
-              title={`${section.label}`}
               className="border border-slate-200 shadow-none"
+              title={`${section.label}`}
             >
               <SectionAttributesDataGrid
                 attributes={section.attributes}

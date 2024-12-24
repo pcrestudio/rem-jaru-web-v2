@@ -1,9 +1,10 @@
 "use client";
 
-import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import React, { FC } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
+
+import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 
 export interface LocalAutocompleteProps extends ReactiveFieldProps {
@@ -25,37 +26,37 @@ const LocalAutocomplete: FC<LocalAutocompleteProps> = ({
 }) => {
   return (
     <Controller
-      name={name}
       control={control}
+      name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
           fullWidth
-          options={options}
+          className={className}
           getOptionLabel={(option) => option.label || ""}
+          isOptionEqualToValue={(option, value) => option === value}
+          options={options}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              className="nextui-input"
+              error={!!error}
+              helperText={error ? error.message : ""}
+              label={label}
+              required={isRequired}
+              size="medium"
+              variant="filled"
+            />
+          )}
+          sx={autocompleteStyle}
           value={
             value && options
               ? options.find((option) => option.value === value)
               : null
           }
-          sx={autocompleteStyle}
           onChange={(_, newValue) => onChange(newValue ? newValue.value : "")}
-          className={className}
-          isOptionEqualToValue={(option, value) => option === value}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              required={isRequired}
-              variant="filled"
-              size="medium"
-              className="nextui-input"
-              label={label}
-              error={!!error}
-              helperText={error ? error.message : ""}
-            />
-          )}
-        ></Autocomplete>
+        />
       )}
-    ></Controller>
+    />
   );
 };
 

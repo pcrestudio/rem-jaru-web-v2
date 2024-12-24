@@ -1,4 +1,6 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
 import { CreateSectionAttributeOptionDto } from "@/app/dto/attribute-values/create-section-attribute-option.dto";
@@ -9,7 +11,6 @@ import {
   editSectionAttributeOption,
 } from "@/app/api/attribute-values/atrribute-values";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
-import toast from "react-hot-toast";
 
 interface UseSectionAttributeProps {
   isOpenSectionAttributeModal: boolean;
@@ -80,6 +81,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
       if (data) {
         setAttributeOption(initialValues);
         toast.success("Se editó la opción correctamente.");
+
         return reset();
       }
     }
@@ -94,6 +96,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     if (data) {
       setAttributeOption(initialValues);
       toast.success("Se creó la opción correctamente.");
+
       return reset();
     }
   };
@@ -116,6 +119,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
         setAttributeOption(initialValues);
         setOpenSectionAttributeModal(false);
         toast.success("Se editó el atributo correctamente.");
+
         return reset();
       }
     }
@@ -130,6 +134,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
       setAttributeOption(initialValues);
       setOpenSectionAttributeModal(false);
       toast.success("Se creó el atributo correctamente.");
+
       return reset();
     }
   };

@@ -1,5 +1,4 @@
 import { environment } from "@/environment/environment";
-
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { CreateJudicialProcessDto } from "@/app/dto/submodule/judicial_process/create-judicial-process.dto";
 import api from "@/config/axios.config";

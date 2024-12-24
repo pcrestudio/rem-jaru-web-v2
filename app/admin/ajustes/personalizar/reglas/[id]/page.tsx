@@ -1,17 +1,18 @@
 "use client";
 
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import useSWR from "swr";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+
+import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetAttributeRulesDto } from "@/app/dto/attribute-values/get-attribute-rules.dto";
-import React, { useState } from "react";
 import AttributeRulesDataGrid from "@/components/admin/ajustes/attribute-rules-datagrid/AttributeRulesDataGrid";
 import AttributeRulesModal from "@/components/admin/ajustes/attribute-rules-modal/AttributeRulesModal";
 import { CreateAttributeRuleDto } from "@/app/dto/attribute-values/create-attribute-rule.dto";
 import { upsertAttributeRule } from "@/app/api/attribute-values/atrribute-values";
-import toast from "react-hot-toast";
 
 export default function Rules() {
   const pathname = usePathname();
@@ -36,6 +37,7 @@ export default function Rules() {
 
   const handleOnSelectChange = (keys: string) => {
     const attribute: GetAttributeRulesDto = JSON.parse(JSON.parse(keys));
+
     setAttributeRule(attribute);
     setIsOpen(true);
   };
@@ -56,6 +58,7 @@ export default function Rules() {
         setIsOpen(false);
         toast.success("La regla fue editada correctamente");
         setAttributeRule(null);
+
         return reset();
       }
     }
@@ -84,19 +87,19 @@ export default function Rules() {
       </div>
       <AttributeRulesModal
         attributeRule={attributeRule}
-        moduleId={Number(router?.get("moduleId"))}
-        isOpen={isOpen}
-        onOpenChange={handleOpenChange}
-        onCloseChange={handleOnCloseChange}
         handleSubmit={handleSubmit}
+        isOpen={isOpen}
+        moduleId={Number(router?.get("moduleId"))}
         sectionAttributeId={Number(params?.id)}
         title={attributeRule ? "Editar regla" : "Nueva regla"}
+        onCloseChange={handleOnCloseChange}
+        onOpenChange={handleOpenChange}
       />
       <AttributeRulesDataGrid
+        loading={isLoading}
         rules={data ? data : []}
         onOpenChange={handleOpenChange}
         onSelectionChange={handleOnSelectChange}
-        loading={isLoading}
       />
     </div>
   );

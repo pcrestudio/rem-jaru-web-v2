@@ -1,10 +1,11 @@
 "use client";
 
 import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { AiOutlinePlus } from "react-icons/ai";
+
 import MasterOptionDataGrid from "@/components/admin/ajustes/master-option-datagrid/MasterOptionDataGrid";
 import format from "@/utils/format_date";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
-import { AiOutlinePlus } from "react-icons/ai";
 import MasterModal from "@/app/admin/ajustes/maestros/components/master-modal/MasterModal";
 import useMasterSettingHook from "@/app/admin/ajustes/maestros/hooks/useMasterSettingHook";
 
@@ -23,11 +24,11 @@ export default function Maestros() {
   return (
     <>
       <MasterModal
-        title={isSettingSection ? "Nueva sección" : "Nuevo maestro"}
-        isOpen={openMaster}
         handleSubmit={handleMasterSubmit}
-        onCloseChange={handleCloseMasterModal}
+        isOpen={openMaster}
         isSettingSection={isSettingSection}
+        title={isSettingSection ? "Nueva sección" : "Nuevo maestro"}
+        onCloseChange={handleCloseMasterModal}
       />
 
       <div className="page-settings">
@@ -57,8 +58,6 @@ export default function Maestros() {
           groupedData.map(([moduleName, masters]) => (
             <Accordion
               key={moduleName}
-              selectionMode="multiple"
-              variant="splitted"
               className="master-global-accordion"
               itemClasses={{
                 base: "-p-0",
@@ -66,13 +65,14 @@ export default function Maestros() {
                 content: "master-accordion",
                 trigger: "border-b-red-500",
               }}
+              selectionMode="multiple"
+              variant="splitted"
             >
               <AccordionItem title={moduleName}>
                 <>
                   {masters.map((master) => (
                     <Accordion
                       key={master.name}
-                      variant="splitted"
                       className="master-option-global-accordion"
                       itemClasses={{
                         title:
@@ -80,11 +80,12 @@ export default function Maestros() {
                         base: "mb-4",
                         trigger: "![&>span]:rotate-0",
                       }}
+                      variant="splitted"
                     >
                       <AccordionItem
-                        title={master.name}
-                        subtitle={`Creado: ${format(master.createdAt)}`}
                         className="border border-slate-200 shadow-none"
+                        subtitle={`Creado: ${format(master.createdAt)}`}
+                        title={master.name}
                       >
                         <MasterOptionDataGrid masterId={master.id} />
                       </AccordionItem>
@@ -93,10 +94,10 @@ export default function Maestros() {
                   <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
                     <Button
                       className="standard-btn w-auto text-white"
+                      endContent={<AiOutlinePlus />}
                       onClick={() =>
                         handleMasterModalChange(masters, moduleName)
                       }
-                      endContent={<AiOutlinePlus />}
                     >
                       Agregar maestro
                     </Button>

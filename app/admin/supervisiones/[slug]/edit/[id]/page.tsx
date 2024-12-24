@@ -2,12 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import useSWR from "swr";
+import React from "react";
+
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import SupervisionForm from "@/app/admin/supervisiones/[slug]/components/supervision-form/SupervisionForm";
-import React from "react";
 import { CreateSupervisionDto } from "@/app/dto/supervision/create-supervision.dto";
 
 export default function SupervisionesSlugEdit() {
@@ -32,9 +33,9 @@ export default function SupervisionesSlugEdit() {
 
       <SupervisionForm
         handleSubmit={handleSubmit}
-        supervision={data}
-        slugSubmodule={slug}
         pathname={pathname}
+        slugSubmodule={slug}
+        supervision={data}
       />
     </div>
   );

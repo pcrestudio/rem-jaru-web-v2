@@ -1,8 +1,9 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import auth from "@/app/api/auth";
-import { UserAuthDto } from "@/app/dto/user-auth.dto";
 import NextAuth from "next-auth";
 import { cookies } from "next/headers";
+
+import auth from "@/app/api/auth";
+import { UserAuthDto } from "@/app/dto/user-auth.dto";
 
 const handler = NextAuth({
   providers: [
@@ -49,7 +50,7 @@ const handler = NextAuth({
 
       return token;
     },
-    session({ session, token, user }) {
+    session({ session, token }) {
       if (token) {
         session.user = token;
         session.user.role = token.role;

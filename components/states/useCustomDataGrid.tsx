@@ -1,11 +1,12 @@
 import useSWR from "swr";
+import React, { ChangeEvent, ReactNode, useCallback, useState } from "react";
+import { Button } from "@nextui-org/button";
+import { AiOutlineFileExcel, AiOutlinePlus } from "react-icons/ai";
+
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import useStore from "@/lib/store";
-import React, { ChangeEvent, ReactNode, useCallback, useState } from "react";
-import { Button } from "@nextui-org/button";
-import { AiOutlineFileExcel, AiOutlinePlus } from "react-icons/ai";
 
 interface UseCustomDataGridProps<T extends object> {
   items: T[];
@@ -51,7 +52,7 @@ const useCustomDataGrid = <T extends object>(
       params.hasAddButton && (
         <div className="flex flex-col gap-1">
           <div className="flex justify-between gap-3 items-end">
-            <p></p>
+            <p />
             <div className="flex flex-row gap-3">
               {params.hasExcelButton && (
                 <Button

@@ -1,7 +1,9 @@
-import { environment } from "@/environment/environment";
-import axios from "axios";
-import { UserAuthDto } from "@/app/dto/user-auth.dto";
 import * as https from "https";
+
+import axios from "axios";
+
+import { environment } from "@/environment/environment";
+import { UserAuthDto } from "@/app/dto/user-auth.dto";
 
 const apiUrl: string = environment.baseUrl;
 

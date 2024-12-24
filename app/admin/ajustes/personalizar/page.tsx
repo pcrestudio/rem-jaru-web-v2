@@ -1,18 +1,19 @@
 "use client";
 import { usePathname } from "next/navigation";
-import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import useSWR from "swr";
+import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetModuleDto } from "@/app/dto/modules/get-module.dto";
-import { Accordion, AccordionItem, Button } from "@nextui-org/react";
 import AttributeSection from "@/components/admin/ajustes/attribute-section/AttributeSection";
-import { AiOutlinePlus } from "react-icons/ai";
 import SettingsSectionModal from "@/app/admin/ajustes/maestros/components/settings-section-modal/SettingsSectionModal";
-import { useState } from "react";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
 import { createSettingSection } from "@/app/api/attribute-values/atrribute-values";
-import toast from "react-hot-toast";
 import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
 
 export default function Personalizar() {
@@ -47,8 +48,8 @@ export default function Personalizar() {
   return (
     <>
       <SettingsSectionModal
-        isOpen={isOpen}
         handleSubmit={handleSubmit}
+        isOpen={isOpen}
         title={"Nueva sección"}
         onCloseChange={() => setIsOpen(false)}
       />
@@ -77,12 +78,12 @@ export default function Personalizar() {
         </div>
         {data && (
           <Accordion
-            selectionMode="multiple"
-            variant="splitted"
             itemClasses={{
               title: "text-cerulean-950 font-bold text-lg",
               trigger: "border-b-red-500",
             }}
+            selectionMode="multiple"
+            variant="splitted"
           >
             {data.map((module) => (
               <AccordionItem

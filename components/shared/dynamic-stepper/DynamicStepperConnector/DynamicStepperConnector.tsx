@@ -67,7 +67,7 @@ export function QontoStepIcon(props: StepIconProps) {
   const { active, completed, className } = props;
 
   return (
-    <QontoStepIconRoot ownerState={{ active }} className={className}>
+    <QontoStepIconRoot className={className} ownerState={{ active }}>
       {completed ? (
         <Check className="QontoStepIcon-completedIcon" />
       ) : (

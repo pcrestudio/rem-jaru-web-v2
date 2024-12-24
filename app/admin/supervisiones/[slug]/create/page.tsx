@@ -1,9 +1,10 @@
 "use client";
 
-import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
-import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
+import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
+import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import SupervisionForm from "@/app/admin/supervisiones/[slug]/components/supervision-form/SupervisionForm";
 import { CreateSupervisionDto } from "@/app/dto/supervision/create-supervision.dto";
 import { createSupervision } from "@/app/api/supervision/supervision";
@@ -43,11 +44,11 @@ export default function SupervisionesSlugCreate() {
     <div className="short-form-layout">
       <h1 className="text-2xl font-bold">Nueva Supervisión</h1>
       <ConfirmModal
-        title="Supervisión agregada."
         description={{
           __html: `La ficha de supervisión ha sido agregado con éxito. ¿Deseas configurar algunos datos extras?`,
         }}
         isOpen={confirm}
+        title="Supervisión agregada."
         onClose={handleConfirmModalClose}
         onConfirm={redirectToEdit}
       />
@@ -55,8 +56,8 @@ export default function SupervisionesSlugCreate() {
 
       <SupervisionForm
         handleSubmit={handleSubmit}
-        slugSubmodule={slug}
         pathname={pathname}
+        slugSubmodule={slug}
       />
     </div>
   );

@@ -12,14 +12,15 @@ import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
 import { Button } from "@mui/material";
 import { AiOutlinePlus, AiOutlineSisternode } from "react-icons/ai";
+import { SettingsIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+
 import {
   DataType,
   GetSectionAttributesDto,
   RowLayout,
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { sectionAttributesOptionColumns } from "@/components/admin/ajustes/section-attributes-datagrid/columns/section-attribute.columns";
-import { SettingsIcon } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 
 export interface SectionAttributesDataGridProps {
   attributes: GetSectionAttributesDto[];
@@ -199,20 +200,14 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
   return (
     <>
       <Table
-        classNames={{
-          wrapper: "bg-transparent border-none p-0 gap-1 mb-2",
-          table: "",
-          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
-          thead: "[&>tr]:first:rounded-none rounded-lg",
-        }}
         bottomContent={
           <>
             {sectionId !== 1000 && (
               <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
                 <Button
                   className="text-cerulean-500 text-sm flex flex-row items-center !normal-case"
-                  onClick={onSectionAttributeModalOpenChange}
                   endIcon={<AiOutlinePlus size={16} />}
+                  onClick={onSectionAttributeModalOpenChange}
                 >
                   Agregar otro atributo
                 </Button>
@@ -220,13 +215,19 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
             )}
           </>
         }
+        classNames={{
+          wrapper: "bg-transparent border-none p-0 gap-1 mb-2",
+          table: "",
+          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
+          thead: "[&>tr]:first:rounded-none rounded-lg",
+        }}
       >
         <TableHeader columns={sectionAttributesOptionColumns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={attributes ?? []} emptyContent={"Sin atributos."}>
+        <TableBody emptyContent={"Sin atributos."} items={attributes ?? []}>
           {(item) => (
             <TableRow key={item.sectionAttributeId ?? item.globalAttributeId}>
               {(columnKey) => (

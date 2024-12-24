@@ -1,15 +1,16 @@
 "use client";
 
+import useSWR from "swr";
+import { usePathname } from "next/navigation";
+
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import useSWR from "swr";
 import { GetModuleDto } from "@/app/dto/modules/get-module.dto";
 import ModulesCard from "@/components/admin/modules/ModulesCard";
-import { usePathname } from "next/navigation";
 
 export default function Modulos() {
   const pathname: string = usePathname();
-  const { data, error, isLoading } = useSWR<GetModuleDto[]>(
+  const { data } = useSWR<GetModuleDto[]>(
     `${environment.baseUrl}/modules`,
     fetcher,
   );
@@ -30,9 +31,9 @@ export default function Modulos() {
           {data.map((module) => (
             <ModulesCard
               key={module.name}
+              isSubmodule={false}
               module={module}
               pathname={pathname}
-              isSubmodule={false}
             />
           ))}
         </div>

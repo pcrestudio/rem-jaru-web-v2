@@ -1,4 +1,3 @@
-import { mappingRole } from "@/config/mapping_role";
 import React, { FC } from "react";
 import { User } from "next-auth";
 import {
@@ -8,6 +7,8 @@ import {
   DropdownTrigger,
 } from "@nextui-org/react";
 import { signOut } from "next-auth/react";
+
+import { mappingRole } from "@/config/mapping_role";
 
 interface AppBarUserProps {
   user: User;

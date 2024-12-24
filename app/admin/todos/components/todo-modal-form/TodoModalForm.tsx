@@ -1,4 +1,6 @@
 import React, { FC } from "react";
+import useSWR from "swr";
+
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import createTodoValidationSchema from "@/app/validations/create-todo.validation";
@@ -6,7 +8,6 @@ import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
 import { MasterOptionConfig } from "@/config/master-option.config";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 
@@ -32,61 +33,61 @@ const TodoModal: FC<TodoModalProps> = ({
   return (
     <FormDialog
       formId="todo-form"
-      stopEventPropagation={stopEventPropagation}
+      initialValues={todo}
       isOpen={isOpen}
-      onCloseChange={onCloseChange}
-      onSubmit={handleSubmit}
+      stopEventPropagation={stopEventPropagation}
       title={title}
       validationSchema={createTodoValidationSchema}
-      initialValues={todo}
+      onCloseChange={onCloseChange}
+      onSubmit={handleSubmit}
     >
-      {({ register, errors, touchedFields, control, isValid }) => (
+      {({ register, errors, touchedFields, control }) => (
         <div className="grid grid-cols-12 gap-4 px-6">
           <ReactiveField
-            isRequired={true}
-            name="title"
-            label="Nombre"
-            register={register}
+            className="col-span-12"
             control={control}
             errors={errors}
+            isRequired={true}
+            label="Nombre"
+            name="title"
+            register={register}
             touched={touchedFields.title}
-            className="col-span-12"
           />
 
           <ReactiveField
-            isRequired={true}
-            name="description"
-            label="Descripción"
-            register={register}
+            className="col-span-12"
             control={control}
             errors={errors}
+            isRequired={true}
+            label="Descripción"
+            name="description"
+            register={register}
             touched={touchedFields.description}
-            className="col-span-12"
           />
 
           <AsyncAutocomplete
-            name="responsibleId"
-            isRequired={true}
-            control={control}
-            register={register}
-            errors={errors}
-            touched={touchedFields.targetAttributeId}
-            items={data?.results ?? []}
-            className="col-span-6"
             noModal
-            label="Responsable"
+            className="col-span-6"
+            control={control}
+            errors={errors}
+            isRequired={true}
             itemLabel="firstName"
             itemValue="id"
+            items={data?.results ?? []}
+            label="Responsable"
+            name="responsibleId"
+            register={register}
+            touched={touchedFields.targetAttributeId}
           />
 
           <DynamicAutocomplete
-            isRequired={true}
-            name="todoStateId"
-            label="Estado"
-            className="col-span-6"
-            slug={MasterOptionConfig.todoEstados}
-            control={control}
             noModal
+            className="col-span-6"
+            control={control}
+            isRequired={true}
+            label="Estado"
+            name="todoStateId"
+            slug={MasterOptionConfig.todoEstados}
           />
         </div>
       )}

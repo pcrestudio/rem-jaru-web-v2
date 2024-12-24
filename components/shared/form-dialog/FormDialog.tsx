@@ -1,9 +1,10 @@
 import { FC } from "react";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Button } from "@nextui-org/button";
+
 import ReactiveForm, {
   ReactiveFormProps,
 } from "@/components/form/ReactiveForm";
-import { Button } from "@nextui-org/button";
 
 interface FormDialogProps extends ReactiveFormProps {
   title: string;
@@ -26,24 +27,24 @@ const FormDialog: FC<FormDialogProps> = ({
 }) => {
   return (
     <Dialog
-      open={isOpen}
       fullWidth
       PaperProps={{
         className: "!rounded-2xl",
       }}
+      open={isOpen}
     >
       <DialogTitle className="text-cerulean-950 font-bold !text-lg">
         {title}
       </DialogTitle>
       <ReactiveForm
-        onSubmit={(values, reset, event) => onSubmit(values, reset, event)}
-        validationSchema={validationSchema}
-        initialValues={initialValues}
-        stopEventPropagation={stopEventPropagation}
         formId={formId}
+        initialValues={initialValues}
         options={{
           mode: "onTouched",
         }}
+        stopEventPropagation={stopEventPropagation}
+        validationSchema={validationSchema}
+        onSubmit={(values, reset, event) => onSubmit(values, reset, event)}
       >
         {({ register, errors, touchedFields, control, isValid, reset }) => (
           <>
@@ -56,13 +57,13 @@ const FormDialog: FC<FormDialogProps> = ({
               reset,
             })}
             <DialogActions className="!px-6 !pt-4">
-              <Button onClick={onCloseChange} className="bg-transparent">
+              <Button className="bg-transparent" onClick={onCloseChange}>
                 Cancelar
               </Button>
               <Button
-                type="submit"
                 className="standard-btn text-white"
                 disabled={!isValid}
+                type="submit"
               >
                 {buttonSubmitTitle}
               </Button>

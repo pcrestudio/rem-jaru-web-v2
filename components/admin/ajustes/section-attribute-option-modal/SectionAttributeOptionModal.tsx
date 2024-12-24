@@ -1,7 +1,8 @@
 import React, { FC } from "react";
+import useSWR from "swr";
+
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
@@ -38,17 +39,17 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
   return (
     <>
       <FormDialog
-        isOpen={isOpen}
-        onCloseChange={onCloseChange}
-        onSubmit={(values, reset) => handleSubmit(values, reset)}
-        title={title}
-        validationSchema={createSectionAttributeOptionSchema}
-        initialValues={attributeOption}
         buttonSubmitTitle={
           attributeOption.attributeId ? "Actualizar" : "Guardar"
         }
+        initialValues={attributeOption}
+        isOpen={isOpen}
+        title={title}
+        validationSchema={createSectionAttributeOptionSchema}
+        onCloseChange={onCloseChange}
+        onSubmit={(values, reset) => handleSubmit(values, reset)}
       >
-        {({ register, errors, touchedFields, control, reset }) => {
+        {({ register, errors, touchedFields, control }) => {
           return (
             <>
               <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">
@@ -63,26 +64,26 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
                   value={attributeOption?.sectionAttributeOptionId}
                 />
                 <ReactiveField
-                  isRequired={true}
-                  control={control}
-                  name="optionLabel"
-                  label="Etiqueta"
-                  register={register}
-                  errors={errors}
-                  touched={touchedFields.optionLabel}
-                  defaultValue={attributeOption?.optionLabel}
                   className="col-span-12"
+                  control={control}
+                  defaultValue={attributeOption?.optionLabel}
+                  errors={errors}
+                  isRequired={true}
+                  label="Etiqueta"
+                  name="optionLabel"
+                  register={register}
+                  touched={touchedFields.optionLabel}
                 />
                 <ReactiveField
-                  isRequired={true}
-                  name="optionValue"
-                  control={control}
-                  label="Propiedad de base de datos"
-                  register={register}
-                  errors={errors}
-                  touched={touchedFields.optionValue}
-                  defaultValue={attributeOption?.optionValue}
                   className="col-span-12"
+                  control={control}
+                  defaultValue={attributeOption?.optionValue}
+                  errors={errors}
+                  isRequired={true}
+                  label="Propiedad de base de datos"
+                  name="optionValue"
+                  register={register}
+                  touched={touchedFields.optionValue}
                 />
                 {attributeId !== null && (
                   <div className="col-span-12">

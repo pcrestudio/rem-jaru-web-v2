@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import React, { ReactNode } from "react";
+
 import useCustomDataGrid from "@/components/states/useCustomDataGrid";
 
 interface CustomDataGridProps<T extends object> {
@@ -60,8 +61,6 @@ const CustomDataGrid = <T extends object>({
 
   return (
     <Table
-      className="col-span-12"
-      topContent={topContent}
       bottomContent={
         <div className="flex w-full justify-between">
           <div className="flex flex-row gap-4 items-center">
@@ -92,24 +91,26 @@ const CustomDataGrid = <T extends object>({
           </label>
         </div>
       }
+      className="col-span-12"
       classNames={{
         wrapper: "bg-white",
       }}
+      topContent={topContent}
     >
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn
             key={column["key"]}
-            width={column["width"] ? column["width"] : null}
             allowsSorting={column["sortable"] ?? null}
+            width={column["width"] ? column["width"] : null}
           >
             {column["label"]}
           </TableColumn>
         )}
       </TableHeader>
       <TableBody
-        items={items && items.length === 0 ? storeItems : items}
         emptyContent={emptyContent}
+        items={items && items.length === 0 ? storeItems : items}
       >
         {(item) => (
           <TableRow key={item[dataGridKey]}>

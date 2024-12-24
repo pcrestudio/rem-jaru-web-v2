@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import { Textarea } from "@nextui-org/input";
+
+import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";
-import { exportDocument } from "@/app/api/instances/instances";
 import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
 
 interface InstanceFormProps {
@@ -29,6 +29,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
     onChange(step.id, name, value);
   };
@@ -38,6 +39,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
 
     if (files && files.length > 0) {
       const file = files[0];
+
       setFormData((prev) => ({ ...prev, [name]: file }));
       onChange(step?.id || 0, name, file);
     }
@@ -64,48 +66,48 @@ const InstanceForm: FC<InstanceFormProps> = ({
 
         <div
           className="custom-file-wrapper !bg-white"
-          onClick={handleClick}
           role="presentation"
+          onClick={handleClick}
         >
           <span className="custom-file-text">
             {formData.file?.name || formData.file || "Seleccionar archivo"}
           </span>
-          <button type="button" className="custom-file-button">
+          <button className="custom-file-button" type="button">
             Examinar
           </button>
         </div>
 
         <input
-          type="file"
-          name="file"
-          accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
           ref={inputRef}
-          onChange={handleFileChange}
+          accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
+          name="file"
           style={{ display: "none" }}
+          type="file"
+          onChange={handleFileChange}
         />
 
         {formData.file?.name && (
-          <p
+          <button
             className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
             onClick={() => handleDownloadDocument(formData.file?.name)}
           >
             Visualizar archivo
-          </p>
+          </button>
         )}
       </div>
 
       <TodoStepDataGrid
+        entityReference={entityReference}
         stepDataId={stepDataId}
         stepId={step.id}
-        entityReference={entityReference}
       />
 
       <Textarea
-        onChange={handleInputChange}
+        className="col-span-12 nextui-textarea-nomodal"
         label="Comentarios"
         name="comments"
-        className="col-span-12 nextui-textarea-nomodal"
         value={formData.comments || ""}
+        onChange={handleInputChange}
       />
     </div>
   );

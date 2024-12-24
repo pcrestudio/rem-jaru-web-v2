@@ -1,15 +1,16 @@
 "use client";
 
+import toast from "react-hot-toast";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+
 import { CreateJudicialProcessDto } from "@/app/dto/submodule/judicial_process/create-judicial-process.dto";
 import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
 import { createJudicialProcess } from "@/app/api/judicial-process/judicial-process";
 import { createSectionAttributeValue } from "@/app/api/attribute-values/atrribute-values";
-import toast from "react-hot-toast";
-import { usePathname, useRouter } from "next/navigation";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
-import React, { useEffect, useState } from "react";
 
 export default function ProcesosJudicialesSlugCreate() {
   const pathname: string = usePathname();
@@ -73,11 +74,11 @@ export default function ProcesosJudicialesSlugCreate() {
     <div className="short-form-layout">
       <h1 className="text-2xl font-bold">Nuevo Proceso Judicial</h1>
       <ConfirmModal
-        title="Expediente agregado."
         description={{
           __html: `El expediente ha sido agregado con éxito. ¿Deseas configurar algunos datos extras?`,
         }}
         isOpen={confirm}
+        title="Expediente agregado."
         onClose={handleConfirmModalClose}
         onConfirm={redirectToEdit}
       />

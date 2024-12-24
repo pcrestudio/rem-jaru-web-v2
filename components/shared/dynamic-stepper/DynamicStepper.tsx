@@ -1,8 +1,9 @@
-import { GetInstanceDto } from "@/app/dto/instance/get-instance.dto";
 import Stepper from "@mui/material/Stepper";
 import { FC, useEffect, useState } from "react";
 import { Step, StepContent, StepLabel } from "@mui/material";
 import useSWR from "swr";
+
+import { GetInstanceDto } from "@/app/dto/instance/get-instance.dto";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import InstanceForm from "@/app/admin/procesos-judiciales/components/InstanceForm";
@@ -57,14 +58,16 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   const handleNextInstanceStep = (outerIndex: number, innerIndex: number) => {
     setActiveInnerSteps((prev) => {
       const newInnerSteps = [...prev];
+
       newInnerSteps[outerIndex] = innerIndex;
+
       return newInnerSteps;
     });
   };
 
   useEffect(() => {
     if (data) {
-      data.forEach(({ id, steps }) => {
+      data.forEach(({ steps }) => {
         steps.forEach((step) => {
           const initialValues = step.stepData?.[0] || {};
 
@@ -106,9 +109,9 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
       <div className="vertical-stepper-container">
         {data && data[activeStep] && (
           <Stepper
+            activeStep={activeInnerSteps[activeStep] || 0}
             className="vertical-stepper mt-4"
             orientation="vertical"
-            activeStep={activeInnerSteps[activeStep] || 0}
           >
             {data[activeStep].steps.map((step, innerIndex) => (
               <Step
@@ -124,15 +127,15 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
                   }}
                 >
                   <InstanceForm
-                    step={step}
-                    onChange={handleStepDataChange}
+                    entityReference={step.stepData[0]?.entityId}
                     initialValues={
                       step.stepData.length > 0
                         ? step.stepData[0]
                         : getInitialValuesForStep(step.id)
                     }
-                    entityReference={step.stepData[0]?.entityId}
+                    step={step}
                     stepDataId={step.stepData[0]?.id}
+                    onChange={handleStepDataChange}
                   />
                 </StepContent>
               </Step>

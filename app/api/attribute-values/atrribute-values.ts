@@ -1,5 +1,4 @@
 import { environment } from "@/environment/environment";
-
 import api from "@/config/axios.config";
 import { CreateSectionAttributeOptionDto } from "@/app/dto/attribute-values/create-section-attribute-option.dto";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";

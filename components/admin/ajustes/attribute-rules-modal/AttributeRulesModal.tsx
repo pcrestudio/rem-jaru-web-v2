@@ -1,8 +1,9 @@
+import { FC } from "react";
+import useSWR from "swr";
+
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import { GetAttributeRulesDto } from "@/app/dto/attribute-values/get-attribute-rules.dto";
-import { FC } from "react";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-attributes.dto";
@@ -37,56 +38,56 @@ const AttributeRulesModal: FC<AttributeRulesModalProps> = ({
   return (
     <>
       <FormDialog
+        initialValues={attributeRule}
         isOpen={isOpen}
-        onCloseChange={onCloseChange}
-        onSubmit={(values, reset) => handleSubmit(values, reset)}
         title={title}
         validationSchema={attributeRuleSchema}
-        initialValues={attributeRule}
+        onCloseChange={onCloseChange}
+        onSubmit={(values, reset) => handleSubmit(values, reset)}
       >
-        {({ register, errors, touchedFields, control, reset }) => (
+        {({ register, errors, touchedFields, control }) => (
           <>
             <div className="grid grid-cols-12 gap-4 px-6">
               <AsyncAutocomplete
-                isRequired={true}
+                className="col-span-6"
                 control={control}
-                name="triggerAttributeId"
-                label="Atributo disparador"
-                register={register}
-                errors={errors}
-                touched={touchedFields.targetAttributeId}
                 defaultValue={sectionAttributeId}
-                items={data}
+                disabled={true}
+                errors={errors}
+                isRequired={true}
                 itemLabel="label"
                 itemValue="sectionAttributeId"
-                className="col-span-6"
-                disabled={true}
+                items={data}
+                label="Atributo disparador"
+                name="triggerAttributeId"
+                register={register}
+                touched={touchedFields.targetAttributeId}
               />
               <AsyncAutocomplete
-                isRequired={true}
+                className="col-span-6"
                 control={control}
-                name="targetAttributeId"
-                label="Atributo afectado"
-                register={register}
                 errors={errors}
-                touched={touchedFields.targetAttributeId}
+                isRequired={true}
+                itemLabel="label"
+                itemValue="sectionAttributeId"
                 items={data.filter(
                   (attribute) =>
                     attribute.sectionAttributeId !== sectionAttributeId,
                 )}
-                itemLabel="label"
-                itemValue="sectionAttributeId"
-                className="col-span-6"
+                label="Atributo afectado"
+                name="targetAttributeId"
+                register={register}
+                touched={touchedFields.targetAttributeId}
               />
               <ReactiveField
-                isRequired={true}
-                control={control}
-                name="targetValue"
-                label="Valor asignado"
-                register={register}
-                errors={errors}
-                touched={touchedFields.targetValue}
                 className="col-span-12"
+                control={control}
+                errors={errors}
+                isRequired={true}
+                label="Valor asignado"
+                name="targetValue"
+                register={register}
+                touched={touchedFields.targetValue}
               />
             </div>
           </>

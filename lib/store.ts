@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import { GetStepDataDto } from "@/app/dto/instance/get-instance.dto";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
@@ -29,7 +30,7 @@ const useStore = create<AppState>((set) => ({
     search: "",
   },
   updateFilter: (filter: FilterType) => {
-    set((state) => ({
+    set(() => ({
       filter,
     }));
   },
@@ -48,12 +49,15 @@ const useStore = create<AppState>((set) => ({
       const existingIndex = state.stepDataArray.findIndex(
         (item) => item.stepId === stepId,
       );
+
       if (existingIndex !== -1) {
         const updatedArray = [...state.stepDataArray];
+
         updatedArray[existingIndex] = {
           ...updatedArray[existingIndex],
           ...data,
         };
+
         return { stepDataArray: updatedArray };
       } else {
         return { stepDataArray: [...state.stepDataArray, { stepId, ...data }] };
@@ -64,12 +68,15 @@ const useStore = create<AppState>((set) => ({
       const existingIndex = state.stepTodos.findIndex(
         (item) => item.title === title,
       );
+
       if (existingIndex !== -1) {
         const updatedArray = [...state.stepTodos];
+
         updatedArray[existingIndex] = {
           ...updatedArray[existingIndex],
           ...data,
         };
+
         return { stepTodos: updatedArray };
       } else {
         return {

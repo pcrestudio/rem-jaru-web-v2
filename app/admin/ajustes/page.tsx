@@ -1,8 +1,9 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { settingsOptions } from "@/config/settings-options";
 import OptionsCard from "@/components/admin/ajustes/options-card/OptionsCard";
-import { usePathname } from "next/navigation";
 
 export default function Ajustes() {
   const pathname: string = usePathname();

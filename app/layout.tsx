@@ -1,14 +1,14 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
 import clsx from "clsx";
+import { ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { ReactNode } from "react";
 import JaruProvider from "@/app/provider/JaruProvider";
-import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {

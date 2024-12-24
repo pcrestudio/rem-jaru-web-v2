@@ -1,8 +1,9 @@
 "use client";
 
 import { ReactNode } from "react";
-import FilterSidebar from "@/components/filter-sidebar/FilterSidebar";
 import { usePathname } from "next/navigation";
+
+import FilterSidebar from "@/components/filter-sidebar/FilterSidebar";
 import useLayoutSettings from "@/app/admin/hooks/useLayoutSettings";
 
 const ProcesosJudicialesLayout = ({ children }: { children: ReactNode }) => {

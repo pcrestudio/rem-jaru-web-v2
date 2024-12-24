@@ -1,6 +1,7 @@
 import { Switch } from "@nextui-org/switch";
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
+
 import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 
 interface ReactiveSwitchProps extends ReactiveFieldProps {
@@ -17,20 +18,20 @@ const ReactiveSwitch: FC<ReactiveSwitchProps> = ({
 }) => {
   return (
     <Controller
-      name={name}
       control={control}
+      name={name}
       render={({ field }) => (
         <Switch
           {...field}
-          name={name}
           className="col-span-12"
           isSelected={isSelected}
+          name={name}
           onValueChange={onValueChange}
         >
           {label}
         </Switch>
       )}
-    ></Controller>
+    />
   );
 };
 

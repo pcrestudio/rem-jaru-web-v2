@@ -7,6 +7,7 @@ import {
   AiOutlineArrowRight,
 } from "react-icons/ai";
 import Link from "next/link";
+
 import { OptionCard } from "@/config/settings-options";
 
 export interface OptionsCardProps {
@@ -15,9 +16,9 @@ export interface OptionsCardProps {
 }
 
 const renderIcon: Record<number, ReactNode> = {
-  1: <AiOutlineReconciliation size="64" className="text-cerulean-950" />,
-  2: <AiOutlineFileDone size="64" className="text-cerulean-950" />,
-  3: <AiOutlineCopyright size="64" className="text-cerulean-950" />,
+  1: <AiOutlineReconciliation className="text-cerulean-950" size="64" />,
+  2: <AiOutlineFileDone className="text-cerulean-950" size="64" />,
+  3: <AiOutlineCopyright className="text-cerulean-950" size="64" />,
 };
 
 const OptionsCard: FC<OptionsCardProps> = ({ option, pathname }) => {

@@ -3,6 +3,7 @@ const getSectionAttributesSlug = (payload: object) => {
     .filter(([key]) => key.includes("-custom"))
     .map(([key, value]) => {
       const [baseKey, suffix] = key.split("-custom-");
+
       return { value: value, type: suffix, attributeSlug: baseKey };
     });
 };

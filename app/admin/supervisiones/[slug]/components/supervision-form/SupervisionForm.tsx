@@ -1,13 +1,14 @@
+import React, { FC } from "react";
+import { Button } from "@nextui-org/button";
+import useSWR from "swr";
+
 import ReactiveForm from "@/components/form/ReactiveForm";
 import { MasterOptionConfig } from "@/config/master-option.config";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
-import React, { FC } from "react";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import createSupervisionSchema from "@/app/validations/create-supervision.validation";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
-import { Button } from "@nextui-org/button";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import SectionAttributeFields from "@/components/shared/section-attribute-fields/SectionAttributeFields";
@@ -30,10 +31,10 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
 
   return (
     <ReactiveForm
-      onSubmit={handleSubmit}
-      validationSchema={createSupervisionSchema}
-      initialValues={supervision}
       formId="judicial-process-edit"
+      initialValues={supervision}
+      validationSchema={createSupervisionSchema}
+      onSubmit={handleSubmit}
     >
       {({
         register,
@@ -46,57 +47,57 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
       }) => (
         <div className="grid grid-cols-12 gap-4">
           <DynamicAutocomplete
-            isRequired={true}
-            name="authorityId"
-            label="Autoridad"
             className="col-span-6 nextui-input-nomodal"
-            slug={`${MasterOptionConfig.autoridad}-${slugSubmodule}`}
+            control={control}
             filter={{
               slugSubmodule: mappingRevertSubmodules[slugSubmodule],
             }}
-            control={control}
+            isRequired={true}
+            label="Autoridad"
+            name="authorityId"
+            slug={`${MasterOptionConfig.autoridad}-${slugSubmodule}`}
           />
 
           <DynamicAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
             isRequired={true}
-            name="situationId"
             label="Situación"
-            className="col-span-6 nextui-input-nomodal"
+            name="situationId"
             slug={MasterOptionConfig.situacion}
-            control={control}
           />
 
           <DynamicAutocomplete
-            isRequired={true}
-            name="projectId"
-            label="Proyecto"
             className="col-span-6 nextui-input-nomodal"
-            slug={MasterOptionConfig.proyectosGeneral}
             control={control}
+            isRequired={true}
+            label="Proyecto"
+            name="projectId"
+            slug={MasterOptionConfig.proyectosGeneral}
           />
 
           <AsyncAutocomplete
-            name="responsibleId"
-            isRequired={true}
-            control={control}
-            register={register}
-            errors={errors}
-            items={data ?? []}
             className="col-span-6 nextui-input-nomodal"
-            label="Responsable"
+            control={control}
+            errors={errors}
+            isRequired={true}
             itemLabel="firstName"
             itemValue="id"
+            items={data ?? []}
+            label="Responsable"
+            name="responsibleId"
+            register={register}
           />
 
           {supervision && supervision?.entityReference && (
             <>
               <SectionAttributeFields
+                control={control}
+                entityReference={supervision?.entityReference}
+                getValues={getValues}
                 pathname={pathname}
                 register={register}
-                control={control}
                 reset={reset}
-                getValues={getValues}
-                entityReference={supervision?.entityReference}
               />
               <div className="col-span-12 mt-4">
                 <DynamicStepper
@@ -107,9 +108,9 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
           )}
 
           <Button
-            type="submit"
             className="standard-btn bg-red-500 text-white col-span-12 w-fit"
             disabled={!isValid}
+            type="submit"
           >
             {supervision && supervision.entityReference
               ? "Guardar y continuar"

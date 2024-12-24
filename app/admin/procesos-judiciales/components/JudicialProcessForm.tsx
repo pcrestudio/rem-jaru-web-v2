@@ -1,19 +1,20 @@
+import React, { FC } from "react";
+import { Button } from "@nextui-org/button";
+import { Alert } from "@nextui-org/alert";
+import useSWR from "swr";
+import { useRouter } from "next/navigation";
+
 import judicialProcessSchema from "@/app/validations/create-judicial-process.validation";
 import ReactiveField from "@/components/form/ReactiveField";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 import { MasterOptionConfig } from "@/config/master-option.config";
 import SectionAttributeFields from "@/components/shared/section-attribute-fields/SectionAttributeFields";
 import ReactiveForm from "@/components/form/ReactiveForm";
-import React, { FC } from "react";
-import { Button } from "@nextui-org/button";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
-import { Alert } from "@nextui-org/alert";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto";
-import { useRouter } from "next/navigation";
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 
 interface JudicialProcessFormProps {
@@ -35,10 +36,10 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
 
   return (
     <ReactiveForm
-      onSubmit={handleSubmit}
-      validationSchema={judicialProcessSchema}
-      initialValues={judicialProcess}
       formId="judicial-process-edit"
+      initialValues={judicialProcess}
+      validationSchema={judicialProcessSchema}
+      onSubmit={handleSubmit}
     >
       {({
         register,
@@ -51,97 +52,98 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
       }) => (
         <div className="grid grid-cols-12 gap-4">
           <ReactiveField
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            errors={errors}
             isRequired={true}
-            name="fileCode"
             label="Código de Expediente"
+            name="fileCode"
             register={register}
-            control={control}
-            errors={errors}
             touched={touchedFields.fileCode}
-            className="col-span-6 nextui-input-nomodal"
           />
           <ReactiveField
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            errors={errors}
             isRequired={true}
-            name="demanded"
             label="Demandado"
+            name="demanded"
             register={register}
-            control={control}
-            errors={errors}
             touched={touchedFields.demanded}
-            className="col-span-6 nextui-input-nomodal"
           />
           <ReactiveField
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            errors={errors}
             isRequired={true}
-            name="plaintiff"
             label="Demandante"
+            name="plaintiff"
             register={register}
-            control={control}
-            errors={errors}
             touched={touchedFields.plaintiff}
-            className="col-span-6 nextui-input-nomodal"
           />
           <ReactiveField
-            name="coDefendant"
-            label="Co Demandado"
-            register={register}
+            className="col-span-6 nextui-input-nomodal"
             control={control}
             errors={errors}
-            className="col-span-6 nextui-input-nomodal"
+            label="Co Demandado"
+            name="coDefendant"
+            register={register}
           />
           <DynamicAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
             isRequired={true}
-            name="projectId"
             label="Proyectos"
-            className="col-span-6 nextui-input-nomodal"
+            name="projectId"
             slug={MasterOptionConfig.proyectos}
-            control={control}
           />
           <DynamicAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
             isRequired={true}
-            name="cargoStudioId"
             label="Estudio a cargo"
-            className="col-span-6 nextui-input-nomodal"
+            name="cargoStudioId"
             slug={MasterOptionConfig.estudios}
-            control={control}
           />
           <DynamicAutocomplete
-            isRequired={true}
-            name="controversialMatter"
-            label="Materia controvertida"
             className="col-span-6 nextui-input-nomodal"
+            control={control}
+            isRequired={true}
+            label="Materia controvertida"
+            name="controversialMatter"
             optionValue="name"
             slug={MasterOptionConfig.materia}
-            control={control}
           />
           {judicialProcess && judicialProcess?.entityReference && (
             <>
               <GlobalAttributeFields
+                control={control}
+                entityReference={judicialProcess?.entityReference}
+                getValues={getValues}
                 pathname={pathname}
                 register={register}
-                control={control}
                 reset={reset}
-                getValues={getValues}
-                entityReference={judicialProcess?.entityReference}
               />
 
               <SectionAttributeFields
+                control={control}
+                entityReference={judicialProcess?.entityReference}
+                getValues={getValues}
                 pathname={pathname}
                 register={register}
-                control={control}
                 reset={reset}
-                getValues={getValues}
-                entityReference={judicialProcess?.entityReference}
               />
 
               <div className="col-span-12">
                 <Alert
                   color={data?.updated ? "primary" : "warning"}
+                  description={data?.alternativeMessage}
                   endContent={
                     <div className="flex my-auto">
                       <Button
+                        className="bg-transparent"
                         color={data?.updated ? "primary" : "warning"}
                         size="sm"
-                        className="bg-transparent"
                         variant="flat"
                         onClick={() => {
                           const currentPath = window.location.pathname;
@@ -160,7 +162,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                     </div>
                   }
                   title={data?.message}
-                  description={data?.alternativeMessage}
                 />
               </div>
 
@@ -173,9 +174,9 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           )}
 
           <Button
-            type="submit"
             className="standard-btn text-white col-span-12 w-fit"
             disabled={!isValid}
+            type="submit"
           >
             {judicialProcess && judicialProcess.entityReference
               ? "Guardar y continuar"

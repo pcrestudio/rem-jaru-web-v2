@@ -1,25 +1,19 @@
-import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import useSWR from "swr";
-import { environment } from "@/environment/environment";
-import { fetcher } from "@/config/axios.config";
-import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import React, { FC, useState } from "react";
-import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalForm";
-import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
-import { upsertTodo } from "@/app/api/todo/todo";
 import { Tooltip } from "@nextui-org/react";
 import { EditIcon } from "@nextui-org/shared-icons";
 import toast from "react-hot-toast";
+
+import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
+import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
+import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalForm";
+import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
+import { upsertTodo } from "@/app/api/todo/todo";
 import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
 import { todoColumns } from "@/app/admin/todos/components/todo-datagrid/columns/todoColumns";
 
 interface TodoDataGridProps {}
 
 const TodoDataGrid: FC<TodoDataGridProps> = () => {
-  const { data } = useSWR<GetTodosInstanceDto[]>(
-    `${environment.baseUrl}/todos`,
-    fetcher,
-  );
   const [todo, setTodo] = useState<GetTodoDto>(null);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -76,6 +70,7 @@ const TodoDataGrid: FC<TodoDataGridProps> = () => {
 
     if (data) {
       toast.success("Todo modificado con éxito");
+
       return setOpen(false);
     }
   };
@@ -83,19 +78,19 @@ const TodoDataGrid: FC<TodoDataGridProps> = () => {
   return (
     <>
       <TodoModal
-        isOpen={open}
         handleSubmit={onSubmit}
-        onCloseChange={() => setOpen(false)}
+        isOpen={open}
         title="Todo"
         todo={todo}
+        onCloseChange={() => setOpen(false)}
       />
 
       <CustomDataGrid<GetTodosInstanceDto>
-        endpointUrl="todos?"
+        cells={renderCell}
         columns={todoColumns}
         dataGridKey="id"
-        cells={renderCell}
         emptyContent="Sin tareas por completar."
+        endpointUrl="todos?"
         onAddChange={() => setOpen(true)}
       />
     </>

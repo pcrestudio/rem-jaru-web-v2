@@ -1,8 +1,12 @@
 import React, { FC, useEffect } from "react";
 import useSWR from "swr";
+import { DatePicker } from "@nextui-org/react";
+import { Input, Textarea } from "@nextui-org/input";
+import { Controller } from "react-hook-form";
+import { Autocomplete, TextField } from "@mui/material";
+
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { DatePicker } from "@nextui-org/react";
 import {
   DataType,
   GetSectionAttributesDto,
@@ -10,9 +14,6 @@ import {
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { useReactiveForm } from "@/components/states/useReactiveForm";
-import { Input, Textarea } from "@nextui-org/input";
-import { Controller } from "react-hook-form";
-import { Autocomplete, TextField } from "@mui/material";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
@@ -77,18 +78,18 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
   return (
     <div className="grid grid-cols-12 gap-2 col-span-12">
       {data &&
-        data.map((global, index) => (
+        data.map((global) => (
           <div
+            key={global.slug}
             className={`${
               mappingRowLayout[global.rowLayout]
             } -order-${global.order}`}
-            key={global.slug}
           >
             {global.dataType === DataType.TEXT && (
               <Controller
-                name={customFieldIndicator(global.slug, global.dataType)}
-                defaultValue={global.values[0]?.value ?? ""}
                 control={control}
+                defaultValue={global.values[0]?.value ?? ""}
+                name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <Input
                     isRequired={true}
@@ -102,21 +103,21 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
 
             {global.dataType === DataType.FLOAT && (
               <Controller
-                name={customFieldIndicator(global.slug, global.dataType)}
-                defaultValue={global.values[0]?.value ?? ""}
                 control={control}
+                defaultValue={global.values[0]?.value ?? ""}
+                name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <Input
-                    isRequired={true}
-                    label={global.label}
-                    type="number"
-                    placeholder="0.0"
                     className="nextui-input-nomodal"
                     endContent={
                       <div className="pointer-events-none flex items-center">
                         <span className="text-default-400 text-small">$</span>
                       </div>
                     }
+                    isRequired={true}
+                    label={global.label}
+                    placeholder="0.0"
+                    type="number"
                     {...field}
                   />
                 )}
@@ -125,30 +126,30 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
 
             {global.dataType === DataType.FILE && (
               <ReactiveFieldFile
-                name={customFieldIndicator(global.slug, global.dataType)}
-                defaultValue={global.values[0]?.value ?? ""}
                 control={control}
+                defaultValue={global.values[0]?.value ?? ""}
+                name={customFieldIndicator(global.slug, global.dataType)}
               />
             )}
 
             {global.dataType === DataType.INTEGER && (
               <Controller
-                name={customFieldIndicator(global.slug, global.dataType)}
-                defaultValue={global.values[0]?.value ?? ""}
                 control={control}
+                defaultValue={global.values[0]?.value ?? ""}
+                name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <Input
-                    isRequired={true}
-                    label={global.label}
-                    type="number"
-                    placeholder="0.0"
-                    min={0}
                     className="nextui-input-nomodal"
                     endContent={
                       <div className="pointer-events-none flex items-center">
                         <span className="text-default-400 text-small">%</span>
                       </div>
                     }
+                    isRequired={true}
+                    label={global.label}
+                    min={0}
+                    placeholder="0.0"
+                    type="number"
                     {...field}
                   />
                 )}
@@ -157,13 +158,13 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
 
             {global.dataType === DataType.TEXTAREA && (
               <Controller
-                name={customFieldIndicator(global.slug, global.dataType)}
                 control={control}
                 defaultValue={global.values[0]?.value ?? ""}
+                name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <Textarea
-                    isRequired={true}
                     className="nextui-textarea-nomodal"
+                    isRequired={true}
                     label={global.label}
                     {...field}
                   />
@@ -173,13 +174,13 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
 
             {global.dataType === DataType.DATE && (
               <Controller
-                name={customFieldIndicator(global.slug, global.dataType)}
+                control={control}
                 defaultValue={
                   global.values[0]?.value
                     ? convertToZonedDateTime(global.values[0]?.value)
                     : null
                 }
-                control={control}
+                name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <DatePicker
                     isRequired={true}
@@ -197,14 +198,25 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
 
             {global.dataType === DataType.LIST && (
               <Controller
-                name={customFieldIndicator(global.slug, global.dataType)}
                 control={control}
                 defaultValue={global.values[0]?.value || ""}
+                name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field: { onChange, value } }) => (
                   <Autocomplete
                     fullWidth
-                    options={global.options}
                     getOptionLabel={(option) => option.optionLabel || ""}
+                    isOptionEqualToValue={(option, value) => option === value}
+                    options={global.options}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        className="nextui-input"
+                        label={global.label}
+                        size="medium"
+                        variant="filled"
+                      />
+                    )}
+                    sx={autocompleteStyle}
                     value={
                       value && global.options
                         ? global.options.find(
@@ -212,23 +224,12 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                           )
                         : null
                     }
-                    sx={autocompleteStyle}
                     onChange={(_, newValue) =>
                       onChange(newValue ? newValue.optionValue : "")
                     }
-                    isOptionEqualToValue={(option, value) => option === value}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        size="medium"
-                        className="nextui-input"
-                        label={global.label}
-                      />
-                    )}
-                  ></Autocomplete>
+                  />
                 )}
-              ></Controller>
+              />
             )}
           </div>
         ))}

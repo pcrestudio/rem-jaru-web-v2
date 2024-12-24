@@ -1,15 +1,16 @@
-import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import React, { FC, useEffect, useState } from "react";
-import { todoInstanceColumns } from "@/app/admin/todos/components/todo-step-datagrid/columns/todoInstanceColumns";
-import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalForm";
 import { createPortal } from "react-dom";
-import useStore from "@/lib/store";
-import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
-import { upsertTodo } from "@/app/api/todo/todo";
 import { Tooltip } from "@nextui-org/react";
 import { EditIcon } from "@nextui-org/shared-icons";
 import toast from "react-hot-toast";
+
+import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
+import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
+import { todoInstanceColumns } from "@/app/admin/todos/components/todo-step-datagrid/columns/todoInstanceColumns";
+import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalForm";
+import useStore from "@/lib/store";
+import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
+import { upsertTodo } from "@/app/api/todo/todo";
 import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
 
 interface TodoStepDataGridProps {
@@ -79,6 +80,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
 
       if (data) {
         toast.success("Todo agregado con éxito");
+
         return setOpen(false);
       }
     } else {
@@ -105,11 +107,11 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
     <>
       {createPortal(
         <TodoModal
-          isOpen={open}
           handleSubmit={onSubmit}
-          onCloseChange={handleClose}
+          isOpen={open}
           title="Todo"
           todo={todo}
+          onCloseChange={handleClose}
         />,
         document.body,
       )}
@@ -118,16 +120,16 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         <p className="text-foreground text-sm">To-Dos</p>
 
         <CustomDataGrid<GetTodosInstanceDto>
-          endpointUrl={`todos/instance?entityReference=${entityReference}&`}
-          columns={todoInstanceColumns}
-          storeItems={stepTodos as GetTodosInstanceDto[]}
-          dataGridKey="id"
-          cells={renderCell}
-          emptyContent="Sin tareas por completar."
-          onAddChange={() => setOpen(true)}
           hasAddButton
           addButtonText="Nuevo To-Do"
+          cells={renderCell}
+          columns={todoInstanceColumns}
+          dataGridKey="id"
+          emptyContent="Sin tareas por completar."
+          endpointUrl={`todos/instance?entityReference=${entityReference}&`}
+          storeItems={stepTodos as GetTodosInstanceDto[]}
           totalItemsText="Tareas totales:"
+          onAddChange={() => setOpen(true)}
         />
       </div>
     </>

@@ -11,9 +11,13 @@ import {
 } from "@nextui-org/react";
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
+import useSWR from "swr";
+import { Button } from "@mui/material";
+import { AiOutlinePlus } from "react-icons/ai";
+import toast from "react-hot-toast";
+
 import { GetMasterOptionsDto } from "@/app/dto/masters/get-master-options.dto";
 import { masterOptionColumns } from "@/components/admin/ajustes/master-option-datagrid/columns/master-option.columns";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import MasterOptionModal from "@/components/admin/ajustes/master-dialog/MasterOptionModal";
@@ -24,10 +28,7 @@ import {
   toggleMasterOption,
 } from "@/app/api/master-option/master-option";
 import { EditMasterOptionDto } from "@/app/dto/masters/edit-master-option.dto";
-import { Button } from "@mui/material";
-import { AiOutlinePlus } from "react-icons/ai";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
-import toast from "react-hot-toast";
 
 export interface MasterOptionDataGridProps {
   masterId?: number;
@@ -149,30 +150,23 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
   return (
     <>
       <ConfirmModal
-        title={`${masterOption ? `¿Deseas ${masterOption.isActive ? "desactivar" : "activar"} esta opción?` : ""}`}
         description={{
           __html: `Estás seguro de realizar esta acción, esta opción no será eliminada y tampoco podrá utilizarse en ningún módulo.`,
         }}
         isOpen={confirm}
+        title={`${masterOption ? `¿Deseas ${masterOption.isActive ? "desactivar" : "activar"} esta opción?` : ""}`}
         onClose={handleConfirmModalClose}
         onConfirm={toggleMasterOptionHelper}
       />
       <MasterOptionModal
-        isOpen={isOpen}
-        onClose={onOpenChange}
-        masterId={masterId}
-        title={masterOption ? "Editar opción" : "Nueva opción"}
         handleSubmit={onSubmit}
+        isOpen={isOpen}
+        masterId={masterId}
         masterOption={masterOption}
+        title={masterOption ? "Editar opción" : "Nueva opción"}
+        onClose={onOpenChange}
       />
       <Table
-        classNames={{
-          wrapper:
-            "bg-transparent shadow-none p-0 border border-gray-200 gap-1",
-          table: "",
-          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
-          thead: "[&>tr]:first:rounded-none rounded-lg",
-        }}
         bottomContent={
           <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
             <Button
@@ -184,13 +178,20 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
             </Button>
           </div>
         }
+        classNames={{
+          wrapper:
+            "bg-transparent shadow-none p-0 border border-gray-200 gap-1",
+          table: "",
+          th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
+          thead: "[&>tr]:first:rounded-none rounded-lg",
+        }}
       >
         <TableHeader columns={masterOptionColumns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={data ?? []} emptyContent={"Sin opciones."}>
+        <TableBody emptyContent={"Sin opciones."} items={data ?? []}>
           {(item) => (
             <TableRow key={item.id}>
               {(columnKey) => (

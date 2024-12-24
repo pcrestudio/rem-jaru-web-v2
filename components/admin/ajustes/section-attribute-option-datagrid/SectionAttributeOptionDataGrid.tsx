@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
+
 import { sectionAttributeOptionColumns } from "@/components/admin/ajustes/section-attribute-option-datagrid/columns/section-attribute-option.columns";
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
 
@@ -77,8 +78,8 @@ const SectionAttributeOptionDataGrid: FC<
           )}
         </TableHeader>
         <TableBody
-          items={attributeOptions ?? []}
           emptyContent={"Sin opciones."}
+          items={attributeOptions ?? []}
         >
           {(item) => (
             <TableRow

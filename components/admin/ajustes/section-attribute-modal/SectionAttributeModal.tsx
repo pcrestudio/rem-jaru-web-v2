@@ -1,15 +1,10 @@
 import { FC } from "react";
+
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
-import {
-  DataType,
-  GetSectionAttributesDto,
-  RowLayout,
-} from "@/app/dto/attribute-values/get-section-attributes.dto";
+import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import createSectionAttributeSchema from "@/app/validations/create-section-attribute.validation";
-import LocalAutocomplete, {
-  LocalAutocompleteOption,
-} from "@/components/autocompletes/LocalAutocomplete";
+import LocalAutocomplete from "@/components/autocompletes/LocalAutocomplete";
 import {
   options,
   rowLayoutOptions,
@@ -36,14 +31,14 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
   return (
     <>
       <FormDialog
+        initialValues={attribute}
         isOpen={isOpen}
-        onCloseChange={onCloseChange}
-        onSubmit={(values, reset) => handleSubmit(values, reset)}
         title={title}
         validationSchema={createSectionAttributeSchema}
-        initialValues={attribute}
+        onCloseChange={onCloseChange}
+        onSubmit={(values, reset) => handleSubmit(values, reset)}
       >
-        {({ register, errors, touchedFields, control, reset }) => (
+        {({ register, errors, touchedFields, control }) => (
           <>
             <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">
               {attribute && (
@@ -59,54 +54,54 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 value={sectionId}
               />
               <ReactiveField
-                isRequired={true}
+                className="col-span-12"
                 control={control}
-                name="label"
+                errors={errors}
+                isRequired={true}
                 label="Etiqueta"
+                name="label"
                 register={register}
-                errors={errors}
                 touched={touchedFields.label}
-                className="col-span-12"
               />
               <ReactiveField
-                isRequired={true}
-                name="slug"
+                className="col-span-12"
                 control={control}
+                errors={errors}
+                isRequired={true}
                 label="Propiedad de base de datos"
+                name="slug"
                 register={register}
-                errors={errors}
                 touched={touchedFields.slug}
-                className="col-span-12"
               />
               <ReactiveField
-                isRequired={true}
-                name="order"
-                control={control}
-                label="Orden"
-                register={register}
-                errors={errors}
-                touched={touchedFields.order}
                 className="col-span-6"
+                control={control}
+                errors={errors}
+                isRequired={true}
+                label="Orden"
+                name="order"
+                register={register}
+                touched={touchedFields.order}
               />
               <LocalAutocomplete
+                className="col-span-6"
+                control={control}
+                errors={errors}
                 isRequired={true}
-                name="rowLayout"
                 label="Grilla"
+                name="rowLayout"
                 options={rowLayoutOptions}
                 register={register}
-                errors={errors}
-                control={control}
-                className="col-span-6"
               />
               <LocalAutocomplete
+                className="col-span-12"
+                control={control}
+                errors={errors}
                 isRequired={true}
-                name="dataType"
                 label="Tipo de dato"
+                name="dataType"
                 options={options}
                 register={register}
-                errors={errors}
-                control={control}
-                className="col-span-12"
               />
             </div>
           </>

@@ -1,16 +1,17 @@
 "use client";
 
-import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import React, { FC } from "react";
 import useSWR from "swr";
+import { Autocomplete, TextField } from "@mui/material";
+import { Controller } from "react-hook-form";
+
+import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { Autocomplete, TextField } from "@mui/material";
 import {
   GetMasterOptionAutoComplete,
   GetMasterOptionsDto,
 } from "@/app/dto/masters/get-master-options.dto";
-import { Controller } from "react-hook-form";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 
 export interface DynamicAutocompleteProps extends ReactiveFieldProps {
@@ -40,13 +41,28 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
 
   return (
     <Controller
-      name={name}
       control={control}
+      name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
           fullWidth
-          options={list ? list.masterOption : []}
+          className={className}
           getOptionLabel={(option: GetMasterOptionsDto) => option.name || ""}
+          isOptionEqualToValue={(option, value) => option === value}
+          options={list ? list.masterOption : []}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              className={noModal ? "nextui-input" : ""}
+              error={!!error}
+              helperText={error ? error.message : ""}
+              label={label}
+              required={isRequired}
+              size="medium"
+              variant="filled"
+            />
+          )}
+          sx={autocompleteStyle}
           value={
             value && list
               ? list.masterOption.find(
@@ -54,27 +70,12 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
                 )
               : null
           }
-          sx={autocompleteStyle}
           onChange={(_, newValue) =>
             onChange(newValue ? newValue[optionValue] : "")
           }
-          className={className}
-          isOptionEqualToValue={(option, value) => option === value}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              required={isRequired}
-              variant="filled"
-              className={noModal ? "nextui-input" : ""}
-              size="medium"
-              label={label}
-              error={!!error}
-              helperText={error ? error.message : ""}
-            />
-          )}
-        ></Autocomplete>
+        />
       )}
-    ></Controller>
+    />
   );
 };
 

@@ -1,7 +1,10 @@
 "use client";
 
-import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { usePathname } from "next/navigation";
+import toast from "react-hot-toast";
+import useSWR from "swr";
+
+import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
 import { editJudicialProcess } from "@/app/api/judicial-process/judicial-process";
@@ -9,9 +12,7 @@ import {
   createGlobalAttributeValue,
   createSectionAttributeValue,
 } from "@/app/api/attribute-values/atrribute-values";
-import toast from "react-hot-toast";
 import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edit-judicial-process.dto";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";

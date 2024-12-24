@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Input } from "@nextui-org/input";
-import { Control, Controller, set } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 
 export interface ReactiveFieldProps {
   name?: string;
@@ -36,11 +36,11 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   return (
     <>
       <Controller
-        name={name}
         control={control}
         defaultValue={defaultValue}
+        name={name}
         render={({ field }) => {
-          const handleBlur = (e: any) => {
+          const handleBlur = () => {
             if (onBlur && field?.value !== undefined) {
               onBlur(field.value);
             }
@@ -50,14 +50,14 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
           return (
             <Input
               {...field}
+              className={className}
+              errorMessage={errorMessage}
+              isInvalid={!!errors[name] && touched}
               isRequired={isRequired}
               label={label}
-              type={type}
-              isInvalid={!!errors[name] && touched}
-              errorMessage={errorMessage}
-              className={className}
-              value={field.value || ""}
               min={0}
+              type={type}
+              value={field.value || ""}
               onBlur={handleBlur}
               onChange={(e) => field.onChange(e.target.value)}
             />

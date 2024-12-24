@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import validateFileCode from "@/utils/validate_file_code";
 
 const attributeRuleSchema = Yup.object().shape({
   triggerAttributeId: Yup.string().required(

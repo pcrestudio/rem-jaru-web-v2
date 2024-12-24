@@ -1,22 +1,22 @@
 import React, { FC, useEffect } from "react";
 import useSWR from "swr";
+import { Accordion, AccordionItem, DatePicker } from "@nextui-org/react";
+import { Input, Textarea } from "@nextui-org/input";
+import { Controller } from "react-hook-form";
+import { Autocomplete, TextField } from "@mui/material";
+
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetSectionAttributesBySlugDto } from "@/app/dto/attribute-values/get-section-attributes-by-slug.dto";
-import { Accordion, AccordionItem, DatePicker } from "@nextui-org/react";
 import {
   DataType,
   RowLayout,
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { useReactiveForm } from "@/components/states/useReactiveForm";
-import { Input, Textarea } from "@nextui-org/input";
-import { Controller } from "react-hook-form";
-import { Autocomplete, TextField } from "@mui/material";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
-import { parseDate } from "@internationalized/date";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
@@ -81,11 +81,9 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
     <div className="col-span-12">
       {data &&
         data.map(
-          (section, index) =>
+          (section) =>
             section.collapsable && (
               <Accordion
-                selectionMode="multiple"
-                variant="splitted"
                 key={`${section.label}`}
                 className="mb-4"
                 itemClasses={{
@@ -93,6 +91,8 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                   base: "pb-4 shadow-none border border-slate-200",
                   trigger: "border-b-red-500 pt-4 pb-1",
                 }}
+                selectionMode="multiple"
+                variant="splitted"
               >
                 <AccordionItem title={section.label}>
                   <div className="grid grid-cols-12 gap-4">
@@ -100,19 +100,19 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                       .sort((a, b) => a.order - b.order)
                       .map((attribute) => (
                         <div
+                          key={attribute.slug}
                           className={`${
                             mappingRowLayout[attribute.rowLayout]
                           } -order-${attribute.order}`}
-                          key={attribute.slug}
                         >
                           {attribute.dataType === DataType.TEXT && (
                             <Controller
+                              control={control}
+                              defaultValue={attribute.values[0]?.value ?? ""}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              control={control}
                               render={({ field }) => (
                                 <Input
                                   isRequired={true}
@@ -125,18 +125,14 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
                           {attribute.dataType === DataType.FLOAT && (
                             <Controller
+                              control={control}
+                              defaultValue={attribute.values[0]?.value ?? ""}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              control={control}
                               render={({ field }) => (
                                 <Input
-                                  isRequired={true}
-                                  label={attribute.label}
-                                  type="number"
-                                  placeholder="0.0"
                                   endContent={
                                     <div className="pointer-events-none flex items-center">
                                       <span className="text-default-400 text-small">
@@ -144,6 +140,10 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                       </span>
                                     </div>
                                   }
+                                  isRequired={true}
+                                  label={attribute.label}
+                                  placeholder="0.0"
+                                  type="number"
                                   {...field}
                                 />
                               )}
@@ -152,30 +152,25 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
                           {attribute.dataType === DataType.FILE && (
                             <ReactiveFieldFile
+                              control={control}
+                              defaultValue={attribute.values[0]?.value ?? ""}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              control={control}
                             />
                           )}
 
                           {attribute.dataType === DataType.INTEGER && (
                             <Controller
+                              control={control}
+                              defaultValue={attribute.values[0]?.value ?? ""}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              control={control}
                               render={({ field }) => (
                                 <Input
-                                  isRequired={true}
-                                  label={attribute.label}
-                                  type="number"
-                                  placeholder="0.0"
-                                  min={0}
                                   endContent={
                                     <div className="pointer-events-none flex items-center">
                                       <span className="text-default-400 text-small">
@@ -183,6 +178,11 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                       </span>
                                     </div>
                                   }
+                                  isRequired={true}
+                                  label={attribute.label}
+                                  min={0}
+                                  placeholder="0.0"
+                                  type="number"
                                   {...field}
                                 />
                               )}
@@ -191,12 +191,12 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
                           {attribute.dataType === DataType.TEXTAREA && (
                             <Controller
+                              control={control}
+                              defaultValue={attribute.values[0]?.value ?? ""}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              control={control}
-                              defaultValue={attribute.values[0]?.value ?? ""}
                               render={({ field }) => (
                                 <Textarea
                                   isRequired={true}
@@ -209,10 +209,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
                           {attribute.dataType === DataType.DATE && (
                             <Controller
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
+                              control={control}
                               defaultValue={
                                 attribute.values[0]?.value
                                   ? convertToZonedDateTime(
@@ -220,7 +217,10 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                     )
                                   : null
                               }
-                              control={control}
+                              name={customFieldIndicator(
+                                attribute.slug,
+                                attribute.dataType,
+                              )}
                               render={({ field }) => (
                                 <DatePicker
                                   isRequired={true}
@@ -237,19 +237,32 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
                           {attribute.dataType === DataType.LIST && (
                             <Controller
+                              control={control}
+                              defaultValue={attribute.values[0]?.value || ""}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
                               )}
-                              control={control}
-                              defaultValue={attribute.values[0]?.value || ""}
                               render={({ field: { onChange, value } }) => (
                                 <Autocomplete
                                   fullWidth
-                                  options={attribute.options}
                                   getOptionLabel={(option) =>
                                     option.optionLabel || ""
                                   }
+                                  isOptionEqualToValue={(option, value) =>
+                                    option === value
+                                  }
+                                  options={attribute.options}
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      className="nextui-input"
+                                      label={attribute.label}
+                                      size="medium"
+                                      variant="filled"
+                                    />
+                                  )}
+                                  sx={autocompleteStyle}
                                   value={
                                     value && attribute.options
                                       ? attribute.options.find(
@@ -258,27 +271,14 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                         )
                                       : null
                                   }
-                                  sx={autocompleteStyle}
                                   onChange={(_, newValue) =>
                                     onChange(
                                       newValue ? newValue.optionValue : "",
                                     )
                                   }
-                                  isOptionEqualToValue={(option, value) =>
-                                    option === value
-                                  }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      variant="filled"
-                                      size="medium"
-                                      className="nextui-input"
-                                      label={attribute.label}
-                                    />
-                                  )}
-                                ></Autocomplete>
+                                />
                               )}
-                            ></Controller>
+                            />
                           )}
                         </div>
                       ))}

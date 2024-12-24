@@ -1,13 +1,14 @@
 "use client";
 
-import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import React, { FC, useCallback, useState } from "react";
-import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { Tooltip } from "@nextui-org/react";
 import { EditIcon } from "@nextui-org/shared-icons";
+import { Chip } from "@nextui-org/chip";
+
+import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
+import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { userColumns } from "@/app/admin/usuarios/components/user-datagrid/columns/userColumns";
-import { Chip } from "@nextui-org/chip";
 import { mappingRole } from "@/config/mapping_role";
 
 interface UserDataGridProps {}
@@ -68,11 +69,11 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
   return (
     <>
       <CustomDataGrid<GetUserDto>
-        endpointUrl={`auth/users?`}
+        cells={renderCell}
         columns={userColumns}
         dataGridKey="id"
-        cells={renderCell}
         emptyContent="Sin usuarios."
+        endpointUrl={`auth/users?`}
         totalItemsText="Usuarios totales:"
         onAddChange={() => setOpen(true)}
       />

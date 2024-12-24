@@ -9,6 +9,7 @@ import {
   ModalHeader,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
+
 import ReactiveForm from "@/components/form/ReactiveForm";
 import ReactiveField from "@/components/form/ReactiveField";
 import masterOptionSchema from "@/app/validations/create-master-option.validation";
@@ -32,12 +33,12 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
   masterOption,
 }) => {
   return (
-    <Modal isOpen={isOpen} onOpenChange={onClose} placement="center">
+    <Modal isOpen={isOpen} placement="center" onOpenChange={onClose}>
       <ReactiveForm
-        onSubmit={handleSubmit}
-        validationSchema={masterOptionSchema}
-        options={{ mode: "onTouched" }}
         initialValues={masterOption}
+        options={{ mode: "onTouched" }}
+        validationSchema={masterOptionSchema}
+        onSubmit={handleSubmit}
       >
         {({ register, errors, isValid, touchedFields, control }) => (
           <ModalContent>
@@ -53,22 +54,22 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
                     value={masterId}
                   />
                   <ReactiveField
-                    isRequired={true}
-                    name="name"
-                    label="Nombre"
-                    register={register}
-                    errors={errors}
-                    touched={touchedFields.name}
                     control={control}
+                    errors={errors}
+                    isRequired={true}
+                    label="Nombre"
+                    name="name"
+                    register={register}
+                    touched={touchedFields.name}
                   />
                   <ReactiveField
-                    isRequired={true}
-                    name="slug"
-                    label="Slug"
-                    register={register}
-                    errors={errors}
-                    touched={touchedFields.slug}
                     control={control}
+                    errors={errors}
+                    isRequired={true}
+                    label="Slug"
+                    name="slug"
+                    register={register}
+                    touched={touchedFields.slug}
                   />
                 </ModalBody>
                 <ModalFooter>
@@ -77,8 +78,8 @@ const MasterOptionModal: FC<MasterOptionModalProps> = ({
                   </Button>
                   <Button
                     className="standard-btn text-white"
-                    type="submit"
                     disabled={!isValid}
+                    type="submit"
                   >
                     Guardar
                   </Button>

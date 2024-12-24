@@ -1,4 +1,3 @@
-import { Role } from "@/config/mapping_role";
 import {
   AiOutlineUsergroupAdd,
   AiOutlineContainer,
@@ -8,6 +7,8 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { signOut } from "next-auth/react";
+
+import { Role } from "@/config/mapping_role";
 
 export interface MenuOptions {
   title: string;
@@ -93,10 +94,12 @@ export const menuOptions: MenuOptions[] = [
 
 export const groupedOptions = menuOptions.reduce((acc, item) => {
   const { group } = item;
+
   if (!acc[group]) {
     acc[group] = [];
   }
   acc[group].push(item);
+
   return acc;
 }, {});
 

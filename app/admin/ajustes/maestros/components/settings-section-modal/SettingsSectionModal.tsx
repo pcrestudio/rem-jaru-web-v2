@@ -1,12 +1,13 @@
+import React, { FC, useState } from "react";
+import { Switch } from "@nextui-org/switch";
+import useSWR from "swr";
+
 import { ModalProps } from "@/app/admin/types/ModalProps";
 import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-attributes.dto";
-import React, { FC, useState } from "react";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import ReactiveField from "@/components/form/ReactiveField";
-import { Switch } from "@nextui-org/switch";
 import createSettingSectionSchema from "@/app/validations/create-setting-section.validation";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import ReactiveSwitch from "@/components/form/ReactiveSwitch";
@@ -43,89 +44,89 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
   return (
     <FormDialog
       formId="settings-section-form"
-      stopEventPropagation={stopEventPropagation}
+      initialValues={attributeSection}
       isOpen={isOpen}
-      onCloseChange={onCloseChange}
-      onSubmit={handleSubmit}
+      stopEventPropagation={stopEventPropagation}
       title={title}
       validationSchema={createSettingSectionSchema}
-      initialValues={attributeSection}
+      onCloseChange={onCloseChange}
+      onSubmit={handleSubmit}
     >
-      {({ register, errors, touchedFields, control, isValid }) => (
+      {({ register, errors, touchedFields, control }) => (
         <div className="grid grid-cols-12 gap-4 px-6">
           <ReactiveField
-            isRequired={true}
-            name="label"
-            label="Etiqueta"
-            register={register}
+            className="col-span-6"
             control={control}
             errors={errors}
+            isRequired={true}
+            label="Etiqueta"
+            name="label"
+            register={register}
             touched={touchedFields.label}
-            className="col-span-6"
           />
 
           <ReactiveField
-            isRequired={true}
-            name="order"
-            control={control}
-            label="Orden"
-            type="number"
-            register={register}
-            errors={errors}
-            touched={touchedFields.order}
             className="col-span-6"
+            control={control}
+            errors={errors}
+            isRequired={true}
+            label="Orden"
+            name="order"
+            register={register}
+            touched={touchedFields.order}
+            type="number"
           />
 
           {!isSection && (
             <>
               <ReactiveField
-                isRequired={true}
-                name="slug"
-                control={control}
-                label="Propiedad de base de datos"
-                register={register}
-                errors={errors}
-                touched={touchedFields.slug}
                 className="col-span-6"
+                control={control}
+                errors={errors}
+                isRequired={true}
+                label="Propiedad de base de datos"
+                name="slug"
+                register={register}
+                touched={touchedFields.slug}
               />
               <LocalAutocomplete
+                className="col-span-6"
+                control={control}
+                errors={errors}
                 isRequired={true}
-                name="rowLayout"
                 label="Grilla"
+                name="rowLayout"
                 options={rowLayoutOptions}
                 register={register}
-                errors={errors}
-                control={control}
-                className="col-span-6"
               />
               <LocalAutocomplete
+                className="col-span-12"
+                control={control}
+                errors={errors}
                 isRequired={true}
-                name="dataType"
                 label="Tipo de dato"
+                name="dataType"
                 options={options}
                 register={register}
-                errors={errors}
-                control={control}
-                className="col-span-12"
               />
             </>
           )}
 
           <ReactiveSwitch
-            name="withoutSection"
             control={control}
-            label="¿Es una sección?"
-            isSelected={isSection}
             defaultValue={isSection}
-            onValueChange={setIsSection}
+            isSelected={isSection}
+            label="¿Es una sección?"
+            name="withoutSection"
             register={register}
+            onValueChange={setIsSection}
           />
 
           {isSection && (
             <ReactiveSwitch
-              name="collapsable"
               control={control}
               label="¿Es una sección colapsable?"
+              name="collapsable"
               register={register}
             />
           )}
@@ -140,16 +141,16 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
 
           {isSelectedModule && (
             <AsyncAutocomplete
-              name="moduleId"
-              isRequired={true}
-              control={control}
-              register={register}
-              errors={errors}
-              items={modules ?? []}
               className="col-span-12 nextui-input"
-              label="Módulos"
+              control={control}
+              errors={errors}
+              isRequired={true}
               itemLabel="name"
               itemValue="id"
+              items={modules ?? []}
+              label="Módulos"
+              name="moduleId"
+              register={register}
             />
           )}
 
@@ -163,16 +164,16 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
 
           {isSelectedSubmodule && (
             <AsyncAutocomplete
-              name="submoduleId"
-              isRequired={true}
-              control={control}
-              register={register}
-              errors={errors}
-              items={submodules ?? []}
               className="col-span-12 nextui-input"
-              label="Submódulos"
+              control={control}
+              errors={errors}
+              isRequired={true}
               itemLabel="name"
               itemValue="id"
+              items={submodules ?? []}
+              label="Submódulos"
+              name="submoduleId"
+              register={register}
             />
           )}
         </div>

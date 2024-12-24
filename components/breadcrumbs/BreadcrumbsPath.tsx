@@ -1,5 +1,6 @@
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import { FC } from "react";
+
 import { mappingNamePath } from "@/config/mapping_submodules";
 
 interface BreadcrumbsPathProps {
@@ -38,6 +39,7 @@ const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
     let name = mappingNamePath[path] ?? path;
 
     const idMatch = path.match(/^(\d+)$/);
+
     if (idMatch) {
       name = `Detalle para ${idMatch[1]}`; // Usar el ID en el nombre, ejemplo: "Detalle 1"
     }
@@ -56,14 +58,14 @@ const BreadcrumbsPath: FC<BreadcrumbsPathProps> = ({ pathname }) => {
       {generateBreadcrumbsPath(pathname).map((bread) => (
         <BreadcrumbItem
           key={`${bread.href}-yes`}
-          href={!bread.disabled ? bread.href : undefined}
-          onClick={(e) => {
-            if (bread.disabled) e.preventDefault();
-          }}
           className="capitalize"
+          href={!bread.disabled ? bread.href : undefined}
           style={{
             color: bread.disabled ? "red" : "blue",
             cursor: bread.disabled ? "not-allowed" : "pointer",
+          }}
+          onClick={(e) => {
+            if (bread.disabled) e.preventDefault();
           }}
         >
           {bread.name}

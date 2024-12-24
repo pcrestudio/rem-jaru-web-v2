@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
-import { Input } from "@nextui-org/input";
-import { Control, Controller, set } from "react-hook-form";
-import { convertToZonedDateTime } from "@/utils/format_date";
+import React, { FC } from "react";
+import { Control, Controller } from "react-hook-form";
 import { DatePicker } from "@nextui-org/react";
+
+import { convertToZonedDateTime } from "@/utils/format_date";
 
 export interface ReactiveFieldProps {
   name?: string;
@@ -35,19 +35,19 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
   return (
     <>
       <Controller
-        name={name}
+        control={control}
         defaultValue={
           defaultValue ? convertToZonedDateTime(defaultValue) : null
         }
-        control={control}
+        name={name}
         render={({ field }) => (
           <DatePicker
             className={className}
             isRequired={isRequired}
             label={label}
             {...field}
-            value={field.value}
             errorMessage={errorMessage}
+            value={field.value}
             onChange={(newValue) => {
               field.onChange(newValue);
             }}

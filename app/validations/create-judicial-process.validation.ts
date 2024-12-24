@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+
 import validateFileCode from "@/utils/validate_file_code";
 
 const judicialProcessSchema = Yup.object().shape({
@@ -11,6 +12,7 @@ const judicialProcessSchema = Yup.object().shape({
         if (value) {
           return validateFileCode(value) === null;
         }
+
         return false;
       },
     ),

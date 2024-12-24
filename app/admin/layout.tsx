@@ -1,10 +1,11 @@
 "use client";
 import { ReactNode } from "react";
 import { useSession } from "next-auth/react";
+import { SWRConfig } from "swr";
+
 import JaruProvider from "@/app/provider/JaruProvider";
 import Sidebar from "@/components/sidebar/Sidebar";
 import AppBar from "@/components/appbar/AppBar";
-import { SWRConfig } from "swr";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const { data } = useSession();

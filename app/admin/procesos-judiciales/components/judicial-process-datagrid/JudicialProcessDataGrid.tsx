@@ -1,9 +1,10 @@
 import { FC, useCallback } from "react";
 import { Tooltip } from "@nextui-org/react";
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
 import { useRouter } from "next/navigation";
+
+import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/judicial-process-datagrid/columns/judicialProcessColumns";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
@@ -35,6 +36,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
                   role="presentation"
                   onClick={() => {
                     const currentPath = window.location.pathname;
+
                     router.push(`${currentPath}/edit/${judicialProcess?.id}`);
                   }}
                 >
@@ -69,15 +71,16 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
 
   return (
     <CustomDataGrid<GetJudicialProcessDto>
-      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&`}
-      columns={judicialProcessColumns}
-      cells={renderCell}
-      addButtonText="Nuevo proceso judicial"
-      emptyContent="Sin procesos judiciales."
       hasAddButton
       hasExcelButton
+      addButtonText="Nuevo proceso judicial"
+      cells={renderCell}
+      columns={judicialProcessColumns}
+      emptyContent="Sin procesos judiciales."
+      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&`}
       onAddChange={() => {
         const currentPath = window.location.pathname;
+
         router.push(`${currentPath}/create`);
       }}
       onExportableExcel={async () => {

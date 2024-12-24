@@ -1,9 +1,10 @@
-import ModulesCard from "@/components/admin/modules/ModulesCard";
 import useSWR from "swr";
+import { FC } from "react";
+
+import ModulesCard from "@/components/admin/modules/ModulesCard";
 import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { FC } from "react";
 
 interface ModuleSlugComponentProps {
   pathname: string;
@@ -12,7 +13,7 @@ interface ModuleSlugComponentProps {
 const ModuleSlugComponent: FC<ModuleSlugComponentProps> = ({ pathname }) => {
   const slug: string = pathname.split("/")[2];
 
-  const { data, error, isLoading } = useSWR<GetSubmoduleDto[]>(
+  const { data } = useSWR<GetSubmoduleDto[]>(
     `${environment.baseUrl}/modules/submodules?slug=${slug}`,
     fetcher,
   );
@@ -33,9 +34,9 @@ const ModuleSlugComponent: FC<ModuleSlugComponentProps> = ({ pathname }) => {
           {data.map((module) => (
             <ModulesCard
               key={module.name}
+              isSubmodule={true}
               module={module}
               pathname={pathname}
-              isSubmodule={true}
             />
           ))}
         </div>

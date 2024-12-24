@@ -25,17 +25,17 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
 }) => {
   return (
     <Modal
-      isOpen={isOpen}
-      onOpenChange={onClose}
-      placement="top-center"
       backdrop="blur"
+      isOpen={isOpen}
+      placement="top-center"
+      onOpenChange={onClose}
     >
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
             <ModalBody>
-              <h1 dangerouslySetInnerHTML={description}></h1>
+              <h1 dangerouslySetInnerHTML={description} />
             </ModalBody>
             <ModalFooter>
               <Button color="default" variant="light" onClick={onClose}>

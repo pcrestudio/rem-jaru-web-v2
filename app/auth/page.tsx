@@ -1,15 +1,16 @@
 "use client";
 
-import { UserAuthDto } from "@/app/dto/user-auth.dto";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/button";
-import ReactiveForm from "@/components/form/ReactiveForm";
-import ReactiveField from "@/components/form/ReactiveField";
-import authValidationSchema from "@/app/validations/auth.validation";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
+
+import ReactiveForm from "@/components/form/ReactiveForm";
+import ReactiveField from "@/components/form/ReactiveField";
+import authValidationSchema from "@/app/validations/auth.validation";
+import { UserAuthDto } from "@/app/dto/user-auth.dto";
 
 export default function Auth() {
   const router = useRouter();
@@ -47,38 +48,38 @@ export default function Auth() {
             </h1>
           </div>
           <ReactiveForm
-            onSubmit={onSubmit}
             validationSchema={authValidationSchema}
+            onSubmit={onSubmit}
           >
             {({ register, errors, control, touchedFields, isValid }) => (
               <div className="grid grid-cols-12 gap-4">
                 <ReactiveField
-                  name="email"
-                  label="Correo electrónico"
-                  register={register}
-                  errors={errors}
-                  control={control}
-                  touched={touchedFields.email}
                   className="col-span-12"
+                  control={control}
+                  errors={errors}
+                  label="Correo electrónico"
+                  name="email"
+                  register={register}
+                  touched={touchedFields.email}
                 />
                 <ReactiveField
-                  name="password"
-                  type="password"
-                  label="Contraseña"
-                  register={register}
-                  errors={errors}
-                  control={control}
-                  touched={touchedFields.password}
                   className="col-span-12"
+                  control={control}
+                  errors={errors}
+                  label="Contraseña"
+                  name="password"
+                  register={register}
+                  touched={touchedFields.password}
+                  type="password"
                 />
                 <Button
+                  className="standard-btn w-full col-span-12"
                   color="primary"
-                  type="submit"
                   disabled={!isValid}
                   startContent={
                     <>{isLoading && <CircularProgress size={10} />}</>
                   }
-                  className="standard-btn w-full col-span-12"
+                  type="submit"
                 >
                   Iniciar sesión
                 </Button>
@@ -88,11 +89,11 @@ export default function Auth() {
         </div>
       </div>
       <div className="relative hidden lg:flex lg:flex-grow">
-        <div className="absolute bg-black/[.35] z-10 w-full h-full"></div>
+        <div className="absolute bg-black/[.35] z-10 w-full h-full" />
         <img
-          src="/anglo-american-quellaveco-inversion-minera.jpg"
           alt=""
           className="h-full w-full object-cover"
+          src="/anglo-american-quellaveco-inversion-minera.jpg"
         />
       </div>
     </section>

@@ -1,7 +1,8 @@
+import { FC } from "react";
+
 import ReactiveForm, {
   ReactiveFormProps,
 } from "@/components/form/ReactiveForm";
-import { FC } from "react";
 import LocalAutocomplete, {
   LocalAutocompleteOption,
 } from "@/components/autocompletes/LocalAutocomplete";
@@ -56,34 +57,34 @@ const AttributeRulesConditionForm: FC<AttributeRulesConditionFormProps> = ({
 }) => {
   return (
     <ReactiveForm
-      onSubmit={(values, reset) => onSubmit(values, reset)}
-      validationSchema={validationSchema}
       initialValues={initialValues}
       options={{
         mode: "onTouched",
       }}
+      validationSchema={validationSchema}
+      onSubmit={(values, reset) => onSubmit(values, reset)}
     >
-      {({ register, errors, touchedFields, control, isValid, reset }) => (
+      {({ register, errors, touchedFields, control }) => (
         <div className="grid grid-cols-12 gap-4 p-6 lg:min-w-[540px]">
           <LocalAutocomplete
-            name="logicalOperator"
+            className="col-span-6"
+            control={control}
+            errors={errors}
             label="Operador lógico"
+            name="logicalOperator"
             options={logicalOperators}
             register={register}
-            errors={errors}
-            control={control}
             touched={touchedFields.logicalOperator}
-            className="col-span-6"
           />
           <LocalAutocomplete
-            name="operator"
+            className="col-span-6"
+            control={control}
+            errors={errors}
             label="Operador condicional"
+            name="operator"
             options={conditionalOperators}
             register={register}
-            errors={errors}
-            control={control}
             touched={touchedFields.logicalOperator}
-            className="col-span-6"
           />
         </div>
       )}

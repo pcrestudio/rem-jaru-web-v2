@@ -4,6 +4,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { RiAuctionLine } from "react-icons/ri";
 import { RiEye2Line } from "react-icons/ri";
 import Link from "next/link";
+
 import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
 import { mappingSubmodules } from "@/config/mapping_submodules";
 
@@ -14,10 +15,10 @@ export interface ModulesCardProps {
 }
 
 const renderIcon: Record<number, ReactNode> = {
-  1: <RiAuctionLine size="64" className="text-cerulean-950" />,
-  2: <RiEye2Line size="64" className="text-cerulean-950" />,
-  3: <RiEye2Line size="64" className="text-cerulean-950" />,
-  4: <RiAuctionLine size="64" className="text-cerulean-950" />,
+  1: <RiAuctionLine className="text-cerulean-950" size="64" />,
+  2: <RiEye2Line className="text-cerulean-950" size="64" />,
+  3: <RiEye2Line className="text-cerulean-950" size="64" />,
+  4: <RiAuctionLine className="text-cerulean-950" size="64" />,
 };
 
 const ModulesCard: FC<ModulesCardProps> = ({

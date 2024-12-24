@@ -1,9 +1,10 @@
 "use client";
 
-import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import React, { FC } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
+
+import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 
 export interface AsyncAutocompleteProps extends ReactiveFieldProps {
@@ -27,42 +28,42 @@ const AsyncAutocomplete: FC<AsyncAutocompleteProps> = ({
 }) => {
   return (
     <Controller
-      name={name}
       control={control}
       defaultValue={defaultValue}
+      name={name}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
           fullWidth
-          readOnly={disabled}
-          options={items}
+          className={className}
           getOptionLabel={(option) => option[itemLabel] || ""}
+          isOptionEqualToValue={(option, value) => option === value}
+          options={items}
+          readOnly={disabled}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              className={noModal ? "nextui-input" : ""}
+              disabled={disabled}
+              error={!!error}
+              helperText={error ? error.message : ""}
+              label={label}
+              required={isRequired}
+              size="medium"
+              variant="filled"
+            />
+          )}
+          sx={autocompleteStyle}
           value={
             value && items
               ? items.find((option) => option[itemValue] === value)
               : null
           }
-          sx={autocompleteStyle}
           onChange={(_, newValue) =>
             onChange(newValue ? newValue[itemValue] : "")
           }
-          className={className}
-          isOptionEqualToValue={(option, value) => option === value}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              required={isRequired}
-              disabled={disabled}
-              variant="filled"
-              size="medium"
-              className={noModal ? "nextui-input" : ""}
-              label={label}
-              error={!!error}
-              helperText={error ? error.message : ""}
-            />
-          )}
-        ></Autocomplete>
+        />
       )}
-    ></Controller>
+    />
   );
 };
 

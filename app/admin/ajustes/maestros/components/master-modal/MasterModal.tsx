@@ -1,14 +1,15 @@
 "use client";
 
 import React, { FC, useState } from "react";
+import useSWR from "swr";
+import { Switch } from "@nextui-org/switch";
+
 import ReactiveField from "@/components/form/ReactiveField";
 import { GetMastersDto } from "@/app/dto/masters/get-masters.dto";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import masterSchema from "@/app/validations/create-master.validation";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { Switch } from "@nextui-org/switch";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
 
 export interface MasterModalProps {
@@ -41,34 +42,34 @@ const MasterModal: FC<MasterModalProps> = ({
 
   return (
     <FormDialog
+      initialValues={master}
       isOpen={isOpen}
-      onCloseChange={onCloseChange}
-      onSubmit={handleSubmit}
       title={title}
       validationSchema={masterSchema}
-      initialValues={master}
+      onCloseChange={onCloseChange}
+      onSubmit={handleSubmit}
     >
-      {({ register, errors, touchedFields, control, isValid }) => (
+      {({ register, errors, touchedFields, control }) => (
         <div className="grid grid-cols-12 gap-4 px-6">
           <ReactiveField
-            isRequired={true}
-            name="name"
-            label="Nombre"
-            register={register}
-            errors={errors}
-            touched={touchedFields.name}
-            control={control}
             className="col-span-12"
+            control={control}
+            errors={errors}
+            isRequired={true}
+            label="Nombre"
+            name="name"
+            register={register}
+            touched={touchedFields.name}
           />
           <ReactiveField
-            isRequired={true}
-            name="slug"
-            label="Slug"
-            register={register}
-            errors={errors}
-            touched={touchedFields.slug}
-            control={control}
             className="col-span-12"
+            control={control}
+            errors={errors}
+            isRequired={true}
+            label="Slug"
+            name="slug"
+            register={register}
+            touched={touchedFields.slug}
           />
 
           {isSettingSection && (
@@ -83,16 +84,16 @@ const MasterModal: FC<MasterModalProps> = ({
 
               {isSelectedModule && (
                 <AsyncAutocomplete
-                  name="moduleId"
-                  isRequired={true}
-                  control={control}
-                  register={register}
-                  errors={errors}
-                  items={modules ?? []}
                   className="col-span-12 nextui-input"
-                  label="Módulos"
+                  control={control}
+                  errors={errors}
+                  isRequired={true}
                   itemLabel="name"
                   itemValue="id"
+                  items={modules ?? []}
+                  label="Módulos"
+                  name="moduleId"
+                  register={register}
                 />
               )}
 
@@ -106,16 +107,16 @@ const MasterModal: FC<MasterModalProps> = ({
 
               {isSelectedSubmodule && (
                 <AsyncAutocomplete
-                  name="submoduleId"
-                  isRequired={true}
-                  control={control}
-                  register={register}
-                  errors={errors}
-                  items={submodules ?? []}
                   className="col-span-12 nextui-input"
-                  label="Submódulos"
+                  control={control}
+                  errors={errors}
+                  isRequired={true}
                   itemLabel="name"
                   itemValue="id"
+                  items={submodules ?? []}
+                  label="Submódulos"
+                  name="submoduleId"
+                  register={register}
                 />
               )}
             </>

@@ -1,14 +1,15 @@
-import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import { supervisionColumns } from "@/app/admin/supervisiones/[slug]/components/supervision-datagrid/columns/supervisionColumns";
 import { useRouter } from "next/navigation";
 import React, { FC } from "react";
-import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import useSWR from "swr";
+import { Tooltip } from "@nextui-org/react";
+import { EditIcon } from "@nextui-org/shared-icons";
+
+import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
+import { supervisionColumns } from "@/app/admin/supervisiones/[slug]/components/supervision-datagrid/columns/supervisionColumns";
+import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import { environment } from "@/environment/environment";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { fetcher } from "@/config/axios.config";
-import { Tooltip } from "@nextui-org/react";
-import { EditIcon } from "@nextui-org/shared-icons";
 
 interface SupervisionDataGrid {
   slug?: string;
@@ -47,6 +48,7 @@ const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
                   role="presentation"
                   onClick={() => {
                     const currentPath = window.location.pathname;
+
                     router.push(`${currentPath}/edit/${item?.id}`);
                   }}
                 >
@@ -65,14 +67,15 @@ const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
 
   return (
     <CustomDataGrid<GetSupervisionDto>
-      columns={supervisionColumns}
-      items={data ?? []}
-      cells={renderCell}
-      emptyContent="Sin supervisiones."
       hasAddButton
       addButtonText="Nueva supervisión"
+      cells={renderCell}
+      columns={supervisionColumns}
+      emptyContent="Sin supervisiones."
+      items={data ?? []}
       onAddChange={() => {
         const currentPath = window.location.pathname;
+
         router.push(`${currentPath}/create`);
       }}
     />

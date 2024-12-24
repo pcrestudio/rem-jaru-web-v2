@@ -1,18 +1,18 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { FC, useState } from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import useSWR from "swr";
+
 import {
   GetGroupedMastersDto,
   GetMastersDto,
 } from "@/app/dto/masters/get-masters.dto";
 import { UpsertMasterDto } from "@/app/dto/masters/upsert-master.dto";
 import { upsertMaster } from "@/app/api/master-option/master-option";
-import toast from "react-hot-toast";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
 
 interface UseMasterSettingHookProps {
   openMaster: boolean;
