@@ -27,6 +27,7 @@ export interface SectionAttributesDataGridProps {
   selectedConfigureOption: (sectionAttribute: GetSectionAttributesDto) => void;
   onOpenChange?: () => void;
   onSectionAttributeModalOpenChange?: () => void;
+  sectionId?: number;
 }
 
 const dataTypeChigBG = (
@@ -106,6 +107,7 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
   selectedAttribute,
   onSectionAttributeModalOpenChange,
   selectedConfigureOption,
+  sectionId,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -198,22 +200,25 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
     <>
       <Table
         classNames={{
-          wrapper:
-            "bg-transparent shadow-none p-0 border border-gray-200 gap-1 mb-2",
+          wrapper: "bg-transparent border-none p-0 gap-1 mb-2",
           table: "",
           th: "bg-[#919EAB14]/5 text-cerulean-950 font-bold",
           thead: "[&>tr]:first:rounded-none rounded-lg",
         }}
         bottomContent={
-          <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
-            <Button
-              className="text-cerulean-500 text-sm flex flex-row items-center !normal-case"
-              onClick={onSectionAttributeModalOpenChange}
-              endIcon={<AiOutlinePlus size={16} />}
-            >
-              Agregar otro atributo
-            </Button>
-          </div>
+          <>
+            {sectionId !== 1000 && (
+              <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
+                <Button
+                  className="text-cerulean-500 text-sm flex flex-row items-center !normal-case"
+                  onClick={onSectionAttributeModalOpenChange}
+                  endIcon={<AiOutlinePlus size={16} />}
+                >
+                  Agregar otro atributo
+                </Button>
+              </div>
+            )}
+          </>
         }
       >
         <TableHeader columns={sectionAttributesOptionColumns}>
@@ -223,7 +228,7 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
         </TableHeader>
         <TableBody items={attributes ?? []} emptyContent={"Sin atributos."}>
           {(item) => (
-            <TableRow key={item.sectionAttributeId}>
+            <TableRow key={item.sectionAttributeId ?? item.globalAttributeId}>
               {(columnKey) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}

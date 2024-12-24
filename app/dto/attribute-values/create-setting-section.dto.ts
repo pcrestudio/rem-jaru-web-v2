@@ -4,4 +4,5 @@ export class CreateSettingSectionDto {
   moduleId?: number;
   submoduleId?: number;
   collapsable?: boolean;
+  isSection?: boolean;
 }

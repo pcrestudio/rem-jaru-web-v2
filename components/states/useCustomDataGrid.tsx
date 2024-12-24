@@ -52,14 +52,14 @@ const useCustomDataGrid = <T extends object>(
         <div className="flex flex-col gap-1">
           <div className="flex justify-between gap-3 items-end">
             <p></p>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-3">
               {params.hasExcelButton && (
                 <Button
                   className="excel-btn"
                   startContent={<AiOutlineFileExcel />}
                   onClick={params.onExportableExcel}
                 >
-                  Exportar excel
+                  Exportar
                 </Button>
               )}
               <Button

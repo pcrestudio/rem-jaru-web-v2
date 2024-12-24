@@ -3,6 +3,7 @@ import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import { Textarea } from "@nextui-org/input";
 import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";
 import { exportDocument } from "@/app/api/instances/instances";
+import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
 
 interface InstanceFormProps {
   onChange: (stepId: number, fieldName: string, value: any) => void;
@@ -54,19 +55,8 @@ const InstanceForm: FC<InstanceFormProps> = ({
     }
   }, [initialValues]);
 
-  const handleDownloadDocument = async (fileName: string) => {
-    const response = await exportDocument(fileName);
-
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link);
-    link.click();
-  };
-
   return (
-    <div className="grid grid-cols-12 gap-6">
+    <div className="grid grid-cols-12 gap-4">
       <div className={`col-span-12 custom-file-container`}>
         <label className="file-label self-start text-foreground" htmlFor="file">
           Documento

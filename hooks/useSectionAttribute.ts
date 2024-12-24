@@ -68,7 +68,10 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     payload: CreateSectionAttributeOptionDto,
     reset: () => void,
   ) => {
-    if (attributeOption.attributeId) {
+    if (
+      attributeOption.attributeId ||
+      attributeOption.globalAttributeOptionId
+    ) {
       const { data } = await editSectionAttributeOption({
         ...payload,
         attributeId: Number(payload.attributeId),

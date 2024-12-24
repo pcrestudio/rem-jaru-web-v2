@@ -17,7 +17,7 @@ export interface SectionAttributeOptionModalProps {
     attributeOption: GetSectionAttributeOptionDto,
   ) => void;
   handleSubmit?: (data: any, reset: () => void) => void;
-  sectionAttributeId?: number;
+  attributeId?: number;
   attributeOption?: GetSectionAttributeOptionDto;
 }
 
@@ -26,12 +26,12 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
   onCloseChange,
   handleSubmit,
   title,
-  sectionAttributeId,
+  attributeId,
   selectedConfigureOption,
   attributeOption,
 }) => {
   const { data } = useSWR<GetSectionAttributeOptionDto[]>(
-    `${environment.baseUrl}/extended/options?attributeId=${sectionAttributeId}`,
+    `${environment.baseUrl}/extended/options?attributeId=${attributeId}`,
     fetcher,
   );
 
@@ -54,8 +54,8 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
               <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">
                 <input
                   type="hidden"
-                  {...register("attributeId", { value: sectionAttributeId })}
-                  defaultValue={sectionAttributeId}
+                  {...register("attributeId", { value: attributeId })}
+                  defaultValue={attributeId}
                 />
                 <input
                   type="hidden"
@@ -84,7 +84,7 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
                   defaultValue={attributeOption?.optionValue}
                   className="col-span-12"
                 />
-                {sectionAttributeId !== null && (
+                {attributeId !== null && (
                   <div className="col-span-12">
                     <SectionAttributeOptionDataGrid
                       attributeOptions={data}

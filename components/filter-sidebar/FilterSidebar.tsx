@@ -20,7 +20,7 @@ const FilterSidebar = () => {
   const debouncedSearch = debounce(handleFilter, 700);
 
   return (
-    <div className="flex flex-col gap-4 shadow-lg p-6 bg-white md:w-[18%] md:max-w-[18%]">
+    <div className="flex flex-col gap-4 shadow-lg p-6 bg-white md:w-[18%] md:max-w-[18%] h-[calc(100vh-72px)]">
       <Input
         name="search"
         className="nextui-input-filter bg-white"

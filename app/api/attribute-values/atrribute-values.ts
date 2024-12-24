@@ -40,6 +40,42 @@ export async function editSectionAttributeOption(
 export async function createSectionAttributeValue(
   sectionAttributeValue: CreateSectionAttributeValueGroup,
 ) {
+  const formData = generateFormDataPayload(sectionAttributeValue);
+
+  return api.post(`${apiUrl}/attribute/values`, formData, {
+    headers: {
+      contentType: "multipart/form-data",
+    },
+  });
+}
+
+export async function createGlobalAttributeValue(
+  sectionAttributeValue: CreateSectionAttributeValueGroup,
+) {
+  const formData = generateFormDataPayload(sectionAttributeValue);
+
+  return api.post(`${apiUrl}/attribute/global/values`, formData, {
+    headers: {
+      contentType: "multipart/form-data",
+    },
+  });
+}
+
+export async function upsertAttributeRule(
+  attributeRule: CreateAttributeRuleDto,
+) {
+  return api.post(`${apiUrl}/attribute/rule`, attributeRule);
+}
+
+export async function createSettingSection(
+  settingSection: CreateSettingSectionDto & CreateSectionAttributeDto,
+) {
+  return api.post(`${apiUrl}/section`, settingSection);
+}
+
+const generateFormDataPayload = (
+  sectionAttributeValue: CreateSectionAttributeValueGroup,
+) => {
   const formData = new FormData();
 
   formData.append(
@@ -55,21 +91,5 @@ export async function createSectionAttributeValue(
 
   formData.append("entityReference", sectionAttributeValue.entityReference);
 
-  return api.post(`${apiUrl}/attribute/values`, formData, {
-    headers: {
-      contentType: "multipart/form-data",
-    },
-  });
-}
-
-export async function upsertAttributeRule(
-  attributeRule: CreateAttributeRuleDto,
-) {
-  return api.post(`${apiUrl}/attribute/rule`, attributeRule);
-}
-
-export async function createSettingSection(
-  settingSection: CreateSettingSectionDto,
-) {
-  return api.post(`${apiUrl}/section`, settingSection);
-}
+  return formData;
+};

@@ -14,6 +14,7 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto";
 import { useRouter } from "next/navigation";
+import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -57,7 +58,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             control={control}
             errors={errors}
             touched={touchedFields.fileCode}
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
           />
           <ReactiveField
             isRequired={true}
@@ -67,7 +68,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             control={control}
             errors={errors}
             touched={touchedFields.demanded}
-            className="col-span-4 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
           />
           <ReactiveField
             isRequired={true}
@@ -77,7 +78,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             control={control}
             errors={errors}
             touched={touchedFields.plaintiff}
-            className="col-span-4 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
           />
           <ReactiveField
             name="coDefendant"
@@ -85,7 +86,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             register={register}
             control={control}
             errors={errors}
-            className="col-span-4 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
           />
           <DynamicAutocomplete
             isRequired={true}
@@ -107,13 +108,22 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             isRequired={true}
             name="controversialMatter"
             label="Materia controvertida"
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
             optionValue="name"
             slug={MasterOptionConfig.materia}
             control={control}
           />
           {judicialProcess && judicialProcess?.entityReference && (
             <>
+              <GlobalAttributeFields
+                pathname={pathname}
+                register={register}
+                control={control}
+                reset={reset}
+                getValues={getValues}
+                entityReference={judicialProcess?.entityReference}
+              />
+
               <SectionAttributeFields
                 pathname={pathname}
                 register={register}

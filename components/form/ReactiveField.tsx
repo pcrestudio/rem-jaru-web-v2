@@ -57,6 +57,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               errorMessage={errorMessage}
               className={className}
               value={field.value || ""}
+              min={0}
               onBlur={handleBlur}
               onChange={(e) => field.onChange(e.target.value)}
             />

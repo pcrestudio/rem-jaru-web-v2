@@ -81,7 +81,11 @@ const SectionAttributeOptionDataGrid: FC<
           emptyContent={"Sin opciones."}
         >
           {(item) => (
-            <TableRow key={item.sectionAttributeOptionId}>
+            <TableRow
+              key={
+                item.sectionAttributeOptionId ?? item.globalAttributeOptionId
+              }
+            >
               {(columnKey) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}

@@ -1,6 +1,7 @@
 import { ReactiveFieldProps } from "@/components/form/ReactiveField";
-import { ChangeEvent, FC, useRef, useState } from "react";
+import React, { ChangeEvent, FC, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
+import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
 
 export interface ReactiveFieldFileProps extends ReactiveFieldProps {}
 
@@ -42,12 +43,15 @@ const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
       defaultValue={defaultValue}
       render={({ field }) => (
         <div className={`${className} custom-file-container`}>
-          <label htmlFor={name} className="file-label">
+          <label
+            htmlFor={name}
+            className="file-label self-start text-foreground"
+          >
             {label} {isRequired && <span className="required">*</span>}
           </label>
 
           <div
-            className="custom-file-wrapper"
+            className="custom-file-wrapper !bg-white"
             onClick={handleClick}
             role="presentation"
           >
@@ -68,8 +72,13 @@ const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
             style={{ display: "none" }}
           />
 
-          {errors && errors[name] && (
-            <p className="file-error-message">{errorMessage}</p>
+          {defaultValue && (
+            <p
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              onClick={() => handleDownloadDocument(defaultValue)}
+            >
+              Visualizar archivo
+            </p>
           )}
         </div>
       )}

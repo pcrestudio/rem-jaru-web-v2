@@ -5,7 +5,10 @@ import { usePathname } from "next/navigation";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
 import { editJudicialProcess } from "@/app/api/judicial-process/judicial-process";
-import { createSectionAttributeValue } from "@/app/api/attribute-values/atrribute-values";
+import {
+  createGlobalAttributeValue,
+  createSectionAttributeValue,
+} from "@/app/api/attribute-values/atrribute-values";
 import toast from "react-hot-toast";
 import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edit-judicial-process.dto";
 import useSWR from "swr";
@@ -15,7 +18,7 @@ import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-
 import useStore from "@/lib/store";
 import { upsertInstanceStepData } from "@/app/api/instances/instances";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
-import { useEffect } from "react";
+import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -36,6 +39,7 @@ export default function ProcesosJudicialesSlugEdit() {
   ) => {
     if (event.target.id === "judicial-process-edit") {
       const customFields = getSectionAttributesSlug(payload);
+      const globalFields = getGlobalAttributesSlug(payload);
 
       const { data } = await editJudicialProcess(
         {
@@ -54,6 +58,19 @@ export default function ProcesosJudicialesSlugEdit() {
           if (instanceResponse.data) {
             toast.success("Instancias modificadas con éxito");
           }
+        }
+
+        if (globalFields.length > 0) {
+          const response = await createGlobalAttributeValue({
+            attributes: globalFields,
+            entityReference: data?.entityReference,
+          });
+
+          if (response.data) {
+            toast.success("Expediente modificado con éxito");
+          }
+        } else {
+          toast.success("Expediente modificado con éxito");
         }
 
         if (customFields.length > 0) {
@@ -80,7 +97,15 @@ export default function ProcesosJudicialesSlugEdit() {
       <BreadcrumbsPath pathname={pathname} />
       <JudicialProcessForm
         handleSubmit={onSubmit}
-        judicialProcess={data}
+        judicialProcess={
+          data ?? {
+            entityReference: "",
+            coDefendant: "",
+            demanded: "",
+            fileCode: "",
+            plaintiff: "",
+          }
+        }
         pathname={pathname}
       />
     </div>

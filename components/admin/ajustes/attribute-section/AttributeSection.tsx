@@ -45,7 +45,9 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
           onCloseChange={onSectionAttributeOptionModalClose}
           title={`Configurar opciones`}
           handleSubmit={handleAttributeOptionSubmit}
-          sectionAttributeId={attribute?.sectionAttributeId}
+          attributeId={
+            attribute?.sectionAttributeId ?? attribute?.globalAttributeId
+          }
           selectedConfigureOption={selectedAttributeOption}
           attributeOption={attributeOption}
         />
@@ -66,9 +68,8 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
             variant="splitted"
             key={`${section.label}`}
             itemClasses={{
-              base: "mb-2",
-              title: "text-cerulean-950 font-bold text-lg",
-              trigger: "border-b-red-500",
+              base: "mb-4",
+              title: "text-cerulean-950 font-semibold text-base",
             }}
           >
             <AccordionItem
@@ -79,6 +80,7 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
             >
               <SectionAttributesDataGrid
                 attributes={section.attributes}
+                sectionId={section.sectionId}
                 selectedAttribute={selectedAttribute}
                 selectedConfigureOption={selectedModalConfigureOption}
                 onSectionAttributeModalOpenChange={() =>

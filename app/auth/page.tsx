@@ -8,12 +8,17 @@ import ReactiveForm from "@/components/form/ReactiveForm";
 import ReactiveField from "@/components/form/ReactiveField";
 import authValidationSchema from "@/app/validations/auth.validation";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
 
 export default function Auth() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (event: any) => {
     const payload = event as UserAuthDto;
+
+    setIsLoading(true);
 
     const res = await signIn("credentials", {
       username: payload.email,
@@ -22,11 +27,15 @@ export default function Auth() {
     });
 
     if (res?.ok) {
+      setIsLoading(false);
       router.push("/admin");
     } else {
+      setIsLoading(false);
       toast.error("Credenciales incorrectas.");
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <section className="flex flex-row min-h-screen">
@@ -66,6 +75,9 @@ export default function Auth() {
                   color="primary"
                   type="submit"
                   disabled={!isValid}
+                  startContent={
+                    <>{isLoading && <CircularProgress size={10} />}</>
+                  }
                   className="standard-btn w-full col-span-12"
                 >
                   Iniciar sesión

@@ -10,9 +10,13 @@ const ProcesosJudicialesLayout = ({ children }: { children: ReactNode }) => {
   const { showFilterSidebar } = useLayoutSettings(pathname);
 
   return (
-    <div className="h-full flex flex-row gap-4">
+    <div className="flex flex-row gap-4">
       {showFilterSidebar && <FilterSidebar />}
-      <div className="flex-grow page-settings">{children}</div>
+      <div
+        className={`flex-grow page-settings ${showFilterSidebar ? "" : "max-w-[960px] mx-auto"}`}
+      >
+        {children}
+      </div>
     </div>
   );
 };

@@ -12,6 +12,7 @@ export interface GetSectionAttributesDto {
   dataType: DataType;
   moduleId: number;
   sectionAttributeId: number;
+  globalAttributeId?: number;
   options?: GetSectionAttributeOptionDto[];
   values?: GetSectionAttributesValuesDto[];
 }

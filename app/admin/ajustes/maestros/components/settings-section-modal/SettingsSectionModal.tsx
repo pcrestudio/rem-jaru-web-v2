@@ -9,6 +9,12 @@ import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
 import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
+import ReactiveSwitch from "@/components/form/ReactiveSwitch";
+import LocalAutocomplete from "@/components/autocompletes/LocalAutocomplete";
+import {
+  options,
+  rowLayoutOptions,
+} from "@/config/attribute_local_autocompletes";
 
 interface AttributeSectionModalProps extends ModalProps {
   attributeSection?: GetSectionAttributesDto;
@@ -24,6 +30,7 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
 }) => {
   const [isSelectedModule, setIsSelectedModule] = useState(false);
   const [isSelectedSubmodule, setIsSelectedSubmodule] = useState(false);
+  const [isSection, setIsSection] = useState(true);
   const { data: modules } = useSWR<any>(
     `${environment.baseUrl}/modules`,
     fetcher,
@@ -62,11 +69,66 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
             name="order"
             control={control}
             label="Orden"
+            type="number"
             register={register}
             errors={errors}
             touched={touchedFields.order}
             className="col-span-6"
           />
+
+          {!isSection && (
+            <>
+              <ReactiveField
+                isRequired={true}
+                name="slug"
+                control={control}
+                label="Propiedad de base de datos"
+                register={register}
+                errors={errors}
+                touched={touchedFields.slug}
+                className="col-span-6"
+              />
+              <LocalAutocomplete
+                isRequired={true}
+                name="rowLayout"
+                label="Grilla"
+                options={rowLayoutOptions}
+                register={register}
+                errors={errors}
+                control={control}
+                className="col-span-6"
+              />
+              <LocalAutocomplete
+                isRequired={true}
+                name="dataType"
+                label="Tipo de dato"
+                options={options}
+                register={register}
+                errors={errors}
+                control={control}
+                className="col-span-12"
+              />
+            </>
+          )}
+
+          <ReactiveSwitch
+            name="withoutSection"
+            control={control}
+            label="¿Es una sección?"
+            isSelected={isSection}
+            defaultValue={isSection}
+            onValueChange={setIsSection}
+            register={register}
+          />
+
+          {isSection && (
+            <ReactiveSwitch
+              name="collapsable"
+              control={control}
+              label="¿Es una sección colapsable?"
+              register={register}
+            />
+          )}
 
           <Switch
             className="col-span-12"

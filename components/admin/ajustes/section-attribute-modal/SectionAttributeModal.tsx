@@ -10,6 +10,10 @@ import createSectionAttributeSchema from "@/app/validations/create-section-attri
 import LocalAutocomplete, {
   LocalAutocompleteOption,
 } from "@/components/autocompletes/LocalAutocomplete";
+import {
+  options,
+  rowLayoutOptions,
+} from "@/config/attribute_local_autocompletes";
 
 export interface SectionAttributeModalProps {
   isOpen: boolean;
@@ -20,52 +24,6 @@ export interface SectionAttributeModalProps {
   attribute?: GetSectionAttributesDto;
   sectionId?: number;
 }
-
-const options: LocalAutocompleteOption[] = [
-  {
-    label: "Texto",
-    value: DataType.TEXT,
-  },
-  {
-    label: "Texto en área",
-    value: DataType.TEXTAREA,
-  },
-  {
-    label: "Fecha",
-    value: DataType.DATE,
-  },
-  {
-    label: "Listado",
-    value: DataType.LIST,
-  },
-  {
-    label: "Númerico",
-    value: DataType.INTEGER,
-  },
-  {
-    label: "Númerico en decimales",
-    value: DataType.FLOAT,
-  },
-  {
-    label: "Archivo",
-    value: DataType.FILE,
-  },
-];
-
-const rowLayoutOptions: LocalAutocompleteOption[] = [
-  {
-    label: "Único",
-    value: RowLayout.single,
-  },
-  {
-    label: "Dos columnas",
-    value: RowLayout.twoColumns,
-  },
-  {
-    label: "Tres columnas",
-    value: RowLayout.threeColumns,
-  },
-];
 
 const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
   isOpen,
