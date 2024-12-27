@@ -2,21 +2,37 @@
 
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { User } from "next-auth";
-import { FC, Fragment, useEffect, useState } from "react";
+import {
+  FC,
+  forwardRef,
+  Fragment,
+  LegacyRef,
+  useEffect,
+  useState,
+} from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 
 import { grouped, MenuOptions } from "@/config/menu-options";
 import { validatePathname } from "@/utils/validate_pathname";
 import AppBarUser from "@/components/appbar/AppBarUser";
+import { Tooltip, IconButton } from "@mui/material";
 
 export interface SidebarProps {
   user: User;
 }
 
+const WrappedIcon = forwardRef(function Component(props, ref) {
+  return (
+    <div {...props} ref={ref as LegacyRef<any>}>
+      Bin
+    </div>
+  );
+});
+
 const mappingWidth: Record<string, string> = {
-  collapsed: "min-w-[60px]",
-  expanded: "min-w-[260px]",
+  collapsed: "w-[140px]",
+  expanded: "w-[260px]",
 };
 
 const Sidebar: FC<SidebarProps> = ({ user }) => {
@@ -97,12 +113,31 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                               : "data-[hover=true]:bg-transparent"
                           } data-[hover=true]:bg-cerulean-500 data-[hover=true]:text-white`}
                           href={redirectTo !== undefined ? redirectTo : ""}
-                          startContent={<Icon />}
+                          classNames={{
+                            title: `${isCollapsed ? "hidden" : ""}`,
+                          }}
+                          startContent={
+                            isCollapsed ? (
+                              <Tooltip title={title} placement="right">
+                                <IconButton>
+                                  <Icon
+                                    size={isCollapsed ? 24 : 16}
+                                    className="text-white"
+                                  />
+                                </IconButton>
+                              </Tooltip>
+                            ) : (
+                              <Icon
+                                size={isCollapsed ? 24 : 16}
+                                className="text-white"
+                              />
+                            )
+                          }
                           onClick={
                             redirectTo === undefined ? onEvent : () => {}
                           }
                         >
-                          <p className="text-sm">{title}</p>
+                          {!isCollapsed && <p className="text-sm">{title}</p>}
                         </ListboxItem>
                       ),
                   )}

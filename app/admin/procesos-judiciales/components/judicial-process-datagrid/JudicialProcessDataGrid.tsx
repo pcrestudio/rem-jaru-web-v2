@@ -55,6 +55,40 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
             </div>
           );
 
+        case "responsibleId":
+          return (
+            <p>
+              {judicialProcess.responsible
+                ? `${judicialProcess.responsible.firstName} ${judicialProcess.responsible.lastName}`
+                : "-"}
+            </p>
+          );
+
+        case "secondaryResponsibleId":
+          return (
+            <p>
+              {judicialProcess.secondaryResponsible
+                ? `${judicialProcess.secondaryResponsible.firstName} ${judicialProcess.secondaryResponsible.lastName}`
+                : "-"}
+            </p>
+          );
+
+        case "projectId":
+          return (
+            <p>
+              {judicialProcess.project
+                ? `${judicialProcess.project.name}`
+                : "-"}
+            </p>
+          );
+
+        case "cargoStudioId":
+          return (
+            <p>
+              {judicialProcess.studio ? `${judicialProcess.studio.name}` : "-"}
+            </p>
+          );
+
         case "isActive":
           return (
             <Chip className={cellValue ? "bg-green-100 text-green-900" : ""}>

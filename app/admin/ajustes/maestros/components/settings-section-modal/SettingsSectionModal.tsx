@@ -117,26 +117,39 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
             defaultValue={isSection}
             isSelected={isSection}
             label="¿Es una sección?"
+            className="col-span-6"
             name="withoutSection"
             register={register}
             onValueChange={setIsSection}
           />
 
+          {!isSection && (
+            <ReactiveSwitch
+              control={control}
+              label="¿Es para reportes?"
+              className="col-span-6"
+              name="isForReport"
+              register={register}
+            />
+          )}
+
           {isSection && (
             <ReactiveSwitch
               control={control}
               label="¿Es una sección colapsable?"
+              className="col-span-6"
               name="collapsable"
               register={register}
             />
           )}
 
           <Switch
-            className="col-span-12"
+            className="col-span-6"
             isSelected={isSelectedModule}
+            isDisabled={isSelectedSubmodule}
             onValueChange={setIsSelectedModule}
           >
-            ¿Pertenecerá a un módulo?
+            <span className="text-sm">¿Pertenecerá a un módulo?</span>
           </Switch>
 
           {isSelectedModule && (
@@ -155,11 +168,12 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
           )}
 
           <Switch
-            className="col-span-12"
+            className="col-span-6"
             isSelected={isSelectedSubmodule}
+            isDisabled={isSelectedModule}
             onValueChange={setIsSelectedSubmodule}
           >
-            ¿Pertenecerá a un submódulo?
+            <span className="text-sm">¿Pertenecerá a un submódulo?</span>
           </Switch>
 
           {isSelectedSubmodule && (

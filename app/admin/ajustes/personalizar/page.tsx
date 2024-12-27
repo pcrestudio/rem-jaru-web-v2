@@ -54,7 +54,7 @@ export default function Personalizar() {
         onCloseChange={() => setIsOpen(false)}
       />
 
-      <div className="page-settings">
+      <div className="page-settings !px-6">
         <BreadcrumbsPath pathname={pathname} />
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-col gap-2">

@@ -25,11 +25,11 @@ div[data-orientation="vertical"] {
 }
 
 .sidebar-transition {
-  transition: width 10s ease-in-out;
+  transition: width .9s ease-in-out;
 }
 
 .nextui-input {
-  @apply relative w-full inline-flex tap-highlight-transparent shadow-sm px-3 bg-default-100 data-[hover=true]:bg-default-200 group-data-[focus=true]:bg-default-100 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background motion-reduce:transition-none !duration-150 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background h-14 py-2;
+  @apply relative w-full inline-flex tap-highlight-transparent shadow-sm bg-default-100 data-[hover=true]:bg-default-200 group-data-[focus=true]:bg-default-100 min-h-10 rounded-medium flex-col items-start justify-center gap-0 transition-background motion-reduce:transition-none !duration-150 outline-none group-data-[focus-visible=true]:z-10 group-data-[focus-visible=true]:ring-2 group-data-[focus-visible=true]:ring-focus group-data-[focus-visible=true]:ring-offset-2 group-data-[focus-visible=true]:ring-offset-background h-14 py-2;
 }
 
 .nextui-input-nomodal {
@@ -47,7 +47,7 @@ div[data-orientation="vertical"] {
 .custom-file-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   font-family: Arial, sans-serif;
 }
 
@@ -157,7 +157,7 @@ div[data-orientation="vertical"] {
 }
 
 .page-settings {
-  @apply flex flex-col gap-6 p-6;
+  @apply flex flex-col gap-6 px-2 py-6;
 }
 
 .scrollbar-none::-webkit-scrollbar {

@@ -76,7 +76,7 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
   }, [data]);
 
   return (
-    <div className="grid grid-cols-12 gap-2 col-span-12">
+    <>
       {data &&
         data.map((global) => (
           <div
@@ -233,7 +233,7 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
             )}
           </div>
         ))}
-    </div>
+    </>
   );
 };
 

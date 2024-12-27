@@ -56,10 +56,16 @@ const dataTypeChigBG = (
         label: "Fecha",
       };
 
-    case DataType.INTEGER || DataType.FLOAT:
+    case DataType.INTEGER:
       return {
         background: "bg-purple-100",
         label: "Númerico",
+      };
+
+    case DataType.FLOAT:
+      return {
+        background: "bg-purple-100",
+        label: "Númerico en decimales",
       };
 
     case DataType.FILE:

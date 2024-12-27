@@ -76,7 +76,8 @@ const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
 
           {defaultValue && (
             <button
-              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              className="text-xs text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
               onClick={() => handleDownloadDocument(defaultValue)}
             >
               Visualizar archivo

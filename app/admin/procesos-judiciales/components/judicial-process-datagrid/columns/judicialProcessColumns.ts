@@ -19,6 +19,30 @@ const judicialProcessColumns = [
     sortable: true,
   },
   {
+    key: "responsibleId",
+    label: "Responsable",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: "secondaryResponsibleId",
+    label: "Responsable Secundario",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: "projectId",
+    label: "Proyecto",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: "cargoStudioId",
+    label: "Estudio a cargo",
+    sortable: true,
+    width: 70,
+  },
+  {
     key: "isActive",
     label: "Activo",
   },

@@ -28,6 +28,8 @@ const useStore = create<AppState>((set) => ({
   stepTodos: [],
   filter: {
     search: "",
+    queryModule: "",
+    queryPagination: "",
   },
   updateFilter: (filter: FilterType) => {
     set(() => ({

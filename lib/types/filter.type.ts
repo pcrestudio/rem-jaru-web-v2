@@ -1,5 +1,8 @@
 export type GlobalFilter = {
-  search: string;
+  queryModule?: string;
+  queryPagination?: string;
+  queryReport?: string;
+  search?: string;
 };
 
 export type JudicialProcessFilter = {

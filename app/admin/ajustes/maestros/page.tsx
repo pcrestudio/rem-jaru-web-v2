@@ -31,7 +31,7 @@ export default function Maestros() {
         onCloseChange={handleCloseMasterModal}
       />
 
-      <div className="page-settings">
+      <div className="page-settings !px-6">
         <BreadcrumbsPath pathname={pathname} />
 
         <div className="flex flex-row justify-between items-center">

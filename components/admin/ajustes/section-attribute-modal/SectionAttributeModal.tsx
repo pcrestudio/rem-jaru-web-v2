@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
@@ -9,6 +9,7 @@ import {
   options,
   rowLayoutOptions,
 } from "@/config/attribute_local_autocompletes";
+import ReactiveSwitch from "@/components/form/ReactiveSwitch";
 
 export interface SectionAttributeModalProps {
   isOpen: boolean;
@@ -102,6 +103,14 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 name="dataType"
                 options={options}
                 register={register}
+              />
+              <ReactiveSwitch
+                label="¿Es para reportes?"
+                className="col-span-12"
+                name="isForReport"
+                register={register}
+                isSelected={attribute?.isForReport ?? false}
+                control={control}
               />
             </div>
           </>

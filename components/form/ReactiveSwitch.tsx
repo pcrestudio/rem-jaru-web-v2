@@ -15,20 +15,28 @@ const ReactiveSwitch: FC<ReactiveSwitchProps> = ({
   control,
   isSelected,
   onValueChange,
+  className,
+  defaultValue,
 }) => {
   return (
     <Controller
       control={control}
       name={name}
+      defaultValue={defaultValue}
       render={({ field }) => (
         <Switch
           {...field}
-          className="col-span-12"
-          isSelected={isSelected}
+          className={className}
+          isSelected={field.value}
           name={name}
-          onValueChange={onValueChange}
+          onValueChange={(value) => {
+            field.onChange(value);
+            if (onValueChange) {
+              onValueChange(value);
+            }
+          }}
         >
-          {label}
+          <span className="text-sm">{label}</span>
         </Switch>
       )}
     />

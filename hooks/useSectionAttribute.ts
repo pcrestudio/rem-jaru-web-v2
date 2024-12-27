@@ -76,6 +76,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
       const { data } = await editSectionAttributeOption({
         ...payload,
         attributeId: Number(payload.attributeId),
+        sectionAttributeId: Number(payload.attributeId),
       });
 
       if (data) {
@@ -91,6 +92,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     const { data } = await createSectionAttributeOption({
       ...payload,
       attributeId: Number(payload.attributeId),
+      sectionAttributeId: Number(payload.attributeId),
     });
 
     if (data) {

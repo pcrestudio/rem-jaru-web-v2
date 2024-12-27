@@ -13,6 +13,7 @@ export interface GetSectionAttributesDto {
   moduleId: number;
   sectionAttributeId: number;
   globalAttributeId?: number;
+  isForReport?: boolean;
   options?: GetSectionAttributeOptionDto[];
   values?: GetSectionAttributesValuesDto[];
 }

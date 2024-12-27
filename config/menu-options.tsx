@@ -9,12 +9,18 @@ import {
 import { signOut } from "next-auth/react";
 
 import { Role } from "@/config/mapping_role";
+import { RiShutDownLine } from "react-icons/ri";
+
+export interface IconProps {
+  size: number;
+  className: string;
+}
 
 export interface MenuOptions {
   title: string;
   role: string[];
   redirectTo?: string | undefined;
-  Icon?: () => JSX.Element;
+  Icon?: (props: IconProps) => JSX.Element;
   isMultiple?: boolean;
   group?: string;
   onEvent?: () => Promise<void>;
@@ -22,7 +28,6 @@ export interface MenuOptions {
 
 const onlyAdmins: string[] = [Role["super-admin"], Role.admin];
 const allRoles: string[] = [Role["super-admin"], Role.admin, Role.visualizer];
-const iconSize: string = "16";
 
 const logout = async () => {
   await signOut({
@@ -43,14 +48,14 @@ export const menuOptions: MenuOptions[] = [
     title: "Dashboard",
     role: onlyAdmins,
     redirectTo: "/admin",
-    Icon: () => <AiOutlineHome size={iconSize} />,
+    Icon: (props) => <AiOutlineHome {...props} />,
     group: group.general,
   },
   {
     title: "Módulos",
     role: [...onlyAdmins, Role.visualizer],
     redirectTo: "/admin/modulos",
-    Icon: () => <AiOutlineContainer size={iconSize} />,
+    Icon: (props) => <AiOutlineContainer {...props} />,
     isMultiple: true,
     group: group.general,
   },
@@ -58,35 +63,35 @@ export const menuOptions: MenuOptions[] = [
     title: "To-Dos",
     redirectTo: "/admin/todos",
     role: [...onlyAdmins, Role.visualizer],
-    Icon: () => <AiOutlineReconciliation size={iconSize} />,
+    Icon: (props) => <AiOutlineReconciliation {...props} />,
     group: group.general,
   },
   {
     title: "Reportes",
     role: allRoles,
     redirectTo: "/admin/reportes",
-    Icon: () => <AiOutlinePieChart size={iconSize} />,
+    Icon: (props) => <AiOutlinePieChart {...props} />,
     group: group.management,
   },
   {
     title: "Usuarios",
     role: onlyAdmins,
     redirectTo: "/admin/usuarios",
-    Icon: () => <AiOutlineUsergroupAdd size={iconSize} />,
+    Icon: (props) => <AiOutlineUsergroupAdd {...props} />,
     group: group.configuration,
   },
   {
     title: "Ajustes",
     role: [Role["super-admin"]],
     redirectTo: "/admin/ajustes",
-    Icon: () => <AiOutlineSetting size={iconSize} />,
+    Icon: (props) => <AiOutlineSetting {...props} />,
     group: group.configuration,
   },
   {
     title: "Cerrar sesión",
     role: [Role["super-admin"]],
     redirectTo: undefined,
-    Icon: () => <AiOutlineSetting size={iconSize} />,
+    Icon: (props) => <RiShutDownLine {...props} />,
     group: group.other,
     onEvent: logout,
   },

@@ -16,6 +16,7 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto";
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
+import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -93,9 +94,9 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
-            label="Proyectos"
+            label="Proyecto"
             name="projectId"
-            slug={MasterOptionConfig.proyectos}
+            slug={MasterOptionConfig.proyectosGeneral}
           />
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
@@ -113,6 +114,20 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="controversialMatter"
             optionValue="name"
             slug={MasterOptionConfig.materia}
+          />
+          <ResponsibleAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            isRequired={true}
+            label="Responsable principal"
+            name="responsibleId"
+          />
+          <ResponsibleAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            isRequired={false}
+            label="Responsable secundario"
+            name="secondaryResponsibleId"
           />
           {judicialProcess && judicialProcess?.entityReference && (
             <>
