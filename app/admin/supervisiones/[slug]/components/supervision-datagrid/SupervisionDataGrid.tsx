@@ -68,6 +68,7 @@ const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
   return (
     <CustomDataGrid<GetSupervisionDto>
       hasAddButton
+      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}?`}
       addButtonText="Nueva supervisión"
       cells={renderCell}
       columns={supervisionColumns}

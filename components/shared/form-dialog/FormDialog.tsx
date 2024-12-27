@@ -46,7 +46,15 @@ const FormDialog: FC<FormDialogProps> = ({
         validationSchema={validationSchema}
         onSubmit={(values, reset, event) => onSubmit(values, reset, event)}
       >
-        {({ register, errors, touchedFields, control, isValid, reset }) => (
+        {({
+          register,
+          errors,
+          touchedFields,
+          control,
+          isValid,
+          reset,
+          getValues,
+        }) => (
           <>
             {children({
               register,
@@ -55,6 +63,7 @@ const FormDialog: FC<FormDialogProps> = ({
               control,
               isValid,
               reset,
+              getValues,
             })}
             <DialogActions className="!px-6 !pt-4">
               <Button className="bg-transparent" onClick={onCloseChange}>
