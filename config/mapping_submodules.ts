@@ -9,6 +9,11 @@ export const mappingSubmodules: Record<string, string> = {
   supervision_ana: "supervisiones-ana",
 };
 
+export const routeOptionMapping: Record<string, string> = {
+  "/admin/procesos-judiciales": "/admin/modulos",
+  "/admin/supervisiones": "/admin/modulos",
+};
+
 export const mappingRevertSubmodules: Record<string, string> = {
   "procesos-judiciales-administrativos": "judicial_process_administrative",
   "procesos-judiciales-laborales": "judicial_process_labor_court",

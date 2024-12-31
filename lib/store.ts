@@ -15,10 +15,11 @@ interface AppState {
   updateStepTodos?: (
     title: string,
     stepId: number,
-    entityReference: string,
+    entityStepReference: string,
     data: Partial<GetTodosInstanceDto>,
   ) => void;
   updateFilter?: (filter: FilterType) => void;
+  clearFilter?: () => void;
   filter?: FilterType;
 }
 
@@ -65,7 +66,7 @@ const useStore = create<AppState>((set) => ({
         return { stepDataArray: [...state.stepDataArray, { stepId, ...data }] };
       }
     }),
-  updateStepTodos: (title, stepDataId, entityReference, data) =>
+  updateStepTodos: (title, stepDataId, entityStepReference, data) =>
     set((state) => {
       const existingIndex = state.stepTodos.findIndex(
         (item) => item.title === title,
@@ -84,12 +85,14 @@ const useStore = create<AppState>((set) => ({
         return {
           stepTodos: [
             ...state.stepTodos,
-            { stepDataId, entityReference, ...data },
+            { stepDataId, entityStepReference, ...data },
           ],
         };
       }
     }),
   clearStepData: () => set({ stepData: {}, stepDataArray: [] }),
+  clearFilter: () =>
+    set({ filter: { search: "", queryModule: "", queryPagination: "" } }),
 }));
 
 export default useStore;

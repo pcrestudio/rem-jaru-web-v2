@@ -114,7 +114,6 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
 
           <ReactiveSwitch
             control={control}
-            defaultValue={isSection}
             isSelected={isSection}
             label="¿Es una sección?"
             className="col-span-6"

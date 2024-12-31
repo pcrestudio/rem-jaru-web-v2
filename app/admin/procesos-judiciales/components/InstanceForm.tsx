@@ -10,6 +10,7 @@ interface InstanceFormProps {
   step?: GetStepDto;
   initialValues?: Record<string, any>;
   entityReference?: string;
+  entityStepReference?: string;
   stepDataId?: number;
 }
 
@@ -18,6 +19,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
   initialValues,
   onChange,
   entityReference,
+  entityStepReference,
   stepDataId,
 }) => {
   const [formData, setFormData] = useState(initialValues);
@@ -98,6 +100,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
 
       <TodoStepDataGrid
         entityReference={entityReference}
+        entityStepReference={entityStepReference}
         stepDataId={stepDataId}
         stepId={step.id}
       />

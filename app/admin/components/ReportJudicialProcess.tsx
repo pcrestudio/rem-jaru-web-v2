@@ -1,18 +1,18 @@
 import { GlobalFilter } from "@/lib/types/filter.type";
-import { FC } from "react";
-import { GetMasterOptionReportDto } from "@/app/dto/report/get-init-report.dto";
-import HorizontalBarChart from "@/app/admin/reportes/components/bar/HorizontalBarChart/HorizontalBarChart";
-import judicialProcessHorizontalBarColumns from "@/app/admin/reportes/components/ReportChartDataGrid/columns/judicialProcessHorizontalBarColumns";
-import PieChart from "@/app/admin/reportes/components/pie/PieChart/PieChart";
-import judicialProcessPieBarColumns from "@/app/admin/reportes/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
-import useReportJudicialProcess from "@/app/admin/reportes/hooks/useReportJudicialProcess";
-import ReportCountRecord from "@/app/admin/reportes/components/ReportCountRecord/ReportCountRecord";
-import { RiAuctionLine } from "react-icons/ri";
-import ReportProvisionAmountRecord from "@/app/admin/reportes/components/ReportProvisionAmountRecord/ReportProvisionAmountRecord";
+import React, { FC } from "react";
+import useReportJudicialProcess from "@/app/admin/hooks/useReportJudicialProcess";
 import { PiHandCoins } from "react-icons/pi";
-import judicialProcessContingenciesColumns from "@/app/admin/reportes/components/ReportChartDataGrid/columns/judicialProcessContingenciesColumns";
-import ReportChartDataGrid from "@/app/admin/reportes/components/ReportChartDataGrid/ReportChartDataGrid";
-import judicialProcessCriticalProcessesColumns from "@/app/admin/reportes/components/ReportChartDataGrid/columns/judicialProcessCriticalProcessesColumns";
+import ReportCountRecord from "@/app/admin/components/ReportCountRecord/ReportCountRecord";
+import { RiAuctionLine } from "react-icons/ri";
+import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
+import judicialProcessCriticalProcessesColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessCriticalProcessesColumns";
+import { GetMasterOptionReportDto } from "@/app/dto/report/get-init-report.dto";
+import HorizontalBarChart from "@/app/admin/components/bar/HorizontalBarChart/HorizontalBarChart";
+import judicialProcessHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessHorizontalBarColumns";
+import ReportProvisionAmountRecord from "@/app/admin/components/ReportProvisionAmountRecord/ReportProvisionAmountRecord";
+import judicialProcessContingenciesColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessContingenciesColumns";
+import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
+import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;

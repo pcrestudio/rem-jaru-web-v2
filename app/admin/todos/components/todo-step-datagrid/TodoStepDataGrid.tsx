@@ -17,10 +17,12 @@ interface TodoStepDataGridProps {
   stepDataId: number;
   stepId: number;
   entityReference?: string;
+  entityStepReference?: string;
 }
 
 const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
   entityReference,
+  entityStepReference,
   stepDataId,
   stepId,
 }) => {
@@ -72,6 +74,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
       const { data } = await upsertTodo({
         title: payload.title,
         description: payload.description,
+        entityStepReference: entityStepReference,
         entityReference: entityReference,
         todoStateId: Number(payload.todoStateId),
         responsibleId: Number(payload.responsibleId),
@@ -84,7 +87,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         return setOpen(false);
       }
     } else {
-      updateStepTodos(payload.title, stepDataId, entityReference, {
+      updateStepTodos(payload.title, stepDataId, entityStepReference, {
         title: payload.title,
         description: payload.description,
         todoStateId: Number(payload.todoStateId),

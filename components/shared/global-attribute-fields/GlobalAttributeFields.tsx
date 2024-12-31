@@ -210,7 +210,7 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        className="nextui-input"
+                        className="nextui-input-nomodal"
                         label={global.label}
                         size="medium"
                         variant="filled"

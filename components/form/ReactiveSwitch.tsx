@@ -22,7 +22,7 @@ const ReactiveSwitch: FC<ReactiveSwitchProps> = ({
     <Controller
       control={control}
       name={name}
-      defaultValue={defaultValue}
+      defaultValue={isSelected || false}
       render={({ field }) => (
         <Switch
           {...field}

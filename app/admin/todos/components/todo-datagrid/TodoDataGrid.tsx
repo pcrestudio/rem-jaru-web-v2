@@ -63,6 +63,7 @@ const TodoDataGrid: FC<TodoDataGridProps> = () => {
       title: payload.title,
       description: payload.description,
       entityReference: todo.entityReference,
+      entityStepReference: todo.entityStepReference,
       todoStateId: Number(payload.todoStateId),
       responsibleId: Number(payload.responsibleId),
       id: todo ? todo.id : 0,

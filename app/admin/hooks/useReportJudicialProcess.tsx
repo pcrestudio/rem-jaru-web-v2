@@ -44,7 +44,7 @@ const useReportJudicialProcess = (
     (data?.studio.report[0].masterOption.map((option) => ({
       name: option.name,
       type: "bar",
-      data: [option._count.judicialProjects],
+      data: [option._count.judicialStudios],
     })) as ChartData[]) ?? [];
 
   const matterChartData =
@@ -54,17 +54,17 @@ const useReportJudicialProcess = (
     })) as ChartData[]) ?? [];
 
   const total = data?.studio.report[0]?.masterOption?.reduce(
-    (sum, item) => sum + (item._count?.judicialProjects || 0),
+    (sum, item) => sum + (item._count?.judicialStudios || 0),
     0,
   );
 
   const renderBarChartCell = useCallback(
     (report: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = report[columnKey];
-      const percent = (report._count.judicialProjects / total) * 100;
+      const percent = (report._count.judicialStudios / total) * 100;
       switch (columnKey) {
         case "count":
-          return <p>{report._count.judicialProjects}</p>;
+          return <p>{report._count.judicialStudios}</p>;
 
         case "percent":
           return <p>{percent.toFixed(2)} %</p>;

@@ -1,7 +1,6 @@
 import {
   AiOutlineUsergroupAdd,
   AiOutlineContainer,
-  AiOutlinePieChart,
   AiOutlineReconciliation,
   AiOutlineHome,
   AiOutlineSetting,
@@ -21,7 +20,7 @@ export interface MenuOptions {
   role: string[];
   redirectTo?: string | undefined;
   Icon?: (props: IconProps) => JSX.Element;
-  isMultiple?: boolean;
+  isSubmodule?: boolean;
   group?: string;
   onEvent?: () => Promise<void>;
 }
@@ -46,7 +45,7 @@ const group = {
 export const menuOptions: MenuOptions[] = [
   {
     title: "Dashboard",
-    role: onlyAdmins,
+    role: allRoles,
     redirectTo: "/admin",
     Icon: (props) => <AiOutlineHome {...props} />,
     group: group.general,
@@ -55,8 +54,8 @@ export const menuOptions: MenuOptions[] = [
     title: "Módulos",
     role: [...onlyAdmins, Role.visualizer],
     redirectTo: "/admin/modulos",
+    isSubmodule: true,
     Icon: (props) => <AiOutlineContainer {...props} />,
-    isMultiple: true,
     group: group.general,
   },
   {
@@ -65,13 +64,6 @@ export const menuOptions: MenuOptions[] = [
     role: [...onlyAdmins, Role.visualizer],
     Icon: (props) => <AiOutlineReconciliation {...props} />,
     group: group.general,
-  },
-  {
-    title: "Reportes",
-    role: allRoles,
-    redirectTo: "/admin/reportes",
-    Icon: (props) => <AiOutlinePieChart {...props} />,
-    group: group.management,
   },
   {
     title: "Usuarios",

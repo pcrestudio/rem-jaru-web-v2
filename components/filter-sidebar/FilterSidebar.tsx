@@ -14,41 +14,51 @@ export interface FilterSidebarProps {
 }
 
 const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
-  const { updateFilter, filter } = useStore();
+  const { updateFilter, filter, clearFilter } = useStore();
   const [moduleId, setModuleId] = useState<number>(0);
 
   const handleFilter = (event: any) => {
     const { name, value } = event.target;
 
-    if (name === "moduleId") {
-      setModuleId(value);
-      updateFilter({ queryReport: `?moduleId=${value}` });
-    } else if (name === "projectId") {
-      updateFilter({ queryReport: filter.queryReport + `&projectId=${value}` });
+    if (value !== undefined) {
+      const queryPart = `${name}=${value}`;
+      const updatedQuery = filter.queryReport
+        ? `${filter.queryReport}&${queryPart}`
+        : `?${queryPart}`;
+
+      updateFilter({ queryReport: updatedQuery });
+
+      if (name === "moduleId") {
+        setModuleId(value);
+      }
     }
   };
+
+  const isAdminPath: boolean = pathname === "/admin";
 
   const debouncedSearch = debounce(handleFilter, 700);
 
   return (
     <div className="flex flex-col gap-6 shadow-lg p-6 bg-white w-full lg:max-w-[270px] max-h-screen overflow-y-auto">
-      <Input
-        className="nextui-input-filter bg-white"
-        classNames={{
-          inputWrapper: "bg-white shadow-none data-[focus=true]:!bg-white",
-          base: "!bg-red-500",
-        }}
-        endContent={<AiOutlineSearch size={24} />}
-        name="search"
-        placeholder="Buscar coincidencias..."
-        onChange={(event) => debouncedSearch(event)}
-      />
+      {!isAdminPath && (
+        <Input
+          className="nextui-input-filter bg-white"
+          classNames={{
+            inputWrapper: "bg-white shadow-none data-[focus=true]:!bg-white",
+            base: "!bg-red-500",
+          }}
+          endContent={<AiOutlineSearch size={24} />}
+          name="search"
+          placeholder="Buscar coincidencias..."
+          onChange={(event) => debouncedSearch(event)}
+        />
+      )}
       <div className="grid grid-cols-12 gap-4">
         <>
           <p className="text-base font-bold text-cerulean-950 col-span-12">
             Filtrar por
           </p>
-          {pathname.includes("reportes") && (
+          {isAdminPath && (
             <>
               <FilterModuleAutocomplete
                 name="moduleId"

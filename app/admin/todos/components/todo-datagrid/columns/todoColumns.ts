@@ -4,6 +4,10 @@ export const todoColumns = [
     label: "Nombre",
   },
   {
+    key: "description",
+    label: "Descripción",
+  },
+  {
     key: "module",
     label: "Módulo",
   },

@@ -14,6 +14,7 @@ export interface GetTodoDto {
   updatedAt: string;
   todoStateId: number;
   entityReference: string;
+  entityStepReference?: string;
   detail?: GetTodoDetailDto;
   responsible?: GetUserDto;
 }

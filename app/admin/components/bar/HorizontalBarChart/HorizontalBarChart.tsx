@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import ReactECharts from "echarts-for-react";
-import ReportChartDataGrid from "@/app/admin/reportes/components/ReportChartDataGrid/ReportChartDataGrid";
-import { ChartData } from "@/app/admin/reportes/types/ChartDataType";
+import { ChartData } from "@/app/admin/types/ChartDataType";
+import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 
 interface HorizontalBarChartProps<T extends object> {
   title: string;

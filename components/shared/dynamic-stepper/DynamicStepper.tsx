@@ -127,7 +127,8 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
                   }}
                 >
                   <InstanceForm
-                    entityReference={step.stepData[0]?.entityId}
+                    entityReference={entityReference}
+                    entityStepReference={step.stepData[0]?.entityId}
                     initialValues={
                       step.stepData.length > 0
                         ? step.stepData[0]

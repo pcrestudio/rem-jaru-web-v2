@@ -30,6 +30,7 @@ export interface GetMasterOptionReportDto {
   _count: {
     judicialProjects?: number;
     JudicialProcess?: number;
+    judicialStudios?: number;
     group?: number;
   };
 }
