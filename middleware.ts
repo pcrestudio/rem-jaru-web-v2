@@ -1,33 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
 
-export async function middleware(request: NextRequest) {
-  const session = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("token")?.value;
 
-  const pathname = request.nextUrl.pathname;
+  if (!token && request.nextUrl.pathname.startsWith("/admin")) {
+    // Build a redirect URL to the login page
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/auth";
+    redirectUrl.searchParams.set("redirect", request.nextUrl.pathname);
 
-  // Allow requests to `/auth` if there's no session (login/logout flow)
-  if (pathname === "/auth" && !session) {
-    return NextResponse.next();
+    return NextResponse.redirect(redirectUrl);
   }
 
-  // Redirect logged-in users from `/auth` to `/admin`
-  if (pathname === "/auth" && session) {
-    return NextResponse.redirect(new URL("/admin", request.nextUrl));
-  }
-
-  // Redirect unauthorized users trying to access `/admin/*` to `/auth`
-  if (pathname.startsWith("/admin") && !session) {
-    return NextResponse.redirect(new URL("/auth", request.nextUrl));
-  }
-
-  // Allow requests to proceed
   return NextResponse.next();
 }
 
+// Protect these routes:
 export const config = {
-  matcher: ["/admin/:path*", "/auth", "/"],
+  matcher: ["/admin/:path*", "/profile/:path*"],
 };

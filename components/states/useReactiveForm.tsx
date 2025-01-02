@@ -13,6 +13,7 @@ export const useReactiveForm = (validationSchema: Yup.ObjectSchema<any>) => {
     control,
     reset,
     getValues,
+    watch,
     formState: { errors, isValid, touchedFields },
   } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
@@ -25,6 +26,7 @@ export const useReactiveForm = (validationSchema: Yup.ObjectSchema<any>) => {
     touchedFields,
     control,
     reset,
+    watch,
     getValues,
   };
 };

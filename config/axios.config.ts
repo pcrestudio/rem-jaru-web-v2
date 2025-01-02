@@ -10,12 +10,19 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token: string = document.cookie
-      .split("; ")
-      .find((cookie) => cookie.startsWith("JWToken="))
-      .split("=")[1];
+    // const token: string = document.cookie
+    //   .split("; ")
+    //   .find((cookie) => cookie.startsWith("JWToken="))
+    //   .split("=")[1];
 
-    if (token) {
+    // if (token) {
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // }
+
+    // Could attach token automatically from localStorage if desired
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -23,7 +30,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);

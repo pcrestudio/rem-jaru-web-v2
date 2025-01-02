@@ -1,10 +1,10 @@
-import { User } from "next-auth";
 import React, { FC } from "react";
 
 import AppBarUser from "@/components/appbar/AppBarUser";
+import { IUser } from "@/app/admin/usuarios/interfaces";
 
 export interface AppBarProps {
-  user: User;
+  user: IUser;
 }
 
 const AppBar: FC<AppBarProps> = ({ user }) => {

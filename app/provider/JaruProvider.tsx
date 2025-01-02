@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, PropsWithChildren } from "react";
-import { SessionProvider } from "next-auth/react";
+//import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@mui/material";
 import { CssBaseline } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
@@ -13,7 +13,8 @@ const JaruProvider: FC<PropsWithChildren> = ({ children }) => {
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <SessionProvider>{children}</SessionProvider>
+        {/* <SessionProvider>{children}</SessionProvider> */}
+        {children}
       </ThemeProvider>
     </AppRouterCacheProvider>
   );

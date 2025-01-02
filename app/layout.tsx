@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 
 import { Providers } from "./providers";
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <JaruProvider>
@@ -39,9 +39,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }}
           />
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-            <div className="flex flex-col h-screen overflow-hidden w-full relative bg-cerulean-50/[.45]">
-              {children}
-            </div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <div className="flex flex-col h-screen overflow-hidden w-full relative bg-cerulean-50/[.45]">
+                {children}
+              </div>
+            </Suspense>
           </Providers>
         </JaruProvider>
       </body>

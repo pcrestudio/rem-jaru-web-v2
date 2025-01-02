@@ -1,7 +1,6 @@
 "use client";
 
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
-import { User } from "next-auth";
 import { FC, Fragment, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
@@ -9,9 +8,10 @@ import { Tooltip, IconButton } from "@mui/material";
 
 import { grouped, MenuOptions } from "@/config/menu-options";
 import { validatePathname } from "@/utils/validate_pathname";
+import {IUser} from "@/app/admin/usuarios/interfaces";
 
 export interface SidebarProps {
-  user: User;
+  user: IUser;
 }
 
 const mappingWidth: Record<string, string> = {

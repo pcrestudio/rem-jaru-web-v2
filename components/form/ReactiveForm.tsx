@@ -21,6 +21,7 @@ export interface ReactiveFormProps {
     control: ReturnType<typeof useReactiveForm>["control"];
     reset: ReturnType<typeof useReactiveForm>["reset"];
     getValues: ReturnType<typeof useReactiveForm>["getValues"];
+    watch?: ReturnType<typeof useReactiveForm>["watch"];
   }) => ReactNode;
   options?: any;
   stopEventPropagation?: boolean;
@@ -42,6 +43,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     reset,
     control,
     getValues,
+    watch,
     formState: { isValid, errors, touchedFields },
   } = useForm({
     resolver: validationSchema ? yupResolver(validationSchema) : undefined,
@@ -52,7 +54,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
 
   const handleFormSubmit = (
     values: FormValues,
-    event: React.FormEvent<HTMLFormElement>,
+    event: React.FormEvent<HTMLFormElement>
   ) => {
     if (stopEventPropagation) {
       event.stopPropagation();
@@ -71,7 +73,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     <form
       id={formId}
       onSubmit={handleSubmit((values, event) =>
-        handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>),
+        handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>)
       )}
     >
       {children({
@@ -82,6 +84,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
         control,
         reset,
         getValues,
+        watch,
       })}
     </form>
   );
