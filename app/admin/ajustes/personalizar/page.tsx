@@ -15,7 +15,6 @@ import SettingsSectionModal from "@/app/admin/ajustes/maestros/components/settin
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
 import { createSettingSection } from "@/app/api/attribute-values/atrribute-values";
 import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
-import { Book } from "lucide-react";
 
 export default function Personalizar() {
   const pathname = usePathname();

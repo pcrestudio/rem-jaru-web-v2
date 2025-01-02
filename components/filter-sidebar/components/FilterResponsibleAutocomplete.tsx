@@ -2,10 +2,10 @@
 
 import React, { FC, useRef } from "react";
 import { Autocomplete, TextField } from "@mui/material";
+import useSWR from "swr";
 
 import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetUserDto } from "@/app/dto/get-user.dto";
@@ -56,11 +56,11 @@ const FilterResponsibleAutocomplete: FC<FilterResponsibleAutocompleteProps> = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          inputRef={textFieldRef}
-          name={name}
           className={noModal ? "nextui-input" : ""}
           disabled={disabled}
+          inputRef={textFieldRef}
           label={label}
+          name={name}
           required={isRequired}
           size="medium"
           variant="filled"

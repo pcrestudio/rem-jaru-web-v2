@@ -14,7 +14,7 @@ export interface FilterSidebarProps {
 }
 
 const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
-  const { updateFilter, filter, clearFilter } = useStore();
+  const { updateFilter, filter } = useStore();
   const [moduleId, setModuleId] = useState<number>(0);
 
   const handleFilter = (event: any) => {
@@ -61,18 +61,18 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           {isAdminPath && (
             <>
               <FilterModuleAutocomplete
-                name="moduleId"
                 className="col-span-12 nextui-input-nomodal"
                 label="Módulo"
+                name="moduleId"
                 onChange={handleFilter}
               />
 
               <FilterSubmoduleAutocomplete
-                name="submoduleId"
-                moduleId={moduleId}
-                disabled={moduleId === 0}
                 className="col-span-12 nextui-input-nomodal"
+                disabled={moduleId === 0}
                 label="Submódulo"
+                moduleId={moduleId}
+                name="submoduleId"
                 onChange={handleFilter}
               />
             </>
@@ -80,16 +80,16 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
         </>
 
         <FilterProjectAutocomplete
-          name="projectId"
           className="col-span-12 nextui-input-nomodal"
           label="Proyecto"
+          name="projectId"
           onChange={handleFilter}
         />
 
         <FilterResponsibleAutocomplete
-          name="responsibleId"
           className="col-span-12 nextui-input-nomodal"
           label="Responsable"
+          name="responsibleId"
           onChange={handleFilter}
         />
       </div>

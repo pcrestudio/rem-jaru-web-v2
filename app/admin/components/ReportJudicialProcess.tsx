@@ -1,9 +1,10 @@
-import { GlobalFilter } from "@/lib/types/filter.type";
 import React, { FC } from "react";
-import useReportJudicialProcess from "@/app/admin/hooks/useReportJudicialProcess";
 import { PiHandCoins } from "react-icons/pi";
-import ReportCountRecord from "@/app/admin/components/ReportCountRecord/ReportCountRecord";
 import { RiAuctionLine } from "react-icons/ri";
+
+import { GlobalFilter } from "@/lib/types/filter.type";
+import useReportJudicialProcess from "@/app/admin/hooks/useReportJudicialProcess";
+import ReportCountRecord from "@/app/admin/components/ReportCountRecord/ReportCountRecord";
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 import judicialProcessCriticalProcessesColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessCriticalProcessesColumns";
 import { GetMasterOptionReportDto } from "@/app/dto/report/get-init-report.dto";
@@ -34,55 +35,53 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     <div className="grid grid-cols-12 items-stretch gap-10">
       <div className="col-span-4">
         <ReportProvisionAmountRecord
+          Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
           title="Monto provisionado"
           total={data?.provisionAmount.report}
-          Icon={
-            <PiHandCoins className="text-cerulean-800" size={64}></PiHandCoins>
-          }
         />
       </div>
       <div className="col-span-12 md:col-span-4">
         <ReportCountRecord
+          Icon={<RiAuctionLine className="text-cerulean-800" size={48} />}
+          description="PROCESOS JUDICIALIZADOS"
           title="N° de Expediente"
           total={totalJudicialProcess}
-          description="PROCESOS JUDICIALIZADOS"
-          Icon={<RiAuctionLine className="text-cerulean-800" size={48} />}
         />
       </div>
       <div className="col-span-6">
         <ReportChartDataGrid<GetMasterOptionReportDto>
-          items={data ? data?.contingencies.report : []}
-          dataGridKey="name"
           cells={renderContingenciesCell}
           columns={judicialProcessContingenciesColumns}
+          dataGridKey="name"
+          items={data ? data?.contingencies.report : []}
         />
       </div>
       <div className="col-span-6">
         <ReportChartDataGrid<GetMasterOptionReportDto>
-          items={data ? data?.criticalProcesses.report : []}
-          dataGridKey="name"
           cells={renderContingenciesCell}
           columns={judicialProcessCriticalProcessesColumns}
+          dataGridKey="name"
+          items={data ? data?.criticalProcesses.report : []}
         />
       </div>
       <div className="col-span-12">
         <PieChart<GetMasterOptionReportDto>
-          title="N° de procesos judiciales por materias"
-          chartData={matterChartData}
           cells={renderPieChartCell}
+          chartData={matterChartData}
           columns={judicialProcessPieBarColumns}
           items={data?.matters.report[0].Submodule}
+          title="N° de procesos judiciales por materias"
         />
       </div>
-      <div className="col-span-6"></div>
+      <div className="col-span-6" />
       <div className="col-span-6">
         <HorizontalBarChart<GetMasterOptionReportDto>
-          title="N° de procesos judiciales por estudio"
-          yAxisData={studioYAxisData}
-          chartData={studioChartData}
           cells={renderBarChartCell}
+          chartData={studioChartData}
           columns={judicialProcessHorizontalBarColumns}
           items={data?.studio.report[0].masterOption}
+          title="N° de procesos judiciales por estudio"
+          yAxisData={studioYAxisData}
         />
       </div>
     </div>

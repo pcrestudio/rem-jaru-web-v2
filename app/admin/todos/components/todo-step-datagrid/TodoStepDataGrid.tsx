@@ -78,6 +78,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         entityReference: entityReference,
         todoStateId: Number(payload.todoStateId),
         responsibleId: Number(payload.responsibleId),
+        dateExpiration: payload.dateExpiration,
         id: todo ? todo.id : 0,
       });
 

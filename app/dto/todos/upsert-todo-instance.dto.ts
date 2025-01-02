@@ -5,5 +5,6 @@ export class UpsertTodoDto {
   entityStepReference?: string;
   todoStateId?: number;
   responsibleId?: number;
+  dateExpiration?: object;
   id?: number;
 }

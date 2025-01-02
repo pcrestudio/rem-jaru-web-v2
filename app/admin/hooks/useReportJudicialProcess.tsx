@@ -1,13 +1,14 @@
 import useSWR from "swr";
+import { ReactNode, useCallback } from "react";
+
 import {
   GetInitReportDto,
   GetMasterOptionReportDto,
 } from "@/app/dto/report/get-init-report.dto";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { ChartData } from "@/app/admin/reportes/types/ChartDataType";
-import { ReactNode, useCallback } from "react";
 import { GlobalFilter } from "@/lib/types/filter.type";
+import { ChartData } from "@/app/admin/types/ChartDataType";
 
 interface UseReportJudicialProcessProps {
   data: GetInitReportDto;
@@ -62,6 +63,7 @@ const useReportJudicialProcess = (
     (report: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = report[columnKey];
       const percent = (report._count.judicialStudios / total) * 100;
+
       switch (columnKey) {
         case "count":
           return <p>{report._count.judicialStudios}</p>;
@@ -80,6 +82,7 @@ const useReportJudicialProcess = (
     (matter: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = matter[columnKey];
       const percent = (matter._count.JudicialProcess / total) * 100;
+
       switch (columnKey) {
         case "count":
           return <p>{matter._count.JudicialProcess}</p>;
@@ -98,6 +101,7 @@ const useReportJudicialProcess = (
     (contingency: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = contingency[columnKey];
       const percent = (contingency._count.group / total) * 100;
+
       switch (columnKey) {
         case "count":
           return <p>{contingency._count.group}</p>;

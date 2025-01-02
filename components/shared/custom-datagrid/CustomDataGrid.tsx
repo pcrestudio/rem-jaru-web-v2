@@ -62,10 +62,6 @@ const CustomDataGrid = <T extends object>({
   return (
     <div className="overflow-auto max-w-full">
       <Table
-        className="col-span-12"
-        classNames={{
-          wrapper: "bg-white shadow-none border border-gray-200 gap-4",
-        }}
         bottomContent={
           <div className="flex w-full justify-between">
             <div className="flex flex-row gap-4 items-center">
@@ -96,6 +92,10 @@ const CustomDataGrid = <T extends object>({
             </label>
           </div>
         }
+        className="col-span-12"
+        classNames={{
+          wrapper: "bg-white shadow-none border border-gray-200 gap-4",
+        }}
         topContent={topContent}
       >
         <TableHeader columns={columns}>

@@ -2,32 +2,17 @@
 
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { User } from "next-auth";
-import {
-  FC,
-  forwardRef,
-  Fragment,
-  LegacyRef,
-  useEffect,
-  useState,
-} from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
+import { Tooltip, IconButton } from "@mui/material";
 
 import { grouped, MenuOptions } from "@/config/menu-options";
 import { validatePathname } from "@/utils/validate_pathname";
-import { Tooltip, IconButton } from "@mui/material";
 
 export interface SidebarProps {
   user: User;
 }
-
-const WrappedIcon = forwardRef(function Component(props, ref) {
-  return (
-    <div {...props} ref={ref as LegacyRef<any>}>
-      Bin
-    </div>
-  );
-});
 
 const mappingWidth: Record<string, string> = {
   collapsed: "w-[140px]",
@@ -95,36 +80,33 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                 )}
                 <Listbox aria-label="Actions" className="[&_ul]:gap-3">
                   {options.map(
-                    (
-                      { title, Icon, role, redirectTo, onEvent, isSubmodule },
-                      index,
-                    ) =>
+                    ({ title, Icon, role, redirectTo, onEvent }, index) =>
                       role.includes(user?.role) && (
                         <ListboxItem
                           key={`${index}-${Math.random()}`}
                           className={`${isCollapsed ? "flex-col" : "flex-row"} gap-4 text-white ${
-                            validatePathname(pathname, redirectTo, isSubmodule)
+                            validatePathname(pathname, redirectTo)
                               ? "bg-cerulean-500 text-white"
                               : "data-[hover=true]:bg-transparent"
                           } data-[hover=true]:bg-cerulean-500 data-[hover=true]:text-white`}
-                          href={redirectTo !== undefined ? redirectTo : ""}
                           classNames={{
                             title: `${isCollapsed ? "hidden" : ""}`,
                           }}
+                          href={redirectTo !== undefined ? redirectTo : ""}
                           startContent={
                             isCollapsed ? (
-                              <Tooltip title={title} placement="right">
+                              <Tooltip placement="right" title={title}>
                                 <IconButton>
                                   <Icon
-                                    size={isCollapsed ? 24 : 16}
                                     className="text-white"
+                                    size={isCollapsed ? 24 : 16}
                                   />
                                 </IconButton>
                               </Tooltip>
                             ) : (
                               <Icon
-                                size={isCollapsed ? 24 : 16}
                                 className="text-white"
+                                size={isCollapsed ? 24 : 16}
                               />
                             )
                           }

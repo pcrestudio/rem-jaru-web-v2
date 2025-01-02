@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import ReactECharts from "echarts-for-react";
+
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 import { ChartData } from "@/app/admin/types/ChartDataType";
 
@@ -41,10 +42,10 @@ const PieChart = <T extends object>({
   return (
     <div className="flex flex-row gap-4">
       <ReportChartDataGrid<T>
-        items={(items as T[]) ?? []}
-        columns={columns}
         cells={cells}
+        columns={columns}
         dataGridKey="name"
+        items={(items as T[]) ?? []}
       />
       <ReactECharts
         option={option}

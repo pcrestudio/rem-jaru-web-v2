@@ -54,58 +54,60 @@ export default function Maestros() {
           </Button>
         </div>
 
-        {groupedData.length > 0 &&
-          groupedData.map(([moduleName, masters]) => (
-            <Accordion
-              key={moduleName}
-              className="master-global-accordion"
-              itemClasses={{
-                base: "-p-0",
-                title: "master-title text-cerulean-950 font-bold text-lg",
-                content: "master-accordion",
-                trigger: "border-b-red-500",
-              }}
-              selectionMode="multiple"
-              variant="splitted"
-            >
-              <AccordionItem title={moduleName}>
-                <>
-                  {masters.map((master) => (
-                    <Accordion
-                      key={master.name}
-                      className="master-option-global-accordion"
-                      itemClasses={{
-                        title:
-                          "master-option-title text-cerulean-950 font-bold text-base",
-                        base: "mb-4",
-                        trigger: "![&>span]:rotate-0",
-                      }}
-                      variant="splitted"
-                    >
-                      <AccordionItem
-                        className="border border-slate-200 shadow-none"
-                        subtitle={`Creado: ${format(master.createdAt)}`}
-                        title={master.name}
+        <div className="flex flex-col gap-2">
+          {groupedData.length > 0 &&
+            groupedData.map(([moduleName, masters]) => (
+              <Accordion
+                key={moduleName}
+                className="master-global-accordion"
+                itemClasses={{
+                  base: "-p-0",
+                  title: "master-title text-cerulean-950 font-bold text-lg",
+                  content: "master-accordion",
+                  trigger: "border-b-red-500",
+                }}
+                selectionMode="multiple"
+                variant="splitted"
+              >
+                <AccordionItem title={moduleName}>
+                  <>
+                    {masters.map((master) => (
+                      <Accordion
+                        key={master.name}
+                        className="master-option-global-accordion"
+                        itemClasses={{
+                          title:
+                            "master-option-title text-cerulean-950 font-bold text-base",
+                          base: "mb-4",
+                          trigger: "![&>span]:rotate-0",
+                        }}
+                        variant="splitted"
                       >
-                        <MasterOptionDataGrid masterId={master.id} />
-                      </AccordionItem>
-                    </Accordion>
-                  ))}
-                  <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
-                    <Button
-                      className="standard-btn w-auto text-white"
-                      endContent={<AiOutlinePlus />}
-                      onClick={() =>
-                        handleMasterModalChange(masters, moduleName)
-                      }
-                    >
-                      Agregar maestro
-                    </Button>
-                  </div>
-                </>
-              </AccordionItem>
-            </Accordion>
-          ))}
+                        <AccordionItem
+                          className="border border-slate-200 shadow-none"
+                          subtitle={`Creado: ${format(master.createdAt)}`}
+                          title={master.name}
+                        >
+                          <MasterOptionDataGrid masterId={master.id} />
+                        </AccordionItem>
+                      </Accordion>
+                    ))}
+                    <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
+                      <Button
+                        className="standard-btn w-auto text-white"
+                        endContent={<AiOutlinePlus />}
+                        onClick={() =>
+                          handleMasterModalChange(masters, moduleName)
+                        }
+                      >
+                        Agregar maestro
+                      </Button>
+                    </div>
+                  </>
+                </AccordionItem>
+              </Accordion>
+            ))}
+        </div>
       </div>
     </>
   );

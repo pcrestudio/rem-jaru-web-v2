@@ -10,7 +10,7 @@ const ReportEmptyState = () => {
           Haz clic en alguno de los filtros para comenzar.
         </p>
       </div>
-      <img src="/empty_state_search.svg" alt="" className="w-full h-[340px]" />
+      <img alt="" className="w-full h-[340px]" src="/empty_state_search.svg" />
     </div>
   );
 };

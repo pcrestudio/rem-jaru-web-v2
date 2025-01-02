@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Control, Controller } from "react-hook-form";
 import { DatePicker } from "@nextui-org/react";
+import { ZonedDateTime } from "@internationalized/date";
 
 import { convertToZonedDateTime } from "@/utils/format_date";
 
@@ -24,7 +25,6 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
   name,
   errors,
   label,
-  defaultValue,
   isRequired,
   touched,
   className,
@@ -32,24 +32,40 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
+  const parseValueToZonedDateTime = (value: any): ZonedDateTime | null => {
+    if (typeof value === "string") {
+      return convertToZonedDateTime(value);
+    }
+
+    return value instanceof ZonedDateTime ? value : null;
+  };
+
   return (
     <>
       <Controller
         control={control}
-        defaultValue={
-          defaultValue ? convertToZonedDateTime(defaultValue) : null
-        }
         name={name}
         render={({ field }) => (
           <DatePicker
+            {...field}
             className={className}
+            errorMessage={errorMessage}
             isRequired={isRequired}
             label={label}
-            {...field}
-            errorMessage={errorMessage}
-            value={field.value}
+            value={parseValueToZonedDateTime(field.value)}
             onChange={(newValue) => {
-              field.onChange(newValue);
+              const parsedDate =
+                newValue instanceof ZonedDateTime
+                  ? newValue
+                  : convertToZonedDateTime(newValue);
+
+              if (parsedDate) {
+                field.onChange(parsedDate);
+              } else {
+                console.error(
+                  "Error: Fecha inválida seleccionada o no procesada.",
+                );
+              }
             }}
           />
         )}

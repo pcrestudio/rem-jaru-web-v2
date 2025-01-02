@@ -5,11 +5,10 @@ import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import createTodoValidationSchema from "@/app/validations/create-todo.validation";
 import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
-import { MasterOptionConfig } from "@/config/master-option.config";
-import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
+import ReactiveDatePicker from "@/components/form/ReactiveDatePicker";
 
 export interface TodoModalProps {
   isOpen: boolean;
@@ -80,14 +79,13 @@ const TodoModal: FC<TodoModalProps> = ({
             touched={touchedFields.targetAttributeId}
           />
 
-          <DynamicAutocomplete
-            noModal
+          <ReactiveDatePicker
             className="col-span-6"
             control={control}
             isRequired={true}
-            label="Estado"
-            name="todoStateId"
-            slug={MasterOptionConfig.todoEstados}
+            label="Fecha de vencimiento"
+            name="dateExpiration"
+            register={register}
           />
         </div>
       )}

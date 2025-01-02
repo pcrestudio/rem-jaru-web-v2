@@ -1,8 +1,9 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import useStore from "@/lib/store";
 import FilterSidebar from "@/components/filter-sidebar/FilterSidebar";
-import { usePathname } from "next/navigation";
 import useLayoutSettings from "@/app/admin/hooks/useLayoutSettings";
 import ReportJudicialProcess from "@/app/admin/components/ReportJudicialProcess";
 import ReportEmptyState from "@/app/admin/components/ReportEmptyState/ReportEmptyState";
@@ -11,8 +12,6 @@ export default function Admin() {
   const { filter } = useStore();
   const pathname = usePathname();
   const { showFilterSidebar } = useLayoutSettings(pathname);
-
-  console.log(filter.queryReport);
 
   return (
     <div className="flex flex-row gap-2 h-screen overflow-hidden">

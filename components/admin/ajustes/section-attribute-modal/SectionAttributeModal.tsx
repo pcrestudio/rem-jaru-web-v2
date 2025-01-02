@@ -105,12 +105,12 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 register={register}
               />
               <ReactiveSwitch
-                label="¿Es para reportes?"
                 className="col-span-12"
+                control={control}
+                isSelected={attribute?.isForReport ?? false}
+                label="¿Es para reportes?"
                 name="isForReport"
                 register={register}
-                isSelected={attribute?.isForReport ?? false}
-                control={control}
               />
             </div>
           </>

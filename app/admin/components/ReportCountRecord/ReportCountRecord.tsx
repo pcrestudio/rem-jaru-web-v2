@@ -1,5 +1,4 @@
 import { FC, ReactNode } from "react";
-import { Divider } from "@mui/material";
 
 interface ReportCountRecordProps {
   title: string;

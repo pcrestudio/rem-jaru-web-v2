@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import ReactECharts from "echarts-for-react";
+
 import { ChartData } from "@/app/admin/types/ChartDataType";
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 
@@ -64,10 +65,10 @@ const HorizontalBarChart = <T extends object>({
     <div className="flex flex-col gap-4">
       <ReactECharts option={option} />
       <ReportChartDataGrid<T>
-        items={(items as T[]) ?? []}
-        columns={columns}
         cells={cells}
+        columns={columns}
         dataGridKey="name"
+        items={(items as T[]) ?? []}
       />
     </div>
   );

@@ -16,6 +16,14 @@ export const todoColumns = [
     label: "Submódulo",
   },
   {
+    key: "dateExpiration",
+    label: "Vencimiento",
+  },
+  {
+    key: "state",
+    label: "Estado",
+  },
+  {
     key: "responsible",
     label: "Responsable",
   },
