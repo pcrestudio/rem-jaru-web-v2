@@ -30,7 +30,7 @@ function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
                   hideIconWrapper
                   color="primary"
                   title={`Código de un solo uso`}
-                  description={`Ingresa el código enviado a tu correo electrónico. Este código es válido por 2 horas.`}
+                  description={`Ingresa el código de verificación enviado por correo electrónico. Este código es válido por 60 minutos.`}
                 />
                 <div className="col-span-12 flex justify-center mt-4 mb-4">
                   <ReactiveOtpField

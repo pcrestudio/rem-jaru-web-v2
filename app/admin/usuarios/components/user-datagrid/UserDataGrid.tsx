@@ -73,7 +73,7 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
         columns={userColumns}
         dataGridKey="id"
         emptyContent="Sin usuarios."
-        endpointUrl={`auth/users?`}
+        endpointUrl={`users?`}
         totalItemsText="Usuarios totales:"
         onAddChange={() => setOpen(true)}
       />
