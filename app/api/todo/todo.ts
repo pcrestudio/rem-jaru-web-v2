@@ -7,3 +7,7 @@ const apiUrl: string = `${environment.baseUrl}/todos`;
 export async function upsertTodo(todo: UpsertTodoDto) {
   return api.post(`${apiUrl}/upsert`, todo);
 }
+
+export async function alertTodo(todoId: number) {
+  return api.patch(`${apiUrl}/alert/${todoId}`);
+}

@@ -117,7 +117,7 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
             control={control}
             isSelected={isSection}
             label="¿Es una sección?"
-            name="withoutSection"
+            name="isSection"
             register={register}
             onValueChange={setIsSection}
           />
@@ -136,7 +136,7 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
             <ReactiveSwitch
               className="col-span-6"
               control={control}
-              label="¿Es una sección colapsable?"
+              label="¿Es colapsable?"
               name="collapsable"
               register={register}
             />

@@ -27,5 +27,9 @@ export const todoColumns = [
     key: "responsible",
     label: "Responsable",
   },
+  {
+    key: "alert",
+    label: "Alertado",
+  },
   { key: "actions", label: "Opciones" },
 ];

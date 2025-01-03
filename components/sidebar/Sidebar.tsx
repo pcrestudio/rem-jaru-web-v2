@@ -1,14 +1,12 @@
-"use client";
-
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { Tooltip, IconButton } from "@mui/material";
 
 import { grouped, MenuOptions } from "@/config/menu-options";
 import { validatePathname } from "@/utils/validate_pathname";
-import {IUser} from "@/app/admin/usuarios/interfaces";
+import { IUser } from "@/app/admin/usuarios/interfaces";
 
 export interface SidebarProps {
   user: IUser;
@@ -52,6 +50,8 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
     }
   }, [isCollapsed]);
 
+  if (!user) return null; // Asegura consistencia mientras se carga el usuario.
+
   return (
     <aside
       className={`${minWidth} sidebar-transition bg-cerulean-950 px-8 py-4 h-screen flex flex-col relative transition-all`}
@@ -67,7 +67,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       <div className="flex-grow mt-4 overflow-y-auto scrollbar-none py-4">
         <div className="flex flex-col gap-6">
           {grouped.map(([groupName, options]: [string, Array<MenuOptions>]) => (
-            <Fragment key={`${groupName}-${Math.random()}`}>
+            <Fragment key={groupName}>
               <div className="flex flex-col gap-2">
                 {!isCollapsed && options.length > 0 && (
                   <p
@@ -80,10 +80,10 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                 )}
                 <Listbox aria-label="Actions" className="[&_ul]:gap-3">
                   {options.map(
-                    ({ title, Icon, role, redirectTo, onEvent }, index) =>
+                    ({ title, Icon, role, redirectTo, onEvent }) =>
                       role.includes(user?.role) && (
                         <ListboxItem
-                          key={`${index}-${Math.random()}`}
+                          key={title}
                           className={`${isCollapsed ? "flex-col" : "flex-row"} gap-4 text-white ${
                             validatePathname(pathname, redirectTo)
                               ? "bg-cerulean-500 text-white"

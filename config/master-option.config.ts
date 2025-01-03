@@ -6,4 +6,5 @@ export enum MasterOptionConfig {
   situacion = "situacion",
   todoEstados = "todo-estados",
   autoridad = "autoridad",
+  reportTabs = "reportes-tabs",
 }

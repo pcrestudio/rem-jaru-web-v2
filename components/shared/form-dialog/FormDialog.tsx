@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 import { Button } from "@nextui-org/button";
 
@@ -11,6 +11,7 @@ interface FormDialogProps extends ReactiveFormProps {
   isOpen: boolean;
   onCloseChange: () => void;
   buttonSubmitTitle?: string;
+  modalEndContent?: ReactNode;
 }
 
 const FormDialog: FC<FormDialogProps> = ({
@@ -24,6 +25,7 @@ const FormDialog: FC<FormDialogProps> = ({
   stopEventPropagation = false,
   formId,
   buttonSubmitTitle = "Guardar",
+  modalEndContent,
 }) => {
   return (
     <Dialog
@@ -65,7 +67,7 @@ const FormDialog: FC<FormDialogProps> = ({
               reset,
               getValues,
             })}
-            <DialogActions className="!px-6 !pt-4">
+            <DialogActions className="!px-6 !pt-4 flex flex-row gap-2">
               <Button className="bg-transparent" onClick={onCloseChange}>
                 Cancelar
               </Button>
@@ -76,6 +78,7 @@ const FormDialog: FC<FormDialogProps> = ({
               >
                 {buttonSubmitTitle}
               </Button>
+              {modalEndContent}
             </DialogActions>
           </>
         )}

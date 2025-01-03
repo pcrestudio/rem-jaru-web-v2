@@ -9,6 +9,10 @@ import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import ReactiveDatePicker from "@/components/form/ReactiveDatePicker";
+import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
+import { GetUserDto } from "@/app/dto/get-user.dto";
+import { Button } from "@nextui-org/button";
+import { MasterTodosStates } from "@/config/master-todos-states.config";
 
 export interface TodoModalProps {
   isOpen: boolean;
@@ -17,6 +21,7 @@ export interface TodoModalProps {
   handleSubmit?: (data: any) => void;
   todo?: GetTodoDto;
   stopEventPropagation?: boolean;
+  endContentOnChange?: () => void;
 }
 
 const TodoModal: FC<TodoModalProps> = ({
@@ -26,8 +31,12 @@ const TodoModal: FC<TodoModalProps> = ({
   title,
   todo,
   stopEventPropagation = true,
+  endContentOnChange,
 }) => {
-  const { data } = useSWR<any>(`${environment.baseUrl}/auth/users`, fetcher);
+  const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
+    `${environment.baseUrl}/users`,
+    fetcher,
+  );
 
   return (
     <FormDialog
@@ -39,6 +48,20 @@ const TodoModal: FC<TodoModalProps> = ({
       validationSchema={createTodoValidationSchema}
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
+      modalEndContent={
+        todo &&
+        !todo.alert &&
+        todo.state.slug === MasterTodosStates.lessThanTwoWeeks && (
+          <Button
+            variant="flat"
+            color="warning"
+            type="button"
+            onClick={endContentOnChange}
+          >
+            Alertar
+          </Button>
+        )
+      }
     >
       {({ register, errors, touchedFields, control }) => (
         <div className="grid grid-cols-12 gap-4 px-6">

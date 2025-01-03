@@ -7,6 +7,7 @@ import FilterSidebar from "@/components/filter-sidebar/FilterSidebar";
 import useLayoutSettings from "@/app/admin/hooks/useLayoutSettings";
 import ReportJudicialProcess from "@/app/admin/components/ReportJudicialProcess";
 import ReportEmptyState from "@/app/admin/components/ReportEmptyState/ReportEmptyState";
+import ReportTabs from "@/app/admin/reportes/components/ReportTabs/ReportTabs";
 
 export default function Admin() {
   const { filter } = useStore();
@@ -19,11 +20,7 @@ export default function Admin() {
       <div
         className={`flex-grow page-settings h-[calc(100vh-72px)] overflow-y-auto ${showFilterSidebar ? "" : "max-w-[960px] mx-auto"}`}
       >
-        {filter.queryReport ? (
-          <ReportJudicialProcess filter={filter} />
-        ) : (
-          <ReportEmptyState />
-        )}
+        {filter.queryReport ? <ReportTabs /> : <ReportEmptyState />}
       </div>
     </div>
   );
