@@ -10,7 +10,7 @@ export interface AppBarProps {
 const AppBar: FC<AppBarProps> = ({ user }) => {
   return (
     <header className="w-full py-4 px-8 bg-cerulean-950 flex flex-row justify-between">
-      <img alt="Jaru Software" src="/jaru-logo.svg" />
+      <img alt="Jaru Software" src="/jaru.svg" />
       <AppBarUser user={user} />
     </header>
   );

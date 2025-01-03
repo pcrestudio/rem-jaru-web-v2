@@ -56,8 +56,10 @@ export default function Auth() {
       );
 
       // Store token in localStorage (or cookies)
-      const { access_token } = res.data;
+      const { access_token, user } = res.data;
+
       localStorage.setItem("token", access_token);
+      localStorage.setItem("user", JSON.stringify(user));
 
       // Redirect to admin
       router.push(redirect);

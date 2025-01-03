@@ -1,4 +1,4 @@
-import { FC } from "react";
+import {FC, ReactNode} from "react";
 import { Input } from "@nextui-org/input";
 import { Control, Controller } from "react-hook-form";
 
@@ -17,6 +17,7 @@ export interface ReactiveFieldProps {
   disabled?: boolean;
   onBlur?: (value: any) => void;
   noModal?: boolean;
+  endContent?: ReactNode;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({
@@ -30,6 +31,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   className,
   control,
   onBlur,
+                                                 endContent,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
@@ -50,6 +52,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
           return (
             <Input
               {...field}
+                endContent={endContent}
               className={className}
               errorMessage={errorMessage}
               isInvalid={!!errors[name] && touched}

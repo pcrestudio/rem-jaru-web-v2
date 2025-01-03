@@ -69,7 +69,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
           {grouped.map(([groupName, options]: [string, Array<MenuOptions>]) => (
             <Fragment key={`${groupName}-${Math.random()}`}>
               <div className="flex flex-col gap-2">
-                {!isCollapsed && (
+                {!isCollapsed && options.length > 0 && (
                   <p
                     className={`text-medium text-jaruColor-white ${
                       isCollapsed ? "text-center" : ""

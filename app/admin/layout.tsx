@@ -8,12 +8,12 @@ import AppBar from "@/components/appbar/AppBar";
 import { IUser } from "./usuarios/interfaces";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const user: IUser = {
-    id: 1,
-    firstName: "Jaru",
-    lastName: "Admin",
-    name: "Jaru Admin",
-    role: "admin",
+  const user: IUser = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("user")) : {
+      id: 1,
+      firstName: "Jaru",
+      lastName: "Admin",
+      name: "Jaru Admin",
+      role: "admin",
   };
 
   return (

@@ -25,7 +25,6 @@ function LoginForm({ onEmailSubmit, onAzureLogin, isLoading }) {
               control={control}
               errors={errors}
               label="Correo electrónico"
-              //labelPlacement="outside"
               placeholder="Ingresa tu correo electrónico"
               name="email"
               register={register}

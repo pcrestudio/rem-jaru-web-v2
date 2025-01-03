@@ -81,7 +81,7 @@ export const menuOptions: MenuOptions[] = [
   },
   {
     title: "Cerrar sesión",
-    role: [Role["super-admin"]],
+    role: [Role["super-admin"], Role.visualizer],
     redirectTo: undefined,
     Icon: (props) => <RiShutDownLine {...props} />,
     group: group.other,

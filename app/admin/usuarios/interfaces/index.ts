@@ -1,7 +1,6 @@
-export interface IUser {
+import {GetUserDto} from "@/app/dto/get-user.dto";
+
+export interface IUser extends GetUserDto {
   id: number;
-  firstName: string;
-  lastName: string;
-  name: string;
   role: string;
 }

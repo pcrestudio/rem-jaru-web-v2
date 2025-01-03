@@ -23,7 +23,7 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   noModal,
 }) => {
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/auth/users`,
+    `${environment.baseUrl}/users?`,
     fetcher,
   );
 
