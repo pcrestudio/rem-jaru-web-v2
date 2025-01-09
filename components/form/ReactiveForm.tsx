@@ -54,7 +54,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
 
   const handleFormSubmit = (
     values: FormValues,
-    event: React.FormEvent<HTMLFormElement>
+    event: React.FormEvent<HTMLFormElement>,
   ) => {
     if (stopEventPropagation) {
       event.stopPropagation();
@@ -73,7 +73,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     <form
       id={formId}
       onSubmit={handleSubmit((values, event) =>
-        handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>)
+        handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>),
       )}
     >
       {children({

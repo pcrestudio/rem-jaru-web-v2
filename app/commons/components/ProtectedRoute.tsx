@@ -2,6 +2,7 @@
 
 import React, { useContext, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
 import { AuthContext } from "./AuthProvider";
 
 export default function ProtectedRoute({

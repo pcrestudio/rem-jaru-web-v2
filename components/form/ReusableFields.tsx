@@ -36,15 +36,15 @@ const ReusableFields: FC<CustomFormProps> = ({
       {fields.map((field, index) => (
         <Input
           key={index}
+          defaultValue={field.value}
+          errorMessage={errors[field.name]}
+          isInvalid={inputValid[field.name]}
+          isRequired={field.required}
+          label={field.label}
           name={field.name}
           type={field.type}
-          isInvalid={inputValid[field.name]}
-          label={field.label}
-          defaultValue={field.value}
-          isRequired={field.required}
-          onChange={onInputChange}
           onBlur={onBlurChange}
-          errorMessage={errors[field.name]}
+          onChange={onInputChange}
         />
       ))}
     </div>

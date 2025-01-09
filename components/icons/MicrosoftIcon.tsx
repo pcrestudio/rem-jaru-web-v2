@@ -1,12 +1,13 @@
-interface MicrosoftIconProps extends React.SVGProps<SVGSVGElement> {
+import { FC, SVGProps } from "react";
+
+interface MicrosoftIconProps extends SVGProps<SVGSVGElement> {
   fill?: string;
   size?: number | string;
   height?: number | string;
   width?: number | string;
 }
 
-export const MicrosoftIcon: React.FC<MicrosoftIconProps> = ({
-  fill = "currentColor",
+export const MicrosoftIcon: FC<MicrosoftIconProps> = ({
   size,
   height,
   width,
@@ -14,16 +15,16 @@ export const MicrosoftIcon: React.FC<MicrosoftIconProps> = ({
 }) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size || width || 24}
       height={size || height || 24}
       viewBox="0 0 256 256"
+      width={size || width || 24}
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path fill="#f1511b" d="M121.666 121.666H0V0h121.666z"></path>
-      <path fill="#80cc28" d="M256 121.666H134.335V0H256z"></path>
-      <path fill="#00adef" d="M121.663 256.002H0V134.336h121.663z"></path>
-      <path fill="#fbbc09" d="M256 256.002H134.335V134.336H256z"></path>
+      <path d="M121.666 121.666H0V0h121.666z" fill="#f1511b" />
+      <path d="M256 121.666H134.335V0H256z" fill="#80cc28" />
+      <path d="M121.663 256.002H0V134.336h121.663z" fill="#00adef" />
+      <path d="M256 256.002H134.335V134.336H256z" fill="#fbbc09" />
     </svg>
     // <svg
     //   data-name="Iconly/Curved/Profile"

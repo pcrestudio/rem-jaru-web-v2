@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import ReactECharts from "echarts-for-react";
 
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
-import { ChartData } from "@/app/admin/types/ChartDataType";
+import { ChartData, PieChartType } from "@/app/admin/types/ChartDataType";
 
 interface PieChartChartProps<T extends object> {
   title: string;
@@ -10,6 +10,7 @@ interface PieChartChartProps<T extends object> {
   items: T[];
   columns: any;
   cells: (item: T, columnKey: string | number) => ReactNode;
+  type?: string;
 }
 
 const PieChart = <T extends object>({
@@ -18,9 +19,8 @@ const PieChart = <T extends object>({
   items,
   cells,
   columns,
+  type = PieChartType.row,
 }: PieChartChartProps<T>) => {
-  const colors = ["#5470C6", "#91CC75", "#EE6666", "#FAC858"];
-
   const option = {
     title: {
       text: title.toUpperCase(),
@@ -40,19 +40,23 @@ const PieChart = <T extends object>({
   };
 
   return (
-    <div className="flex flex-row gap-4">
+    <div
+      className={`${type === PieChartType.row ? "flex flex-row gap-4" : "flex flex-col gap-4"}`}
+    >
       <ReportChartDataGrid<T>
         cells={cells}
         columns={columns}
         dataGridKey="name"
         items={(items as T[]) ?? []}
       />
-      <ReactECharts
-        option={option}
-        style={{
-          width: "100%",
-        }}
-      />
+      <div className={`${type === PieChartType.row ? "" : "-order-1"}`}>
+        <ReactECharts
+          option={option}
+          style={{
+            width: "100%",
+          }}
+        />
+      </div>
     </div>
   );
 };

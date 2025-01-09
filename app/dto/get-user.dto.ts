@@ -5,10 +5,13 @@ export interface GetUserDto {
   lastName: string;
   email: string;
   password?: string;
+  authMethod?: string;
+  displayName?: string;
   createdAt?: Date;
   updatedAt?: Date;
   id?: number;
   UserRole?: GetUserRoleDto[];
+  roleId?: number;
 }
 
 export interface GetUserRoleDto {

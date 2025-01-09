@@ -8,6 +8,7 @@ const Step = ({ children, isActive }) => {
       setIsVisible(true); // Make the step visible when active
     } else {
       const timer = setTimeout(() => setIsVisible(false), 500); // Match transition duration
+
       return () => clearTimeout(timer);
     }
   }, [isActive]);

@@ -1,15 +1,17 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
-import httpClient from "@/lib/httpClient";
-import { emailValidationSchema } from "../validation";
-import ReactiveForm from "@/components/form/ReactiveForm";
-import ReactiveField from "@/components/form/ReactiveField";
 import toast from "react-hot-toast";
 import { MailIcon } from "lucide-react";
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { CircularProgress } from "@mui/material";
+
+import { emailValidationSchema } from "../validation";
+
+import ReactiveField from "@/components/form/ReactiveField";
+import ReactiveForm from "@/components/form/ReactiveForm";
+import httpClient from "@/lib/httpClient";
 
 export default function ForgotPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,14 +21,14 @@ export default function ForgotPasswordPage() {
     setIsLoading(true);
     try {
       const res = await httpClient.post("/auth/forgot-password", { email });
+
       setMessage(res.data.message);
-    } catch (err: any) {
-      console.error(err);
+    } catch (_) {
     } finally {
       setIsLoading(false);
     }
     toast.success(
-      "Se ha enviado un correo electrónico con las instrucciones para restablecer tu contraseña."
+      "Se ha enviado un correo electrónico con las instrucciones para restablecer tu contraseña.",
     );
   };
 
@@ -44,23 +46,23 @@ export default function ForgotPasswordPage() {
               </h2>
               <div className="flex flex-col w-full gap-3">
                 <ReactiveForm
-                  onSubmit={handleSubmit}
                   validationSchema={emailValidationSchema}
+                  onSubmit={handleSubmit}
                 >
                   {({ register, errors, control, touchedFields, isValid }) => (
                     <div className="flex flex-col w-full gap-4">
                       <ReactiveField
                         isRequired
                         control={control}
-                        errors={errors}
-                        label="Correo electrónico"
-                        placeholder="Ingresa tu correo electrónico"
-                        name="email"
-                        register={register}
-                        touched={touchedFields.email}
                         endContent={
                           <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
                         }
+                        errors={errors}
+                        label="Correo electrónico"
+                        name="email"
+                        placeholder="Ingresa tu correo electrónico"
+                        register={register}
+                        touched={touchedFields.email}
                       />
                       <Button
                         className="standard-btn w-full"
@@ -79,8 +81,8 @@ export default function ForgotPasswordPage() {
                 </ReactiveForm>
                 <div className="flex flex-col w-full items-center px-1 py-2">
                   <Link
-                    href="/auth"
                     color="primary"
+                    href="/auth"
                     size="sm"
                     underline="hover"
                   >

@@ -4,12 +4,15 @@ import React, { FC, useCallback, useState } from "react";
 import { Tooltip } from "@nextui-org/react";
 import { EditIcon } from "@nextui-org/shared-icons";
 import { Chip } from "@nextui-org/chip";
+import toast from "react-hot-toast";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { userColumns } from "@/app/admin/usuarios/components/user-datagrid/columns/userColumns";
 import { mappingRole } from "@/config/mapping_role";
+import UserModal from "@/app/admin/usuarios/components/UserModal";
+import { UpsertUserDto } from "@/app/dto/user/user-register.dto";
+import { upsertUser } from "@/app/api/user/user";
 
 interface UserDataGridProps {}
 
@@ -18,7 +21,9 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const selectUser = (user: GetUserDto) => {
-    setUser(user);
+    const roleId = user?.UserRole[0]?.roleId;
+
+    setUser({ ...user, roleId: roleId ?? null });
     setOpen(true);
   };
 
@@ -64,11 +69,34 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
     [],
   );
 
-  const onSubmit = async (payload: UpsertTodoDto) => {};
+  const handleClose = () => {
+    setOpen(false);
+    setUser(null);
+  };
+
+  const onSubmit = async (payload: UpsertUserDto) => {
+    const { data } = await upsertUser(payload);
+
+    if (data) {
+      handleClose();
+
+      toast.success("Usuario registrado con éxito.");
+    }
+  };
 
   return (
     <>
+      <UserModal
+        handleSubmit={onSubmit}
+        isOpen={open}
+        title={user ? "Editar usuario" : "Nuevo usuario"}
+        user={user}
+        onCloseChange={handleClose}
+      />
+
       <CustomDataGrid<GetUserDto>
+        hasAddButton
+        addButtonText="Nuevo usuario"
         cells={renderCell}
         columns={userColumns}
         dataGridKey="id"

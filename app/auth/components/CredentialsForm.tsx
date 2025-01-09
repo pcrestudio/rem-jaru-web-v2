@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
-import ReactiveForm from "@/components/form/ReactiveForm";
 import { CircularProgress } from "@mui/material";
-import ReactiveField from "@/components/form/ReactiveField";
-import { otpValidationSchema, passswordValidationSchema } from "../validation";
-import ReactiveOtpField from "@/components/form/ReactiveOtpField";
 import { Alert } from "@nextui-org/alert";
 import { Button, Checkbox, Divider, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
+
+import { otpValidationSchema, passswordValidationSchema } from "../validation";
+
+import ReactiveOtpField from "@/components/form/ReactiveOtpField";
+import ReactiveField from "@/components/form/ReactiveField";
+import ReactiveForm from "@/components/form/ReactiveForm";
 
 function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -17,10 +19,10 @@ function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
   return (
     <div className="flex flex-col w-full gap-4">
       <ReactiveForm
-        onSubmit={onSubmit}
         validationSchema={
           authMethod === "otp" ? otpValidationSchema : passswordValidationSchema
         }
+        onSubmit={onSubmit}
       >
         {({ register, errors, control, touchedFields, isValid }) => (
           <div className="flex flex-col gap-3">
@@ -29,8 +31,8 @@ function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
                 <Alert
                   hideIconWrapper
                   color="primary"
-                  title={`Código de un solo uso`}
                   description={`Ingresa el código de verificación enviado por correo electrónico. Este código es válido por 60 minutos.`}
+                  title={`Código de un solo uso`}
                 />
                 <div className="col-span-12 flex justify-center mt-4 mb-4">
                   <ReactiveOtpField
@@ -40,8 +42,8 @@ function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
                     label={"Enter OTP"}
                     name={"token"}
                     register={register}
-                    touched={touchedFields.token}
                     size="lg"
+                    touched={touchedFields.token}
                   />
                 </div>
               </div>
@@ -50,11 +52,6 @@ function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
                 <ReactiveField
                   className="col-span-12"
                   control={control}
-                  errors={errors}
-                  label={"Ingresa tu clave secreta"}
-                  name={"password"}
-                  register={register}
-                  touched={touchedFields.password}
                   endContent={
                     <button type="button" onClick={toggleVisibility}>
                       {isVisible ? (
@@ -70,10 +67,15 @@ function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
                       )}
                     </button>
                   }
+                  errors={errors}
+                  label={"Ingresa tu clave secreta"}
+                  name={"password"}
+                  register={register}
+                  touched={touchedFields.password}
                   type={isVisible ? "text" : "password"}
                 />
                 <div className="flex w-full items-center justify-between px-1 py-2">
-                  <Checkbox name="remember" size="sm" className="mr-2">
+                  <Checkbox className="mr-2" name="remember" size="sm">
                     Recordarme
                   </Checkbox>
                   <Link

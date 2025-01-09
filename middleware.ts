@@ -6,6 +6,7 @@ export function middleware(request: NextRequest) {
   if (!token && request.nextUrl.pathname.startsWith("/admin")) {
     // Build a redirect URL to the login page
     const redirectUrl = request.nextUrl.clone();
+
     redirectUrl.pathname = "/auth";
     redirectUrl.searchParams.set("redirect", request.nextUrl.pathname);
 

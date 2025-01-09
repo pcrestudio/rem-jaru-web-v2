@@ -8,6 +8,7 @@ import FilterResponsibleAutocomplete from "@/components/filter-sidebar/component
 import FilterModuleAutocomplete from "@/components/filter-sidebar/components/FilterModuleAutocomplete";
 import FilterSubmoduleAutocomplete from "@/components/filter-sidebar/components/FilterSubmoduleAutocomplete";
 import FilterProjectAutocomplete from "@/components/filter-sidebar/components/FilterProjectAutocomplete";
+import FilterStudioAutocomplete from "@/components/filter-sidebar/components/FilterStudioAutocomplete";
 
 export interface FilterSidebarProps {
   pathname: string;
@@ -20,17 +21,20 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
   const handleFilter = (event: any) => {
     const { name, value } = event.target;
 
-    if (value !== undefined) {
-      const queryPart = `${name}=${value}`;
-      const updatedQuery = filter.queryReport
-        ? `${filter.queryReport}&${queryPart}`
-        : `?${queryPart}`;
+    const params = new URLSearchParams(filter.queryReport);
 
-      updateFilter({ queryReport: updatedQuery });
+    if (value !== undefined && value !== null && value !== "") {
+      params.set(name, value);
+    } else {
+      params.delete(name);
+    }
 
-      if (name === "moduleId") {
-        setModuleId(value);
-      }
+    const updatedQuery = params.toString() ? `?${params.toString()}` : "";
+
+    updateFilter({ queryReport: updatedQuery });
+
+    if (name === "moduleId") {
+      setModuleId(value);
     }
   };
 
@@ -83,6 +87,13 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           className="col-span-12 nextui-input-nomodal"
           label="Proyecto"
           name="projectId"
+          onChange={handleFilter}
+        />
+
+        <FilterStudioAutocomplete
+          className="col-span-12 nextui-input-nomodal"
+          label="Estudio a cargo"
+          name="cargoStudioId"
           onChange={handleFilter}
         />
 

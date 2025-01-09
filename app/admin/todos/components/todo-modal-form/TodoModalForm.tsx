@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import useSWR from "swr";
+import { Button } from "@nextui-org/button";
 
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
@@ -11,16 +12,11 @@ import { fetcher } from "@/config/axios.config";
 import ReactiveDatePicker from "@/components/form/ReactiveDatePicker";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 import { GetUserDto } from "@/app/dto/get-user.dto";
-import { Button } from "@nextui-org/button";
 import { MasterTodosStates } from "@/config/master-todos-states.config";
+import { ModalProps } from "@/app/admin/types/ModalProps";
 
-export interface TodoModalProps {
-  isOpen: boolean;
-  onCloseChange: () => void;
-  title: string;
-  handleSubmit?: (data: any) => void;
+export interface TodoModalProps extends ModalProps {
   todo?: GetTodoDto;
-  stopEventPropagation?: boolean;
   endContentOnChange?: () => void;
 }
 
@@ -43,25 +39,25 @@ const TodoModal: FC<TodoModalProps> = ({
       formId="todo-form"
       initialValues={todo}
       isOpen={isOpen}
-      stopEventPropagation={stopEventPropagation}
-      title={title}
-      validationSchema={createTodoValidationSchema}
-      onCloseChange={onCloseChange}
-      onSubmit={handleSubmit}
       modalEndContent={
         todo &&
         !todo.alert &&
         todo.state.slug === MasterTodosStates.lessThanTwoWeeks && (
           <Button
-            variant="flat"
             color="warning"
             type="button"
+            variant="flat"
             onClick={endContentOnChange}
           >
             Alertar
           </Button>
         )
       }
+      stopEventPropagation={stopEventPropagation}
+      title={title}
+      validationSchema={createTodoValidationSchema}
+      onCloseChange={onCloseChange}
+      onSubmit={handleSubmit}
     >
       {({ register, errors, touchedFields, control }) => (
         <div className="grid grid-cols-12 gap-4 px-6">

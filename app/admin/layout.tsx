@@ -2,10 +2,11 @@
 import { ReactNode, Suspense, useEffect, useState } from "react";
 import { SWRConfig } from "swr";
 
+import { IUser } from "./usuarios/interfaces";
+
 import JaruProvider from "@/app/provider/JaruProvider";
 import Sidebar from "@/components/sidebar/Sidebar";
 import AppBar from "@/components/appbar/AppBar";
-import { IUser } from "./usuarios/interfaces";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [clientUser, setClientUser] = useState<IUser>({
@@ -13,12 +14,14 @@ export default function Layout({ children }: { children: ReactNode }) {
     firstName: "Jaru",
     lastName: "Admin",
     role: "admin",
+    displayName: "Jaru",
     email: "pcusir@gmail.com",
   });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
+
       if (storedUser) {
         setClientUser(JSON.parse(storedUser));
       }

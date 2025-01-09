@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
+
 import validateErrorMessages from "@/utils/validate_error_messages";
 import { CustomFormField } from "@/components/form/ReusableFields";
 
@@ -32,7 +33,7 @@ const useCustomForm = (fields: CustomFormField[]): UseCustomFormProps => {
     Record<string, string | null | undefined>
   >(fields.reduce((acc, field) => ({ ...acc, [field.name]: null }), {}));
 
-  const [touched, setTouched] = useState<Record<string, boolean>>(
+  const [, setTouched] = useState<Record<string, boolean>>(
     fields.reduce((acc, field) => ({ ...acc, [field.name]: false }), {}),
   );
 
@@ -49,10 +50,12 @@ const useCustomForm = (fields: CustomFormField[]): UseCustomFormProps => {
   ) => {
     if (field?.validate) {
       const error = validateErrorMessages(field, value);
+
       setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
       setInputValid((prevValid) => ({ ...prevValid, [name]: error !== null }));
     } else {
       const error = validateErrorMessages(field, value);
+
       setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
       setInputValid((prevValid) => ({ ...prevValid, [name]: error !== null }));
     }
@@ -111,6 +114,7 @@ const useCustomForm = (fields: CustomFormField[]): UseCustomFormProps => {
       fields.reduce(
         (acc, field) => {
           acc[field.name] = field.value || "";
+
           return acc;
         },
         {} as Record<string, string>,
@@ -120,6 +124,7 @@ const useCustomForm = (fields: CustomFormField[]): UseCustomFormProps => {
       fields.reduce(
         (acc, field) => {
           acc[field.name] = null;
+
           return acc;
         },
         {} as Record<string, string>,
@@ -129,6 +134,7 @@ const useCustomForm = (fields: CustomFormField[]): UseCustomFormProps => {
       fields.reduce(
         (acc, field) => {
           acc[field.name] = false;
+
           return acc;
         },
         {} as Record<string, boolean>,

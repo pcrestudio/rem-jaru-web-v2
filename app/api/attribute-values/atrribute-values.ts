@@ -43,7 +43,7 @@ export async function createSectionAttributeValue(
 
   return api.post(`${apiUrl}/attribute/values`, formData, {
     headers: {
-      contentType: "multipart/form-data",
+      "Content-Type": "multipart/form-data",
     },
   });
 }
@@ -55,7 +55,7 @@ export async function createGlobalAttributeValue(
 
   return api.post(`${apiUrl}/attribute/global/values`, formData, {
     headers: {
-      contentType: "multipart/form-data",
+      "Content-Type": "multipart/form-data",
     },
   });
 }

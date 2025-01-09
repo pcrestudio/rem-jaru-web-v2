@@ -22,12 +22,12 @@ const TodoDataGrid = () => {
   return (
     <>
       <TodoModal
+        endContentOnChange={handleEndContentChange}
         handleSubmit={onSubmit}
         isOpen={open}
         title={todo ? "Editar todo" : "Nuevo todo"}
         todo={todo}
         onCloseChange={handleTodoClose}
-        endContentOnChange={handleEndContentChange}
       />
       <ConfirmModal
         description={{

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Input } from "@nextui-org/input";
 import { InputOtp } from "@nextui-org/input-otp";
 import { Control, Controller } from "react-hook-form";
 
@@ -51,12 +50,12 @@ const ReactiveOtpField: FC<ReactiveOtpFieldProps> = ({
           return (
             <InputOtp
               aria-label="OTP input field"
-              placeholder={label || "Enter code"}
               className={className}
               errorMessage={errorMessage}
               isInvalid={!!errors[name] && touched}
               isRequired={isRequired}
               length={6}
+              placeholder={label || "Enter code"}
               value={field.value}
               onBlur={handleBlur}
               onValueChange={(value) => field.onChange(value)}

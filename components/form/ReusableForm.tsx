@@ -12,7 +12,7 @@ const ReusableForm: FC<ReusableFormProps> = ({
   className,
 }) => {
   return (
-    <form onSubmit={handleSubmit} className={className}>
+    <form className={className} onSubmit={handleSubmit}>
       {children}
     </form>
   );

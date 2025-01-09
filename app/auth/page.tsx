@@ -1,14 +1,15 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
-
-import httpClient from "@/lib/httpClient";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+
 import { CredentialsType } from "./types";
 import LoginForm from "./components/LoginForm";
 import CredentialsForm from "./components/CredentialsForm";
 import Step from "./components/Step";
+
+import httpClient from "@/lib/httpClient";
 
 export default function Auth() {
   const router = useRouter();
@@ -52,7 +53,7 @@ export default function Auth() {
         { ...credentials, email },
         {
           withCredentials: true,
-        }
+        },
       );
 
       // Store token in localStorage (or cookies)
@@ -64,8 +65,6 @@ export default function Auth() {
       // Redirect to admin
       router.push(redirect);
     } catch (error) {
-      console.error("Login error:", error);
-      //alert("Login failed");
       toast.error("Credenciales incorrectas.");
     } finally {
       setIsLoading(false);
@@ -77,7 +76,7 @@ export default function Auth() {
     localStorage.removeItem("token");
     // This route should initiate the Azure AD auth flow
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/azure-ad?redirect=${encodeURIComponent(
-      redirect
+      redirect,
     )}`;
   };
 
@@ -93,17 +92,17 @@ export default function Auth() {
               <div className="flex w-full gap-3 overflow-hidden relative h-auto min-h-[350px]">
                 <Step isActive={step === 1}>
                   <LoginForm
-                    onEmailSubmit={handleEmailSubmit}
-                    onAzureLogin={handleAzureLogin}
                     isLoading={isLoading}
+                    onAzureLogin={handleAzureLogin}
+                    onEmailSubmit={handleEmailSubmit}
                   />
                 </Step>
                 <Step isActive={step === 2}>
                   <CredentialsForm
-                    onSubmit={handleLogin}
                     authMethod={authMethod}
                     isLoading={isLoading}
                     onGoBackClick={() => setStep(1)}
+                    onSubmit={handleLogin}
                   />
                 </Step>
               </div>

@@ -32,7 +32,9 @@ const AppBarUser: FC<AppBarUserProps> = ({ user }) => {
     <Dropdown backdrop="blur">
       <DropdownTrigger>
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-white cursor-pointer">{user?.firstName}</p>
+          <p className="text-sm text-white cursor-pointer">
+            {user?.displayName}
+          </p>
           <p className="text-xs text-cerulean-200 cursor-pointer self-end">
             {mappingRole[user?.role]}
           </p>

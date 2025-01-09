@@ -1,17 +1,19 @@
 "use client";
 
 import React, { Suspense, useState } from "react";
-import httpClient from "@/lib/httpClient";
-import { passswordValidationSchema } from "../validation";
-import ReactiveForm from "@/components/form/ReactiveForm";
-import ReactiveField from "@/components/form/ReactiveField";
 import toast from "react-hot-toast";
 import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { CircularProgress } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";
+
+import { passswordValidationSchema } from "../validation";
 import PasswordHints from "../components/PasswordHints";
+
+import ReactiveField from "@/components/form/ReactiveField";
+import ReactiveForm from "@/components/form/ReactiveForm";
+import httpClient from "@/lib/httpClient";
 
 export default function ResetPasswordPage() {
   const [message, setMessage] = useState("");
@@ -26,8 +28,10 @@ export default function ResetPasswordPage() {
     setIsLoading(true);
 
     const token = searchParams.get("token");
+
     if (!token) {
       setMessage("Enlace invalido.");
+
       return;
     }
 
@@ -36,14 +40,14 @@ export default function ResetPasswordPage() {
         token,
         password,
       });
+
       setMessage(res.data.message);
       toast.success(
-        "Contraseña restablecida correctamente. Por favor inicia sesión."
+        "Contraseña restablecida correctamente. Por favor inicia sesión.",
       );
 
       router.push("/auth");
     } catch (err: any) {
-      console.error(err);
       setMessage(err.response?.data?.message || "Error resetting password");
     } finally {
       setIsLoading(false);
@@ -64,8 +68,8 @@ export default function ResetPasswordPage() {
               </h2>
               <div className="flex flex-col w-full gap-3">
                 <ReactiveForm
-                  onSubmit={handleSubmit}
                   validationSchema={passswordValidationSchema}
+                  onSubmit={handleSubmit}
                 >
                   {({
                     register,
@@ -82,11 +86,6 @@ export default function ResetPasswordPage() {
                         <ReactiveField
                           className="col-span-12"
                           control={control}
-                          errors={errors}
-                          label={"Ingresa tu clave secreta"}
-                          name={"password"}
-                          register={register}
-                          touched={touchedFields.password}
                           endContent={
                             <button type="button" onClick={toggleVisibility}>
                               {isVisible ? (
@@ -102,6 +101,11 @@ export default function ResetPasswordPage() {
                               )}
                             </button>
                           }
+                          errors={errors}
+                          label={"Ingresa tu clave secreta"}
+                          name={"password"}
+                          register={register}
+                          touched={touchedFields.password}
                           type={isVisible ? "text" : "password"}
                         />
                         <PasswordHints passwordValue={passwordValue} />
@@ -109,11 +113,6 @@ export default function ResetPasswordPage() {
                         <ReactiveField
                           className="col-span-12"
                           control={control}
-                          errors={errors}
-                          label="Confirma tu nueva contraseña"
-                          name="confirmPassword"
-                          register={register}
-                          touched={touchedFields.confirmPassword}
                           endContent={
                             <button type="button" onClick={toggleVisibility}>
                               {isVisible ? (
@@ -129,6 +128,11 @@ export default function ResetPasswordPage() {
                               )}
                             </button>
                           }
+                          errors={errors}
+                          label="Confirma tu nueva contraseña"
+                          name="confirmPassword"
+                          register={register}
+                          touched={touchedFields.confirmPassword}
                           type={isVisible ? "text" : "password"}
                         />
 
@@ -150,8 +154,8 @@ export default function ResetPasswordPage() {
                 </ReactiveForm>
                 <div className="flex flex-col w-full items-center px-1 py-2">
                   <Link
-                    href="/auth"
                     color="primary"
+                    href="/auth"
                     size="sm"
                     underline="hover"
                   >

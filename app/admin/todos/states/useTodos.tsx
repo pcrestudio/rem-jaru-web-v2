@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
-import format_date from "@/utils/format_date";
 import { Tooltip } from "@nextui-org/react";
 import { EditIcon } from "@nextui-org/shared-icons";
+import toast from "react-hot-toast";
+import { HiOutlineBellAlert } from "react-icons/hi2";
+
+import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
+import format_date from "@/utils/format_date";
 import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { alertTodo, upsertTodo } from "@/app/api/todo/todo";
-import toast from "react-hot-toast";
-import { MasterTodosStates } from "@/config/master-todos-states.config";
-import { HiOutlineBellAlert } from "react-icons/hi2";
+import TodoSemaphore from "@/app/admin/todos/components/todo-semaphore/TodoSemaphore";
 
 interface UseTodosProps {
   todo: GetTodoDto;
@@ -21,12 +22,6 @@ interface UseTodosProps {
   renderCell: any;
   onSubmit: (payload: UpsertTodoDto) => void;
 }
-
-const mappingSemaphore: Record<MasterTodosStates, string> = {
-  [MasterTodosStates.expired]: "bg-[#e53935]",
-  [MasterTodosStates.lessThanTwoWeeks]: "bg-[#fdd835]",
-  [MasterTodosStates.moreThanTwoWeeks]: "bg-[#43a047]",
-};
 
 const useTodos = (): UseTodosProps => {
   const [todo, setTodo] = useState<GetTodoDto>(null);
@@ -68,9 +63,7 @@ const useTodos = (): UseTodosProps => {
         case "state":
           return (
             <Tooltip content={item.state.name}>
-              <div
-                className={`w-5 h-5 mx-auto rounded-full opacity-25 ${mappingSemaphore[item.state.slug]}`}
-              />
+              <TodoSemaphore slug={item.state.slug} />
             </Tooltip>
           );
 

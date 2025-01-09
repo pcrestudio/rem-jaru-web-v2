@@ -22,6 +22,7 @@ api.interceptors.request.use(
     // Could attach token automatically from localStorage if desired
     const token =
       typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -30,7 +31,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);

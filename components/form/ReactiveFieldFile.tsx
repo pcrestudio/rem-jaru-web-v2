@@ -9,14 +9,14 @@ export interface ReactiveFieldFileProps extends ReactiveFieldProps {}
 const ReactiveFieldFile: FC<ReactiveFieldFileProps> = ({
   name,
   className,
-  errors,
-  touched,
+  //errors,
+  //touched,
   label,
   control,
   defaultValue,
   isRequired,
 }) => {
-  const errorMessage = touched && errors[name] ? errors[name].message : "";
+  //const errorMessage = touched && errors[name] ? errors[name].message : "";
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 

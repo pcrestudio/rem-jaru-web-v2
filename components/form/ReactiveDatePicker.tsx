@@ -61,10 +61,6 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
 
               if (parsedDate) {
                 field.onChange(parsedDate);
-              } else {
-                console.error(
-                  "Error: Fecha inválida seleccionada o no procesada.",
-                );
               }
             }}
           />
