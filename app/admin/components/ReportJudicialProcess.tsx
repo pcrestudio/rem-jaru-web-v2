@@ -33,14 +33,14 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
 
   return (
     <div className="grid grid-cols-12 items-stretch gap-10">
-      <div className="col-span-4">
+      <div className="col-span-12 md:col-span-6">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
           title="Monto provisionado"
           total={data?.provisionAmount.report}
         />
       </div>
-      <div className="col-span-12 md:col-span-4">
+      <div className="col-span-12 md:col-span-6">
         <ReportCountRecord
           Icon={<RiAuctionLine className="text-cerulean-800" size={48} />}
           description="PROCESOS JUDICIALIZADOS"

@@ -4,6 +4,7 @@ import ReactECharts from "echarts-for-react";
 import { BarChartType, ChartData } from "@/app/admin/types/ChartDataType";
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 import barChartOptionConfig from "@/app/admin/components/bar/config/bar-chart.config";
+import ReportEmptyState from "@/app/admin/components/ReportEmptyState/ReportEmptyState";
 
 interface HorizontalBarChartProps<T extends object> {
   title: string;
@@ -36,7 +37,9 @@ const HorizontalBarChart = <T extends object>({
     type,
   );
 
-  return (
+  return items && items.length === 0 ? (
+    <ReportEmptyState />
+  ) : (
     <div className="flex flex-col gap-4">
       <ReactECharts option={option} />
       <ReportChartDataGrid<T>

@@ -24,6 +24,7 @@ export interface GlobalAttributeFieldsProps extends ReactiveFieldProps {
   touchedFields?: ReturnType<typeof useReactiveForm>["touchedFields"];
   reset?: any;
   getValues?: any;
+  isConditionalRender?: boolean;
 }
 
 const mappingRowLayout: Record<RowLayout, string> = {
@@ -41,11 +42,18 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
   control,
   reset,
   getValues,
+  isConditionalRender = false,
 }) => {
   const { data } = useSWR<GetSectionAttributesDto[]>(
     `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}&isGlobal=true`,
     fetcher,
   );
+
+  const filterData =
+    data &&
+    data.filter(
+      (attribute) => attribute.conditionalRender === isConditionalRender,
+    );
 
   useEffect(() => {
     if (data) {
@@ -76,14 +84,14 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
   }, [data]);
 
   return (
-    <>
-      {data &&
-        data.map((global) => (
+    <div className="col-span-12 grid grid-cols-12 gap-4">
+      {filterData &&
+        filterData.map((global) => (
           <div
             key={global.slug}
             className={`${
               mappingRowLayout[global.rowLayout]
-            } -order-${global.order}`}
+            } order-${global.order}`}
           >
             {global.dataType === DataType.TEXT && (
               <Controller
@@ -233,7 +241,7 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
             )}
           </div>
         ))}
-    </>
+    </div>
   );
 };
 

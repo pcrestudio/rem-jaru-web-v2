@@ -17,6 +17,7 @@ import { fetcher } from "@/config/axios.config";
 import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto";
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
+import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -50,10 +51,12 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
         isValid,
         reset,
         getValues,
+        setValue,
+        watch,
       }) => (
         <div className="grid grid-cols-12 gap-4">
           <ReactiveField
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-12 nextui-input-nomodal"
             control={control}
             errors={errors}
             isRequired={true}
@@ -129,8 +132,20 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             label="Responsable secundario"
             name="secondaryResponsibleId"
           />
+
           {judicialProcess && judicialProcess?.entityReference && (
             <>
+              <ProvisionCheck
+                control={control}
+                judicialProcess={judicialProcess}
+                register={register}
+                getValues={getValues}
+                pathname={pathname}
+                reset={reset}
+                setValue={setValue}
+                watch={watch}
+              />
+
               <GlobalAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}

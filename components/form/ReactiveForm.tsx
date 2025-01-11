@@ -21,6 +21,7 @@ export interface ReactiveFormProps {
     control: ReturnType<typeof useReactiveForm>["control"];
     reset: ReturnType<typeof useReactiveForm>["reset"];
     getValues: ReturnType<typeof useReactiveForm>["getValues"];
+    setValue: ReturnType<typeof useReactiveForm>["setValue"];
     watch?: ReturnType<typeof useReactiveForm>["watch"];
   }) => ReactNode;
   options?: any;
@@ -44,6 +45,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     control,
     getValues,
     watch,
+    setValue,
     formState: { isValid, errors, touchedFields },
   } = useForm({
     resolver: validationSchema ? yupResolver(validationSchema) : undefined,
@@ -85,6 +87,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
         reset,
         getValues,
         watch,
+        setValue,
       })}
     </form>
   );

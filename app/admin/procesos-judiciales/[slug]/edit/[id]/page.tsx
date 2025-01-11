@@ -68,10 +68,10 @@ export default function ProcesosJudicialesSlugEdit() {
           });
 
           if (response.data) {
-            toast.success("Expediente modificado con éxito");
+            toast.success("Atributos planos modificado con éxito");
           }
         } else {
-          toast.success("Expediente modificado con éxito");
+          toast.success("Atributos planos con éxito");
         }
 
         if (customFields.length > 0) {
@@ -81,10 +81,10 @@ export default function ProcesosJudicialesSlugEdit() {
           });
 
           if (response.data) {
-            toast.success("Expediente modificado con éxito");
+            toast.success("Atributos extendidos modificado con éxito");
           }
         } else {
-          toast.success("Expediente modificado con éxito");
+          toast.success("Atributos extendidos modificado con éxito");
         }
       }
 

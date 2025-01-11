@@ -3,6 +3,7 @@ import ReactECharts from "echarts-for-react";
 
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 import { ChartData, PieChartType } from "@/app/admin/types/ChartDataType";
+import ReportEmptyState from "@/app/admin/components/ReportEmptyState/ReportEmptyState";
 
 interface PieChartChartProps<T extends object> {
   title: string;
@@ -39,7 +40,9 @@ const PieChart = <T extends object>({
     ],
   };
 
-  return (
+  return items && items.length === 0 ? (
+    <ReportEmptyState />
+  ) : (
     <div
       className={`${type === PieChartType.row ? "flex flex-row gap-4" : "flex flex-col gap-4"}`}
     >

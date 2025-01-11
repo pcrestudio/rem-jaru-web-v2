@@ -14,6 +14,7 @@ export interface GetSectionAttributesDto {
   sectionAttributeId: number;
   globalAttributeId?: number;
   isForReport?: boolean;
+  conditionalRender?: boolean;
   options?: GetSectionAttributeOptionDto[];
   values?: GetSectionAttributesValuesDto[];
 }

@@ -5,4 +5,5 @@ export interface EditJudicialProcessDto {
   coDefendant: string;
   id: number;
   cargoStudioId: number;
+  isProvisional: boolean;
 }

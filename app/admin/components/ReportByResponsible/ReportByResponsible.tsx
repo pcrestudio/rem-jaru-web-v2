@@ -9,6 +9,7 @@ import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
 import { GetReportByResponsibleDto } from "@/app/dto/report/get-report-by-responsible.dto";
 import { ChartData, PieChartType } from "@/app/admin/types/ChartDataType";
 import reportByResponsibleColumns from "@/app/admin/components/ReportTabs/columns/reportByResponsibleColumns";
+import ReportEmptyState from "@/app/admin/components/ReportEmptyState/ReportEmptyState";
 
 const ReportByResponsible: FC<ReportTabType> = ({ slug }) => {
   const { filter } = useStore();
@@ -17,6 +18,8 @@ const ReportByResponsible: FC<ReportTabType> = ({ slug }) => {
     `${environment.baseUrl}/report/${slug}${filter.queryReport}`,
     fetcher,
   );
+
+  console.log(data);
 
   const responsibleChartData =
     (data?.map((option) => ({

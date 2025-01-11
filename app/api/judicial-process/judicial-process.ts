@@ -22,9 +22,26 @@ export async function editJudicialProcess(
   judicialProcess: EditJudicialProcessDto,
   slug: string,
 ) {
+  const formData = new FormData();
+
+  Object.entries(judicialProcess).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      if (typeof value === "object" && !(value instanceof File)) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value);
+      }
+    }
+  });
+
   return api.patch(
     `${apiUrl}/edit?slug=${mappingRevertSubmodules[slug]}`,
-    judicialProcess,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
   );
 }
 

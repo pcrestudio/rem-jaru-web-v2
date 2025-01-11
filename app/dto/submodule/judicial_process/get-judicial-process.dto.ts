@@ -7,6 +7,8 @@ export interface GetJudicialProcessDto {
   plaintiff: string;
   coDefendant: string;
   submoduleId?: number;
+  isProvisional?: boolean;
+  guaranteeLetter?: string;
   responsible?: GetUserDto;
   secondaryResponsible?: GetUserDto;
   project?: GetMastersDto;
