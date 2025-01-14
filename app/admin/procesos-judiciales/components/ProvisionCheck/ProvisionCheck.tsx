@@ -58,11 +58,7 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
         const provisionAmount = (amount * contingencyPercentage) / 100;
 
         setValue(provisionKey, provisionAmount.toFixed(2));
-      } else {
-        console.warn("Valores insuficientes para calcular la provisión");
       }
-    } else {
-      console.error("No se encontraron las claves necesarias en globalData");
     }
   };
 
@@ -74,6 +70,8 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
   useEffect(() => {
     calculateProvision();
   }, [watchFields]);
+
+  console.log(isProvisional);
 
   return (
     <>

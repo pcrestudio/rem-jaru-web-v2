@@ -25,6 +25,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     renderPieChartCell,
     renderBarChartCell,
     renderContingenciesCell,
+    renderCriticalProcessesCell,
     data,
     studioChartData,
     studioYAxisData,
@@ -58,7 +59,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
       </div>
       <div className="col-span-6">
         <ReportChartDataGrid<GetMasterOptionReportDto>
-          cells={renderContingenciesCell}
+          cells={renderCriticalProcessesCell}
           columns={judicialProcessCriticalProcessesColumns}
           dataGridKey="name"
           items={data ? data?.criticalProcesses.report : []}
@@ -69,7 +70,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           cells={renderPieChartCell}
           chartData={matterChartData}
           columns={judicialProcessPieBarColumns}
-          items={data?.matters.report[0].Submodule}
+          items={data?.matters.report[0]?.Submodule}
           title="N° de procesos judiciales por materias"
         />
       </div>
@@ -79,7 +80,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           cells={renderBarChartCell}
           chartData={studioChartData}
           columns={judicialProcessHorizontalBarColumns}
-          items={data?.studio.report[0].masterOption}
+          items={data?.studio.report[0]?.masterOption}
           title="N° de procesos judiciales por estudio"
           yAxisData={studioYAxisData}
         />

@@ -48,7 +48,7 @@ const ReportByPerson: FC<ReportTabType> = ({ slug }) => {
       chartData={personChartData}
       columns={reportByPersonColumns(slug)}
       items={data}
-      title={`N° DE EXPEDIENTES POR ${slug === MasterReportTabs.byDemanded ? "DEMANDANTE" : "DEMANDADO"}`}
+      title={`N° DE EXPEDIENTES POR ${slug === MasterReportTabs.byDemanded ? "DEMANDADO" : "DEMANDANTE"}`}
       type={PieChartType.column}
     />
   );

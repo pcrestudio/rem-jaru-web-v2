@@ -27,6 +27,10 @@ interface UseReportJudicialProcessProps {
     item: GetMasterOptionReportDto,
     columnKey: string | number,
   ) => ReactNode;
+  renderCriticalProcessesCell: (
+    item: GetMasterOptionReportDto,
+    columnKey: string | number,
+  ) => ReactNode;
   totalJudicialProcess: number;
 }
 
@@ -39,17 +43,19 @@ const useReportJudicialProcess = (
   );
 
   const studioYAxisData =
-    data?.studio.report[0].masterOption.map((option) => option.name) ?? [];
+    data?.studio.report[0]?.masterOption?.map((option) => option.name) ?? [];
 
   const studioChartData =
-    (data?.studio.report[0].masterOption.map((option) => ({
+    (data?.studio.report[0]?.masterOption?.map((option) => ({
       name: option.name,
       type: "bar",
       data: [option._count.judicialStudios],
     })) as ChartData[]) ?? [];
 
+  console.log(data?.studio.report[0]);
+
   const matterChartData =
-    (data?.matters.report[0].Submodule.map((option) => ({
+    (data?.matters.report[0]?.Submodule.map((option) => ({
       name: option.name,
       value: option._count.JudicialProcess,
     })) as ChartData[]) ?? [];
@@ -78,10 +84,15 @@ const useReportJudicialProcess = (
     [total],
   );
 
+  const mattersTotal = data?.matters.report[0].Submodule.reduce(
+    (sum, item) => sum + (item?._count.JudicialProcess || 0),
+    0,
+  );
+
   const renderPieChartCell = useCallback(
     (matter: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = matter[columnKey];
-      const percent = (matter._count.JudicialProcess / total) * 100;
+      const percent = (matter._count.JudicialProcess / mattersTotal) * 100;
 
       switch (columnKey) {
         case "count":
@@ -94,13 +105,18 @@ const useReportJudicialProcess = (
           return cellValue;
       }
     },
-    [total],
+    [mattersTotal],
+  );
+
+  const totalContingencies = data?.contingencies.report.reduce(
+    (sum, item) => sum + (item._count?.group || 0),
+    0,
   );
 
   const renderContingenciesCell = useCallback(
     (contingency: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = contingency[columnKey];
-      const percent = (contingency._count.group / total) * 100;
+      const percent = (contingency._count.group / totalContingencies) * 100;
 
       switch (columnKey) {
         case "count":
@@ -113,7 +129,31 @@ const useReportJudicialProcess = (
           return cellValue;
       }
     },
-    [total],
+    [totalContingencies],
+  );
+
+  const totalCriticalProcesses = data?.criticalProcesses.report.reduce(
+    (sum, item) => sum + (item._count?.group || 0),
+    0,
+  );
+
+  const renderCriticalProcessesCell = useCallback(
+    (contingency: GetMasterOptionReportDto, columnKey: string | number) => {
+      const cellValue = contingency[columnKey];
+      const percent = (contingency._count.group / totalCriticalProcesses) * 100;
+
+      switch (columnKey) {
+        case "count":
+          return <p>{contingency._count.group}</p>;
+
+        case "percent":
+          return <p>{percent.toFixed(2)} %</p>;
+
+        default:
+          return cellValue;
+      }
+    },
+    [totalCriticalProcesses],
   );
 
   return {
@@ -124,6 +164,7 @@ const useReportJudicialProcess = (
     renderBarChartCell,
     renderPieChartCell,
     renderContingenciesCell,
+    renderCriticalProcessesCell,
     totalJudicialProcess: total,
   };
 };

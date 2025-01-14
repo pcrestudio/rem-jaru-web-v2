@@ -25,7 +25,7 @@ const TodoDataGrid = () => {
         endContentOnChange={handleEndContentChange}
         handleSubmit={onSubmit}
         isOpen={open}
-        title={todo ? "Editar todo" : "Nuevo todo"}
+        title={todo ? "Editar To-Do" : "Nuevo To-Do"}
         todo={todo}
         onCloseChange={handleTodoClose}
       />

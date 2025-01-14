@@ -73,7 +73,7 @@ const useTodos = (): UseTodosProps => {
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
-              <Tooltip content="Editar todo">
+              <Tooltip content="Editar To-Do">
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
                   role="presentation"

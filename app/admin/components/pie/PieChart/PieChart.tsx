@@ -44,15 +44,19 @@ const PieChart = <T extends object>({
     <ReportEmptyState />
   ) : (
     <div
-      className={`${type === PieChartType.row ? "flex flex-row gap-4" : "flex flex-col gap-4"}`}
+      className={`${type === PieChartType.row ? "grid grid-cols-12 gap-4" : "flex flex-col gap-4"}`}
     >
-      <ReportChartDataGrid<T>
-        cells={cells}
-        columns={columns}
-        dataGridKey="name"
-        items={(items as T[]) ?? []}
-      />
-      <div className={`${type === PieChartType.row ? "" : "-order-1"}`}>
+      <div className="col-span-6">
+        <ReportChartDataGrid<T>
+          cells={cells}
+          columns={columns}
+          dataGridKey="name"
+          items={(items as T[]) ?? []}
+        />
+      </div>
+      <div
+        className={`${type === PieChartType.row ? "col-span-6" : "col-span-12 -order-1"}`}
+      >
         <ReactECharts
           option={option}
           style={{
