@@ -4,11 +4,13 @@ import { GetStepDataDto } from "@/app/dto/instance/get-instance.dto";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import { FilterType } from "@/lib/types/filter.type";
+import { IUser } from "@/app/admin/usuarios/interfaces";
 
 interface AppState {
   stepData: Record<number, Partial<GetStepDataDto>>;
   stepDataArray: Partial<InstanceStepDataDto>[];
   stepTodos: Partial<GetTodosInstanceDto>[];
+  user: Partial<IUser>;
   updateStepData: (stepId: number, data: Partial<GetStepDataDto>) => void;
   updateStepDataArray: (stepId: number, data: Partial<GetStepDataDto>) => void;
   clearStepData: () => void;
@@ -19,6 +21,7 @@ interface AppState {
     data: Partial<GetTodosInstanceDto>,
   ) => void;
   updateFilter?: (filter: FilterType) => void;
+  updateUser?: (user: IUser) => void;
   clearFilter?: () => void;
   filter?: FilterType;
 }
@@ -26,6 +29,7 @@ interface AppState {
 const useStore = create<AppState>((set) => ({
   stepData: {},
   stepDataArray: [],
+  user: {},
   stepTodos: [],
   filter: {
     search: "",
@@ -35,6 +39,11 @@ const useStore = create<AppState>((set) => ({
   updateFilter: (filter: FilterType) => {
     set(() => ({
       filter,
+    }));
+  },
+  updateUser: (user: IUser) => {
+    set(() => ({
+      user: user,
     }));
   },
   updateStepData: (stepId, data) =>

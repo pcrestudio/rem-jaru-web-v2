@@ -36,9 +36,7 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
         <Autocomplete
           fullWidth
           className={className}
-          getOptionLabel={(option) =>
-            `${option.firstName} ${option.lastName}` || ""
-          }
+          getOptionLabel={(option) => option.displayName || ""}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           options={data ? data?.results : []}
           readOnly={disabled}

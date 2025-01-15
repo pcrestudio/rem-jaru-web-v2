@@ -177,7 +177,11 @@ div[data-orientation="vertical"] {
 }
 
 .excel-btn {
-  @apply bg-transparent border border-green-700 text-green-700 hover:bg-green-700/5 transition delay-500;
+  @apply bg-transparent border border-green-700 text-green-700 hover:bg-green-700/5 transition delay-500 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 disabled:hover:bg-none;
+}
+
+.word-btn {
+  @apply bg-transparent border border-sky-700 text-sky-700 hover:bg-green-700/5 transition delay-500 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 disabled:hover:bg-none;
 }
 
 @layer base {

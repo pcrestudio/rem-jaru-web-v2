@@ -78,7 +78,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                     {groupName}
                   </p>
                 )}
-                <Listbox aria-label="Actions" className="[&_ul]:gap-3">
+                <Listbox aria-label="Actions" className="[&_ul]:gap-3" emptyContent="Sin opciones.">
                   {options.map(
                     ({ title, Icon, role, redirectTo, onEvent }) =>
                       role.includes(user?.role) && (

@@ -71,8 +71,6 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
     calculateProvision();
   }, [watchFields]);
 
-  console.log(isProvisional);
-
   return (
     <>
       <ReactiveSwitch

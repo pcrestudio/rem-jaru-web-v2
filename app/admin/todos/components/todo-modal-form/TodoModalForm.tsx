@@ -14,6 +14,8 @@ import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagina
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { MasterTodosStates } from "@/config/master-todos-states.config";
 import { ModalProps } from "@/app/admin/types/ModalProps";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 
 export interface TodoModalProps extends ModalProps {
   todo?: GetTodoDto;
@@ -33,12 +35,17 @@ const TodoModal: FC<TodoModalProps> = ({
     `${environment.baseUrl}/users`,
     fetcher,
   );
+  const { user } = useStore();
 
   return (
     <FormDialog
       formId="todo-form"
       initialValues={todo}
       isOpen={isOpen}
+      canUse={
+        canUse(user.role, CanUsePermission.editTodo) ||
+        canUse(user.role, CanUsePermission.addTodo)
+      }
       modalEndContent={
         todo &&
         !todo.alert &&

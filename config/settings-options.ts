@@ -20,4 +20,9 @@ export const settingsOptions: OptionCard[] = [
     path: "personalizar",
     name: "Personalizar formularios",
   },
+  {
+    order: 4,
+    path: "roles",
+    name: "Roles",
+  },
 ];

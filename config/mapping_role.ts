@@ -2,10 +2,12 @@ export enum Role {
   "super-admin" = "super-admin",
   admin = "admin",
   visualizer = "visualizer",
+  executor = "executor",
 }
 
 export const mappingRole: Record<string, string> = {
   [Role["super-admin"]]: "Súper Administrador",
   [Role.admin]: "Administrador",
-  [Role.visualizer]: "Visualizador",
+  [Role.executor]: "Ejecutor",
+  [Role.visualizer]: "Supervisador",
 };

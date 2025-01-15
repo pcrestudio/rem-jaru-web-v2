@@ -26,12 +26,14 @@ interface UseCustomDataGridParams {
   addButtonText?: string;
   onAddChange?: () => void;
   onExportableExcel?: () => void;
+  canUse?: boolean;
+  canUseExportable?: boolean;
 }
 
 const useCustomDataGrid = <T extends object>(
   params: UseCustomDataGridParams,
 ): UseCustomDataGridProps<T> => {
-  const { filter } = useStore();
+  const { filter, user } = useStore();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const onRowsPerPageChange = useCallback(
@@ -42,10 +44,8 @@ const useCustomDataGrid = <T extends object>(
     [],
   );
 
-  console.log(filter)
-
   const { data } = useSWR<CustomDataGridPagination<T>>(
-    `${environment.baseUrl}/${params.endpointUrl}page=${page}&pageSize=${pageSize}&search=${filter.search ?? ""}`,
+    `${environment.baseUrl}/${params.endpointUrl}page=${page}&pageSize=${pageSize}&search=${filter.search ?? ""}${filter.queryReport ? filter.queryReport.replace("?", "&") : ""}`,
     fetcher,
   );
 
@@ -61,6 +61,7 @@ const useCustomDataGrid = <T extends object>(
                   className="excel-btn"
                   startContent={<AiOutlineFileExcel />}
                   onClick={params.onExportableExcel}
+                  disabled={!params.canUseExportable}
                 >
                   Exportar
                 </Button>
@@ -69,6 +70,7 @@ const useCustomDataGrid = <T extends object>(
                 className="standard-btn w-auto text-white"
                 startContent={<AiOutlinePlus />}
                 onClick={params.onAddChange}
+                disabled={!params.canUse}
               >
                 {params.addButtonText}
               </Button>

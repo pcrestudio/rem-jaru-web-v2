@@ -10,6 +10,8 @@ import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/j
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { exportJudicialProcessExcel } from "@/app/api/judicial-process/judicial-process";
 import exportableExcel from "@/utils/exportable_excel";
+import useStore from "@/lib/store";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 
 export interface JudicialProcessDataGridProps {
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
@@ -21,6 +23,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
   slug,
 }) => {
   const router = useRouter();
+  const { user } = useStore();
 
   const renderCell = useCallback(
     (judicialProcess: GetJudicialProcessDto, columnKey: string | number) => {
@@ -107,6 +110,8 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
     <CustomDataGrid<GetJudicialProcessDto>
       hasAddButton
       hasExcelButton
+      canUseExportable={canUse(user.role, CanUsePermission.downloadExcel)}
+      canUse={canUse(user.role, CanUsePermission.addItem)}
       addButtonText="Nuevo proceso judicial"
       cells={renderCell}
       columns={judicialProcessColumns}

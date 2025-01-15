@@ -4,4 +4,5 @@ export interface GetRoleDto {
   description: string;
   createdAt?: Date;
   updatedAt?: Date;
+  id?: number;
 }

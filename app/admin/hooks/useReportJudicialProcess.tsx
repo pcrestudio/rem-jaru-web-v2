@@ -52,8 +52,6 @@ const useReportJudicialProcess = (
       data: [option._count.judicialStudios],
     })) as ChartData[]) ?? [];
 
-  console.log(data?.studio.report[0]);
-
   const matterChartData =
     (data?.matters.report[0]?.Submodule.map((option) => ({
       name: option.name,

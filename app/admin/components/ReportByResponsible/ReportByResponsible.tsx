@@ -19,8 +19,6 @@ const ReportByResponsible: FC<ReportTabType> = ({ slug }) => {
     fetcher,
   );
 
-  console.log(data);
-
   const responsibleChartData =
     (data?.map((option) => ({
       name: option.name,

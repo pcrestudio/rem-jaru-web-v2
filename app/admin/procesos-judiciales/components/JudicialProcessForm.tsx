@@ -18,6 +18,8 @@ import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -35,6 +37,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
     fetcher,
   );
   const router = useRouter();
+  const { user } = useStore();
 
   return (
     <ReactiveForm
@@ -205,7 +208,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
 
           <Button
             className="standard-btn text-white col-span-12 w-fit"
-            disabled={!isValid}
+            disabled={!canUse(user.role, CanUsePermission.editItem) || !isValid}
             type="submit"
           >
             {judicialProcess && judicialProcess.entityReference

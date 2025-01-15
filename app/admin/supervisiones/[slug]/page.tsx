@@ -11,7 +11,7 @@ export default function SupervisionSlug() {
   const slug: string = pathname.split("/")[3];
 
   return (
-    <div className="page min-w-[70%] max-w-[80%]">
+    <div className="short-form-layout">
       <BreadcrumbsPath pathname={pathname} />
       <SupervisionDataGrid slug={slug} />
     </div>

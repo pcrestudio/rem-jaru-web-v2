@@ -20,7 +20,7 @@ export default function Ajustes() {
         </p>
       </div>
       {settingsOptions && (
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 gap-8">
           {settingsOptions.map((option) => (
             <OptionsCard
               key={option.path}

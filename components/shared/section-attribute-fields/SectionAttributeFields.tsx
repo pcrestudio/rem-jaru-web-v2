@@ -154,6 +154,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                             <ReactiveFieldFile
                               control={control}
                               defaultValue={attribute.values[0]?.value ?? ""}
+                              label={attribute.label}
                               name={customFieldIndicator(
                                 attribute.slug,
                                 attribute.dataType,
@@ -223,7 +224,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               )}
                               render={({ field }) => (
                                 <DatePicker
-                                  isRequired={true}
                                   label={attribute.label}
                                   {...field}
                                   value={field.value}

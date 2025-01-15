@@ -12,6 +12,7 @@ interface FormDialogProps extends ReactiveFormProps {
   onCloseChange: () => void;
   buttonSubmitTitle?: string;
   modalEndContent?: ReactNode;
+  canUse?: boolean;
 }
 
 const FormDialog: FC<FormDialogProps> = ({
@@ -26,6 +27,7 @@ const FormDialog: FC<FormDialogProps> = ({
   formId,
   buttonSubmitTitle = "Guardar",
   modalEndContent,
+  canUse = true,
 }) => {
   return (
     <Dialog
@@ -56,6 +58,8 @@ const FormDialog: FC<FormDialogProps> = ({
           isValid,
           reset,
           getValues,
+          watch,
+          setValue,
         }) => (
           <>
             {children({
@@ -66,6 +70,8 @@ const FormDialog: FC<FormDialogProps> = ({
               isValid,
               reset,
               getValues,
+              watch,
+              setValue,
             })}
             <DialogActions className="!px-6 !pt-4 flex flex-row gap-2">
               <Button className="bg-transparent" onClick={onCloseChange}>
@@ -73,7 +79,7 @@ const FormDialog: FC<FormDialogProps> = ({
               </Button>
               <Button
                 className="standard-btn text-white"
-                disabled={!isValid}
+                disabled={!canUse || !isValid}
                 type="submit"
               >
                 {buttonSubmitTitle}

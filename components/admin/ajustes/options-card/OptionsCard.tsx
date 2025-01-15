@@ -5,6 +5,7 @@ import {
   AiOutlineReconciliation,
   AiOutlineFileDone,
   AiOutlineArrowRight,
+  AiOutlineSecurityScan,
 } from "react-icons/ai";
 import Link from "next/link";
 
@@ -19,6 +20,7 @@ const renderIcon: Record<number, ReactNode> = {
   1: <AiOutlineReconciliation className="text-cerulean-950" size="64" />,
   2: <AiOutlineFileDone className="text-cerulean-950" size="64" />,
   3: <AiOutlineCopyright className="text-cerulean-950" size="64" />,
+  4: <AiOutlineSecurityScan className="text-cerulean-950" size="64" />,
 };
 
 const OptionsCard: FC<OptionsCardProps> = ({ option, pathname }) => {

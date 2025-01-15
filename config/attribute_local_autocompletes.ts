@@ -3,6 +3,7 @@ import {
   DataType,
   RowLayout,
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
+import { mappingRole, Role } from "@/config/mapping_role";
 
 export const options: LocalAutocompleteOption[] = [
   {
@@ -47,5 +48,20 @@ export const rowLayoutOptions: LocalAutocompleteOption[] = [
   {
     label: "Tres columnas",
     value: RowLayout.threeColumns,
+  },
+];
+
+export const roleOptions: LocalAutocompleteOption[] = [
+  {
+    label: mappingRole[Role["super-admin"]],
+    value: Role["super-admin"],
+  },
+  {
+    label: mappingRole[Role.visualizer],
+    value: Role.visualizer,
+  },
+  {
+    label: mappingRole[Role.admin],
+    value: Role.admin,
   },
 ];

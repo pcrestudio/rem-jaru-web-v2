@@ -26,7 +26,12 @@ export interface MenuOptions {
 }
 
 const onlyAdmins: string[] = [Role["super-admin"], Role.admin];
-const allRoles: string[] = [Role["super-admin"], Role.admin, Role.visualizer];
+const allRoles: string[] = [
+  Role["super-admin"],
+  Role.admin,
+  Role.visualizer,
+  Role.executor,
+];
 
 const logout = async () => {
   await signOut({

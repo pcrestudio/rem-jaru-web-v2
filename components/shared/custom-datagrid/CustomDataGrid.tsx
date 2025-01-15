@@ -21,6 +21,8 @@ interface CustomDataGridProps<T extends object> {
   emptyContent?: string;
   hasAddButton?: boolean;
   hasExcelButton?: boolean;
+  canUse?: boolean;
+  canUseExportable?: boolean;
   addButtonText?: string;
   totalItemsText?: string;
   items?: T[];
@@ -39,6 +41,8 @@ const CustomDataGrid = <T extends object>({
   addButtonText,
   endpointUrl,
   totalItemsText,
+  canUse = true,
+  canUseExportable = true,
   storeItems = [],
 }: CustomDataGridProps<T>) => {
   const {
@@ -57,6 +61,8 @@ const CustomDataGrid = <T extends object>({
     addButtonText,
     onAddChange,
     onExportableExcel,
+    canUse,
+    canUseExportable,
   });
 
   return (

@@ -7,6 +7,7 @@ import { IUser } from "./usuarios/interfaces";
 import JaruProvider from "@/app/provider/JaruProvider";
 import Sidebar from "@/components/sidebar/Sidebar";
 import AppBar from "@/components/appbar/AppBar";
+import useStore from "@/lib/store";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [clientUser, setClientUser] = useState<IUser>({
@@ -18,12 +19,15 @@ export default function Layout({ children }: { children: ReactNode }) {
     email: "pcusir@gmail.com",
   });
 
+  const { updateUser } = useStore();
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
 
       if (storedUser) {
         setClientUser(JSON.parse(storedUser));
+        updateUser({ ...JSON.parse(storedUser) });
       }
     }
   }, []);
