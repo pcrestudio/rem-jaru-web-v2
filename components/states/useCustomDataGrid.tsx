@@ -45,7 +45,7 @@ const useCustomDataGrid = <T extends object>(
   );
 
   const { data } = useSWR<CustomDataGridPagination<T>>(
-    `${environment.baseUrl}/${params.endpointUrl}page=${page}&pageSize=${pageSize}&search=${filter.search ?? ""}${filter.queryReport ? filter.queryReport.replace("?", "&") : ""}`,
+    `${environment.baseUrl}/${params.endpointUrl}page=${page}&pageSize=${pageSize}${filter.queryReport ? filter.queryReport.replace("?", "&") : ""}`,
     fetcher,
   );
 
