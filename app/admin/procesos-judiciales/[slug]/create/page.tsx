@@ -44,21 +44,7 @@ export default function ProcesosJudicialesSlugCreate() {
 
     if (data) {
       setJudicialProcessId(Number(data["id"]));
-
-      if (customFields.length > 0) {
-        const response = await createSectionAttributeValue({
-          attributes: customFields,
-          entityReference: data["result"]["entityReference"],
-        });
-
-        if (response.data) {
-          toast.success("Expediente creado con éxito");
-          setConfirm(true);
-        }
-      } else {
-        setConfirm(true);
-        toast.success("Expediente creado con éxito");
-      }
+      setConfirm(true);
     }
 
     return data;
