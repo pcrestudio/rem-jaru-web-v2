@@ -1,6 +1,7 @@
 import { Input } from "@nextui-org/input";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FC, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import useStore from "@/lib/store";
 import debounce from "@/utils/custom_debounce";
@@ -9,7 +10,6 @@ import FilterModuleAutocomplete from "@/components/filter-sidebar/components/Fil
 import FilterSubmoduleAutocomplete from "@/components/filter-sidebar/components/FilterSubmoduleAutocomplete";
 import FilterProjectAutocomplete from "@/components/filter-sidebar/components/FilterProjectAutocomplete";
 import FilterStudioAutocomplete from "@/components/filter-sidebar/components/FilterStudioAutocomplete";
-import { usePathname } from "next/navigation";
 
 export interface FilterSidebarProps {
   pathname: string;

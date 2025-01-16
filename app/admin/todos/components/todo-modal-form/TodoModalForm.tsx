@@ -39,13 +39,13 @@ const TodoModal: FC<TodoModalProps> = ({
 
   return (
     <FormDialog
-      formId="todo-form"
-      initialValues={todo}
-      isOpen={isOpen}
       canUse={
         canUse(user.role, CanUsePermission.editTodo) ||
         canUse(user.role, CanUsePermission.addTodo)
       }
+      formId="todo-form"
+      initialValues={todo}
+      isOpen={isOpen}
       modalEndContent={
         todo &&
         !todo.alert &&

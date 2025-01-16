@@ -10,6 +10,11 @@ import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import { environment } from "@/environment/environment";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { fetcher } from "@/config/axios.config";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
+import { exportJudicialProcessExcel } from "@/app/api/judicial-process/judicial-process";
+import exportableExcel from "@/utils/exportable_excel";
+import { exportSupervisionExcel } from "@/app/api/supervision/supervision";
 
 interface SupervisionDataGrid {
   slug?: string;
@@ -21,6 +26,7 @@ const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
     `${environment.baseUrl}/supervisions?slug=${mappingRevertSubmodules[slug]}`,
     fetcher,
   );
+  const { user } = useStore();
 
   const renderCell = React.useCallback(
     (item: GetSupervisionDto, columnKey: string | number) => {
@@ -68,16 +74,24 @@ const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
   return (
     <CustomDataGrid<GetSupervisionDto>
       hasAddButton
+      hasExcelButton
+      canUse={canUse(user.role, CanUsePermission.addItem)}
+      canUseExportable={canUse(user.role, CanUsePermission.downloadExcel)}
       addButtonText="Nueva supervisión"
       cells={renderCell}
       columns={supervisionColumns}
       emptyContent="Sin supervisiones."
-      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}?`}
+      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}&`}
       items={data ?? []}
       onAddChange={() => {
         const currentPath = window.location.pathname;
 
         router.push(`${currentPath}/create`);
+      }}
+      onExportableExcel={async () => {
+        const response = await exportSupervisionExcel();
+
+        exportableExcel(response);
       }}
     />
   );

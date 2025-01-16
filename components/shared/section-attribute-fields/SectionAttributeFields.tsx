@@ -17,10 +17,12 @@ import { useReactiveForm } from "@/components/states/useReactiveForm";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
+import { ModelType } from "@/config/model-type.config";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
   entityReference?: string;
+  modelType?: string;
   touchedFields?: ReturnType<typeof useReactiveForm>["touchedFields"];
   reset?: any;
   getValues?: any;
@@ -38,12 +40,13 @@ const customFieldIndicator = (slug: string, type: string) =>
 const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
   pathname,
   entityReference,
+  modelType = ModelType.JudicialProcess,
   control,
   reset,
   getValues,
 }) => {
   const { data } = useSWR<GetSectionAttributesBySlugDto[]>(
-    `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}`,
+    `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}&modelType=${modelType}`,
     fetcher,
   );
 

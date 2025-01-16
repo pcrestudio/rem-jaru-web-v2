@@ -1,7 +1,8 @@
+import React, { FC } from "react";
+
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import { GetRoleDto } from "@/app/dto/role/get-role.dto";
-import React, { FC } from "react";
 import { ModalProps } from "@/app/admin/types/ModalProps";
 import createRoleValidationSchema from "@/app/validations/create-role.validation";
 import ReactiveTextArea from "@/components/form/ReactiveTextArea";

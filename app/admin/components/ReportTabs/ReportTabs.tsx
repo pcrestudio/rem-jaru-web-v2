@@ -12,12 +12,18 @@ import ReportByContingencyLevel from "@/app/admin/components/ReportByContingency
 import ReportByResponsible from "@/app/admin/components/ReportByResponsible/ReportByResponsible";
 import ReportByPerson from "@/app/admin/components/ReportByPerson/ReportByPerson";
 import ReportByStudio from "@/app/admin/components/ReportByStudio/ReportByStudio";
+import useStore from "@/lib/store";
 
 const ReportTabs = () => {
+  const { filter } = useStore();
+
   const { data } = useSWR<GetMastersDto>(
-    `${environment.baseUrl}/masters/report?slug=${MasterOptionConfig.reportTabs}`,
+    `${environment.baseUrl}/masters/report?slug=${MasterOptionConfig.reportTabs}${filter.queryReport ? filter.queryReport.replace("?", "&") : ""}`,
     fetcher,
   );
+
+  console.log(filter.queryReport);
+
   const [selected, setSelected] = useState<string>(
     `${MasterReportTabs.byTodos}`,
   );

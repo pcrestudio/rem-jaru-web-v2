@@ -36,5 +36,6 @@ const rolePermissions = {
 
 export const canUse = (userRole: string, action: string) => {
   const permissions = rolePermissions[userRole] || [];
+
   return permissions.includes(action);
 };

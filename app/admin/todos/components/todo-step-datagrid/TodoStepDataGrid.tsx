@@ -130,7 +130,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
           columns={todoInstanceColumns}
           dataGridKey="id"
           emptyContent="Sin tareas por completar."
-          endpointUrl={`todos/instance?entityReference=${entityReference}&`}
+          endpointUrl={`todos/instance?entityReference=${entityReference}&entityStepReference=${entityStepReference}&`}
           storeItems={stepTodos as GetTodosInstanceDto[]}
           totalItemsText="Tareas totales:"
           onAddChange={() => setOpen(true)}

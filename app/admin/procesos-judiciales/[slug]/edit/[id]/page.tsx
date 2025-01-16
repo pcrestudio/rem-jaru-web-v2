@@ -3,6 +3,9 @@
 import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import useSWR from "swr";
+import { AiOutlineFileWord } from "react-icons/ai";
+import { Button } from "@nextui-org/button";
+import React from "react";
 
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
@@ -23,10 +26,8 @@ import useStore from "@/lib/store";
 import { upsertInstanceStepData } from "@/app/api/instances/instances";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
-import { AiOutlineFileWord } from "react-icons/ai";
-import { Button } from "@nextui-org/button";
-import React from "react";
 import exportableWord from "@/utils/exportable_word";
+import { ModelType } from "@/config/model-type.config";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -61,6 +62,7 @@ export default function ProcesosJudicialesSlugEdit() {
         if (stepDataArray.length > 0) {
           const instanceResponse = await upsertInstanceStepData({
             stepData: stepDataArray as InstanceStepDataDto[],
+            modelType: ModelType.JudicialProcess,
           });
 
           if (instanceResponse.data) {
@@ -72,6 +74,7 @@ export default function ProcesosJudicialesSlugEdit() {
           const response = await createGlobalAttributeValue({
             attributes: globalFields,
             entityReference: data?.entityReference,
+            modelType: ModelType.JudicialProcess,
           });
 
           if (response.data) {
@@ -85,6 +88,7 @@ export default function ProcesosJudicialesSlugEdit() {
           const response = await createSectionAttributeValue({
             attributes: customFields,
             entityReference: data?.entityReference,
+            modelType: ModelType.JudicialProcess,
           });
 
           if (response.data) {

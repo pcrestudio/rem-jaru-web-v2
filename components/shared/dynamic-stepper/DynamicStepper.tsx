@@ -12,22 +12,28 @@ import {
   QontoConnector,
   QontoStepIcon,
 } from "@/components/shared/dynamic-stepper/DynamicStepperConnector/DynamicStepperConnector";
+import { ModelType } from "@/config/model-type.config";
+import SupervisionInstances from "@/app/admin/supervisiones/[slug]/components/SupervisionInstances/SupervisionInstances";
+import { InstanceConfig } from "@/config/instance.config";
 
 interface DynamicStepperProps {
   entityReference?: string;
+  modelType?: string;
   className?: string;
 }
 
 const DynamicStepper: FC<DynamicStepperProps> = ({
   entityReference,
+  modelType = ModelType.JudicialProcess,
   className,
 }) => {
   const { data } = useSWR<GetInstanceDto[]>(
-    `${environment.baseUrl}/instance?entityReference=${entityReference}`,
+    `${environment.baseUrl}/instance?entityReference=${entityReference}&modelType=${modelType}`,
     fetcher,
   );
 
   const [activeStep, setActiveStep] = useState(0);
+  const [instanceName, setInstanceName] = useState<string | null>(null);
   const [activeInnerSteps, setActiveInnerSteps] = useState<number[]>(
     data?.map(() => 0) || [],
   );
@@ -51,8 +57,9 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     return storeState.stepData[stepId] || {};
   };
 
-  const handleNextInstance = (stepIndex: number) => {
+  const handleNextInstance = (stepIndex: number, name: string) => {
     setActiveStep(stepIndex);
+    setInstanceName(name);
   };
 
   const handleNextInstanceStep = (outerIndex: number, innerIndex: number) => {
@@ -85,7 +92,11 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
         });
       });
     }
-  }, [data, entityReference, updateStepData]);
+  }, [data, entityReference, updateStepData, instanceName]);
+
+  const index = data?.findIndex(
+    (instance) => instance.name === InstanceConfig.SANCIONADORA,
+  );
 
   return (
     <div className={`dynamic-stepper ${className || ""}`}>
@@ -99,7 +110,10 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
         >
           {data &&
             data.map(({ id, name }, outerIndex) => (
-              <Step key={id} onClick={() => handleNextInstance(outerIndex)}>
+              <Step
+                key={id}
+                onClick={() => handleNextInstance(outerIndex, name)}
+              >
                 <StepLabel StepIconComponent={QontoStepIcon}>{name}</StepLabel>
               </Step>
             ))}
@@ -126,18 +140,37 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
                     paddingTop: 4,
                   }}
                 >
-                  <InstanceForm
-                    entityReference={entityReference}
-                    entityStepReference={step.stepData[0]?.entityId}
-                    initialValues={
-                      step.stepData.length > 0
-                        ? step.stepData[0]
-                        : getInitialValuesForStep(step.id)
-                    }
-                    step={step}
-                    stepDataId={step.stepData[0]?.id}
-                    onChange={handleStepDataChange}
-                  />
+                  {modelType !== ModelType.Supervision ? (
+                    <InstanceForm
+                      entityReference={entityReference}
+                      entityStepReference={step.stepData[0]?.entityId}
+                      initialValues={
+                        step.stepData.length > 0
+                          ? step.stepData[0]
+                          : getInitialValuesForStep(step.id)
+                      }
+                      step={step}
+                      stepDataId={step.stepData[0]?.id}
+                      onChange={handleStepDataChange}
+                    />
+                  ) : (
+                    <SupervisionInstances
+                      entityReference={entityReference}
+                      entityStepReference={step.stepData[0]?.entityId}
+                      initialValues={
+                        step.stepData.length > 0
+                          ? step.stepData[0]
+                          : getInitialValuesForStep(step.id)
+                      }
+                      instanceName={
+                        index === 0 ? InstanceConfig.SANCIONADORA : instanceName
+                      }
+                      step={step}
+                      stepDataId={step.stepData[0]?.id}
+                      stepName={step.name}
+                      onChange={handleStepDataChange}
+                    />
+                  )}
                 </StepContent>
               </Step>
             ))}

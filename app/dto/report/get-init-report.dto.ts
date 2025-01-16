@@ -31,6 +31,7 @@ export interface GetMasterOptionReportDto {
     judicialProjects?: number;
     JudicialProcess?: number;
     judicialStudios?: number;
+    Supervision?: number;
     group?: number;
   };
 }

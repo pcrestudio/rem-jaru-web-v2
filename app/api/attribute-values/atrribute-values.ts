@@ -89,6 +89,7 @@ const generateFormDataPayload = (
   });
 
   formData.append("entityReference", sectionAttributeValue.entityReference);
+  formData.append("modelType", sectionAttributeValue.modelType);
 
   return formData;
 };

@@ -75,16 +75,18 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         />
       </div>
       <div className="col-span-6" />
-      <div className="col-span-6">
-        <HorizontalBarChart<GetMasterOptionReportDto>
-          cells={renderBarChartCell}
-          chartData={studioChartData}
-          columns={judicialProcessHorizontalBarColumns}
-          items={data?.studio.report[0]?.masterOption}
-          title="N° de procesos judiciales por estudio"
-          yAxisData={studioYAxisData}
-        />
-      </div>
+      {data && data?.studio.report[0]?.masterOption.length > 0 && (
+        <div className="col-span-6">
+          <HorizontalBarChart<GetMasterOptionReportDto>
+            cells={renderBarChartCell}
+            chartData={studioChartData}
+            columns={judicialProcessHorizontalBarColumns}
+            items={data?.studio.report[0]?.masterOption}
+            title="N° de procesos judiciales por estudio"
+            yAxisData={studioYAxisData}
+          />
+        </div>
+      )}
     </div>
   );
 };

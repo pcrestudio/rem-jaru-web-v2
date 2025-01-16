@@ -1,8 +1,9 @@
-import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import rolesColumns from "@/app/admin/ajustes/roles/components/RolesDataGrid/columns/rolesColumns";
 import { FC, useCallback } from "react";
 import { Tooltip } from "@nextui-org/react";
 import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
+
+import rolesColumns from "@/app/admin/ajustes/roles/components/RolesDataGrid/columns/rolesColumns";
+import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import { GetRoleDto } from "@/app/dto/role/get-role.dto";
 
 interface RolesDataGridProps {
@@ -10,7 +11,10 @@ interface RolesDataGridProps {
   onAddChange: () => void;
 }
 
-const RolesDataGrid: FC<RolesDataGridProps> = ({ toggleSelectedItem, onAddChange }) => {
+const RolesDataGrid: FC<RolesDataGridProps> = ({
+  toggleSelectedItem,
+  onAddChange,
+}) => {
   const renderCell = useCallback(
     (role: GetRoleDto, columnKey: string | number) => {
       const cellValue = role[columnKey];
@@ -58,14 +62,14 @@ const RolesDataGrid: FC<RolesDataGridProps> = ({ toggleSelectedItem, onAddChange
   return (
     <CustomDataGrid<GetRoleDto>
       hasAddButton
-      onAddChange={onAddChange}
       addButtonText="Nuevo rol"
-      endpointUrl="roles/filter?"
       cells={renderCell}
       columns={rolesColumns}
-      emptyContent="Sin roles configurados."
-      totalItemsText="Roles totales:"
       dataGridKey="userId"
+      emptyContent="Sin roles configurados."
+      endpointUrl="roles/filter?"
+      totalItemsText="Roles totales:"
+      onAddChange={onAddChange}
     />
   );
 };

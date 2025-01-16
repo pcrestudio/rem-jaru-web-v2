@@ -110,9 +110,9 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
     <CustomDataGrid<GetJudicialProcessDto>
       hasAddButton
       hasExcelButton
-      canUseExportable={canUse(user.role, CanUsePermission.downloadExcel)}
-      canUse={canUse(user.role, CanUsePermission.addItem)}
       addButtonText="Nuevo proceso judicial"
+      canUse={canUse(user.role, CanUsePermission.addItem)}
+      canUseExportable={canUse(user.role, CanUsePermission.downloadExcel)}
       cells={renderCell}
       columns={judicialProcessColumns}
       emptyContent="Sin procesos judiciales."

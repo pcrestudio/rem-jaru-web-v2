@@ -12,10 +12,10 @@ const exportableWord = async (response, entityReference: string) => {
     const blob = new Blob([response.data], {
       type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     });
-    console.log(`Blob size: ${blob.size}`);
 
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
+
     link.href = url;
     link.setAttribute("download", `${fileName}.docx`);
 

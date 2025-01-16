@@ -20,6 +20,7 @@ import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutoc
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
+import { ModelType } from "@/config/model-type.config";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -140,10 +141,10 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             <>
               <ProvisionCheck
                 control={control}
-                judicialProcess={judicialProcess}
-                register={register}
                 getValues={getValues}
                 pathname={pathname}
+                provision={judicialProcess}
+                register={register}
                 reset={reset}
                 setValue={setValue}
                 watch={watch}
@@ -153,6 +154,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 control={control}
                 entityReference={judicialProcess?.entityReference}
                 getValues={getValues}
+                modelType={ModelType.JudicialProcess}
                 pathname={pathname}
                 register={register}
                 reset={reset}
@@ -162,6 +164,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 control={control}
                 entityReference={judicialProcess?.entityReference}
                 getValues={getValues}
+                modelType={ModelType.JudicialProcess}
                 pathname={pathname}
                 register={register}
                 reset={reset}
@@ -201,6 +204,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
               <div className="col-span-12 mt-4">
                 <DynamicStepper
                   entityReference={judicialProcess?.entityReference}
+                  modelType={ModelType.JudicialProcess}
                 />
               </div>
             </>

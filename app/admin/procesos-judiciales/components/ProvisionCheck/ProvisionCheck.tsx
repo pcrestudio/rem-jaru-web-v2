@@ -4,10 +4,11 @@ import ReactiveSwitch from "@/components/form/ReactiveSwitch";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
+import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 
 interface ProvisionCheckProps {
   control: any;
-  judicialProcess: GetJudicialProcessDto;
+  provision: GetJudicialProcessDto | GetSupervisionDto;
   register: any;
   pathname: string;
   getValues: any;
@@ -19,7 +20,7 @@ interface ProvisionCheckProps {
 const ProvisionCheck: FC<ProvisionCheckProps> = ({
   control,
   register,
-  judicialProcess,
+  provision,
   pathname,
   getValues,
   reset,
@@ -27,8 +28,9 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
   watch,
 }) => {
   const [isProvisional, setIsProvisional] = useState<boolean>(
-    judicialProcess?.isProvisional ?? false,
+    provision?.isProvisional ?? false,
   );
+
   const calculateProvision = () => {
     const values = getValues();
 
@@ -37,17 +39,26 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
     );
     const globalData = globalKeys.reduce((acc, key) => {
       acc[key] = values[key];
+
       return acc;
     }, {});
 
-    const amountKey = Object.keys(globalData).find((key) =>
-      key.includes("amount-global-FLOAT"),
+    const amountKey = Object.keys(globalData).find(
+      (key) =>
+        key.includes("amount-global-FLOAT") ||
+        key.includes("supervisionAmount-global-FLOAT"),
     );
-    const contingencyKey = Object.keys(globalData).find((key) =>
-      key.includes("provisionContingency-global-INTEGER"),
+
+    const contingencyKey = Object.keys(globalData).find(
+      (key) =>
+        key.includes("provisionContingency-global-INTEGER") ||
+        key.includes("supervisionProvisionContingency-global-INTEGER"),
     );
-    const provisionKey = Object.keys(globalData).find((key) =>
-      key.includes("provisionAmount-global-FLOAT"),
+
+    const provisionKey = Object.keys(globalData).find(
+      (key) =>
+        key.includes("provisionAmount-global-FLOAT") ||
+        key.includes("supervisionProvisionAmount-global-FLOAT"),
     );
 
     if (amountKey && contingencyKey && provisionKey) {
@@ -65,6 +76,8 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
   const watchFields = watch([
     "amount-global-FLOAT",
     "provisionContingency-global-INTEGER",
+    "supervisionAmount-global-INTEGER",
+    "supervisionProvisionContingency-global-INTEGER",
   ]);
 
   useEffect(() => {
@@ -85,13 +98,13 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
 
       {isProvisional && (
         <GlobalAttributeFields
+          isConditionalRender
           control={control}
-          entityReference={judicialProcess?.entityReference}
+          entityReference={provision?.entityReference}
           getValues={getValues}
           pathname={pathname}
           register={register}
           reset={reset}
-          isConditionalRender
         />
       )}
 
@@ -99,8 +112,8 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
         <ReactiveFieldFile
           className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
           control={control}
+          defaultValue={provision?.guaranteeLetter ?? ""}
           isRequired={true}
-          defaultValue={judicialProcess?.guaranteeLetter ?? ""}
           label="Adjuntar carta de fianza"
           name="guaranteeLetter"
         />

@@ -1,5 +1,6 @@
-import useStore from "@/lib/store";
 import { Button } from "@nextui-org/button";
+
+import useStore from "@/lib/store";
 
 const ReportEmptyState = () => {
   const { clearFilter } = useStore();
@@ -8,7 +9,7 @@ const ReportEmptyState = () => {
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center">
-      <img src="/empty_state.svg" className="w-full h-[340px]" alt="" />
+      <img alt="" className="w-full h-[340px]" src="/empty_state.svg" />
       <div className="flex flex-col items-center gap-1">
         <h2 className="font-bold text-cerulean-950">Sin resultados</h2>
         <p className="text-foreground text-base">
@@ -17,9 +18,9 @@ const ReportEmptyState = () => {
         </p>
       </div>
       <Button
-        onClick={handleClearFilter}
-        color="primary"
         className="bg-cerulean-200 text-cerulean-950 font-bold"
+        color="primary"
+        onClick={handleClearFilter}
       >
         <span>Reintentar</span>
       </Button>

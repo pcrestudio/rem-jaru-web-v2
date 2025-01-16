@@ -1,14 +1,15 @@
 "use client";
 
-import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import RolesDataGrid from "@/app/admin/ajustes/roles/components/RolesDataGrid/RolesDataGrid";
 import RoleModal from "@/app/admin/ajustes/roles/components/RoleModal/RoleModal";
-import { useState } from "react";
 import { GetRoleDto } from "@/app/dto/role/get-role.dto";
 import { UpsertRoleDto } from "@/app/dto/role/upsert-role.dto";
 import { upsertRole } from "@/app/api/role/role";
-import toast from "react-hot-toast";
 
 export default function Roles() {
   const pathname = usePathname();
@@ -49,11 +50,11 @@ export default function Roles() {
       <BreadcrumbsPath pathname={pathname} />
 
       <RoleModal
-        isOpen={isOpen}
         handleSubmit={handleSubmit}
+        isOpen={isOpen}
         role={role}
-        onCloseChange={handleClose}
         title={role ? "Editar rol" : "Nuevo rol"}
+        onCloseChange={handleClose}
       />
 
       <RolesDataGrid

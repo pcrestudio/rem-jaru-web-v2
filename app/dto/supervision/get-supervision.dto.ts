@@ -11,9 +11,11 @@ export interface GetSupervisionDto {
   updatedAt?: string;
   isActive?: boolean;
   submoduleId?: number;
-  entityReference?: string;
   project?: GetMasterOptionsDto;
   authority?: GetMasterOptionsDto;
   situation?: GetMasterOptionsDto;
   responsible?: GetUserDto;
+  guaranteeLetter?: string;
+  isProvisional?: boolean;
+  entityReference?: string;
 }

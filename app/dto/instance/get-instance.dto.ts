@@ -26,6 +26,8 @@ export interface GetStepDto {
 
 export interface GetStepDataDto {
   comments: string;
+  choice?: string;
+  resume?: string;
   id?: number;
   stepId?: number;
   entityReference?: string;
@@ -33,4 +35,8 @@ export interface GetStepDataDto {
   completed?: boolean;
   todos: any;
   file?: string;
+  fileTwo?: string;
+  fileThree?: string;
+  fileFour?: string;
+  fileFive?: string;
 }

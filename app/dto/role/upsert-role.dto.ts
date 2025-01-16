@@ -1,5 +1,5 @@
 export interface UpsertRoleDto {
-  name: string
+  name: string;
   title: string;
   description: string;
   id?: number;
