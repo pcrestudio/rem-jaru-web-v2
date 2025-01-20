@@ -1,5 +1,5 @@
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code";
+import { Snippet } from "@heroui/snippet";
+import { Code } from "@heroui/code";
 
 export default function Home() {
   return (

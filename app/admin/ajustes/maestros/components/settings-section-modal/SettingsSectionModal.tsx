@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Switch } from "@nextui-org/switch";
+import { Switch } from "@heroui/switch";
 import useSWR from "swr";
 
 import { ModalProps } from "@/app/admin/types/ModalProps";

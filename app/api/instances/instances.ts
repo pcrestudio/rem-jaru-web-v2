@@ -1,8 +1,10 @@
 import api from "@/config/axios.config";
 import { environment } from "@/environment/environment";
 import { UpsertInstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
+import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
 
 const apiUrl: string = `${environment.baseUrl}/instance`;
+const apiIncidentUrl: string = `${environment.baseUrl}/incident`;
 
 export async function upsertInstanceStepData(
   instanceStepData: UpsertInstanceStepDataDto,
@@ -61,6 +63,10 @@ export async function upsertInstanceStepData(
       "Content-Type": "multipart/form-data",
     },
   });
+}
+
+export async function upsertIncidentData(incidents: UpsertIncidentDataDto[]) {
+  return api.post(`${apiIncidentUrl}/upsert/incidentData`, incidents);
 }
 
 export async function exportDocument(fileName: string) {

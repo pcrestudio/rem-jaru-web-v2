@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { AiOutlineFileWord } from "react-icons/ai";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import React from "react";
 
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
@@ -23,11 +23,15 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import useStore from "@/lib/store";
-import { upsertInstanceStepData } from "@/app/api/instances/instances";
+import {
+  upsertIncidentData,
+  upsertInstanceStepData,
+} from "@/app/api/instances/instances";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
 import exportableWord from "@/utils/exportable_word";
 import { ModelType } from "@/config/model-type.config";
+import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -39,7 +43,7 @@ export default function ProcesosJudicialesSlugEdit() {
     fetcher,
   );
 
-  const { stepDataArray } = useStore();
+  const { stepDataArray, stepInstanceIncidenceData } = useStore();
 
   const onSubmit = async (
     payload: EditJudicialProcessDto,
@@ -59,17 +63,6 @@ export default function ProcesosJudicialesSlugEdit() {
       );
 
       if (data) {
-        if (stepDataArray.length > 0) {
-          const instanceResponse = await upsertInstanceStepData({
-            stepData: stepDataArray as InstanceStepDataDto[],
-            modelType: ModelType.JudicialProcess,
-          });
-
-          if (instanceResponse.data) {
-            toast.success("Instancias modificadas con éxito");
-          }
-        }
-
         if (globalFields.length > 0) {
           const response = await createGlobalAttributeValue({
             attributes: globalFields,
@@ -103,6 +96,23 @@ export default function ProcesosJudicialesSlugEdit() {
     }
   };
 
+  const handleStepSubmit = async () => {
+    if (stepDataArray.length > 0) {
+      const instanceResponse = await upsertInstanceStepData({
+        stepData: stepDataArray as InstanceStepDataDto[],
+        modelType: ModelType.JudicialProcess,
+      });
+
+      const incidentDataResponse = await upsertIncidentData(
+        stepInstanceIncidenceData as UpsertIncidentDataDto[],
+      );
+
+      if (instanceResponse.data || incidentDataResponse.data) {
+        toast.success("Instancias modificadas con éxito");
+      }
+    }
+  };
+
   return (
     <div className="short-form-layout">
       <div className="flex flex-row justify-between items-center">
@@ -110,8 +120,8 @@ export default function ProcesosJudicialesSlugEdit() {
         <Button
           className="word-btn"
           startContent={<AiOutlineFileWord />}
-          onClick={async () => {
-            const response = await exportJudicialWord();
+          onPress={async () => {
+            const response = await exportJudicialWord(data?.entityReference);
 
             exportableWord(response, data?.entityReference);
           }}
@@ -123,6 +133,7 @@ export default function ProcesosJudicialesSlugEdit() {
       <BreadcrumbsPath pathname={pathname} />
 
       <JudicialProcessForm
+        handleStepSubmit={handleStepSubmit}
         handleSubmit={onSubmit}
         judicialProcess={
           data ?? {

@@ -2,8 +2,8 @@
 
 import React from "react";
 import { CircularProgress } from "@mui/material";
-import { Alert } from "@nextui-org/alert";
-import { Button, Checkbox, Divider, Link } from "@nextui-org/react";
+import { Alert } from "@heroui/alert";
+import { Button, Checkbox, Divider, Link } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
 import { otpValidationSchema, passswordValidationSchema } from "../validation";
@@ -12,13 +12,7 @@ import ReactiveOtpField from "@/components/form/ReactiveOtpField";
 import ReactiveField from "@/components/form/ReactiveField";
 import ReactiveForm from "@/components/form/ReactiveForm";
 
-function CredentialsForm({
-  onSubmit,
-  onResendClick,
-  onGoBackClick,
-  isLoading,
-  authMethod,
-}) {
+function CredentialsForm({ onSubmit, onGoBackClick, isLoading, authMethod }) {
   const [isVisible, setIsVisible] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -33,34 +27,26 @@ function CredentialsForm({
         {({ register, errors, control, touchedFields, isValid }) => (
           <div className="flex flex-col gap-3">
             {authMethod === "otp" ? (
-              <>
-                <div className="col-span-12">
-                  <Alert
-                    hideIconWrapper
-                    color="primary"
-                    description={`Ingresa el código de verificación enviado por correo electrónico. Este código es válido por 5 minutos.`}
+              <div className="col-span-12">
+                <Alert
+                  hideIconWrapper
+                  color="primary"
+                  description={`Ingresa el código de verificación enviado por correo electrónico. Este código es válido por 60 minutos.`}
+                  title={`Código de un solo uso`}
+                />
+                <div className="col-span-12 flex justify-center mt-4 mb-4">
+                  <ReactiveOtpField
+                    className="col-span-12"
+                    control={control}
+                    errors={errors}
+                    label={"Enter OTP"}
+                    name={"token"}
+                    register={register}
+                    size="lg"
+                    touched={touchedFields.token}
                   />
-                  <div className="col-span-12 flex justify-center mt-4 mb-1">
-                    <ReactiveOtpField
-                      className="col-span-12"
-                      control={control}
-                      errors={errors}
-                      label={"Enter OTP"}
-                      name={"token"}
-                      register={register}
-                      size="lg"
-                      touched={touchedFields.token}
-                    />
-                  </div>
                 </div>
-                <Button
-                  className="w-full col-span-12"
-                  variant="bordered"
-                  onClick={onResendClick}
-                >
-                  Reenviar código
-                </Button>
-              </>
+              </div>
             ) : (
               <>
                 <ReactiveField

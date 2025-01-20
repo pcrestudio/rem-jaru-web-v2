@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Input } from "@nextui-org/input";
+import { Input } from "@heroui/input";
 import { Control, Controller } from "react-hook-form";
 
 export interface ReactiveFieldProps {
@@ -53,6 +53,10 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
             <Input
               {...field}
               className={className}
+              classNames={{
+                inputWrapper:
+                  "bg-white shadow-none border border-slate-200 data-[hover=true]:bg-white data-[focus=true]:!bg-white",
+              }}
               endContent={endContent}
               errorMessage={errorMessage}
               isInvalid={!!errors[name] && touched}

@@ -5,5 +5,6 @@ export class EditSupervisionDto {
   projectId: number;
   guaranteeLetter?: string;
   isProvisional: boolean;
+  amount?: number;
   id?: number;
 }

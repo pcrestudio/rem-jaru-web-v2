@@ -51,6 +51,28 @@ export const rowLayoutOptions: LocalAutocompleteOption[] = [
   },
 ];
 
+export const alertOptions: LocalAutocompleteOption[] = [
+  {
+    label: "Con alerta",
+    value: "true",
+  },
+  {
+    label: "Sin alerta",
+    value: "false",
+  },
+];
+
+export const checkOptions: LocalAutocompleteOption[] = [
+  {
+    label: "Completados",
+    value: "true",
+  },
+  {
+    label: "No completados",
+    value: "false",
+  },
+];
+
 export const roleOptions: LocalAutocompleteOption[] = [
   {
     label: mappingRole[Role["super-admin"]],

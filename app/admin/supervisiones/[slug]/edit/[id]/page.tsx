@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import useSWR from "swr";
 import React from "react";
 import toast from "react-hot-toast";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { AiOutlineFileWord } from "react-icons/ai";
 
 import { environment } from "@/environment/environment";
@@ -14,7 +14,6 @@ import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import SupervisionForm from "@/app/admin/supervisiones/[slug]/components/supervision-form/SupervisionForm";
 import getSectionAttributesSlug from "@/utils/get_section_attributes_slug";
 import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
-import { exportJudicialWord } from "@/app/api/judicial-process/judicial-process";
 import { upsertInstanceStepData } from "@/app/api/instances/instances";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import {
@@ -117,7 +116,7 @@ export default function SupervisionesSlugEdit() {
             const response = await exportSupervisionWord();
 
             exportableWord(response, data?.entityReference);
-          }}  
+          }}
         >
           Exportar ficha
         </Button>

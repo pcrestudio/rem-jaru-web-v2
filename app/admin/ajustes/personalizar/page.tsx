@@ -1,7 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import useSWR from "swr";
-import { Accordion, AccordionItem, Button } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button } from "@heroui/react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import toast from "react-hot-toast";

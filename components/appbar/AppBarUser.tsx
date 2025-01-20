@@ -7,7 +7,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import { mappingRole } from "@/config/mapping_role";
 import httpClient from "@/lib/httpClient";

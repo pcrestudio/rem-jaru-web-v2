@@ -15,7 +15,10 @@ const TodoDataGrid = () => {
     open,
     handleEndContentChange,
     confirm,
+    handleDeleteConfirmClose,
+    deleteConfirm,
     toggleAlertHelper,
+    toggleDeleteHelper,
     handleConfirmClose,
   } = useTodos();
 
@@ -29,9 +32,20 @@ const TodoDataGrid = () => {
         todo={todo}
         onCloseChange={handleTodoClose}
       />
+
       <ConfirmModal
         description={{
-          __html: `La alerta será enviada luego de la confirmación, apróximadamente entre 30 segundos a 1 minuto.`,
+          __html: `¿Deseas eliminar el To-Do, esta acción no se podrá revertir.`,
+        }}
+        isOpen={deleteConfirm}
+        title={`Eliminar To-Do`}
+        onClose={handleDeleteConfirmClose}
+        onConfirm={() => toggleDeleteHelper(todo?.id)}
+      />
+
+      <ConfirmModal
+        description={{
+          __html: `El To-Do está a punto de ser alertado. Pulsa confirmar para alertar.`,
         }}
         isOpen={confirm}
         title={`Alertar To-Do`}

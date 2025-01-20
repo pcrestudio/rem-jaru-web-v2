@@ -1,9 +1,9 @@
-import React, { FC, useEffect } from "react";
+import { FC, useEffect } from "react";
 import useSWR from "swr";
-import { Accordion, AccordionItem, DatePicker } from "@nextui-org/react";
-import { Input, Textarea } from "@nextui-org/input";
 import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
+import { Accordion, AccordionItem, DatePicker } from "@heroui/react";
+import { Input, Textarea } from "@heroui/input";
 
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -94,7 +94,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                   base: "pb-4 shadow-none border border-slate-200",
                   trigger: "border-b-red-500 pt-4 pb-1",
                 }}
-                selectionMode="multiple"
+                selectionMode="single"
                 variant="splitted"
               >
                 <AccordionItem title={section.label}>

@@ -10,7 +10,6 @@ import CredentialsForm from "./components/CredentialsForm";
 import Step from "./components/Step";
 
 import httpClient from "@/lib/httpClient";
-import Image from "next/image";
 
 export default function Auth() {
   const router = useRouter();
@@ -25,42 +24,36 @@ export default function Auth() {
   const handleEmailSubmit = async ({ email }: { email: string }) => {
     setIsLoading(true);
     try {
-      const res = await httpClient.get(`/auth/method/${email}`);
+      const res = await httpClient.get(`/users/find/${email}`);
 
       setEmail(email);
-      setAuthMethod(res.data);
+      setAuthMethod(res.data.authMethod);
 
-      if (res.data === "otp") {
-        await httpClient.post("/auth/generate-otp", { email });
+      if (res.data.authMethod === "otp") {
+        await httpClient.post("/otp/generate", { email });
         toast.success("OTP generated. Please check your email or SMS.");
       }
-    } catch (error) {
-      setAuthMethod("password");
-    } finally {
+
       setStep(2);
+    } catch (error) {
+      toast.error("Error verifying email.");
+    } finally {
       setIsLoading(false);
     }
-  };
-
-  const generateOtp = async () => {
-    await httpClient.post("/auth/generate-otp", { email });
-    toast.success(
-      "Se ha generado un código de verificación. Por favor revisa tu correo electrónico."
-    );
   };
 
   const handleLogin = async (credentials: CredentialsType) => {
     setIsLoading(true);
     try {
       const authEndpoint =
-        authMethod === "otp" ? "/auth/validate-otp" : "/auth/login";
+        authMethod === "otp" ? "/otp/validate" : "/auth/login";
 
       const res = await httpClient.post(
         authEndpoint,
         { ...credentials, email },
         {
           withCredentials: true,
-        }
+        },
       );
 
       // Store token in localStorage (or cookies)
@@ -72,8 +65,7 @@ export default function Auth() {
       // Redirect to admin
       router.push(redirect);
     } catch (error) {
-      console.error("Login error:", error.response?.data?.message);
-      toast.error(`Error de inicio sesión: ${error.response?.data?.message}`);
+      toast.error("Credenciales incorrectas.");
     } finally {
       setIsLoading(false);
     }
@@ -84,54 +76,46 @@ export default function Auth() {
     localStorage.removeItem("token");
     // This route should initiate the Azure AD auth flow
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/azure-ad?redirect=${encodeURIComponent(
-      redirect
+      redirect,
     )}`;
   };
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <section className="min-h-screen flex items-center">
-        <div
-          className="absolute inset-0"
-          style={{
-            zIndex: 1, // Ensure it stays behind the content
-          }}
-        >
-          <Image
-            style={{
-              filter: "blur(3px) brightness(0.8)",
-            }}
-            src="/quellaveco-panoramica.jpg"
-            alt="Background"
-            layout="fill"
-            objectFit="cover"
-            //quality={80} // Adjust quality for optimization
-            priority // Ensures the image is loaded first
-          />
-        </div>
-
-        <div className="relative z-10 flex flex-col items-center justify-center bg-white bg-opacity-95 p-8 md:p-12 rounded-lg shadow-lg max-w-md mx-auto">
-          <h1 className="text-2xl font-semibold text-slate-700 mb-8">
-            Bienvenido a <b className="text-cerulean-900">Jaru Software</b>
-          </h1>
-          <div className="flex w-full gap-3 overflow-hidden relative h-auto min-h-[375px] ">
-            <Step isActive={step === 1}>
-              <LoginForm
-                isLoading={isLoading}
-                onAzureLogin={handleAzureLogin}
-                onEmailSubmit={handleEmailSubmit}
-              />
-            </Step>
-            <Step isActive={step === 2}>
-              <CredentialsForm
-                onSubmit={handleLogin}
-                onResendClick={generateOtp}
-                authMethod={authMethod}
-                isLoading={isLoading}
-                onGoBackClick={() => setStep(1)}
-              />
-            </Step>
+      <section className="flex flex-row min-h-screen bg-gradient-to-br from-blue-400 via-teal-400 to-green-500">
+        <div className="flex w-full items-center justify-center lg:w-1/2">
+          <div className="flex w-full max-w-sm flex-col items-center">
+            <div className="w-full max-w-full p-8 bg-white shadow-lg rounded-lg">
+              <h1 className="text-2xl font-semibold text-slate-700 mb-8">
+                Bienvenido a <b className="text-cerulean-900">Jaru Software</b>
+              </h1>
+              <div className="flex w-full gap-3 overflow-hidden relative h-auto min-h-[350px]">
+                <Step isActive={step === 1}>
+                  <LoginForm
+                    isLoading={isLoading}
+                    onAzureLogin={handleAzureLogin}
+                    onEmailSubmit={handleEmailSubmit}
+                  />
+                </Step>
+                <Step isActive={step === 2}>
+                  <CredentialsForm
+                    authMethod={authMethod}
+                    isLoading={isLoading}
+                    onGoBackClick={() => setStep(1)}
+                    onSubmit={handleLogin}
+                  />
+                </Step>
+              </div>
+            </div>
           </div>
+        </div>
+        <div className="relative hidden lg:flex lg:flex-grow">
+          <div className="absolute bg-black/[.35] z-10 w-full h-full" />
+          <img
+            alt=""
+            className="h-full w-full object-cover"
+            src="/anglo-american-quellaveco-inversion-minera.jpg"
+          />
         </div>
       </section>
     </Suspense>
