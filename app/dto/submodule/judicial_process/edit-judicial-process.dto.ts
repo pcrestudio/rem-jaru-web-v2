@@ -6,4 +6,5 @@ export interface EditJudicialProcessDto {
   id: number;
   cargoStudioId: number;
   isProvisional: boolean;
+  comment?: string;
 }

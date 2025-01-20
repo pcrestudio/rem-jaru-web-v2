@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { InputOtp } from "@nextui-org/input-otp";
+import { InputOtp } from "@heroui/input-otp";
 import { Control, Controller } from "react-hook-form";
 
 export interface ReactiveOtpFieldProps {

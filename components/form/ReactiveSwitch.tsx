@@ -1,4 +1,4 @@
-import { Switch } from "@nextui-org/switch";
+import { Switch } from "@heroui/switch";
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
 

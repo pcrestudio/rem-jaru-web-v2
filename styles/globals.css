@@ -184,6 +184,14 @@ div[data-orientation="vertical"] {
   @apply bg-transparent border border-sky-700 text-sky-700 hover:bg-green-700/5 transition delay-500 disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 disabled:hover:bg-none;
 }
 
+.file-name-visualizer {
+  @apply text-xs text-cerulean-950 cursor-pointer w-fit underline;
+}
+
+.not-button {
+  @apply bg-transparent text-foreground w-fit !px-0 hover:text-foreground disabled:cursor-not-allowed;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

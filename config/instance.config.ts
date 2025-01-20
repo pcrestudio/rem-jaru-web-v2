@@ -7,4 +7,5 @@ export enum InstanceConfig {
   SUPERVISION = "Etapa de supervisión",
   PRELIMINAR = "Etapa preliminar",
   SANCIONADORA = "Etapa sancionadora",
+  INSPECTIVA = "Etapa inspectiva",
 }

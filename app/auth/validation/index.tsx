@@ -1,7 +1,9 @@
 import * as Yup from "yup";
 
 export const emailValidationSchema = Yup.object().shape({
-  email: Yup.string().required("El correo es obligatorio."),
+  email: Yup.string()
+    .required("El correo es obligatorio.")
+    .email("El correo no es válido."),
 });
 
 export const passswordValidationSchema = Yup.object().shape({
@@ -15,7 +17,7 @@ export const otpValidationSchema = Yup.object().shape({
 export const passswordResetValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required("La contraseña es requerida.")
-    .min(8, "La contraseña debe tener al menos 8 caracteres.")
+    .min(12, "La contraseña debe tener al menos 12 caracteres.")
     .matches(/[A-Z]/, "Debe contener al menos una mayúscula.")
     .matches(/[0-9]/, "Debe contener al menos un número.")
     .matches(/[^a-zA-Z0-9]/, "Debe contener al menos un caracter especial."),

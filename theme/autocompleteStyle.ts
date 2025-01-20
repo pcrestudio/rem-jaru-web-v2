@@ -15,7 +15,7 @@ export const autocompleteStyle = {
     color: "red",
   },
   ".Mui-focused": {
-    color: "var(--nextui-default-foreground)",
+    color: "var(--heroui-default-foreground)",
   },
   "& .Mui-disabled": {
     background: "transparent !important",

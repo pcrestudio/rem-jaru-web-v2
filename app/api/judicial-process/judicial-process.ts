@@ -55,8 +55,8 @@ export async function exportJudicialProcessExcel() {
   return api.get(`${apiUrl}/export/excel`, { responseType: "blob" });
 }
 
-export async function exportJudicialWord() {
-  return api.get(`${apiUrl}/export/word`, {
+export async function exportJudicialWord(entityReference: string) {
+  return api.get(`${apiUrl}/export/word?entityReference=${entityReference}`, {
     responseType: "arraybuffer",
   });
 }

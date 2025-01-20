@@ -1,4 +1,4 @@
-import { Tab, Tabs } from "@nextui-org/react";
+import { Tab, Tabs } from "@heroui/react";
 import useSWR from "swr";
 import { Key, useState } from "react";
 
@@ -21,8 +21,6 @@ const ReportTabs = () => {
     `${environment.baseUrl}/masters/report?slug=${MasterOptionConfig.reportTabs}${filter.queryReport ? filter.queryReport.replace("?", "&") : ""}`,
     fetcher,
   );
-
-  console.log(filter.queryReport);
 
   const [selected, setSelected] = useState<string>(
     `${MasterReportTabs.byTodos}`,

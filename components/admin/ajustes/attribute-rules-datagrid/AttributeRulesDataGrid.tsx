@@ -7,11 +7,11 @@ import {
   TableRow,
   TableCell,
   Tooltip,
-} from "@nextui-org/react";
-import { EditIcon } from "@nextui-org/shared-icons";
+} from "@heroui/react";
+import { EditIcon } from "@heroui/shared-icons";
 import { Button } from "@mui/material";
 import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
-import { Input } from "@nextui-org/input";
+import { Input } from "@heroui/input";
 
 import { GetAttributeRulesDto } from "@/app/dto/attribute-values/get-attribute-rules.dto";
 import { attributeRulesColumns } from "@/components/admin/ajustes/attribute-rules-datagrid/columns/attribute-rules.columns";

@@ -1,5 +1,5 @@
 import { FC, useCallback } from "react";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import { GetCEJHistoricalDto } from "@/app/dto/cej/get-cej-historical.dto";

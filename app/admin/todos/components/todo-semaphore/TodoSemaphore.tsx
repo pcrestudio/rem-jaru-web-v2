@@ -14,9 +14,7 @@ interface TodoSemaphoreProps {
 
 const TodoSemaphore: FC<TodoSemaphoreProps> = ({ slug }) => {
   return (
-    <div
-      className={`w-5 h-5 mx-auto rounded-full opacity-25 ${mappingSemaphore[slug]}`}
-    />
+    <div className={`w-5 h-5 mx-auto rounded-full ${mappingSemaphore[slug]}`} />
   );
 };
 

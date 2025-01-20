@@ -5,13 +5,20 @@ import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata
 import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import { FilterType } from "@/lib/types/filter.type";
 import { IUser } from "@/app/admin/usuarios/interfaces";
+import { GetInstanceIncidenceDataDto } from "@/app/dto/instance/get-instance-incidence-data.dto";
 
 interface AppState {
   stepData: Record<number, Partial<GetStepDataDto>>;
   stepDataArray: Partial<InstanceStepDataDto>[];
+  stepInstanceIncidenceData: Partial<GetInstanceIncidenceDataDto>[];
   stepTodos: Partial<GetTodosInstanceDto>[];
   user: Partial<IUser>;
   updateStepData: (stepId: number, data: Partial<GetStepDataDto>) => void;
+  updateInstanceIncidenceData: (
+    incidenceId: number,
+    entityReference: string,
+    data: Partial<GetInstanceIncidenceDataDto>,
+  ) => void;
   updateStepDataArray: (stepId: number, data: Partial<GetStepDataDto>) => void;
   clearStepData: () => void;
   updateStepTodos?: (
@@ -29,6 +36,7 @@ interface AppState {
 const useStore = create<AppState>((set) => ({
   stepData: {},
   stepDataArray: [],
+  stepInstanceIncidenceData: [],
   user: {},
   stepTodos: [],
   filter: {
@@ -72,7 +80,9 @@ const useStore = create<AppState>((set) => ({
 
         return { stepDataArray: updatedArray };
       } else {
-        return { stepDataArray: [...state.stepDataArray, { stepId, ...data }] };
+        return {
+          stepDataArray: [...state.stepDataArray, { stepId, ...data }],
+        };
       }
     }),
   updateStepTodos: (title, stepDataId, entityStepReference, data) =>
@@ -95,6 +105,30 @@ const useStore = create<AppState>((set) => ({
           stepTodos: [
             ...state.stepTodos,
             { stepDataId, entityStepReference, ...data },
+          ],
+        };
+      }
+    }),
+  updateInstanceIncidenceData: (instanceIncidentId, entityReference, data) =>
+    set((state) => {
+      const existingIndex = state.stepInstanceIncidenceData.findIndex(
+        (item) => item.instanceIncidentId === instanceIncidentId,
+      );
+
+      if (existingIndex !== -1) {
+        const updatedArray = [...state.stepInstanceIncidenceData];
+
+        updatedArray[existingIndex] = {
+          ...updatedArray[existingIndex],
+          ...data,
+        };
+
+        return { stepInstanceIncidenceData: updatedArray };
+      } else {
+        return {
+          stepInstanceIncidenceData: [
+            ...state.stepInstanceIncidenceData,
+            { instanceIncidentId, entityReference, ...data },
           ],
         };
       }
