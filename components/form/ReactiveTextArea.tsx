@@ -29,7 +29,6 @@ const ReactiveTextArea: FC<ReactiveFieldProps> = ({
   touched,
   control,
   className,
-  onBlur,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
@@ -40,13 +39,6 @@ const ReactiveTextArea: FC<ReactiveFieldProps> = ({
         defaultValue={defaultValue}
         name={name}
         render={({ field }) => {
-          const handleBlur = () => {
-            if (onBlur && field?.value !== undefined) {
-              onBlur(field.value);
-            }
-            field.onBlur();
-          };
-
           return (
             <Textarea
               className={className}

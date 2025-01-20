@@ -14,6 +14,7 @@ import ProvisionCheck from "@/app/admin/procesos-judiciales/components/Provision
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
+import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -150,7 +151,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             slug={MasterOptionConfig.situacion}
           />
 
-          <ReactiveField
+          <ReactiveNumericField
             className="col-span-6"
             control={control}
             endContent={

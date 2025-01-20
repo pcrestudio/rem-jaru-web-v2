@@ -19,6 +19,7 @@ import GlobalAttributeFields from "@/components/shared/global-attribute-fields/G
 import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import { ModelType } from "@/config/model-type.config";
+import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -136,7 +137,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="secondaryResponsibleId"
           />
 
-          <ReactiveField
+          <ReactiveNumericField
             className="col-span-4"
             control={control}
             endContent={

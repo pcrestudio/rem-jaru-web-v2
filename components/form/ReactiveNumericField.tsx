@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { ChangeEvent, FC, ReactNode } from "react";
 import { Input } from "@heroui/input";
 import { Control, Controller } from "react-hook-form";
 
@@ -20,12 +20,11 @@ export interface ReactiveFieldProps {
   endContent?: ReactNode;
 }
 
-const ReactiveField: FC<ReactiveFieldProps> = ({
+const ReactiveNumericField: FC<ReactiveFieldProps> = ({
   name,
   errors,
   label,
   defaultValue,
-  type,
   isRequired,
   touched,
   className,
@@ -49,6 +48,14 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
             field.onBlur();
           };
 
+          const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value;
+            // Validar si es un número decimal válido
+            if (/^-?\d*(\.\d*)?$/.test(value)) {
+              field.onChange(value);
+            }
+          };
+
           return (
             <Input
               {...field}
@@ -63,10 +70,11 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               isRequired={isRequired}
               label={label}
               min={0}
-              type={type}
+              step="any"
+              type="number"
               value={field.value || ""}
               onBlur={handleBlur}
-              onChange={(e) => field.onChange(e.target.value)}
+              onChange={handleChange}
             />
           );
         }}
@@ -75,4 +83,4 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   );
 };
 
-export default ReactiveField;
+export default ReactiveNumericField;
