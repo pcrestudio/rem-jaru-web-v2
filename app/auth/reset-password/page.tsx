@@ -2,8 +2,8 @@
 
 import React, { Suspense, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "@nextui-org/link";
-import { Button } from "@nextui-org/button";
+import { Link } from "@heroui/link";
+import { Button } from "@heroui/button";
 import { CircularProgress } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";

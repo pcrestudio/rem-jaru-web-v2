@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 import ReactiveForm, {
   ReactiveFormProps,
@@ -12,6 +12,7 @@ interface FormDialogProps extends ReactiveFormProps {
   onCloseChange: () => void;
   buttonSubmitTitle?: string;
   modalEndContent?: ReactNode;
+  modalDialogHeaderContent?: ReactNode;
   canUse?: boolean;
 }
 
@@ -27,6 +28,7 @@ const FormDialog: FC<FormDialogProps> = ({
   formId,
   buttonSubmitTitle = "Guardar",
   modalEndContent,
+  modalDialogHeaderContent,
   canUse = true,
 }) => {
   return (
@@ -36,9 +38,20 @@ const FormDialog: FC<FormDialogProps> = ({
         className: "!rounded-2xl",
       }}
       open={isOpen}
+      scroll="paper"
     >
-      <DialogTitle className="text-cerulean-950 font-bold !text-lg">
-        {title}
+      <DialogTitle
+        className="text-cerulean-950 font-bold !text-lg"
+        sx={{
+          paddingX: modalDialogHeaderContent
+            ? "0 !important"
+            : "24px !important",
+          paddingTop: modalDialogHeaderContent
+            ? "0 !important"
+            : "16px !important",
+        }}
+      >
+        {modalDialogHeaderContent ? modalDialogHeaderContent : title}
       </DialogTitle>
       <ReactiveForm
         formId={formId}

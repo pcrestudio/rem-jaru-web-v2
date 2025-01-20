@@ -7,9 +7,9 @@ import {
   TableRow,
   TableCell,
   Tooltip,
-} from "@nextui-org/react";
-import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
-import { Chip } from "@nextui-org/chip";
+} from "@heroui/react";
+import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import { Chip } from "@heroui/chip";
 import { Button } from "@mui/material";
 import { AiOutlinePlus, AiOutlineSisternode } from "react-icons/ai";
 import { SettingsIcon } from "lucide-react";

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Control, Controller } from "react-hook-form";
-import { DatePicker } from "@nextui-org/react";
+import { DatePicker } from "@heroui/react";
 import { ZonedDateTime } from "@internationalized/date";
 
 import { convertToZonedDateTime } from "@/utils/format_date";

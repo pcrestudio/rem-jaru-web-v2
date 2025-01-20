@@ -1,10 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
+import { errors } from "openid-client";
 
 import ReactiveSwitch from "@/components/form/ReactiveSwitch";
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
+import ReactiveTextArea from "@/components/form/ReactiveTextArea";
 
 interface ProvisionCheckProps {
   control: any;
@@ -109,14 +111,24 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
       )}
 
       {!isProvisional && (
-        <ReactiveFieldFile
-          className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
-          control={control}
-          defaultValue={provision?.guaranteeLetter ?? ""}
-          isRequired={true}
-          label="Adjuntar carta de fianza"
-          name="guaranteeLetter"
-        />
+        <>
+          <ReactiveFieldFile
+            className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
+            control={control}
+            defaultValue={provision?.guaranteeLetter ?? ""}
+            label="Adjuntar carta de fianza"
+            name="guaranteeLetter"
+          />
+
+          <ReactiveTextArea
+            className="col-span-12 nextui-textarea-nomodal"
+            control={control}
+            errors={errors}
+            label="Comentarios"
+            name="comment"
+            register={register}
+          />
+        </>
       )}
     </>
   );

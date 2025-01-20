@@ -3,6 +3,7 @@ import { ReactNode, useCallback } from "react";
 
 import {
   GetInitReportDto,
+  GetInstancesReportDto,
   GetMasterOptionReportDto,
 } from "@/app/dto/report/get-init-report.dto";
 import { environment } from "@/environment/environment";
@@ -13,10 +14,15 @@ import { ChartData } from "@/app/admin/types/ChartDataType";
 interface UseReportJudicialProcessProps {
   data: GetInitReportDto;
   studioYAxisData: string[];
+  instanceYAxisData: string[];
   studioChartData: ChartData[];
   matterChartData: ChartData[];
   renderBarChartCell: (
     item: GetMasterOptionReportDto,
+    columnKey: string | number,
+  ) => ReactNode;
+  renderInstanceBarChartCell: (
+    item: GetInstancesReportDto,
     columnKey: string | number,
   ) => ReactNode;
   renderPieChartCell: (
@@ -174,6 +180,33 @@ const useReportJudicialProcess = (
     [totalCriticalProcesses],
   );
 
+  const instanceYAxisData =
+    data?.instances?.report.map((option) => option.instanceName) ?? [];
+
+  const totalInstances = data?.instances.report.reduce(
+    (sum, item) => sum + (item.count || 0),
+    0,
+  );
+
+  const renderInstanceBarChartCell = useCallback(
+    (report: GetInstancesReportDto, columnKey: string | number) => {
+      const cellValue = report[columnKey];
+      const percent = (report.count / totalInstances) * 100;
+
+      switch (columnKey) {
+        case "count":
+          return <p>{report.count}</p>;
+
+        case "percent":
+          return <p>{percent.toFixed(2)} %</p>;
+
+        default:
+          return cellValue;
+      }
+    },
+    [total],
+  );
+
   return {
     data,
     studioChartData,
@@ -181,9 +214,11 @@ const useReportJudicialProcess = (
     matterChartData,
     renderBarChartCell,
     renderPieChartCell,
+    renderInstanceBarChartCell,
     renderContingenciesCell,
     renderCriticalProcessesCell,
     totalJudicialProcess: total,
+    instanceYAxisData,
   };
 };
 

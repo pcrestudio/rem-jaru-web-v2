@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { Button } from "@nextui-org/button";
-import { Alert } from "@nextui-org/alert";
+import { Button } from "@heroui/button";
+import { Alert } from "@heroui/alert";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 
@@ -18,12 +18,11 @@ import { GetCejDossierDetailDto } from "@/app/dto/cej/get-cej-dossier-detail.dto
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
-import { canUse, CanUsePermission } from "@/utils/can_use_permission";
-import useStore from "@/lib/store";
 import { ModelType } from "@/config/model-type.config";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
+  handleStepSubmit?: () => void;
   judicialProcess?: GetJudicialProcessDto;
   pathname?: string;
 }
@@ -32,13 +31,13 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   judicialProcess,
   pathname,
   handleSubmit,
+  handleStepSubmit,
 }) => {
   const { data } = useSWR<GetCejDossierDetailDto>(
     `${environment.baseUrl}/cej/detail?fileCode=${judicialProcess?.fileCode}`,
     fetcher,
   );
   const router = useRouter();
-  const { user } = useStore();
 
   return (
     <ReactiveForm
@@ -60,7 +59,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
       }) => (
         <div className="grid grid-cols-12 gap-4">
           <ReactiveField
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-12"
             control={control}
             errors={errors}
             isRequired={true}
@@ -70,7 +69,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             touched={touchedFields.fileCode}
           />
           <ReactiveField
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-6"
             control={control}
             errors={errors}
             isRequired={true}
@@ -80,7 +79,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             touched={touchedFields.demanded}
           />
           <ReactiveField
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-6"
             control={control}
             errors={errors}
             isRequired={true}
@@ -90,7 +89,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             touched={touchedFields.plaintiff}
           />
           <ReactiveField
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-6"
             control={control}
             errors={errors}
             label="Co Demandado"
@@ -123,18 +122,35 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             slug={MasterOptionConfig.materia}
           />
           <ResponsibleAutocomplete
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-4 nextui-input-nomodal"
             control={control}
             isRequired={true}
             label="Responsable principal"
             name="responsibleId"
           />
           <ResponsibleAutocomplete
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-4 nextui-input-nomodal"
             control={control}
             isRequired={false}
             label="Responsable secundario"
             name="secondaryResponsibleId"
+          />
+
+          <ReactiveField
+            className="col-span-4"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">$</span>
+              </div>
+            }
+            errors={errors}
+            isRequired={true}
+            label="Cuantía"
+            name="amount"
+            register={register}
+            touched={touchedFields.amount}
+            type="number"
           />
 
           {judicialProcess && judicialProcess?.entityReference && (
@@ -210,15 +226,27 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             </>
           )}
 
-          <Button
-            className="standard-btn text-white col-span-12 w-fit"
-            disabled={!canUse(user.role, CanUsePermission.editItem) || !isValid}
-            type="submit"
-          >
-            {judicialProcess && judicialProcess.entityReference
-              ? "Guardar y continuar"
-              : "Guardar"}
-          </Button>
+          <div className="col-span-12 flex flex-row gap-4">
+            <Button
+              className="standard-btn bg-red-500 text-white w-fit"
+              disabled={!isValid}
+              type="submit"
+            >
+              {judicialProcess && judicialProcess.entityReference
+                ? "Editar ficha"
+                : "Guardar ficha"}
+            </Button>
+
+            {judicialProcess && judicialProcess?.entityReference && (
+              <Button
+                className="word-btn bg-red-500 text-white w-fit"
+                type="button"
+                onClick={handleStepSubmit}
+              >
+                Guardar y continuar paso
+              </Button>
+            )}
+          </div>
         </div>
       )}
     </ReactiveForm>
