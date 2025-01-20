@@ -49,7 +49,7 @@ const group = {
 
 export const menuOptions: MenuOptions[] = [
   {
-    title: "Reportes",
+    title: "Dashboard",
     role: allRoles,
     redirectTo: "/admin",
     Icon: (props) => <AiOutlineHome {...props} />,

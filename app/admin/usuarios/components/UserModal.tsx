@@ -101,7 +101,7 @@ const UserModal: FC<UserModalProps> = ({
           />
 
           <LocalAutocomplete
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-12"
             control={control}
             errors={errors}
             isRequired={true}
@@ -113,7 +113,7 @@ const UserModal: FC<UserModalProps> = ({
           />
 
           <AsyncAutocomplete
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-12 nextui-input"
             control={control}
             errors={errors}
             isRequired={true}

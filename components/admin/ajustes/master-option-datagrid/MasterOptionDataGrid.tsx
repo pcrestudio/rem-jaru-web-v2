@@ -8,9 +8,9 @@ import {
   TableCell,
   Tooltip,
   useDisclosure,
-} from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
-import { Chip } from "@heroui/chip";
+} from "@nextui-org/react";
+import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
+import { Chip } from "@nextui-org/chip";
 import useSWR from "swr";
 import { Button } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";

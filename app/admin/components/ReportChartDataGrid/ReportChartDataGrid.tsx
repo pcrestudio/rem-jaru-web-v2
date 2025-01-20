@@ -5,7 +5,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@heroui/react";
+} from "@nextui-org/react";
 import { ReactNode } from "react";
 
 interface ReportChartDataGridProps<T extends object> {

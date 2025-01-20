@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import { Textarea } from "@heroui/input";
+import { Textarea } from "@nextui-org/input";
 import { Control, Controller } from "react-hook-form";
 
 export interface ReactiveFieldProps {

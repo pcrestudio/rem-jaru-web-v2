@@ -23,7 +23,6 @@ const LocalAutocomplete: FC<LocalAutocompleteProps> = ({
   control,
   isRequired,
   options,
-  noModal,
 }) => {
   return (
     <Controller
@@ -39,7 +38,7 @@ const LocalAutocomplete: FC<LocalAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              className={noModal ? "nextui-input" : ""}
+              className="nextui-input"
               error={!!error}
               helperText={error ? error.message : ""}
               label={label}

@@ -14,9 +14,6 @@ export interface GetInitReportDto {
   studio: {
     report: GetStudioReportDto[];
   };
-  instances: {
-    report: GetInstancesReportDto[];
-  };
   total: number;
 }
 
@@ -37,9 +34,4 @@ export interface GetMasterOptionReportDto {
     Supervision?: number;
     group?: number;
   };
-}
-
-export interface GetInstancesReportDto {
-  instanceName: string;
-  count: number;
 }

@@ -43,10 +43,8 @@ const judicialProcessColumns = [
     width: 70,
   },
   {
-    key: "instance",
-    label: "Instancia",
-    sortable: true,
-    width: 70,
+    key: "isActive",
+    label: "Activo",
   },
   { key: "actions", label: "Opciones" },
 ];

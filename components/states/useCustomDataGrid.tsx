@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import React, { ChangeEvent, ReactNode, useCallback, useState } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@nextui-org/button";
 import { AiOutlineFileExcel, AiOutlinePlus } from "react-icons/ai";
 
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
@@ -33,7 +33,7 @@ interface UseCustomDataGridParams {
 const useCustomDataGrid = <T extends object>(
   params: UseCustomDataGridParams,
 ): UseCustomDataGridProps<T> => {
-  const { filter } = useStore();
+  const { filter, user } = useStore();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const onRowsPerPageChange = useCallback(

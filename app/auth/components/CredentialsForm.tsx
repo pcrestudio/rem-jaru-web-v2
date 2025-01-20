@@ -2,8 +2,8 @@
 
 import React from "react";
 import { CircularProgress } from "@mui/material";
-import { Alert } from "@heroui/alert";
-import { Button, Checkbox, Divider, Link } from "@heroui/react";
+import { Alert } from "@nextui-org/alert";
+import { Button, Checkbox, Divider, Link } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 
 import { otpValidationSchema, passswordValidationSchema } from "../validation";

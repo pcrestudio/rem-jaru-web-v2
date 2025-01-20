@@ -1,6 +1,4 @@
 import { ZonedDateTime } from "@internationalized/date";
-import { formatDistanceToNow } from "date-fns";
-import { es } from "date-fns/locale";
 
 const format = (date: Date) => {
   const getDate = new Date(date.toString());
@@ -45,11 +43,4 @@ export function convertToZonedDateTime(
   }
 
   return null;
-}
-
-export function convertFormatDistanceToNow(date: Date) {
-  return formatDistanceToNow(date, {
-    addSuffix: true,
-    locale: es,
-  });
 }

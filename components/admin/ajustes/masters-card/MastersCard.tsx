@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC } from "react";
-import { Accordion, AccordionItem } from "@heroui/react";
+import { Accordion, AccordionItem } from "@nextui-org/react";
 import useSWR from "swr";
 
 import { GetMastersDto } from "@/app/dto/masters/get-masters.dto";

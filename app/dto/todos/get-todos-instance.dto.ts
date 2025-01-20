@@ -10,6 +10,4 @@ export interface GetTodosInstanceDto {
   updatedAt: string;
   todoStateId: number;
   entityReference: string;
-  entityStepReference: string;
-  dateExpiration: object;
 }

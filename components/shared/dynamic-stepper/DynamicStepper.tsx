@@ -15,7 +15,6 @@ import {
 import { ModelType } from "@/config/model-type.config";
 import SupervisionInstances from "@/app/admin/supervisiones/[slug]/components/SupervisionInstances/SupervisionInstances";
 import { InstanceConfig } from "@/config/instance.config";
-import IncidentsTabs from "@/app/admin/procesos-judiciales/components/IncidentsTabs/IncidentsTabs";
 
 interface DynamicStepperProps {
   entityReference?: string;
@@ -39,8 +38,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     data?.map(() => 0) || [],
   );
 
-  const { updateStepData, updateStepDataArray, updateInstanceIncidenceData } =
-    useStore();
+  const { updateStepData, updateStepDataArray } = useStore();
 
   const handleStepDataChange = (
     stepId: number,
@@ -51,19 +49,6 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
 
     updateStepData(stepId, newData);
     updateStepDataArray(stepId, newData);
-  };
-
-  const handleIncidenceChange = (
-    instanceIncidentId: number,
-    fieldName: string,
-    value: string,
-  ) => {
-    const newData = {
-      [fieldName]: value,
-      instanceIncidentId,
-    };
-
-    updateInstanceIncidenceData(instanceIncidentId, newData);
   };
 
   const getInitialValuesForStep = (stepId: number) => {
@@ -110,7 +95,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   }, [data, entityReference, updateStepData, instanceName]);
 
   const index = data?.findIndex(
-    (instance) => instance.name === InstanceConfig.INSPECTIVA,
+    (instance) => instance.name === InstanceConfig.SANCIONADORA,
   );
 
   return (
@@ -137,65 +122,59 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
 
       <div className="vertical-stepper-container">
         {data && data[activeStep] && (
-          <>
-            {modelType === ModelType.JudicialProcess && (
-              <IncidentsTabs instance={data[activeStep]} />
-            )}
-
-            <Stepper
-              activeStep={activeInnerSteps[activeStep] || 0}
-              className="vertical-stepper mt-4"
-              orientation="vertical"
-            >
-              {data[activeStep].steps.map((step, innerIndex) => (
-                <Step
-                  key={`${step.id}-step`}
-                  onClick={() => handleNextInstanceStep(activeStep, innerIndex)}
+          <Stepper
+            activeStep={activeInnerSteps[activeStep] || 0}
+            className="vertical-stepper mt-4"
+            orientation="vertical"
+          >
+            {data[activeStep].steps.map((step, innerIndex) => (
+              <Step
+                key={`${step.id}-step`}
+                onClick={() => handleNextInstanceStep(activeStep, innerIndex)}
+              >
+                <StepLabel StepIconComponent={QontoStepIcon}>
+                  {step.name}
+                </StepLabel>
+                <StepContent
+                  sx={{
+                    paddingTop: 4,
+                  }}
                 >
-                  <StepLabel StepIconComponent={QontoStepIcon}>
-                    {step.name}
-                  </StepLabel>
-                  <StepContent
-                    sx={{
-                      paddingTop: 4,
-                    }}
-                  >
-                    {modelType !== ModelType.Supervision ? (
-                      <InstanceForm
-                        entityReference={entityReference}
-                        entityStepReference={step.stepData[0]?.entityId}
-                        initialValues={
-                          step.stepData.length > 0
-                            ? step.stepData[0]
-                            : getInitialValuesForStep(step.id)
-                        }
-                        step={step}
-                        stepDataId={step.stepData[0]?.id}
-                        onChange={handleStepDataChange}
-                      />
-                    ) : (
-                      <SupervisionInstances
-                        entityReference={entityReference}
-                        entityStepReference={step.stepData[0]?.entityId}
-                        initialValues={
-                          step.stepData.length > 0
-                            ? step.stepData[0]
-                            : getInitialValuesForStep(step.id)
-                        }
-                        instanceName={
-                          index === 0 ? InstanceConfig.INSPECTIVA : instanceName
-                        }
-                        step={step}
-                        stepDataId={step.stepData[0]?.id}
-                        stepName={step.name}
-                        onChange={handleStepDataChange}
-                      />
-                    )}
-                  </StepContent>
-                </Step>
-              ))}
-            </Stepper>
-          </>
+                  {modelType !== ModelType.Supervision ? (
+                    <InstanceForm
+                      entityReference={entityReference}
+                      entityStepReference={step.stepData[0]?.entityId}
+                      initialValues={
+                        step.stepData.length > 0
+                          ? step.stepData[0]
+                          : getInitialValuesForStep(step.id)
+                      }
+                      step={step}
+                      stepDataId={step.stepData[0]?.id}
+                      onChange={handleStepDataChange}
+                    />
+                  ) : (
+                    <SupervisionInstances
+                      entityReference={entityReference}
+                      entityStepReference={step.stepData[0]?.entityId}
+                      initialValues={
+                        step.stepData.length > 0
+                          ? step.stepData[0]
+                          : getInitialValuesForStep(step.id)
+                      }
+                      instanceName={
+                        index === 0 ? InstanceConfig.SANCIONADORA : instanceName
+                      }
+                      step={step}
+                      stepDataId={step.stepData[0]?.id}
+                      stepName={step.name}
+                      onChange={handleStepDataChange}
+                    />
+                  )}
+                </StepContent>
+              </Step>
+            ))}
+          </Stepper>
         )}
       </div>
     </div>

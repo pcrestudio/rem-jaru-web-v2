@@ -7,17 +7,13 @@ import useReportJudicialProcess from "@/app/admin/hooks/useReportJudicialProcess
 import ReportCountRecord from "@/app/admin/components/ReportCountRecord/ReportCountRecord";
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 import judicialProcessCriticalProcessesColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessCriticalProcessesColumns";
-import {
-  GetInstancesReportDto,
-  GetMasterOptionReportDto,
-} from "@/app/dto/report/get-init-report.dto";
+import { GetMasterOptionReportDto } from "@/app/dto/report/get-init-report.dto";
 import HorizontalBarChart from "@/app/admin/components/bar/HorizontalBarChart/HorizontalBarChart";
 import judicialProcessHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessHorizontalBarColumns";
 import ReportProvisionAmountRecord from "@/app/admin/components/ReportProvisionAmountRecord/ReportProvisionAmountRecord";
 import judicialProcessContingenciesColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessContingenciesColumns";
 import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
 import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
-import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessInstanceHorizontalBarColumns";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;
@@ -30,11 +26,9 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     renderBarChartCell,
     renderContingenciesCell,
     renderCriticalProcessesCell,
-    renderInstanceBarChartCell,
     data,
     studioChartData,
     studioYAxisData,
-    instanceYAxisData,
     totalJudicialProcess,
   } = useReportJudicialProcess(filter);
 
@@ -80,17 +74,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           title="N° de procesos judiciales por materias"
         />
       </div>
-      <div className="col-span-6">
-        <HorizontalBarChart<GetInstancesReportDto>
-          cells={renderInstanceBarChartCell}
-          chartData={studioChartData}
-          columns={judicialProcessInstanceHorizontalBarColumns}
-          dataGridKey="instanceName"
-          items={data?.instances?.report ?? []}
-          title="N° de procesos judiciales por instancia"
-          yAxisData={instanceYAxisData}
-        />
-      </div>
+      <div className="col-span-6" />
       {data && data?.studio.report[0]?.masterOption.length > 0 && (
         <div className="col-span-6">
           <HorizontalBarChart<GetMasterOptionReportDto>

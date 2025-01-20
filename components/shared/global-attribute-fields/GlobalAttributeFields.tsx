@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import useSWR from "swr";
-import { DatePicker } from "@heroui/react";
-import { Input, Textarea } from "@heroui/input";
+import { DatePicker } from "@nextui-org/react";
+import { Input, Textarea } from "@nextui-org/input";
 import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 

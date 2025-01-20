@@ -2,7 +2,7 @@
 
 import React, { FC, useState } from "react";
 import useSWR from "swr";
-import { Switch } from "@heroui/switch";
+import { Switch } from "@nextui-org/switch";
 
 import ReactiveField from "@/components/form/ReactiveField";
 import { GetMastersDto } from "@/app/dto/masters/get-masters.dto";
