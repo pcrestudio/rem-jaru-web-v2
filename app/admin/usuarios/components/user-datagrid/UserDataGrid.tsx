@@ -1,9 +1,9 @@
 "use client";
 
 import React, { FC, useCallback, useState } from "react";
-import { Tooltip } from "@heroui/react";
-import { EditIcon } from "@heroui/shared-icons";
-import { Chip } from "@heroui/chip";
+import { Tooltip } from "@nextui-org/react";
+import { EditIcon } from "@nextui-org/shared-icons";
+import { Chip } from "@nextui-org/chip";
 import toast from "react-hot-toast";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";

@@ -2,8 +2,8 @@
 
 import React, { Suspense, useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "@heroui/link";
-import { Button } from "@heroui/button";
+import { Link } from "@nextui-org/link";
+import { Button } from "@nextui-org/button";
 import { CircularProgress } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -41,13 +41,14 @@ export default function ResetPasswordPage() {
         password,
       });
 
-      setMessage(res.data.message);
+      //setMessage(res.data.message);
       toast.success(
-        "Contraseña restablecida correctamente. Por favor inicia sesión.",
+        "Contraseña restablecida correctamente. Por favor inicia sesión."
       );
 
       router.push("/auth");
     } catch (err: any) {
+      console.error(err);
       setMessage(err.response?.data?.message || "Error resetting password");
     } finally {
       setIsLoading(false);

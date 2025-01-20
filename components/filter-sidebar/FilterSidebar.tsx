@@ -1,4 +1,4 @@
-import { Input } from "@heroui/input";
+import { Input } from "@nextui-org/input";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -10,12 +10,6 @@ import FilterModuleAutocomplete from "@/components/filter-sidebar/components/Fil
 import FilterSubmoduleAutocomplete from "@/components/filter-sidebar/components/FilterSubmoduleAutocomplete";
 import FilterProjectAutocomplete from "@/components/filter-sidebar/components/FilterProjectAutocomplete";
 import FilterStudioAutocomplete from "@/components/filter-sidebar/components/FilterStudioAutocomplete";
-import FilterTodoStateAutocomplete from "@/components/filter-sidebar/components/FilterTodoStateAutocomplete";
-import FilterTodoCheckAutocomplete from "@/components/filter-sidebar/components/FilterTodoCheckAutocomplete";
-import {
-  alertOptions,
-  checkOptions,
-} from "@/config/attribute_local_autocompletes";
 
 export interface FilterSidebarProps {
   pathname: string;
@@ -50,10 +44,6 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
   };
 
   const isAdminPath: boolean = pathname === "/admin";
-  const isTodoPath: boolean = pathname === "/admin/todos";
-  const isSubmodulePath: boolean =
-    pathname.includes("/admin/procesos-judiciales") ||
-    pathname.includes("/admin/supervisiones");
 
   const debouncedSearch = debounce(handleFilter, 700);
 
@@ -67,8 +57,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
         <Input
           className="nextui-input-filter bg-white"
           classNames={{
-            inputWrapper:
-              "bg-white shadow-none data-[focus=true]:!bg-white data-[hover=true]:bg-transparent",
+            inputWrapper: "bg-white shadow-none data-[focus=true]:!bg-white",
             base: "!bg-red-500",
           }}
           endContent={<AiOutlineSearch size={24} />}
@@ -82,7 +71,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           <p className="text-base font-bold text-cerulean-950 col-span-12">
             Filtrar por
           </p>
-          {(isAdminPath || isTodoPath) && (
+          {isAdminPath && (
             <>
               <FilterModuleAutocomplete
                 className="col-span-12 nextui-input-nomodal"
@@ -103,23 +92,19 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           )}
         </>
 
-        {(isAdminPath || isSubmodulePath) && (
-          <>
-            <FilterProjectAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Proyecto"
-              name="projectId"
-              onChange={handleFilter}
-            />
+        <FilterProjectAutocomplete
+          className="col-span-12 nextui-input-nomodal"
+          label="Proyecto"
+          name="projectId"
+          onChange={handleFilter}
+        />
 
-            <FilterStudioAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Estudio a cargo"
-              name="cargoStudioId"
-              onChange={handleFilter}
-            />
-          </>
-        )}
+        <FilterStudioAutocomplete
+          className="col-span-12 nextui-input-nomodal"
+          label="Estudio a cargo"
+          name="cargoStudioId"
+          onChange={handleFilter}
+        />
 
         <FilterResponsibleAutocomplete
           className="col-span-12 nextui-input-nomodal"
@@ -127,33 +112,6 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           name="responsibleId"
           onChange={handleFilter}
         />
-
-        {isTodoPath && (
-          <>
-            <FilterTodoStateAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Tiempo transcurrido"
-              name="state"
-              onChange={handleFilter}
-            />
-
-            <FilterTodoCheckAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Alerta"
-              name="alert"
-              options={alertOptions}
-              onChange={handleFilter}
-            />
-
-            <FilterTodoCheckAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Estado"
-              name="check"
-              options={checkOptions}
-              onChange={handleFilter}
-            />
-          </>
-        )}
       </div>
     </div>
   );

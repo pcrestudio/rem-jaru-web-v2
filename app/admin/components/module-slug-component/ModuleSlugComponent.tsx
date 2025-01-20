@@ -30,7 +30,7 @@ const ModuleSlugComponent: FC<ModuleSlugComponentProps> = ({ pathname }) => {
         </p>
       </div>
       {data && (
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {data.map((module) => (
             <ModulesCard
               key={module.name}

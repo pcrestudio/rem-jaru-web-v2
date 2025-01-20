@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Textarea } from "@heroui/input";
+import { Textarea } from "@nextui-org/input";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";

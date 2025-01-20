@@ -5,31 +5,7 @@ export const todoInstanceColumns = [
   },
   {
     key: "description",
-    label: "Descripción",
-  },
-  {
-    key: "module",
-    label: "Módulo",
-  },
-  {
-    key: "submodule",
-    label: "Submódulo",
-  },
-  {
-    key: "dateExpiration",
-    label: "Vencimiento",
-  },
-  {
-    key: "state",
-    label: "Estado",
-  },
-  {
-    key: "responsible",
-    label: "Responsable",
-  },
-  {
-    key: "alert",
-    label: "Alertado",
+    label: "descripción",
   },
   { key: "actions", label: "Opciones" },
 ];

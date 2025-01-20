@@ -6,7 +6,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from "@heroui/react";
+} from "@nextui-org/react";
 import React, { ReactNode } from "react";
 
 import useCustomDataGrid from "@/components/states/useCustomDataGrid";
@@ -16,7 +16,6 @@ interface CustomDataGridProps<T extends object> {
   columns: any;
   dataGridKey?: string;
   cells?: (item: any, columnKey: string | number) => ReactNode;
-  onRowAction?: (item: any) => void;
   onAddChange?: () => void;
   onExportableExcel?: () => void;
   emptyContent?: string;
@@ -45,7 +44,6 @@ const CustomDataGrid = <T extends object>({
   canUse = true,
   canUseExportable = true,
   storeItems = [],
-  onRowAction,
 }: CustomDataGridProps<T>) => {
   const {
     items,
@@ -104,7 +102,6 @@ const CustomDataGrid = <T extends object>({
         classNames={{
           wrapper: "bg-white shadow-none border border-gray-200 gap-4",
         }}
-        selectionBehavior="replace"
         topContent={topContent}
       >
         <TableHeader columns={columns}>

@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { FC } from "react";
-import { Accordion, AccordionItem } from "@heroui/react";
+import { Accordion, AccordionItem } from "@nextui-org/react";
 
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";

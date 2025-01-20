@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { DatePicker } from "@heroui/react";
-import { ZonedDateTime } from "@internationalized/date";
-import { Textarea } from "@heroui/input";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";
 import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
 import useStore from "@/lib/store";
+import { DatePicker } from "@nextui-org/react";
+import { ZonedDateTime } from "@internationalized/date";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import parseValueToZonedDateTime from "@/config/parse_date_value.config";
+import { Textarea } from "@nextui-org/input";
 
 export interface PreeliminarFormProps {
   onChange: (stepId: number, fieldName: string, value: any) => void;

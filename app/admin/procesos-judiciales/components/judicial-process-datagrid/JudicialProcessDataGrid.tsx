@@ -1,7 +1,7 @@
 import { FC, useCallback } from "react";
-import { Tooltip } from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
-import { Chip } from "@heroui/chip";
+import { Tooltip } from "@nextui-org/react";
+import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
+import { Chip } from "@nextui-org/chip";
 import { useRouter } from "next/navigation";
 
 import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
@@ -29,26 +29,13 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
     (judicialProcess: GetJudicialProcessDto, columnKey: string | number) => {
       const cellValue = judicialProcess[columnKey];
 
-      let selectedInstance = judicialProcess.stepData.reduce(
-        (latestInstance, currentStep) => {
-          const currentInstance = currentStep.step.instance;
-
-          if (!latestInstance || currentInstance.id > latestInstance.id) {
-            return currentInstance;
-          }
-
-          return latestInstance;
-        },
-        null,
-      );
-
       switch (columnKey) {
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
               <Tooltip content="Editar expediente">
                 <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50 action-button"
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
                   role="presentation"
                   onClick={() => {
                     const currentPath = window.location.pathname;
@@ -61,7 +48,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
               </Tooltip>
               <Tooltip color="danger" content="Desactivar expediente">
                 <span
-                  className="text-lg text-danger cursor-pointer active:opacity-50 action-button"
+                  className="text-lg text-danger cursor-pointer active:opacity-50"
                   role="presentation"
                   onClick={() => toggleSelectedItem(judicialProcess)}
                 >
@@ -102,13 +89,6 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
           return (
             <p>
               {judicialProcess.studio ? `${judicialProcess.studio.name}` : "-"}
-            </p>
-          );
-
-        case "instance":
-          return (
-            <p>
-              {judicialProcess.stepData ? `${selectedInstance["name"]}` : "-"}
             </p>
           );
 

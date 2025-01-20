@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent, FC, FocusEvent } from "react";
-import { Input } from "@heroui/input";
+import { Input } from "@nextui-org/input";
 
 interface CustomFormProps {
   fields: CustomFormField[];

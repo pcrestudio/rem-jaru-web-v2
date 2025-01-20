@@ -1,4 +1,4 @@
-import { Button } from "@heroui/button";
+import { Button } from "@nextui-org/button";
 
 import useStore from "@/lib/store";
 
