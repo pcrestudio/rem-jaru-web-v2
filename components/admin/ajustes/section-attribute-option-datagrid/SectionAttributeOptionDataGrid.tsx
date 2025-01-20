@@ -7,9 +7,9 @@ import {
   TableRow,
   TableCell,
   Tooltip,
-} from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
-import { Chip } from "@heroui/chip";
+} from "@nextui-org/react";
+import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
+import { Chip } from "@nextui-org/chip";
 
 import { sectionAttributeOptionColumns } from "@/components/admin/ajustes/section-attribute-option-datagrid/columns/section-attribute-option.columns";
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";

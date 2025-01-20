@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Textarea } from "@heroui/input";
-import { Radio, RadioGroup } from "@heroui/react";
+import { Textarea } from "@nextui-org/input";
+import { Radio, RadioGroup } from "@nextui-org/react";
 
 import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
 import { GenericFormProps } from "@/app/admin/supervisiones/[slug]/components/SupervisionInstances/forms/GenericForm";

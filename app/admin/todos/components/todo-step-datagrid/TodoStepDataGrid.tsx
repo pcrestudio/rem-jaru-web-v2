@@ -1,5 +1,7 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { Tooltip } from "@nextui-org/react";
+import { EditIcon } from "@nextui-org/shared-icons";
 import toast from "react-hot-toast";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
@@ -9,8 +11,7 @@ import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalFor
 import useStore from "@/lib/store";
 import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { upsertTodo } from "@/app/api/todo/todo";
-import useTodos from "@/app/admin/todos/states/useTodos";
-import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import { GetTodoDto } from "@/app/dto/todos/get-todo.dto";
 
 interface TodoStepDataGridProps {
   stepDataId: number;
@@ -25,19 +26,48 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
   stepDataId,
   stepId,
 }) => {
+  const [todo, setTodo] = useState<GetTodoDto>(null);
   let { updateStepTodos, updateStepDataArray, updateStepData, stepTodos } =
     useStore();
-  const {
-    todo,
-    handleTodoClose,
-    handleAddChange,
-    renderCell,
-    open,
-    handleEndContentChange,
-    confirm,
-    toggleAlertHelper,
-    handleConfirmClose,
-  } = useTodos();
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const selectTodo = (todo: GetTodoDto) => {
+    setTodo(todo);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setTodo(null);
+  };
+
+  const renderCell = React.useCallback(
+    (item: GetTodoDto, columnKey: string | number) => {
+      const cellValue = item[columnKey];
+
+      switch (columnKey) {
+        case "actions":
+          return (
+            <div className="relative flex items-center gap-2">
+              <Tooltip content="Editar todo">
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  role="presentation"
+                  onClick={() => selectTodo(item)}
+                >
+                  <EditIcon />
+                </span>
+              </Tooltip>
+            </div>
+          );
+
+        default:
+          return cellValue;
+      }
+    },
+    [],
+  );
 
   const onSubmit = async (payload: UpsertTodoDto) => {
     if (stepDataId) {
@@ -46,27 +76,27 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
         description: payload.description,
         entityStepReference: entityStepReference,
         entityReference: entityReference,
+        todoStateId: Number(payload.todoStateId),
         responsibleId: Number(payload.responsibleId),
         dateExpiration: payload.dateExpiration,
-        check: payload.check,
         id: todo ? todo.id : 0,
       });
 
       if (data) {
         toast.success("Todo agregado con éxito");
-        handleTodoClose();
+
+        return setOpen(false);
       }
     } else {
       updateStepTodos(payload.title, stepDataId, entityStepReference, {
         title: payload.title,
         description: payload.description,
-        dateExpiration: payload.dateExpiration,
-        entityReference: entityReference,
+        todoStateId: Number(payload.todoStateId),
         responsibleId: Number(payload.responsibleId),
         id: 0,
       });
 
-      handleTodoClose();
+      return setOpen(false);
     }
   };
 
@@ -81,25 +111,14 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
     <>
       {createPortal(
         <TodoModal
-          endContentOnChange={handleEndContentChange}
           handleSubmit={onSubmit}
           isOpen={open}
-          title={todo ? "Editar To-Do" : "Nuevo To-Do"}
+          title="Todo"
           todo={todo}
-          onCloseChange={handleTodoClose}
+          onCloseChange={handleClose}
         />,
         document.body,
       )}
-
-      <ConfirmModal
-        description={{
-          __html: `La alerta será enviada luego de la confirmación, apróximadamente entre 30 segundos a 1 minuto.`,
-        }}
-        isOpen={confirm}
-        title={`Alertar To-Do`}
-        onClose={handleConfirmClose}
-        onConfirm={() => toggleAlertHelper(todo?.id)}
-      />
 
       <div className="col-span-12 flex flex-col gap-4">
         <p className="text-foreground text-sm">To-Dos</p>
@@ -114,7 +133,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
           endpointUrl={`todos/instance?entityReference=${entityReference}&entityStepReference=${entityStepReference}&`}
           storeItems={stepTodos as GetTodosInstanceDto[]}
           totalItemsText="Tareas totales:"
-          onAddChange={handleAddChange}
+          onAddChange={() => setOpen(true)}
         />
       </div>
     </>

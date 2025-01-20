@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@nextui-org/button";
 
 import ReactiveForm from "@/components/form/ReactiveForm";
 import { MasterOptionConfig } from "@/config/master-option.config";
@@ -13,7 +13,6 @@ import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutoc
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import { ModelType } from "@/config/model-type.config";
-import ReactiveField from "@/components/form/ReactiveField";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -34,9 +33,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
     <ReactiveForm
       formId="supervision-edit"
       initialValues={supervision}
-      options={{
-        mode: "onTouched",
-      }}
       validationSchema={createSupervisionSchema}
       onSubmit={handleSubmit}
     >
@@ -52,83 +48,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
         setValue,
       }) => (
         <div className="grid grid-cols-12 gap-4">
-          <ReactiveField
-            className="col-span-12"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Código de Expediente"
-            name="fileCode"
-            register={register}
-            touched={touchedFields.fileCode}
-          />
-          <ReactiveField
-            className="col-span-6"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Demandado"
-            name="demanded"
-            register={register}
-            touched={touchedFields.demanded}
-          />
-
-          <ReactiveField
-            className="col-span-6"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Demandante"
-            name="plaintiff"
-            register={register}
-            touched={touchedFields.plaintiff}
-          />
-
-          <ReactiveField
-            className="col-span-6"
-            control={control}
-            errors={errors}
-            label="Co Demandado"
-            name="coDefendant"
-            register={register}
-          />
-
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Proyecto"
-            name="projectId"
-            slug={MasterOptionConfig.proyectosGeneral}
-          />
-
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Estudio a cargo"
-            name="cargoStudioId"
-            slug={MasterOptionConfig.estudios}
-          />
-
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Materia controvertida"
-            name="controversialMatter"
-            optionValue="name"
-            slug={MasterOptionConfig.materia}
-          />
-
-          <ResponsibleAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Responsable principal"
-            name="responsibleId"
-          />
-
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -150,21 +69,21 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             slug={MasterOptionConfig.situacion}
           />
 
-          <ReactiveField
-            className="col-span-6"
+          <DynamicAutocomplete
+            className="col-span-6 nextui-input-nomodal"
             control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">$</span>
-              </div>
-            }
-            errors={errors}
             isRequired={true}
-            label="Cuantía"
-            name="amount"
-            register={register}
-            touched={touchedFields.amount}
-            type="number"
+            label="Proyecto"
+            name="projectId"
+            slug={MasterOptionConfig.proyectosGeneral}
+          />
+
+          <ResponsibleAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            isRequired={true}
+            label="Responsable principal"
+            name="responsibleId"
           />
 
           {supervision && supervision?.entityReference && (

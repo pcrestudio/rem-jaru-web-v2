@@ -7,8 +7,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@heroui/modal";
-import { Button } from "@heroui/button";
+} from "@nextui-org/modal";
+import { Button } from "@nextui-org/button";
 
 import ReactiveForm from "@/components/form/ReactiveForm";
 import ReactiveField from "@/components/form/ReactiveField";

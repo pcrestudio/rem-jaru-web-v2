@@ -4,9 +4,9 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-} from "@heroui/modal";
+} from "@nextui-org/modal";
 import React, { FC } from "react";
-import { Button } from "@heroui/button";
+import { Button } from "@nextui-org/button";
 
 export interface ConfirmModalProps {
   isOpen: boolean;
@@ -26,10 +26,6 @@ const ConfirmModal: FC<ConfirmModalProps> = ({
   return (
     <Modal
       backdrop="blur"
-      classNames={{
-        backdrop: "z-[9999]",
-        wrapper: "!z-[99999]",
-      }}
       isOpen={isOpen}
       placement="top-center"
       onOpenChange={onClose}

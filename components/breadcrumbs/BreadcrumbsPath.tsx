@@ -1,4 +1,4 @@
-import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
+import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import { FC } from "react";
 
 import { mappingNamePath } from "@/config/mapping_submodules";

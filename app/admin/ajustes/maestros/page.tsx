@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion, AccordionItem, Button } from "@heroui/react";
+import { Accordion, AccordionItem, Button } from "@nextui-org/react";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import MasterOptionDataGrid from "@/components/admin/ajustes/master-option-datagrid/MasterOptionDataGrid";

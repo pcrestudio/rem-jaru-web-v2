@@ -31,9 +31,5 @@ export const todoColumns = [
     key: "alert",
     label: "Alertado",
   },
-  {
-    key: "check",
-    label: "Completado",
-  },
   { key: "actions", label: "Opciones" },
 ];

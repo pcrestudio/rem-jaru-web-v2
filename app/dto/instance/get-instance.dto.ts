@@ -1,6 +1,5 @@
 import { GetModuleDto } from "@/app/dto/modules/get-module.dto";
 import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
-import { GetInstanceIncidenceDto } from "@/app/dto/instance/get-instance-incidence.dto";
 
 export interface GetInstanceDto {
   id: number;
@@ -13,7 +12,6 @@ export interface GetInstanceDto {
   module: GetModuleDto;
   submodule: GetSubmoduleDto;
   steps: GetStepDto[];
-  incidences: GetInstanceIncidenceDto[];
 }
 
 export interface GetStepDto {
@@ -24,7 +22,6 @@ export interface GetStepDto {
   createdAt: string;
   updatedAt: string;
   stepData: GetStepDataDto[];
-  instance: GetInstanceDto;
 }
 
 export interface GetStepDataDto {
@@ -42,5 +39,4 @@ export interface GetStepDataDto {
   fileThree?: string;
   fileFour?: string;
   fileFive?: string;
-  step: GetStepDto;
 }

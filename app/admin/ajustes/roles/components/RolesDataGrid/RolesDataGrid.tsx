@@ -1,6 +1,6 @@
 import { FC, useCallback } from "react";
-import { Tooltip } from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import { Tooltip } from "@nextui-org/react";
+import { DeleteIcon, EditIcon } from "@nextui-org/shared-icons";
 
 import rolesColumns from "@/app/admin/ajustes/roles/components/RolesDataGrid/columns/rolesColumns";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";

@@ -27,9 +27,6 @@ const renderInstanceStepComponent = (
     case InstanceConfig.SANCIONADORA:
       return renderStepSupervisionForm(payload.stepName, payload);
 
-    case InstanceConfig.INSPECTIVA:
-      return <GenericForm {...payload} />;
-
     default:
       return <PreliminarForm {...payload} />;
   }
