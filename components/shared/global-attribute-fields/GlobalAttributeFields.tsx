@@ -103,7 +103,6 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                 name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <Input
-                    isRequired={true}
                     label={global.label}
                     {...field}
                     className="nextui-input-nomodal"
@@ -125,7 +124,6 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                         <span className="text-default-400 text-small">$</span>
                       </div>
                     }
-                    isRequired={true}
                     label={global.label}
                     placeholder="0.0"
                     type="number"
@@ -156,7 +154,6 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                         <span className="text-default-400 text-small">%</span>
                       </div>
                     }
-                    isRequired={true}
                     label={global.label}
                     min={0}
                     placeholder="0.0"
@@ -175,7 +172,6 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                 render={({ field }) => (
                   <Textarea
                     className="nextui-textarea-nomodal"
-                    isRequired={true}
                     label={global.label}
                     {...field}
                   />
@@ -194,7 +190,6 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                 name={customFieldIndicator(global.slug, global.dataType)}
                 render={({ field }) => (
                   <DatePicker
-                    isRequired={true}
                     label={global.label}
                     {...field}
                     className="nextui-input-nomodal"

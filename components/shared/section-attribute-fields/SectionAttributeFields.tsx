@@ -117,11 +117,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                 attribute.dataType,
                               )}
                               render={({ field }) => (
-                                <Input
-                                  isRequired={true}
-                                  label={attribute.label}
-                                  {...field}
-                                />
+                                <Input label={attribute.label} {...field} />
                               )}
                             />
                           )}
@@ -143,7 +139,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                       </span>
                                     </div>
                                   }
-                                  isRequired={true}
                                   label={attribute.label}
                                   placeholder="0.0"
                                   type="number"
@@ -182,7 +177,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                       </span>
                                     </div>
                                   }
-                                  isRequired={true}
                                   label={attribute.label}
                                   min={0}
                                   placeholder="0.0"
@@ -202,11 +196,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                 attribute.dataType,
                               )}
                               render={({ field }) => (
-                                <Textarea
-                                  isRequired={true}
-                                  label={attribute.label}
-                                  {...field}
-                                />
+                                <Textarea label={attribute.label} {...field} />
                               )}
                             />
                           )}

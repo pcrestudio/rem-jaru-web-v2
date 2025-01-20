@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { ChangeEvent, FC, ReactNode } from "react";
 import { Input } from "@heroui/input";
 import { Control, Controller } from "react-hook-form";
 
@@ -49,6 +49,14 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
             field.onBlur();
           };
 
+          const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value;
+            // Validar si es un número decimal válido
+            if (/^-?\d*(\.\d*)?$/.test(value)) {
+              field.onChange(value);
+            }
+          };
+
           return (
             <Input
               {...field}
@@ -63,10 +71,11 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               isRequired={isRequired}
               label={label}
               min={0}
+              step="any"
               type={type}
               value={field.value || ""}
               onBlur={handleBlur}
-              onChange={(e) => field.onChange(e.target.value)}
+              onChange={handleChange}
             />
           );
         }}
