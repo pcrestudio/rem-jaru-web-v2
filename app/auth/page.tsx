@@ -3,6 +3,7 @@
 import React, { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 import { CredentialsType } from "./types";
 import LoginForm from "./components/LoginForm";
@@ -10,7 +11,6 @@ import CredentialsForm from "./components/CredentialsForm";
 import Step from "./components/Step";
 
 import httpClient from "@/lib/httpClient";
-import Image from "next/image";
 
 export default function Auth() {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function Auth() {
   const generateOtp = async () => {
     await httpClient.post("/auth/generate-otp", { email });
     toast.success(
-      "Se ha generado un código de verificación. Por favor revisa tu correo electrónico."
+      "Se ha generado un código de verificación. Por favor revisa tu correo electrónico.",
     );
   };
 
@@ -60,7 +60,7 @@ export default function Auth() {
         { ...credentials, email },
         {
           withCredentials: true,
-        }
+        },
       );
 
       // Store token in localStorage (or cookies)
@@ -84,7 +84,7 @@ export default function Auth() {
     localStorage.removeItem("token");
     // This route should initiate the Azure AD auth flow
     window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/azure-ad?redirect=${encodeURIComponent(
-      redirect
+      redirect,
     )}`;
   };
 
@@ -98,12 +98,12 @@ export default function Auth() {
           }}
         >
           <Image
+            alt="Background"
+            layout="fill"
+            src="/quellaveco-panoramica.jpg"
             style={{
               filter: "blur(3px) brightness(0.8)",
             }}
-            src="/quellaveco-panoramica.jpg"
-            alt="Background"
-            layout="fill"
             objectFit="cover"
             //quality={80} // Adjust quality for optimization
             priority // Ensures the image is loaded first
@@ -124,11 +124,11 @@ export default function Auth() {
             </Step>
             <Step isActive={step === 2}>
               <CredentialsForm
-                onSubmit={handleLogin}
-                onResendClick={generateOtp}
                 authMethod={authMethod}
                 isLoading={isLoading}
                 onGoBackClick={() => setStep(1)}
+                onResendClick={generateOtp}
+                onSubmit={handleLogin}
               />
             </Step>
           </div>

@@ -2,6 +2,8 @@ export enum MasterOptionConfig {
   materia = "materia-controvertida",
   estudios = "estudios-a-cargo",
   proyectos = "proyectos",
+  demandantes = "demandantes",
+  "nivel-contingencia" = "nivel-contingencia",
   proyectosGeneral = "proyecto-general",
   situacion = "situacion",
   todoEstados = "todo-estados",

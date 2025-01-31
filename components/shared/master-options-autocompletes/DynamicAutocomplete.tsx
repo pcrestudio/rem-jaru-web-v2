@@ -30,6 +30,8 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
   optionValue = "id",
   noModal,
   filter,
+  disabled,
+  labelClassName,
 }) => {
   const filterUrl = filter
     ? `${environment.baseUrl}/masters/options/autocomplete?slug=${slug}&slugSubmodule=${filter["slugSubmodule"]}`
@@ -47,6 +49,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
         <Autocomplete
           fullWidth
           className={className}
+          disabled={disabled}
           getOptionLabel={(option: GetMasterOptionsDto) => option.name || ""}
           isOptionEqualToValue={(option, value) => option === value}
           options={list ? list.masterOption : []}
@@ -54,6 +57,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
             <TextField
               {...params}
               className={noModal ? "nextui-input" : ""}
+              disabled={disabled}
               error={!!error}
               helperText={error ? error.message : ""}
               label={label}
@@ -68,7 +72,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
               ? list.masterOption.find(
                   (option) => option[optionValue] === value,
                 )
-              : null
+              : ""
           }
           onChange={(_, newValue) =>
             onChange(newValue ? newValue[optionValue] : "")

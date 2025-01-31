@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState, useCallback } from "react";
 import { Textarea } from "@heroui/input";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
@@ -22,30 +22,40 @@ const InstanceForm: FC<InstanceFormProps> = ({
   entityStepReference,
   stepDataId,
 }) => {
-  const [formData, setFormData] = useState(initialValues);
+  const [formData, setFormData] = useState(initialValues || {});
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleClick = () => {
-    inputRef.current?.click();
-  };
+  // Handle input change with debounce (optional)
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+      // Only update state if the value has changed
+      if (formData[name] !== value) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        onChange(step?.id || 0, name, value);
+      }
+    },
+    [formData, onChange, step?.id],
+  );
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    onChange(step.id, name, value);
-  };
+  // Handle file change
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, files } = e.target;
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
+      if (files && files.length > 0) {
+        const file = files[0];
 
-    if (files && files.length > 0) {
-      const file = files[0];
-
-      setFormData((prev) => ({ ...prev, [name]: file }));
-      onChange(step?.id || 0, name, file);
-    }
-  };
+        // Only update state if the file has changed
+        if (formData[name] !== file) {
+          setFormData((prev) => ({ ...prev, [name]: file }));
+          onChange(step?.id || 0, name, file);
+        }
+      }
+    },
+    [formData, onChange, step?.id],
+  );
 
   useEffect(() => {
     if (initialValues) {
@@ -69,7 +79,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
         <div
           className="custom-file-wrapper !bg-white"
           role="presentation"
-          onClick={handleClick}
+          onClick={() => inputRef.current?.click()}
         >
           <span className="custom-file-text">
             {formData.file?.name || formData.file || "Seleccionar archivo"}
@@ -102,7 +112,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
         entityReference={entityReference}
         entityStepReference={entityStepReference}
         stepDataId={stepDataId}
-        stepId={step.id}
+        stepId={step?.id || 0}
       />
 
       <Textarea
@@ -116,4 +126,4 @@ const InstanceForm: FC<InstanceFormProps> = ({
   );
 };
 
-export default InstanceForm;
+export default React.memo(InstanceForm);

@@ -1,37 +1,39 @@
 "use client";
 
 import React from "react";
-import ReactiveForm from "@/components/form/ReactiveForm";
 import { Button } from "@heroui/button";
 import { Divider } from "@heroui/divider";
 import { CircularProgress } from "@mui/material";
-import ReactiveField from "@/components/form/ReactiveField";
+import { Link } from "@heroui/react";
+
 import { emailValidationSchema } from "../validation";
+
+import ReactiveForm from "@/components/form/ReactiveForm";
+import ReactiveField from "@/components/form/ReactiveField";
 import { MicrosoftIcon } from "@/components/icons/MicrosoftIcon";
 import { MailIcon } from "@/components/icons/MailIcon";
-import { Link } from "@heroui/react";
 
 function LoginForm({ onEmailSubmit, onAzureLogin, isLoading }) {
   return (
     <div className="flex flex-col w-full gap-4">
       <ReactiveForm
-        onSubmit={onEmailSubmit}
         validationSchema={emailValidationSchema}
+        onSubmit={onEmailSubmit}
       >
         {({ register, errors, control, touchedFields, isValid }) => (
           <div className="flex flex-col w-full gap-4">
             <ReactiveField
               isRequired
               control={control}
-              errors={errors}
-              label="Correo electrónico"
-              placeholder="Ingresa tu correo electrónico"
-              name="email"
-              register={register}
-              touched={touchedFields.email}
               endContent={
                 <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
               }
+              errors={errors}
+              label="Correo electrónico"
+              name="email"
+              placeholder="Ingresa tu correo electrónico"
+              register={register}
+              touched={touchedFields.email}
             />
             <Button
               className="standard-btn w-full"
@@ -44,8 +46,8 @@ function LoginForm({ onEmailSubmit, onAzureLogin, isLoading }) {
             </Button>
             <div className="flex flex-col w-full items-center px-1 py-2">
               <Link
-                href="/auth/forgot-password"
                 color="primary"
+                href="/auth/forgot-password"
                 size="sm"
                 underline="hover"
               >
@@ -59,9 +61,9 @@ function LoginForm({ onEmailSubmit, onAzureLogin, isLoading }) {
             </div>
             <Button
               className="w-full"
+              startContent={<MicrosoftIcon />}
               variant="bordered"
               onClick={onAzureLogin}
-              startContent={<MicrosoftIcon />}
             >
               Continuar con Microsoft Entra ID
             </Button>

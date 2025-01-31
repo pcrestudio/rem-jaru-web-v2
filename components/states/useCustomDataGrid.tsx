@@ -61,7 +61,7 @@ const useCustomDataGrid = <T extends object>(
                   className="excel-btn"
                   disabled={!params.canUseExportable}
                   startContent={<AiOutlineFileExcel />}
-                  onClick={params.onExportableExcel}
+                  onPress={params.onExportableExcel}
                 >
                   Exportar
                 </Button>
@@ -70,7 +70,7 @@ const useCustomDataGrid = <T extends object>(
                 className="standard-btn w-auto text-white"
                 disabled={!params.canUse}
                 startContent={<AiOutlinePlus />}
-                onClick={params.onAddChange}
+                onPress={params.onAddChange}
               >
                 {params.addButtonText}
               </Button>

@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
 
       //setMessage(res.data.message);
       toast.success(
-        "Contraseña restablecida correctamente. Por favor inicia sesión."
+        "Contraseña restablecida correctamente. Por favor inicia sesión.",
       );
 
       router.push("/auth");

@@ -192,6 +192,10 @@ div[data-orientation="vertical"] {
   @apply bg-transparent text-foreground w-fit !px-0 hover:text-foreground disabled:cursor-not-allowed;
 }
 
+.input-disabled[data-disabled="true"] {
+  opacity: .65 !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

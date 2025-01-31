@@ -4,9 +4,9 @@ import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
 import { Chip } from "@heroui/chip";
 import { useRouter } from "next/navigation";
 
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/judicial-process-datagrid/columns/judicialProcessColumns";
+import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/JudicialProcessDataGrid/columns/judicialProcessColumns";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { exportJudicialProcessExcel } from "@/app/api/judicial-process/judicial-process";
 import exportableExcel from "@/utils/exportable_excel";

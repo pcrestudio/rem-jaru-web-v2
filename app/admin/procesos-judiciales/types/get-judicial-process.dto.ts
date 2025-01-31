@@ -1,6 +1,7 @@
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { GetMastersDto } from "@/app/dto/masters/get-masters.dto";
 import { GetStepDataDto } from "@/app/dto/instance/get-instance.dto";
+import { UpsertReclaimDto } from "@/app/dto/reclaims/upsert-reclaim.dto";
 
 export interface GetJudicialProcessDto {
   fileCode: string;
@@ -16,6 +17,7 @@ export interface GetJudicialProcessDto {
   stepData?: GetStepDataDto[];
   responsibleId?: number;
   secondaryResponsibleId?: number;
+  reclaims?: UpsertReclaimDto[];
   isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;

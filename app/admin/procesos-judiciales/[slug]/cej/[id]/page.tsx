@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
-import JudicialProcessCEJDataGrid from "@/app/admin/procesos-judiciales/components/judicial-process-cej-datagrid/JudicialProcessCEJDataGrid";
+import JudicialProcessCEJDataGrid from "@/app/admin/procesos-judiciales/components/JudicialProcessCEJDataGrid/JudicialProcessCEJDataGrid";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();

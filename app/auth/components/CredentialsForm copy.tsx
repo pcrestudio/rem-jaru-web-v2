@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
-import ReactiveForm from "@/components/form/ReactiveForm";
 import { CircularProgress } from "@mui/material";
-import ReactiveField from "@/components/form/ReactiveField";
-import { otpValidationSchema, passswordValidationSchema } from "../validation";
-import ReactiveOtpField from "@/components/form/ReactiveOtpField";
 import { Alert } from "@heroui/alert";
 import { Button, Checkbox, Divider, Link } from "@heroui/react";
 import { Icon } from "@iconify/react";
+
+import { otpValidationSchema, passswordValidationSchema } from "../validation";
+
+import ReactiveOtpField from "@/components/form/ReactiveOtpField";
+import ReactiveField from "@/components/form/ReactiveField";
+import ReactiveForm from "@/components/form/ReactiveForm";
 
 function CredentialsForm({
   onSubmit,
@@ -23,10 +25,10 @@ function CredentialsForm({
   return (
     <div className="flex flex-col w-full gap-4">
       <ReactiveForm
-        onSubmit={onSubmit}
         validationSchema={
           authMethod === "otp" ? otpValidationSchema : passswordValidationSchema
         }
+        onSubmit={onSubmit}
       >
         {({ register, errors, control, touchedFields, isValid }) => (
           <div className="flex flex-col gap-3">
@@ -46,8 +48,8 @@ function CredentialsForm({
                       label={"Enter OTP"}
                       name={"token"}
                       register={register}
-                      touched={touchedFields.token}
                       size="lg"
+                      touched={touchedFields.token}
                     />
                   </div>
                 </div>
@@ -64,11 +66,6 @@ function CredentialsForm({
                 <ReactiveField
                   className="col-span-12"
                   control={control}
-                  errors={errors}
-                  label={"Ingresa tu clave secreta"}
-                  name={"password"}
-                  register={register}
-                  touched={touchedFields.password}
                   endContent={
                     <button type="button" onClick={toggleVisibility}>
                       {isVisible ? (
@@ -84,10 +81,15 @@ function CredentialsForm({
                       )}
                     </button>
                   }
+                  errors={errors}
+                  label={"Ingresa tu clave secreta"}
+                  name={"password"}
+                  register={register}
+                  touched={touchedFields.password}
                   type={isVisible ? "text" : "password"}
                 />
                 <div className="flex w-full items-center justify-between px-1 py-2">
-                  <Checkbox name="remember" size="sm" className="mr-2">
+                  <Checkbox className="mr-2" name="remember" size="sm">
                     Recordarme
                   </Checkbox>
                   <Link

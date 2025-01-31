@@ -3,7 +3,7 @@ import { Button } from "@heroui/button";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import { GetCEJHistoricalDto } from "@/app/dto/cej/get-cej-historical.dto";
-import judicialProcessCEJColumns from "@/app/admin/procesos-judiciales/components/judicial-process-cej-datagrid/columns/judicialProcessCEJColumns";
+import judicialProcessCEJColumns from "@/app/admin/procesos-judiciales/components/JudicialProcessCEJDataGrid/columns/judicialProcessCEJColumns";
 import { exportCEJDossier } from "@/app/api/judicial-process/judicial-process";
 
 export interface JudicialProcessDataGridProps {

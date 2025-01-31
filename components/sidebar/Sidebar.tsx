@@ -114,7 +114,8 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                               />
                             )
                           }
-                          onClick={
+                          textValue={title}
+                          onPress={
                             redirectTo === undefined ? onEvent : () => {}
                           }
                         >

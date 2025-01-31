@@ -1,6 +1,9 @@
 import api from "@/config/axios.config";
 import { environment } from "@/environment/environment";
-import { UpsertInstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
+import {
+  InstanceStepDataDto,
+  UpsertInstanceStepDataDto,
+} from "@/app/dto/instance/create-instance-stepdata.dto";
 import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
 
 const apiUrl: string = `${environment.baseUrl}/instance`;
@@ -9,9 +12,20 @@ const apiIncidentUrl: string = `${environment.baseUrl}/incident`;
 export async function upsertInstanceStepData(
   instanceStepData: UpsertInstanceStepDataDto,
 ) {
+  const filteredData: InstanceStepDataDto[] = instanceStepData.stepData.filter(
+    (item) => {
+      const keys = Object.keys(item);
+
+      return (
+        keys.length > 2 ||
+        !keys.every((key) => key === "stepId" || key === "entityReference")
+      );
+    },
+  );
+
   const formData = new FormData();
 
-  instanceStepData.stepData.forEach((stepData, index) => {
+  filteredData.forEach((stepData, index) => {
     formData.append(`stepData[${index}][stepId]`, stepData.stepId.toString());
     formData.append(`stepData[${index}][comments]`, stepData.comments || "");
     formData.append(`stepData[${index}][choice]`, stepData.choice || "");

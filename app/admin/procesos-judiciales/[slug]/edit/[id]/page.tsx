@@ -18,10 +18,10 @@ import {
   createGlobalAttributeValue,
   createSectionAttributeValue,
 } from "@/app/api/attribute-values/atrribute-values";
-import { EditJudicialProcessDto } from "@/app/dto/submodule/judicial_process/edit-judicial-process.dto";
+import { EditJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/edit-judicial-process.dto";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
 import useStore from "@/lib/store";
 import {
   upsertIncidentData,
@@ -32,6 +32,7 @@ import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
 import exportableWord from "@/utils/exportable_word";
 import { ModelType } from "@/config/model-type.config";
 import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
+import { upsertReclaims } from "@/app/api/reclaims/reclaims";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -57,10 +58,26 @@ export default function ProcesosJudicialesSlugEdit() {
       const { data } = await editJudicialProcess(
         {
           ...payload,
+          plaintiff:
+            typeof payload.plaintiff === "string"
+              ? payload.plaintiff
+              : (payload.plaintiff as unknown as number[]).join(", "),
           id: Number(id),
         },
         slug,
       );
+
+      if (payload.reclaims) {
+        const response = await upsertReclaims(
+          payload.reclaims,
+          data?.entityReference,
+          ModelType.JudicialProcess,
+        );
+
+        if (response.data) {
+          toast.success("Petitorios guardados.");
+        }
+      }
 
       if (data) {
         if (globalFields.length > 0) {
@@ -123,7 +140,7 @@ export default function ProcesosJudicialesSlugEdit() {
           onPress={async () => {
             const response = await exportJudicialWord(data?.entityReference);
 
-            exportableWord(response, data?.entityReference);
+            await exportableWord(response, data?.entityReference);
           }}
         >
           Exportar ficha

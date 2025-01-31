@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-import JudicialProcessDataGrid from "@/app/admin/procesos-judiciales/components/judicial-process-datagrid/JudicialProcessDataGrid";
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import JudicialProcessDataGrid from "@/app/admin/procesos-judiciales/components/JudicialProcessDataGrid/JudicialProcessDataGrid";
+import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
 import { toggleJudicialProcess } from "@/app/api/judicial-process/judicial-process";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";

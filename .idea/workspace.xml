@@ -4,39 +4,70 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bc1fb2b-b621-42eb-863f-1eedaade3b81" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/layout.tsx" afterDir="false" />
+    <list default="true" id="1bc1fb2b-b621-42eb-863f-1eedaade3b81" name="Changes" comment="feat: added numeric field">
+      <change afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/Reclaims/Reclaims.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/ModularProps.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/upsert-reclaims.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/autocompletes/PlaintiffAutocomplete.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/cej/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/cej/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/create/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/create/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/edit/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/edit/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/InstanceForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/InstanceForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-cej-datagrid/JudicialProcessCEJDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessCEJDataGrid/JudicialProcessCEJDataGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-cej-datagrid/columns/judicialProcessCEJColumns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessCEJDataGrid/columns/judicialProcessCEJColumns.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-datagrid/JudicialProcessDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessDataGrid/JudicialProcessDataGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-datagrid/columns/judicialProcessColumns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessDataGrid/columns/judicialProcessColumns.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/constants/judicial-process-fields.constant.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/constants/reclaims.constant.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/instances/instances.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/instances/instances.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/judicial-process/judicial-process.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/judicial-process/judicial-process.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/components/CredentialsForm copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/components/CredentialsForm copy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/components/LoginForm copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/components/LoginForm copy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/components/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/page copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/page copy.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/auth/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/reset-password/page copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/reset-password/page copy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/auth/reset-password/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/reset-password/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/create-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/create-judicial-process.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/edit-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/edit-judicial-process.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/get-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/get-judicial-process.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/toggle-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/toggle-judicial-process.dto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/provider/JaruProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/provider/JaruProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/appbar/AppBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/appbar/AppBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/appbar/AppBarUser.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/appbar/AppBarUser.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/validations/create-judicial-process.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/validations/create-judicial-process.validation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/validations/create-supervision.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/validations/create-supervision.validation.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/form/ReactiveField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/form/ReactiveField.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/form/ReactiveForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/form/ReactiveForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/form/ReactiveNumericField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/form/ReactiveNumericField.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/custom-datagrid/CustomDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/custom-datagrid/CustomDataGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/shared/master-options-autocompletes/DynamicAutocomplete.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/master-options-autocompletes/DynamicAutocomplete.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/sidebar/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sidebar/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/states/useReactiveForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/states/useReactiveForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/axios.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/axios.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/jaru-logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/states/useCustomDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/states/useCustomDataGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/extended-attribute.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/extended-attribute.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/master-option.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/master-option.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2r5iZIVd3IPs07g8LtC3h4XOeRN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -45,21 +76,28 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/sso",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/Users/PCR/Workspace/rem-jaru-web-v2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Users\\PCR\\AppData\\Local\\JetBrains\\WebStorm 2024.1.4\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "prettierjs.PrettierConfiguration.Package": "/Users/dev.pierci/Workspace/rem-jaru-web-v2/node_modules/prettier",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "/Users/dev.pierci/Workspace/rem-jaru-web-v2/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/admin/procesos-judiciales/types" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17890.13" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.18034.50" />
       </set>
     </attachedChunks>
   </component>
@@ -72,10 +110,54 @@
       <option name="presentableId" value="Default" />
       <updated>1735855391180</updated>
       <workItem from="1735855392268" duration="719000" />
+      <workItem from="1737383368071" duration="2959000" />
+      <workItem from="1737663917331" duration="2251000" />
+      <workItem from="1737913637729" duration="1006000" />
+      <workItem from="1738000014439" duration="29811000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: super fix">
+      <option name="closed" value="true" />
+      <created>1737365081916</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737365081916</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: delete file code validation">
+      <option name="closed" value="true" />
+      <created>1737371979499</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1737371979499</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: delete is required in attributes">
+      <option name="closed" value="true" />
+      <created>1737374670916</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737374670916</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: added numeric field">
+      <option name="closed" value="true" />
+      <created>1737375653656</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1737375653656</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: super fix" />
+    <MESSAGE value="feat: delete file code validation" />
+    <MESSAGE value="feat: delete is required in attributes" />
+    <MESSAGE value="feat: added numeric field" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: added numeric field" />
   </component>
 </project>

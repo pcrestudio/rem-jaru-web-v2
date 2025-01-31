@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { CreateJudicialProcessDto } from "@/app/dto/submodule/judicial_process/create-judicial-process.dto";
+import { CreateJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/create-judicial-process.dto";
 import { createJudicialProcess } from "@/app/api/judicial-process/judicial-process";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
@@ -33,6 +33,7 @@ export default function ProcesosJudicialesSlugCreate() {
     const { data } = await createJudicialProcess(
       {
         ...payload,
+        plaintiff: (payload.plaintiff as unknown as number[]).join(", "),
       },
       slug,
     );

@@ -73,6 +73,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
 
   return (
     <form
+      noValidate
       id={formId}
       onSubmit={handleSubmit((values, event) =>
         handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>),

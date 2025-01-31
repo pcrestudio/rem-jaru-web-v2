@@ -1,3 +1,5 @@
+import { UpsertReclaimDto } from "@/app/dto/reclaims/upsert-reclaim.dto";
+
 export interface EditJudicialProcessDto {
   fileCode: string;
   demanded: string;
@@ -7,4 +9,5 @@ export interface EditJudicialProcessDto {
   cargoStudioId: number;
   isProvisional: boolean;
   comment?: string;
+  reclaims?: UpsertReclaimDto[];
 }

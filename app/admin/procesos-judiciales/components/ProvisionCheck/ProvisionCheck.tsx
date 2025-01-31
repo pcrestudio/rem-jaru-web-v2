@@ -1,31 +1,20 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { errors } from "openid-client";
 
 import ReactiveSwitch from "@/components/form/ReactiveSwitch";
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
-import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
-import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import ReactiveTextArea from "@/components/form/ReactiveTextArea";
+import ReactiveNumericField from "@/components/form/ReactiveNumericField";
+import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
+import { MasterOptionConfig } from "@/config/master-option.config";
+import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
+import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 
-interface ProvisionCheckProps {
-  control: any;
-  provision: GetJudicialProcessDto | GetSupervisionDto;
-  register: any;
-  pathname: string;
-  getValues: any;
-  reset: any;
-  setValue: any;
-  watch: any;
-}
-
-const ProvisionCheck: FC<ProvisionCheckProps> = ({
+const ProvisionCheck: FC<ModularProps> = ({
   control,
   register,
   provision,
-  pathname,
   getValues,
-  reset,
   setValue,
   watch,
 }) => {
@@ -33,61 +22,121 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
     provision?.isProvisional ?? false,
   );
 
-  const calculateProvision = () => {
+  // Calculate contingency level
+  const calculateContingencyLevel = useCallback(() => {
     const values = getValues();
+    const contingencyPercentage = Number(values?.contingencyPercentage) ?? 0;
 
-    const globalKeys = Object.keys(values).filter((key) =>
-      key.includes("-global-"),
-    );
-    const globalData = globalKeys.reduce((acc, key) => {
-      acc[key] = values[key];
+    if (contingencyPercentage > 0 && contingencyPercentage < 50) {
+      setValue(ExtendedAttributeConfig.contingencyLevel, "remoto", {
+        shouldValidate: true,
+      });
+    } else if (contingencyPercentage >= 50 && contingencyPercentage < 80) {
+      setValue(ExtendedAttributeConfig.contingencyLevel, "posible", {
+        shouldValidate: true,
+      });
+      setValue(ExtendedAttributeConfig.isProvisional, true, {
+        shouldValidate: true,
+      });
+      setIsProvisional(true);
+    } else if (contingencyPercentage >= 80) {
+      setValue(ExtendedAttributeConfig.contingencyLevel, "probable", {
+        shouldValidate: true,
+      });
+      setValue(ExtendedAttributeConfig.isProvisional, true, {
+        shouldValidate: true,
+      });
+      setIsProvisional(true);
+    } else {
+      setValue(ExtendedAttributeConfig.isProvisional, false, {
+        shouldValidate: true,
+      });
+      setValue(ExtendedAttributeConfig.contingencyLevel, null, {
+        shouldValidate: true,
+      });
+      setIsProvisional(false);
+    }
+  }, [getValues, setValue]);
 
-      return acc;
-    }, {});
+  // Calculate provision amount
+  const calculateProvision = useCallback(() => {
+    const values = getValues();
+    const amount = parseFloat(values?.amount) ?? 0;
+    const provisionContingency = Number(values?.provisionContingency) ?? 0;
 
-    const amountKey = Object.keys(globalData).find(
-      (key) =>
-        key.includes("amount-global-FLOAT") ||
-        key.includes("supervisionAmount-global-FLOAT"),
-    );
+    if (amount > 0 && provisionContingency > 0) {
+      const provisionAmount = (amount * provisionContingency) / 100;
+      setValue(
+        ExtendedAttributeConfig.provisionAmount,
+        provisionAmount.toFixed(2),
+        { shouldValidate: true },
+      );
+    }
+  }, [getValues, setValue]);
 
-    const contingencyKey = Object.keys(globalData).find(
-      (key) =>
-        key.includes("provisionContingency-global-INTEGER") ||
-        key.includes("supervisionProvisionContingency-global-INTEGER"),
-    );
+  // Calculate plaintiff
+  const calculatePlaintiff = useCallback(() => {
+    const values = getValues();
+    const initPlaintiff: string = values?.plaintiff ?? "";
 
-    const provisionKey = Object.keys(globalData).find(
-      (key) =>
-        key.includes("provisionAmount-global-FLOAT") ||
-        key.includes("supervisionProvisionAmount-global-FLOAT"),
-    );
+    if (typeof initPlaintiff === "string") {
+      const plaintiff: number[] =
+        initPlaintiff.split(",").map((v) => Number(v)) ?? [];
 
-    if (amountKey && contingencyKey && provisionKey) {
-      const amount = parseFloat(globalData[amountKey]) || 0;
-      const contingencyPercentage = parseFloat(globalData[contingencyKey]) || 0;
-
-      if (amount > 0 && contingencyPercentage > 0) {
-        const provisionAmount = (amount * contingencyPercentage) / 100;
-
-        setValue(provisionKey, provisionAmount.toFixed(2));
+      if (plaintiff.length > 0) {
+        setValue(ExtendedAttributeConfig.plaintiff, plaintiff);
       }
     }
-  };
+  }, [getValues, setValue]);
 
+  // Watch fields for changes
   const watchFields = watch([
-    "amount-global-FLOAT",
-    "provisionContingency-global-INTEGER",
-    "supervisionAmount-global-INTEGER",
-    "supervisionProvisionContingency-global-INTEGER",
+    "contingencyPercentage",
+    "amount",
+    "provisionContingency",
   ]);
 
+  // Run calculations when watched fields change
   useEffect(() => {
     calculateProvision();
-  }, [watchFields]);
+    calculateContingencyLevel();
+  }, [watchFields, calculateProvision, calculateContingencyLevel]);
+
+  // Run plaintiff calculation only once on mount
+  useEffect(() => {
+    calculatePlaintiff();
+  }, [calculatePlaintiff]);
 
   return (
     <>
+      <ReactiveNumericField
+        className="col-span-6"
+        control={control}
+        endContent={
+          <div className="pointer-events-none flex items-center">
+            <span className="text-default-400 text-small">%</span>
+          </div>
+        }
+        errors={errors}
+        label="Porcentaje de contingencia estimado"
+        max={100}
+        min={0}
+        name="contingencyPercentage"
+        register={register}
+      />
+
+      <DynamicAutocomplete
+        disabled
+        className="col-span-6 nextui-input-nomodal"
+        control={control}
+        errors={errors}
+        label="Nivel de contigencia"
+        name="contingencyLevel"
+        optionValue="slug"
+        register={register}
+        slug={MasterOptionConfig["nivel-contingencia"]}
+      />
+
       <ReactiveSwitch
         className="col-span-12"
         control={control}
@@ -99,15 +148,38 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
       />
 
       {isProvisional && (
-        <GlobalAttributeFields
-          isConditionalRender
-          control={control}
-          entityReference={provision?.entityReference}
-          getValues={getValues}
-          pathname={pathname}
-          register={register}
-          reset={reset}
-        />
+        <>
+          <ReactiveNumericField
+            className="col-span-6"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">%</span>
+              </div>
+            }
+            errors={errors}
+            label="Provisión estimada"
+            max={100}
+            min={0}
+            name="provisionContingency"
+            register={register}
+          />
+
+          <ReactiveNumericField
+            disabled
+            className="col-span-6"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">S/.</span>
+              </div>
+            }
+            errors={errors}
+            label="Monto provisionado"
+            name="provisionAmount"
+            register={register}
+          />
+        </>
       )}
 
       {!isProvisional && (
@@ -134,4 +206,4 @@ const ProvisionCheck: FC<ProvisionCheckProps> = ({
   );
 };
 
-export default ProvisionCheck;
+export default React.memo(ProvisionCheck);

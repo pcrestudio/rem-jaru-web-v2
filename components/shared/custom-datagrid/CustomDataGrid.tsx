@@ -45,7 +45,6 @@ const CustomDataGrid = <T extends object>({
   canUse = true,
   canUseExportable = true,
   storeItems = [],
-  onRowAction,
 }: CustomDataGridProps<T>) => {
   const {
     items,
@@ -70,6 +69,7 @@ const CustomDataGrid = <T extends object>({
   return (
     <div className="overflow-auto max-w-full">
       <Table
+        aria-labelledby={addButtonText}
         bottomContent={
           <div className="flex w-full justify-between">
             <div className="flex flex-row gap-4 items-center">

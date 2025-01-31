@@ -1,7 +1,5 @@
 import * as Yup from "yup";
 
-import validateFileCode from "@/utils/validate_file_code";
-
 const createSupervisionSchema = Yup.object().shape({
   fileCode: Yup.string().required("El código de expediente obligatorio."),
   demanded: Yup.string().required("El demandado es obligatorio."),

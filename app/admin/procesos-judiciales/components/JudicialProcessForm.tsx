@@ -10,7 +10,7 @@ import DynamicAutocomplete from "@/components/shared/master-options-autocomplete
 import { MasterOptionConfig } from "@/config/master-option.config";
 import SectionAttributeFields from "@/components/shared/section-attribute-fields/SectionAttributeFields";
 import ReactiveForm from "@/components/form/ReactiveForm";
-import { GetJudicialProcessDto } from "@/app/dto/submodule/judicial_process/get-judicial-process.dto";
+import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
 import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -20,6 +20,9 @@ import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutoc
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import { ModelType } from "@/config/model-type.config";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
+import PlaintiffAutocomplete from "@/components/autocompletes/PlaintiffAutocomplete";
+import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
+import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -40,10 +43,21 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   );
   const router = useRouter();
 
+  console.log(judicialProcess?.reclaims);
+
   return (
     <ReactiveForm
       formId="judicial-process-edit"
-      initialValues={judicialProcess}
+      initialValues={{
+        ...judicialProcess,
+        reclaims:
+          judicialProcess?.reclaims?.length > 0
+            ? judicialProcess.reclaims
+            : mockReclaims,
+      }}
+      options={{
+        mode: "onTouched",
+      }}
       validationSchema={judicialProcessSchema}
       onSubmit={handleSubmit}
     >
@@ -69,6 +83,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             register={register}
             touched={touchedFields.fileCode}
           />
+
           <ReactiveField
             className="col-span-6"
             control={control}
@@ -79,16 +94,18 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             register={register}
             touched={touchedFields.demanded}
           />
-          <ReactiveField
-            className="col-span-6"
+
+          <PlaintiffAutocomplete
+            isRequired
+            multiple
+            className="col-span-6 nextui-input-nomodal"
             control={control}
             errors={errors}
-            isRequired={true}
             label="Demandante"
             name="plaintiff"
-            register={register}
             touched={touchedFields.plaintiff}
           />
+
           <ReactiveField
             className="col-span-6"
             control={control}
@@ -97,6 +114,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="coDefendant"
             register={register}
           />
+
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -105,6 +123,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="projectId"
             slug={MasterOptionConfig.proyectosGeneral}
           />
+
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -113,6 +132,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="cargoStudioId"
             slug={MasterOptionConfig.estudios}
           />
+
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -122,6 +142,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             optionValue="name"
             slug={MasterOptionConfig.materia}
           />
+
           <ResponsibleAutocomplete
             className="col-span-4 nextui-input-nomodal"
             control={control}
@@ -129,6 +150,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             label="Responsable principal"
             name="responsibleId"
           />
+
           <ResponsibleAutocomplete
             className="col-span-4 nextui-input-nomodal"
             control={control}
@@ -142,7 +164,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             control={control}
             endContent={
               <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">$</span>
+                <span className="text-default-400 text-small" />
               </div>
             }
             errors={errors}
@@ -177,6 +199,17 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 reset={reset}
               />
 
+              <Reclaims
+                control={control}
+                errors={errors}
+                pathname={pathname}
+                getValues={getValues}
+                setValue={setValue}
+                provision={judicialProcess}
+                register={register}
+                watch={watch}
+              />
+
               <SectionAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}
@@ -198,7 +231,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                         color={data?.updated ? "primary" : "warning"}
                         size="sm"
                         variant="flat"
-                        onClick={() => {
+                        onPress={() => {
                           const currentPath = window.location.pathname;
                           const cej_route = currentPath.replace(
                             /edit\/\d+/,
@@ -242,7 +275,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
               <Button
                 className="word-btn bg-red-500 text-white w-fit"
                 type="button"
-                onClick={handleStepSubmit}
+                onPress={handleStepSubmit}
               >
                 Guardar y continuar paso
               </Button>

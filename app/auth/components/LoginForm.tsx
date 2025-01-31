@@ -63,7 +63,7 @@ function LoginForm({ onEmailSubmit, onAzureLogin, isLoading }) {
               className="w-full"
               startContent={<MicrosoftIcon />}
               variant="bordered"
-              onClick={onAzureLogin}
+              onPress={onAzureLogin}
             >
               Continuar con Microsoft Entra ID
             </Button>

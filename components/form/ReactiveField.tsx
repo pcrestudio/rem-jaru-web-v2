@@ -13,11 +13,13 @@ export interface ReactiveFieldProps {
   isRequired?: boolean;
   touched?: boolean;
   className?: string;
+  labelClassName?: string;
   control?: Control<any>;
   disabled?: boolean;
   onBlur?: (value: any) => void;
   noModal?: boolean;
   endContent?: ReactNode;
+  multiple?: boolean;
 }
 
 const ReactiveField: FC<ReactiveFieldProps> = ({
