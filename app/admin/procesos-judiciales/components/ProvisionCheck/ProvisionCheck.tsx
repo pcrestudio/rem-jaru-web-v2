@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { errors } from "openid-client";
 
 import ReactiveSwitch from "@/components/form/ReactiveSwitch";
@@ -9,6 +9,7 @@ import DynamicAutocomplete from "@/components/shared/master-options-autocomplete
 import { MasterOptionConfig } from "@/config/master-option.config";
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
+import { ContingencyLevelConfig } from "@/config/contingency-level.config";
 
 const ProvisionCheck: FC<ModularProps> = ({
   control,
@@ -22,60 +23,78 @@ const ProvisionCheck: FC<ModularProps> = ({
     provision?.isProvisional ?? false,
   );
 
-  // Calculate contingency level
-  const calculateContingencyLevel = useCallback(() => {
-    const values = getValues();
+  const values = getValues();
+
+  const reclaims = watch("reclaims");
+
+  const calculateProvisionPercentage = () => {
+    const provisionAmount = reclaims?.reduce(
+      (sum, item) => Number(item.provisionAmount) + sum,
+      0,
+    );
+
+    const amount = reclaims?.reduce(
+      (sum, item) => Number(item.amount) + sum,
+      0,
+    );
+
+    const percentage = (provisionAmount / amount) * 100;
+
+    setValue(
+      ExtendedAttributeConfig.provisionContingency,
+      Math.round(percentage),
+    );
+  };
+
+  const calculateContingencyLevel = () => {
     const contingencyPercentage = Number(values?.contingencyPercentage) ?? 0;
 
-    if (contingencyPercentage > 0 && contingencyPercentage < 50) {
-      setValue(ExtendedAttributeConfig.contingencyLevel, "remoto", {
-        shouldValidate: true,
-      });
-    } else if (contingencyPercentage >= 50 && contingencyPercentage < 80) {
-      setValue(ExtendedAttributeConfig.contingencyLevel, "posible", {
-        shouldValidate: true,
-      });
-      setValue(ExtendedAttributeConfig.isProvisional, true, {
-        shouldValidate: true,
-      });
+    if (contingencyPercentage > 0 && contingencyPercentage < 10) {
+      setValue(
+        ExtendedAttributeConfig.contingencyLevel,
+        ContingencyLevelConfig.remoto,
+      );
+    } else if (contingencyPercentage >= 10 && contingencyPercentage < 50) {
+      setValue(
+        ExtendedAttributeConfig.contingencyLevel,
+        ContingencyLevelConfig.posible,
+      );
+    } else if (contingencyPercentage >= 50 && contingencyPercentage < 90) {
+      setValue(
+        ExtendedAttributeConfig.contingencyLevel,
+        ContingencyLevelConfig.probable,
+      );
+      setValue(ExtendedAttributeConfig.isProvisional, true);
       setIsProvisional(true);
-    } else if (contingencyPercentage >= 80) {
-      setValue(ExtendedAttributeConfig.contingencyLevel, "probable", {
-        shouldValidate: true,
-      });
-      setValue(ExtendedAttributeConfig.isProvisional, true, {
-        shouldValidate: true,
-      });
+    } else if (contingencyPercentage >= 90) {
+      setValue(
+        ExtendedAttributeConfig.contingencyLevel,
+        ContingencyLevelConfig.virtualmente,
+      );
+      setValue(ExtendedAttributeConfig.isProvisional, true);
       setIsProvisional(true);
     } else {
-      setValue(ExtendedAttributeConfig.isProvisional, false, {
-        shouldValidate: true,
-      });
-      setValue(ExtendedAttributeConfig.contingencyLevel, null, {
-        shouldValidate: true,
-      });
+      setValue(ExtendedAttributeConfig.contingencyLevel, null);
+      setValue(ExtendedAttributeConfig.isProvisional, false);
       setIsProvisional(false);
     }
-  }, [getValues, setValue]);
+  };
 
-  // Calculate provision amount
-  const calculateProvision = useCallback(() => {
-    const values = getValues();
+  const calculateProvision = () => {
     const amount = parseFloat(values?.amount) ?? 0;
     const provisionContingency = Number(values?.provisionContingency) ?? 0;
 
     if (amount > 0 && provisionContingency > 0) {
       const provisionAmount = (amount * provisionContingency) / 100;
+
       setValue(
         ExtendedAttributeConfig.provisionAmount,
         provisionAmount.toFixed(2),
-        { shouldValidate: true },
       );
     }
-  }, [getValues, setValue]);
+  };
 
-  // Calculate plaintiff
-  const calculatePlaintiff = useCallback(() => {
+  const calculatePlaintiff = () => {
     const values = getValues();
     const initPlaintiff: string = values?.plaintiff ?? "";
 
@@ -87,25 +106,17 @@ const ProvisionCheck: FC<ModularProps> = ({
         setValue(ExtendedAttributeConfig.plaintiff, plaintiff);
       }
     }
-  }, [getValues, setValue]);
+  };
 
   // Watch fields for changes
-  const watchFields = watch([
-    "contingencyPercentage",
-    "amount",
-    "provisionContingency",
-  ]);
+  const watchFields = watch(["contingencyPercentage"]);
 
-  // Run calculations when watched fields change
   useEffect(() => {
-    calculateProvision();
     calculateContingencyLevel();
-  }, [watchFields, calculateProvision, calculateContingencyLevel]);
-
-  // Run plaintiff calculation only once on mount
-  useEffect(() => {
+    calculateProvision();
     calculatePlaintiff();
-  }, [calculatePlaintiff]);
+    calculateProvisionPercentage();
+  }, [watchFields]);
 
   return (
     <>
@@ -150,6 +161,7 @@ const ProvisionCheck: FC<ModularProps> = ({
       {isProvisional && (
         <>
           <ReactiveNumericField
+            disabled
             className="col-span-6"
             control={control}
             endContent={
@@ -206,4 +218,4 @@ const ProvisionCheck: FC<ModularProps> = ({
   );
 };
 
-export default React.memo(ProvisionCheck);
+export default ProvisionCheck;

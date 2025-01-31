@@ -9,4 +9,7 @@ export enum ExtendedAttributeConfig {
   contingencyLevel = "contingencyLevel",
   contingencyPercentage = "contingencyPercentage",
   plaintiff = "plaintiff",
+  lastSituation = "lastSituation",
+  nextSituation = "nextSituation",
+  lastDate = "lastDate",
 }

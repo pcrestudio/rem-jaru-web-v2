@@ -43,8 +43,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   );
   const router = useRouter();
 
-  console.log(judicialProcess?.reclaims);
-
   return (
     <ReactiveForm
       formId="judicial-process-edit"
@@ -144,7 +142,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           />
 
           <ResponsibleAutocomplete
-            className="col-span-4 nextui-input-nomodal"
+            className={`nextui-input-nomodal ${!judicialProcess ? "col-span-6" : "col-span-4"}`}
             control={control}
             isRequired={true}
             label="Responsable principal"
@@ -152,32 +150,33 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           />
 
           <ResponsibleAutocomplete
-            className="col-span-4 nextui-input-nomodal"
+            className={`nextui-input-nomodal ${!judicialProcess ? "col-span-6" : "col-span-4"}`}
             control={control}
             isRequired={false}
             label="Responsable secundario"
             name="secondaryResponsibleId"
           />
 
-          <ReactiveNumericField
-            className="col-span-4"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small" />
-              </div>
-            }
-            errors={errors}
-            isRequired={true}
-            label="Cuantía"
-            name="amount"
-            register={register}
-            touched={touchedFields.amount}
-            type="number"
-          />
-
           {judicialProcess && judicialProcess?.entityReference && (
             <>
+              <ReactiveNumericField
+                disabled
+                className="col-span-4"
+                control={control}
+                endContent={
+                  <div className="pointer-events-none flex items-center">
+                    <span className="text-default-400 text-small" />
+                  </div>
+                }
+                errors={errors}
+                isRequired={true}
+                label="Cuantía"
+                name="amount"
+                register={register}
+                touched={touchedFields.amount}
+                type="number"
+              />
+
               <ProvisionCheck
                 control={control}
                 getValues={getValues}
@@ -202,11 +201,11 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
               <Reclaims
                 control={control}
                 errors={errors}
-                pathname={pathname}
                 getValues={getValues}
-                setValue={setValue}
+                pathname={pathname}
                 provision={judicialProcess}
                 register={register}
+                setValue={setValue}
                 watch={watch}
               />
 

@@ -18,6 +18,8 @@ import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 import { ModelType } from "@/config/model-type.config";
+import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
+import { format } from "date-fns";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
@@ -49,6 +51,12 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
     `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}&modelType=${modelType}`,
     fetcher,
   );
+
+  const acceptUpdateLabel: string[] = [
+    ExtendedAttributeConfig.lastSituation,
+    ExtendedAttributeConfig.nextSituation,
+    ExtendedAttributeConfig.lastDate,
+  ];
 
   useEffect(() => {
     if (data) {
@@ -196,7 +204,29 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                 attribute.dataType,
                               )}
                               render={({ field }) => (
-                                <Textarea label={attribute.label} {...field} />
+                                <Textarea
+                                  {...field}
+                                  label={`${attribute.label}`}
+                                  description={
+                                    <>
+                                      {String(
+                                        acceptUpdateLabel
+                                          .includes(attribute.slug)
+                                          .valueOf(),
+                                      ) === "true" && (
+                                        <span className="text-xs text-slate-500 font-semibold">
+                                          Actualizado el:{" "}
+                                          {format(
+                                            new Date(
+                                              attribute.values[0]?.createdAt,
+                                            ),
+                                            "MM/dd/yyyy",
+                                          )}
+                                        </span>
+                                      )}
+                                    </>
+                                  }
+                                />
                               )}
                             />
                           )}

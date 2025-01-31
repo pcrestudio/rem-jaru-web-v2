@@ -55,6 +55,9 @@ const useTodos = (): UseTodosProps => {
       const cellValue = item[columnKey];
 
       switch (columnKey) {
+        case "fileCode":
+          return item.detail ? item.detail.fileCode : "-";
+
         case "module":
           return item.detail ? item.detail.submodule.module.name : "-";
 

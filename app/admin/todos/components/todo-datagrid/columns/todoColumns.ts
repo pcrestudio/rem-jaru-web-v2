@@ -1,5 +1,9 @@
 export const todoColumns = [
   {
+    key: "fileCode",
+    label: "Código de expediente",
+  },
+  {
     key: "title",
     label: "Nombre",
   },

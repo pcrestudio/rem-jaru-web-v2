@@ -25,6 +25,7 @@ export interface GetTodoDto {
 }
 
 export interface GetTodoDetailDto {
+  fileCode?: string;
   submodule?: GetTodoSubmoduleDto;
 }
 
