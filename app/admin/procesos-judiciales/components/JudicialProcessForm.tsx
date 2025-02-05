@@ -46,14 +46,13 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   return (
     <ReactiveForm
       formId="judicial-process-edit"
-      initialValues={
-        judicialProcess
-          ? {
-              ...judicialProcess,
-              reclaims: judicialProcess.reclaims ?? mockReclaims,
-            }
-          : {}
-      }
+      initialValues={{
+        ...judicialProcess,
+        reclaims:
+          judicialProcess?.reclaims?.length > 0
+            ? judicialProcess.reclaims
+            : mockReclaims,
+      }}
       options={{
         mode: "onTouched",
       }}
