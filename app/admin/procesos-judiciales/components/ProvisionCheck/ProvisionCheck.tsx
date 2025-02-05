@@ -161,7 +161,7 @@ const ProvisionCheck: FC<ModularProps> = ({
       {isProvisional && (
         <>
           <ReactiveNumericField
-            disabled
+            readOnly
             className="col-span-6"
             control={control}
             endContent={
@@ -178,7 +178,7 @@ const ProvisionCheck: FC<ModularProps> = ({
           />
 
           <ReactiveNumericField
-            disabled
+            readOnly
             className="col-span-6"
             control={control}
             endContent={

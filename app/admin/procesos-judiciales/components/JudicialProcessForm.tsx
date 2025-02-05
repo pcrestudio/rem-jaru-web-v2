@@ -46,13 +46,14 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   return (
     <ReactiveForm
       formId="judicial-process-edit"
-      initialValues={{
-        ...judicialProcess,
-        reclaims:
-          judicialProcess?.reclaims?.length > 0
-            ? judicialProcess.reclaims
-            : mockReclaims,
-      }}
+      initialValues={
+        judicialProcess
+          ? {
+              ...judicialProcess,
+              reclaims: judicialProcess.reclaims ?? mockReclaims,
+            }
+          : {}
+      }
       options={{
         mode: "onTouched",
       }}
@@ -160,7 +161,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           {judicialProcess && judicialProcess?.entityReference && (
             <>
               <ReactiveNumericField
-                disabled
+                readOnly
                 className="col-span-4"
                 control={control}
                 endContent={
@@ -181,7 +182,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 control={control}
                 getValues={getValues}
                 pathname={pathname}
-                provision={judicialProcess}
+                provision={judicialProcess as GetJudicialProcessDto}
                 register={register}
                 reset={reset}
                 setValue={setValue}

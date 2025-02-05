@@ -8,6 +8,7 @@ import ReportCountRecord from "@/app/admin/components/ReportCountRecord/ReportCo
 import ReportChartDataGrid from "@/app/admin/components/ReportChartDataGrid/ReportChartDataGrid";
 import judicialProcessCriticalProcessesColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessCriticalProcessesColumns";
 import {
+  GetContingenciesReportDto,
   GetInstancesReportDto,
   GetMasterOptionReportDto,
 } from "@/app/dto/report/get-init-report.dto";
@@ -28,6 +29,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     matterChartData,
     renderPieChartCell,
     renderBarChartCell,
+    instanceChartData,
     renderContingenciesCell,
     renderCriticalProcessesCell,
     renderInstanceBarChartCell,
@@ -56,7 +58,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         />
       </div>
       <div className="col-span-6">
-        <ReportChartDataGrid<GetMasterOptionReportDto>
+        <ReportChartDataGrid<GetContingenciesReportDto>
           cells={renderContingenciesCell}
           columns={judicialProcessContingenciesColumns}
           dataGridKey="name"
@@ -83,7 +85,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
       <div className="col-span-6">
         <HorizontalBarChart<GetInstancesReportDto>
           cells={renderInstanceBarChartCell}
-          chartData={studioChartData}
+          chartData={instanceChartData}
           columns={judicialProcessInstanceHorizontalBarColumns}
           dataGridKey="instanceName"
           items={data?.instances?.report ?? []}

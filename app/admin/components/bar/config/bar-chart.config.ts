@@ -8,6 +8,7 @@ const barChartOptionConfig = (
   type: string,
 ) => {
   const isVertical = type === BarChartType.vertical;
+  const total = combinedData.reduce((sum, value) => sum + value, 0); // Calculate the total sum of all values
 
   return isVertical
     ? {
@@ -18,6 +19,12 @@ const barChartOptionConfig = (
           trigger: "axis",
           axisPointer: {
             type: "shadow",
+          },
+          formatter: function (params: any) {
+            const value = params[0].value;
+            const percent = ((value / total) * 100).toFixed(2);
+
+            return `${params[0].name}: ${!isNaN(Number(percent)) ? percent : Number(0).toFixed(2)}%`;
           },
         },
         grid: {
@@ -30,7 +37,7 @@ const barChartOptionConfig = (
           type: "value",
           minInterval: 1,
           axisLabel: {
-            formatter: "{value}",
+            formatter: "{value}", // Keep raw numbers for x-axis labels
           },
         },
         yAxis: {
@@ -53,6 +60,18 @@ const barChartOptionConfig = (
         title: {
           text: title.toUpperCase(),
         },
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow",
+          },
+          formatter: function (params: any) {
+            const value = params[0].value;
+            const percent = ((value / total) * 100).toFixed(2); // Calculate percentage
+
+            return `${params[0].name}: ${percent}%`;
+          },
+        },
         grid: {
           left: "3%",
           right: "4%",
@@ -68,7 +87,7 @@ const barChartOptionConfig = (
           type: "value",
           minInterval: 1,
           axisLabel: {
-            formatter: "{value}",
+            formatter: "{value}", // Keep raw numbers for y-axis labels
           },
         },
         series: [

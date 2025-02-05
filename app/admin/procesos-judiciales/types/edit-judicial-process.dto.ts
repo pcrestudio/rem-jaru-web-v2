@@ -8,6 +8,9 @@ export interface EditJudicialProcessDto {
   id: number;
   cargoStudioId: number;
   isProvisional: boolean;
+  amount?: number;
+  provisionAmount?: number;
+  provisionContingency?: number;
   comment?: string;
   reclaims?: UpsertReclaimDto[];
 }

@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { ReactNode, useCallback } from "react";
 
 import {
+  GetContingenciesReportDto,
   GetInitReportDto,
   GetInstancesReportDto,
   GetMasterOptionReportDto,
@@ -17,6 +18,7 @@ interface UseReportJudicialProcessProps {
   instanceYAxisData: string[];
   studioChartData: ChartData[];
   matterChartData: ChartData[];
+  instanceChartData: ChartData[];
   renderBarChartCell: (
     item: GetMasterOptionReportDto,
     columnKey: string | number,
@@ -30,7 +32,7 @@ interface UseReportJudicialProcessProps {
     columnKey: string | number,
   ) => ReactNode;
   renderContingenciesCell: (
-    item: GetMasterOptionReportDto,
+    item: GetContingenciesReportDto,
     columnKey: string | number,
   ) => ReactNode;
   renderCriticalProcessesCell: (
@@ -133,18 +135,18 @@ const useReportJudicialProcess = (
   );
 
   const totalContingencies = data?.contingencies.report.reduce(
-    (sum, item) => sum + (item._count?.group || 0),
+    (sum, item) => sum + (item.count || 0),
     0,
   );
 
   const renderContingenciesCell = useCallback(
-    (contingency: GetMasterOptionReportDto, columnKey: string | number) => {
+    (contingency: GetContingenciesReportDto, columnKey: string | number) => {
       const cellValue = contingency[columnKey];
-      const percent = (contingency._count.group / totalContingencies) * 100;
+      const percent = (contingency.count / totalContingencies) * 100;
 
       switch (columnKey) {
         case "count":
-          return <p>{contingency._count.group}</p>;
+          return <p>{contingency.count}</p>;
 
         case "percent":
           return <p>{percent.toFixed(2)} %</p>;
@@ -183,6 +185,13 @@ const useReportJudicialProcess = (
   const instanceYAxisData =
     data?.instances?.report.map((option) => option.instanceName) ?? [];
 
+  const instanceChartData =
+    (data?.instances.report.map((option) => ({
+      name: option.instanceName,
+      type: "bar",
+      data: [option.count],
+    })) as ChartData[]) ?? [];
+
   const totalInstances = data?.instances.report.reduce(
     (sum, item) => sum + (item.count || 0),
     0,
@@ -191,6 +200,7 @@ const useReportJudicialProcess = (
   const renderInstanceBarChartCell = useCallback(
     (report: GetInstancesReportDto, columnKey: string | number) => {
       const cellValue = report[columnKey];
+
       const percent = (report.count / totalInstances) * 100;
 
       switch (columnKey) {
@@ -198,13 +208,17 @@ const useReportJudicialProcess = (
           return <p>{report.count}</p>;
 
         case "percent":
-          return <p>{percent.toFixed(2)} %</p>;
+          return (
+            <p>
+              {!isNaN(percent) ? percent.toFixed(2) : Number(0).toFixed(2)} %
+            </p>
+          );
 
         default:
           return cellValue;
       }
     },
-    [total],
+    [totalInstances],
   );
 
   return {
@@ -218,6 +232,7 @@ const useReportJudicialProcess = (
     renderContingenciesCell,
     renderCriticalProcessesCell,
     totalJudicialProcess: total,
+    instanceChartData,
     instanceYAxisData,
   };
 };

@@ -1,7 +1,26 @@
+import { DataGridKey } from "@/config/datagrid-key.config";
+
 const judicialProcessColumns = [
+  { key: "actions", label: "Opciones" },
+  {
+    key: DataGridKey.connectLegal,
+    label: "Código de Legal Connect",
+  },
+  {
+    key: DataGridKey.sede,
+    label: "Sede",
+  },
   {
     key: "fileCode",
     label: "Código de Expediente",
+  },
+  {
+    key: DataGridKey.cause,
+    label: "Causa / Raíz",
+  },
+  {
+    key: DataGridKey.startDate,
+    label: "Fecha de inicio del proceso",
   },
   {
     key: "demanded",
@@ -19,20 +38,54 @@ const judicialProcessColumns = [
     sortable: true,
   },
   {
-    key: "responsibleId",
-    label: "Responsable",
+    key: "amount",
+    label: "Cuantía",
+    sortable: true,
+  },
+  {
+    key: DataGridKey.resume,
+    label: "Breve resumen del caso",
+    width: 50,
+  },
+  {
+    key: "instance",
+    label: "Instancia actual",
     sortable: true,
     width: 70,
   },
   {
-    key: "secondaryResponsibleId",
-    label: "Responsable Secundario",
+    key: DataGridKey.lastSituation,
+    label: "Última actuación",
     sortable: true,
     width: 70,
   },
   {
-    key: "projectId",
-    label: "Proyecto",
+    key: DataGridKey.nextSituation,
+    label: "Próxima acción",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: DataGridKey.contingencyPercentage,
+    label: "% de contingencia estimado",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: DataGridKey.contingencyLevel,
+    label: "Nivel de contingencia",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: DataGridKey.provisionContingency,
+    label: "% de provisión estimado",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: DataGridKey.provisionAmount,
+    label: "Monto provisionado",
     sortable: true,
     width: 70,
   },
@@ -43,12 +96,41 @@ const judicialProcessColumns = [
     width: 70,
   },
   {
-    key: "instance",
-    label: "Instancia",
+    key: DataGridKey.risks,
+    label: "Riesgos",
     sortable: true,
     width: 70,
   },
-  { key: "actions", label: "Opciones" },
+  {
+    key: DataGridKey.saving,
+    label: "Ahorro generado",
+    sortable: true,
+    width: 70,
+  },
+  {
+    key: DataGridKey.criticalProcess,
+    label: "Nivel de riesgo",
+    sortable: true,
+    width: 40,
+  },
+  {
+    key: DataGridKey.principalLawyer,
+    label: "Abogado responsable/s",
+    sortable: true,
+    width: 40,
+  },
+  {
+    key: DataGridKey.lawyerEmail,
+    label: "Correo de abogado/s",
+    sortable: true,
+    width: 40,
+  },
+  {
+    key: DataGridKey.internalSpecialist,
+    label: "Especialista interno",
+    sortable: true,
+    width: 40,
+  },
 ];
 
 export default judicialProcessColumns;

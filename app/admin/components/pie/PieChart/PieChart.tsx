@@ -29,6 +29,12 @@ const PieChart = <T extends object>({
     },
     tooltip: {
       trigger: "item",
+      formatter: function (params: any) {
+        const total = chartData.reduce((sum, item) => sum + item.value, 0); // Calculate the total sum of all values
+        const percent = ((params.value / total) * 100).toFixed(2); // Calculate percentage
+
+        return `${params.name}: ${percent}%`; // Display percentage in the tooltip
+      },
     },
     series: [
       {
@@ -36,6 +42,10 @@ const PieChart = <T extends object>({
         type: "pie",
         radius: "50%",
         data: [...chartData],
+        label: {
+          show: true, // Show labels
+          formatter: "{b}: {c}", // Keep raw numbers for labels (e.g., "A: 10")
+        },
       },
     ],
   };

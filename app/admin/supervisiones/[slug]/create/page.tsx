@@ -28,7 +28,13 @@ export default function SupervisionesSlugCreate() {
   };
 
   const handleSubmit = async (payload: CreateSupervisionDto) => {
-    const { data } = await createSupervision(payload, slug);
+    const { data } = await createSupervision(
+      {
+        ...payload,
+        plaintiff: (payload.plaintiff as unknown as number[]).join(", "),
+      },
+      slug,
+    );
 
     if (data) {
       setSupervisionId(data["result"]["id"]);

@@ -4,6 +4,7 @@ import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { Accordion, AccordionItem, DatePicker } from "@heroui/react";
 import { Input, Textarea } from "@heroui/input";
+import { format } from "date-fns";
 
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -19,7 +20,7 @@ import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 import { ModelType } from "@/config/model-type.config";
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
-import { format } from "date-fns";
+import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
@@ -206,26 +207,27 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               render={({ field }) => (
                                 <Textarea
                                   {...field}
-                                  label={`${attribute.label}`}
                                   description={
                                     <>
                                       {String(
                                         acceptUpdateLabel
                                           .includes(attribute.slug)
                                           .valueOf(),
-                                      ) === "true" && (
-                                        <span className="text-xs text-slate-500 font-semibold">
-                                          Actualizado el:{" "}
-                                          {format(
-                                            new Date(
-                                              attribute.values[0]?.createdAt,
-                                            ),
-                                            "MM/dd/yyyy",
-                                          )}
-                                        </span>
-                                      )}
+                                      ) === "true" &&
+                                        attribute.values[0]?.createdAt && (
+                                          <span className="text-xs text-slate-500 font-semibold">
+                                            Actualizado el:{" "}
+                                            {format(
+                                              new Date(
+                                                attribute.values[0]?.createdAt,
+                                              ),
+                                              "MM/dd/yyyy",
+                                            )}
+                                          </span>
+                                        )}
                                     </>
                                   }
+                                  label={`${attribute.label}`}
                                 />
                               )}
                             />
@@ -269,12 +271,27 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               render={({ field: { onChange, value } }) => (
                                 <Autocomplete
                                   fullWidth
-                                  getOptionLabel={(option) =>
-                                    option.optionLabel || ""
-                                  }
-                                  isOptionEqualToValue={(option, value) =>
-                                    option === value
-                                  }
+                                  getOptionLabel={(
+                                    option: GetSectionAttributeOptionDto,
+                                  ) => option.optionLabel || ""}
+                                  isOptionEqualToValue={(option, value) => {
+                                    if (attribute.isMultiple) {
+                                      return (
+                                        (option as GetSectionAttributeOptionDto)
+                                          .optionValue ===
+                                        (value as GetSectionAttributeOptionDto)
+                                          .optionValue
+                                      );
+                                    } else {
+                                      return (
+                                        (option as GetSectionAttributeOptionDto)
+                                          .optionValue ===
+                                        (value as GetSectionAttributeOptionDto)
+                                          .optionValue
+                                      );
+                                    }
+                                  }}
+                                  multiple={attribute.isMultiple}
                                   options={attribute.options}
                                   renderInput={(params) => (
                                     <TextField
@@ -287,18 +304,41 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                   )}
                                   sx={autocompleteStyle}
                                   value={
-                                    value && attribute.options
-                                      ? attribute.options.find(
-                                          (option) =>
-                                            option.optionValue === value,
-                                        )
-                                      : null
+                                    value && data
+                                      ? attribute.isMultiple
+                                        ? attribute.options.filter((option) =>
+                                            value.includes(option.optionValue),
+                                          )
+                                        : attribute.options.find(
+                                            (option) =>
+                                              option.optionValue === value,
+                                          )
+                                      : attribute.isMultiple
+                                        ? []
+                                        : null
                                   }
-                                  onChange={(_, newValue) =>
-                                    onChange(
-                                      newValue ? newValue.optionValue : "",
-                                    )
-                                  }
+                                  onChange={(
+                                    _,
+                                    newValue:
+                                      | GetSectionAttributeOptionDto
+                                      | GetSectionAttributeOptionDto[],
+                                  ) => {
+                                    if (attribute.isMultiple) {
+                                      onChange(
+                                        Array.isArray(newValue)
+                                          ? newValue.map((v) => v.optionValue)
+                                          : [],
+                                      );
+                                    } else {
+                                      onChange(
+                                        newValue
+                                          ? (
+                                              newValue as GetSectionAttributeOptionDto
+                                            ).optionValue
+                                          : "",
+                                      );
+                                    }
+                                  }}
                                 />
                               )}
                             />

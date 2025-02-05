@@ -52,6 +52,7 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     defaultValues: initialValues || {},
     mode: options?.mode || "onSubmit",
     ...options,
+    shouldUnregister: false,
   });
 
   const handleFormSubmit = (
@@ -59,7 +60,6 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     if (stopEventPropagation) {
-      event.stopPropagation();
       event.stopPropagation();
     }
     onSubmit(values, reset, event);

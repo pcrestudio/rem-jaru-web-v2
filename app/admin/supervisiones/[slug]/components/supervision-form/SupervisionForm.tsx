@@ -15,6 +15,9 @@ import GlobalAttributeFields from "@/components/shared/global-attribute-fields/G
 import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
+import PlaintiffAutocomplete from "@/components/autocompletes/PlaintiffAutocomplete";
+import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
+import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -34,7 +37,13 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
   return (
     <ReactiveForm
       formId="supervision-edit"
-      initialValues={supervision}
+      initialValues={{
+        ...supervision,
+        reclaims:
+          supervision?.reclaims?.length > 0
+            ? supervision.reclaims
+            : mockReclaims,
+      }}
       options={{
         mode: "onTouched",
       }}
@@ -63,6 +72,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             register={register}
             touched={touchedFields.fileCode}
           />
+
           <ReactiveField
             className="col-span-6"
             control={control}
@@ -74,14 +84,14 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             touched={touchedFields.demanded}
           />
 
-          <ReactiveField
-            className="col-span-6"
+          <PlaintiffAutocomplete
+            isRequired
+            multiple
+            className="col-span-6 nextui-input-nomodal"
             control={control}
             errors={errors}
-            isRequired={true}
             label="Demandante"
             name="plaintiff"
-            register={register}
             touched={touchedFields.plaintiff}
           />
 
@@ -151,30 +161,30 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             slug={MasterOptionConfig.situacion}
           />
 
-          <ReactiveNumericField
-            className="col-span-6"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">$</span>
-              </div>
-            }
-            errors={errors}
-            isRequired={true}
-            label="Cuantía"
-            name="amount"
-            register={register}
-            touched={touchedFields.amount}
-            type="number"
-          />
-
           {supervision && supervision?.entityReference && (
             <>
+              <ReactiveNumericField
+                className="col-span-6"
+                control={control}
+                endContent={
+                  <div className="pointer-events-none flex items-center">
+                    <span className="text-default-400 text-small">$</span>
+                  </div>
+                }
+                errors={errors}
+                isRequired={true}
+                label="Cuantía"
+                name="amount"
+                register={register}
+                touched={touchedFields.amount}
+                type="number"
+              />
+
               <ProvisionCheck
                 control={control}
                 getValues={getValues}
                 pathname={pathname}
-                provision={supervision}
+                provision={supervision as GetSupervisionDto}
                 register={register}
                 reset={reset}
                 setValue={setValue}
@@ -189,6 +199,17 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 pathname={pathname}
                 register={register}
                 reset={reset}
+              />
+
+              <Reclaims
+                control={control}
+                errors={errors}
+                getValues={getValues}
+                pathname={pathname}
+                provision={supervision}
+                register={register}
+                setValue={setValue}
+                watch={watch}
               />
 
               <SectionAttributeFields
@@ -225,7 +246,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
               <Button
                 className="word-btn bg-red-500 text-white w-fit"
                 type="button"
-                onClick={handleStepSubmit}
+                onPress={handleStepSubmit}
               >
                 Guardar y continuar paso
               </Button>

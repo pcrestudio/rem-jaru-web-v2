@@ -3,4 +3,5 @@ export interface CreateSupervisionDto {
   situationId: number;
   responsibleId: number;
   projectId: number;
+  plaintiff: string;
 }

@@ -67,7 +67,7 @@ const CustomDataGrid = <T extends object>({
   });
 
   return (
-    <div className="overflow-auto max-w-full">
+    <div className="max-w-full">
       <Table
         aria-labelledby={addButtonText}
         bottomContent={
@@ -100,12 +100,14 @@ const CustomDataGrid = <T extends object>({
             </label>
           </div>
         }
+        bottomContentPlacement="outside"
         className="col-span-12"
         classNames={{
           wrapper: "bg-white shadow-none border border-gray-200 gap-4",
         }}
         selectionBehavior="replace"
         topContent={topContent}
+        topContentPlacement="outside"
       >
         <TableHeader columns={columns}>
           {(column) => (

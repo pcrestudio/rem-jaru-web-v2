@@ -6,7 +6,7 @@ export interface GetInitReportDto {
     report: number;
   };
   contingencies: {
-    report: GetMasterOptionReportDto[];
+    report: GetContingenciesReportDto[];
   };
   criticalProcesses: {
     report: GetMasterOptionReportDto[];
@@ -41,5 +41,10 @@ export interface GetMasterOptionReportDto {
 
 export interface GetInstancesReportDto {
   instanceName: string;
+  count: number;
+}
+
+export interface GetContingenciesReportDto {
+  name: string;
   count: number;
 }

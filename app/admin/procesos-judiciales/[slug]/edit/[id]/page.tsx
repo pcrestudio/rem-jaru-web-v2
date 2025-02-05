@@ -153,13 +153,15 @@ export default function ProcesosJudicialesSlugEdit() {
         handleStepSubmit={handleStepSubmit}
         handleSubmit={onSubmit}
         judicialProcess={
-          data ?? {
-            entityReference: "",
-            coDefendant: "",
-            demanded: "",
-            fileCode: "",
-            plaintiff: "",
-          }
+          data
+            ? data
+            : {
+                entityReference: "",
+                coDefendant: "",
+                demanded: "",
+                fileCode: "",
+                plaintiff: "",
+              }
         }
         pathname={pathname}
       />

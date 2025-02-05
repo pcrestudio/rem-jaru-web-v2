@@ -39,7 +39,7 @@ export default function SupervisionesSlugEdit() {
     fetcher,
   );
 
-  const { stepDataArray, stepData } = useStore();
+  const { stepDataArray } = useStore();
 
   const handleSubmit = async (
     payload: EditSupervisionDto,
@@ -53,6 +53,10 @@ export default function SupervisionesSlugEdit() {
       const { data } = await editSupervision(
         {
           ...payload,
+          plaintiff:
+            typeof payload.plaintiff === "string"
+              ? payload.plaintiff
+              : (payload.plaintiff as unknown as number[]).join(", "),
           id: Number(id),
         },
         slug,
@@ -112,10 +116,10 @@ export default function SupervisionesSlugEdit() {
         <Button
           className="word-btn"
           startContent={<AiOutlineFileWord />}
-          onClick={async () => {
+          onPress={async () => {
             const response = await exportSupervisionWord();
 
-            exportableWord(response, data?.entityReference);
+            await exportableWord(response, data?.entityReference);
           }}
         >
           Exportar ficha

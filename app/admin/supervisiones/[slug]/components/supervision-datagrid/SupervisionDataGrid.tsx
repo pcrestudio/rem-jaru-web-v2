@@ -1,8 +1,6 @@
 import { useRouter } from "next/navigation";
 import React, { FC, Key } from "react";
 import useSWR from "swr";
-import { Tooltip } from "@heroui/react";
-import { EditIcon } from "@heroui/shared-icons";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import { supervisionColumns } from "@/app/admin/supervisiones/[slug]/components/supervision-datagrid/columns/supervisionColumns";
@@ -14,6 +12,7 @@ import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
 import exportableExcel from "@/utils/exportable_excel";
 import { exportSupervisionExcel } from "@/app/api/supervision/supervision";
+import useCommonDossier from "@/app/admin/hooks/useCommonDossier";
 
 interface SupervisionDataGrid {
   slug?: string;
@@ -26,78 +25,13 @@ const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
     fetcher,
   );
   const { user } = useStore();
+  const { renderCell } = useCommonDossier();
 
   const handleEditSupervision = (key: Key) => {
     const currentPath = window.location.pathname;
 
     router.push(`${currentPath}/edit/${key}`);
   };
-
-  const renderCell = React.useCallback(
-    (item: GetSupervisionDto, columnKey: string | number) => {
-      const cellValue = item[columnKey];
-
-      let selectedInstance = item.stepData.reduce(
-        (latestInstance, currentStep) => {
-          const currentInstance = currentStep.step.instance;
-
-          if (!latestInstance || currentInstance.id > latestInstance.id) {
-            return currentInstance;
-          }
-
-          return latestInstance;
-        },
-        null,
-      );
-
-      switch (columnKey) {
-        case "project":
-          return item.project.name;
-
-        case "responsible_id":
-          return (
-            <p>{item.responsible ? `${item.responsible.displayName} ` : "-"}</p>
-          );
-
-        case "cargoStudioId":
-          return <p>{item.studio ? `${item.studio.name}` : "-"}</p>;
-
-        case "authority":
-          return item.authority.name;
-
-        case "situation":
-          return item.situation.name;
-
-        case "instance":
-          return (
-            <p>{selectedInstance ? `${selectedInstance["name"]}` : "-"}</p>
-          );
-
-        case "actions":
-          return (
-            <div className="relative flex items-center gap-2">
-              <Tooltip content="Editar supervisión">
-                <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50 action-button"
-                  role="presentation"
-                  onClick={() => {
-                    const currentPath = window.location.pathname;
-
-                    router.push(`${currentPath}/edit/${item?.id}`);
-                  }}
-                >
-                  <EditIcon />
-                </span>
-              </Tooltip>
-            </div>
-          );
-
-        default:
-          return cellValue;
-      }
-    },
-    [],
-  );
 
   return (
     <CustomDataGrid<GetSupervisionDto>
