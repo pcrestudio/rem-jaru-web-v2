@@ -155,7 +155,7 @@ const EtapaSupervisionForm: FC<EtapaSupervisionFormProps> = ({
         inputRef={datePickerRef}
         label="Fecha de visita"
         name="dateResume"
-        value={formData.dateResume}
+        value={formData.dateResume as any}
         onChange={handlePickerChange}
       />
 

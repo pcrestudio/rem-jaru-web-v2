@@ -165,7 +165,7 @@ const ResumeDateForm: FC<ResumeDateFormProps> = ({
         inputRef={datePickerRef}
         label={datePickerLabel}
         name="dateResume"
-        value={formData.dateResume}
+        value={formData.dateResume as any}
         onChange={handlePickerChange}
       />
 

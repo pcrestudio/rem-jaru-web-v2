@@ -52,12 +52,12 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
             errorMessage={errorMessage}
             isRequired={isRequired}
             label={label}
-            value={parseValueToZonedDateTime(field.value)}
+            value={parseValueToZonedDateTime(field.value) as any}
             onChange={(newValue) => {
               const parsedDate =
                 newValue instanceof ZonedDateTime
                   ? newValue
-                  : convertToZonedDateTime(newValue);
+                  : convertToZonedDateTime(newValue as any);
 
               if (parsedDate) {
                 field.onChange(parsedDate);
