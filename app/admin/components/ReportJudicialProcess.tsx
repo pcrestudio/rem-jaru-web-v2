@@ -19,6 +19,7 @@ import judicialProcessContingenciesColumns from "@/app/admin/components/ReportCh
 import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
 import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
 import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessInstanceHorizontalBarColumns";
+import { Switch } from "@heroui/switch";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;
@@ -42,14 +43,27 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
 
   return (
     <div className="grid grid-cols-12 items-stretch gap-10">
-      <div className="col-span-12 md:col-span-6">
+      <div className="col-span-12">
+        <Switch className="filter">
+          <span className="text-sm"></span>
+        </Switch>
+      </div>
+
+      <div className="col-span-12 md:col-span-4">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
-          title="Monto provisionado"
+          title="Monto total"
+          total={data?.amountSum?.report}
+        />
+      </div>
+      <div className="col-span-12 md:col-span-4">
+        <ReportProvisionAmountRecord
+          Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
+          title="Monto provisionado total"
           total={data?.provisionAmount.report}
         />
       </div>
-      <div className="col-span-12 md:col-span-6">
+      <div className="col-span-12 md:col-span-4">
         <ReportCountRecord
           Icon={<RiAuctionLine className="text-cerulean-800" size={48} />}
           description="PROCESOS JUDICIALIZADOS"

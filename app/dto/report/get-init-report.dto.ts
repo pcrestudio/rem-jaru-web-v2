@@ -5,6 +5,9 @@ export interface GetInitReportDto {
   provisionAmount: {
     report: number;
   };
+  amountSum: {
+    report: number;
+  };
   contingencies: {
     report: GetContingenciesReportDto[];
   };

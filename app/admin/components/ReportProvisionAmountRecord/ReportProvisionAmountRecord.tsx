@@ -14,9 +14,9 @@ const ReportProvisionAmountRecord: FC<ReportProvisionAmountRecordProps> = ({
   return (
     <div className="h-full flex flex-row gap-4 border border-slate-200 p-4 rounded-xl bg-white items-center justify-between">
       {Icon}
-      <div className="flex flex-col gap-4 items-center justify-center">
+      <div className="flex flex-col gap-4">
         <p className="text-base font-bold text-cerulean-800">{title}</p>
-        <h1 className="text-4xl font-bold text-cerulean-500">S/. {total}</h1>
+        <h1 className="text-3xl font-bold text-cerulean-500">S/. {total}</h1>
       </div>
     </div>
   );
