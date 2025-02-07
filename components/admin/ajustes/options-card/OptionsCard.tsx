@@ -10,9 +10,11 @@ import {
 import Link from "next/link";
 
 import { OptionCard } from "@/config/settings-options";
+import useStore from "@/lib/store";
 
 export interface OptionsCardProps {
   option: OptionCard;
+  isDisabled?: boolean;
   pathname?: string;
 }
 
@@ -24,9 +26,14 @@ const renderIcon: Record<number, ReactNode> = {
 };
 
 const OptionsCard: FC<OptionsCardProps> = ({ option, pathname }) => {
+  const { user } = useStore();
+
   return (
-    <Link href={`${pathname}/${option?.path}`}>
-      <Card className="min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
+    <Link href={option.isDisabled(user) ? "" : `${pathname}/${option?.path}`}>
+      <Card
+        className={`min-h-[138px] shadow-none border border-slate-200 motion-reduce:transition ${option.isDisabled(user) ? "cursor-not-allowed hover:border-red-600 hover:bg-red-50" : "cursor-pointer hover:border-cerulean-600 hover:bg-cerulean-50"}`}
+        isDisabled={option.isDisabled(user)}
+      >
         <CardBody className="flex flex-row gap-2 items-center transition justify-between p-4 w-full">
           <div className="flex flex-col gap-4">
             <h1 className="text-cerulean-950 font-bold">{option?.name}</h1>

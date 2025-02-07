@@ -79,14 +79,14 @@ export const menuOptions: MenuOptions[] = [
   },
   {
     title: "Ajustes",
-    role: [Role["super-admin"]],
+    role: [...onlyAdmins],
     redirectTo: "/admin/ajustes",
     Icon: (props) => <AiOutlineSetting {...props} />,
     group: group.configuration,
   },
   {
     title: "Cerrar sesión",
-    role: [Role["super-admin"], Role.visualizer],
+    role: [...allRoles],
     redirectTo: undefined,
     Icon: (props) => <RiShutDownLine {...props} />,
     group: group.other,

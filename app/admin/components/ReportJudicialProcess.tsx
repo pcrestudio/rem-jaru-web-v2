@@ -20,6 +20,8 @@ import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
 import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
 import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessInstanceHorizontalBarColumns";
 import { Switch } from "@heroui/switch";
+import { Chip } from "@heroui/chip";
+import { convertFormatDistanceToNow } from "@/utils/format_date";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;
@@ -29,7 +31,11 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
   const {
     matterChartData,
     renderPieChartCell,
+    exchange,
     renderBarChartCell,
+    handleExchange,
+    calculateTotal,
+    isDollar,
     instanceChartData,
     renderContingenciesCell,
     renderCriticalProcessesCell,
@@ -44,23 +50,45 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
   return (
     <div className="grid grid-cols-12 items-stretch gap-10">
       <div className="col-span-12">
-        <Switch className="filter">
-          <span className="text-sm"></span>
-        </Switch>
+        <div className="flex flex-row gap-4 items-center">
+          <Switch
+            className="filter"
+            isSelected={isDollar}
+            onChange={handleExchange}
+          >
+            <span className="text-sm">
+              {isDollar ? "En dólares" : "En soles"}
+            </span>
+          </Switch>
+
+          <Chip className="text-foreground text-xs" variant="faded">
+            <span>Tipo de cambio: {exchange?.value}</span>
+          </Chip>
+
+          {exchange?.updatedAt && (
+            <Chip className="text-foreground text-xs" variant="flat">
+              <span>
+                Actualizado: {convertFormatDistanceToNow(exchange?.createdAt)}
+              </span>
+            </Chip>
+          )}
+        </div>
       </div>
 
       <div className="col-span-12 md:col-span-4">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
+          currency={isDollar ? "$" : "S/. "}
           title="Monto total"
-          total={data?.amountSum?.report}
+          total={calculateTotal(isDollar, data?.amountSum?.report)}
         />
       </div>
       <div className="col-span-12 md:col-span-4">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
+          currency={isDollar ? "$" : "S/. "}
           title="Monto provisionado total"
-          total={data?.provisionAmount.report}
+          total={calculateTotal(isDollar, data?.provisionAmount.report)}
         />
       </div>
       <div className="col-span-12 md:col-span-4">

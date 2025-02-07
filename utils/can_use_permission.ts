@@ -8,6 +8,9 @@ export enum CanUsePermission {
   editTodo = "editTodo",
   downloadExcel = "downloadExcel",
   downloadWord = "downloadWord",
+  viewMasters = "viewMasters",
+  viewExtendedAttributes = "viewExtendedAttributes",
+  viewRoles = "viewExtendedAttributes",
 }
 
 const rolePermissions = {
@@ -19,11 +22,15 @@ const rolePermissions = {
     CanUsePermission.editItem,
     CanUsePermission.addTodo,
     CanUsePermission.editTodo,
+    CanUsePermission.viewMasters,
+    CanUsePermission.viewExtendedAttributes,
+    CanUsePermission.viewRoles,
   ],
   [Role.admin]: [
     CanUsePermission.viewDashboard,
     CanUsePermission.downloadExcel,
     CanUsePermission.downloadWord,
+    CanUsePermission.viewMasters,
   ],
   [Role.visualizer]: [
     CanUsePermission.downloadExcel,
@@ -34,7 +41,7 @@ const rolePermissions = {
   [Role.executor]: [CanUsePermission.downloadExcel],
 };
 
-export const canUse = (userRole: string, action: string) => {
+export const canUse = (userRole: string, action: string): boolean => {
   const permissions = rolePermissions[userRole] || [];
 
   return permissions.includes(action);

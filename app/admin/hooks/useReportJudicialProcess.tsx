@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { ReactNode, useCallback } from "react";
+import { ReactNode, useCallback, useState } from "react";
 
 import {
   GetContingenciesReportDto,
@@ -11,6 +11,7 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GlobalFilter } from "@/lib/types/filter.type";
 import { ChartData } from "@/app/admin/types/ChartDataType";
+import { GetExchangeDto } from "@/app/dto/report/get-exchange.dto";
 
 interface UseReportJudicialProcessProps {
   data: GetInitReportDto;
@@ -19,6 +20,10 @@ interface UseReportJudicialProcessProps {
   studioChartData: ChartData[];
   matterChartData: ChartData[];
   instanceChartData: ChartData[];
+  handleExchange: () => void;
+  exchange: GetExchangeDto;
+  calculateTotal: (shouldBeDollar: boolean, amount: number) => string | number;
+  isDollar: boolean;
   renderBarChartCell: (
     item: GetMasterOptionReportDto,
     columnKey: string | number,
@@ -47,6 +52,13 @@ const useReportJudicialProcess = (
 ): UseReportJudicialProcessProps => {
   const { data } = useSWR<GetInitReportDto>(
     `${environment.baseUrl}/report/init${filter.queryReport ?? ""}`,
+    fetcher,
+  );
+
+  const [isDollar, setIsDollar] = useState<boolean>(false);
+
+  const { data: exchange } = useSWR<GetExchangeDto>(
+    `${environment.baseUrl}/exchange`,
     fetcher,
   );
 
@@ -88,7 +100,7 @@ const useReportJudicialProcess = (
           return <p>{report._count.judicialStudios}</p>;
 
         case "percent":
-          return <p>{percent.toFixed(2)} %</p>;
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
 
         default:
           return cellValue;
@@ -125,7 +137,7 @@ const useReportJudicialProcess = (
           );
 
         case "percent":
-          return <p>{percent.toFixed(2)} %</p>;
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
 
         default:
           return cellValue;
@@ -149,7 +161,7 @@ const useReportJudicialProcess = (
           return <p>{contingency.count}</p>;
 
         case "percent":
-          return <p>{percent.toFixed(2)} %</p>;
+          return <p>{percent} %</p>;
 
         default:
           return cellValue;
@@ -173,7 +185,7 @@ const useReportJudicialProcess = (
           return <p>{contingency._count.group}</p>;
 
         case "percent":
-          return <p>{percent.toFixed(2)} %</p>;
+          return <p>{percent} %</p>;
 
         default:
           return cellValue;
@@ -208,11 +220,7 @@ const useReportJudicialProcess = (
           return <p>{report.count}</p>;
 
         case "percent":
-          return (
-            <p>
-              {!isNaN(percent) ? percent.toFixed(2) : Number(0).toFixed(2)} %
-            </p>
-          );
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
 
         default:
           return cellValue;
@@ -221,8 +229,26 @@ const useReportJudicialProcess = (
     [totalInstances],
   );
 
+  const handleExchange = () => {
+    setIsDollar(!isDollar);
+  };
+
+  const calculateTotal = (shouldBeDollar: boolean, amount: number) => {
+    if (shouldBeDollar) {
+      const conversion = amount / exchange?.value;
+
+      return Number(conversion).toFixed(2);
+    }
+
+    return amount;
+  };
+
   return {
     data,
+    exchange,
+    handleExchange,
+    calculateTotal,
+    isDollar,
     studioChartData,
     studioYAxisData,
     matterChartData,
