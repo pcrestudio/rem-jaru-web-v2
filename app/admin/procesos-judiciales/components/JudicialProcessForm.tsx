@@ -23,6 +23,8 @@ import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 import PlaintiffAutocomplete from "@/components/autocompletes/PlaintiffAutocomplete";
 import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -42,6 +44,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
     fetcher,
   );
   const router = useRouter();
+  const { user } = useStore();
 
   return (
     <ReactiveForm
@@ -262,7 +265,9 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           <div className="col-span-12 flex flex-row gap-4">
             <Button
               className="standard-btn bg-red-500 text-white w-fit"
-              disabled={!isValid}
+              isDisabled={
+                !isValid || !canUse(user.role, CanUsePermission.editItem)
+              }
               type="submit"
             >
               {judicialProcess && judicialProcess.entityReference
@@ -273,6 +278,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             {judicialProcess && judicialProcess?.entityReference && (
               <Button
                 className="word-btn bg-red-500 text-white w-fit"
+                isDisabled={!canUse(user.role, CanUsePermission.editItem)}
                 type="button"
                 onPress={handleStepSubmit}
               >

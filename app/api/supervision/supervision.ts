@@ -3,6 +3,7 @@ import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import api from "@/config/axios.config";
 import { CreateSupervisionDto } from "@/app/dto/supervision/create-supervision.dto";
 import { EditSupervisionDto } from "@/app/dto/supervision/edit-supervision.dto";
+import { ToggleJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/toggle-judicial-process.dto";
 
 const apiUrl: string = `${environment.baseUrl}/supervisions`;
 
@@ -51,4 +52,8 @@ export async function exportSupervisionWord() {
 
 export async function exportSupervisionExcel() {
   return api.get(`${apiUrl}/export/excel`, { responseType: "blob" });
+}
+
+export async function toggleSupervision(supervision: ToggleJudicialProcessDto) {
+  return api.patch(`${apiUrl}/toggle`, supervision);
 }

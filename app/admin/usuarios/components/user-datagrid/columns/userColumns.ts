@@ -8,12 +8,12 @@ export const userColumns = [
     label: "Correo electrónico",
   },
   {
-    key: "role",
-    label: "Rol",
+    key: "isLocked",
+    label: "Sesión bloqueada",
   },
   {
-    key: "isActive",
-    label: "Activo",
+    key: "role",
+    label: "Rol",
   },
   { key: "actions", label: "Opciones" },
 ];

@@ -15,6 +15,8 @@ import SettingsSectionModal from "@/app/admin/ajustes/maestros/components/settin
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
 import { createSettingSection } from "@/app/api/attribute-values/atrribute-values";
 import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 
 export default function Personalizar() {
   const pathname = usePathname();
@@ -44,6 +46,7 @@ export default function Personalizar() {
       toast.error("Sucedió algo");
     }
   };
+  const { user } = useStore();
 
   return (
     <>
@@ -71,7 +74,10 @@ export default function Personalizar() {
           <Button
             className="standard-btn w-auto text-white"
             endContent={<AiOutlinePlus />}
-            onClick={() => setIsOpen(true)}
+            isDisabled={
+              !canUse(user.role, CanUsePermission.addExtendedAttributes)
+            }
+            onPress={() => setIsOpen(true)}
           >
             Agregar sección
           </Button>

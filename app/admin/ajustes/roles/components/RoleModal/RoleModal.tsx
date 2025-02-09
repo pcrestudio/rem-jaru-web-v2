@@ -44,7 +44,7 @@ const RoleModal: FC<RoleModalProps> = ({
           />
 
           <ReactiveTextArea
-            className="col-span-12"
+            className="col-span-12 nextui-textarea-nomodal"
             control={control}
             errors={errors}
             isRequired={true}

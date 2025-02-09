@@ -76,8 +76,8 @@ const ReactiveNumericField: FC<ReactiveFieldProps> = ({
               }}
               endContent={endContent}
               errorMessage={errorMessage}
-              isReadOnly={readOnly}
               isInvalid={!!errors[name] && touched}
+              isReadOnly={readOnly}
               isRequired={isRequired}
               label={label}
               max={max}

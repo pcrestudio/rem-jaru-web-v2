@@ -12,6 +12,8 @@ import { DataType } from "@/app/dto/attribute-values/get-section-attributes.dto"
 import format_date from "@/utils/format_date";
 import { DataGridKey } from "@/config/datagrid-key.config";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
+import { ModelType } from "@/config/model-type.config";
+import capitalizeFirstLetter from "@/utils/capitalize";
 
 interface UseCommonDossierProps {
   renderCell: (
@@ -24,6 +26,7 @@ interface UseCommonDossierParams {
   toggleSelectedItem?: (
     dossier: GetJudicialProcessDto | GetSupervisionDto,
   ) => void;
+  modelType?: string;
 }
 
 const useCommonDossier = (
@@ -35,18 +38,25 @@ const useCommonDossier = (
     dossier: GetJudicialProcessDto | GetSupervisionDto,
     slug: string,
   ) => {
+    const slugConversion =
+      params?.modelType === ModelType.Supervision
+        ? `${params?.modelType.toLowerCase()}${capitalizeFirstLetter(slug)}`
+        : slug;
+
     const data: GetSectionAttributesValuesDto =
-      dossier.sectionAttributeValues.find((v) => v.attribute.slug === slug);
+      dossier.sectionAttributeValues.find(
+        (v) => v.attribute.slug === slugConversion,
+      );
 
     if (!data) {
-      return "Sin rellenar.";
+      return "N/A.";
     }
 
     if (data?.attribute.dataType === DataType.DATE) {
       return format_date(new Date(data?.value));
     }
 
-    if (data?.attribute.dataType === DataType.LIST) {
+    if (data && data.attribute.dataType === DataType.LIST) {
       const convertedValue = data?.value.includes(", ")
         ? data?.value.split(", ")
         : data?.value;
@@ -68,7 +78,11 @@ const useCommonDossier = (
         (v) => v.optionValue === data?.value,
       );
 
-      return option.optionLabel;
+      if (option) {
+        return option.optionLabel;
+      }
+
+      return "N/A.";
     }
 
     return data?.value;
@@ -111,7 +125,7 @@ const useCommonDossier = (
                   <EditIcon />
                 </span>
               </Tooltip>
-              <Tooltip color="danger" content="Desactivar expediente">
+              <Tooltip color="danger" content="Eliminar expediente">
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50 action-button"
                   role="presentation"

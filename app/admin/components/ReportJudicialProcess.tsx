@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import { PiHandCoins } from "react-icons/pi";
 import { RiAuctionLine } from "react-icons/ri";
+import { Switch } from "@heroui/switch";
+import { Chip } from "@heroui/chip";
 
 import { GlobalFilter } from "@/lib/types/filter.type";
 import useReportJudicialProcess from "@/app/admin/hooks/useReportJudicialProcess";
@@ -19,8 +21,6 @@ import judicialProcessContingenciesColumns from "@/app/admin/components/ReportCh
 import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
 import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
 import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessInstanceHorizontalBarColumns";
-import { Switch } from "@heroui/switch";
-import { Chip } from "@heroui/chip";
 import { convertFormatDistanceToNow } from "@/utils/format_date";
 
 interface ReportJudicialProcess {

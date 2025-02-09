@@ -8,6 +8,8 @@ import format from "@/utils/format_date";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import MasterModal from "@/app/admin/ajustes/maestros/components/master-modal/MasterModal";
 import useMasterSettingHook from "@/app/admin/ajustes/maestros/hooks/useMasterSettingHook";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 
 export default function Maestros() {
   const {
@@ -20,6 +22,7 @@ export default function Maestros() {
     isSettingSection,
     pathname,
   } = useMasterSettingHook();
+  const { user } = useStore();
 
   return (
     <>
@@ -48,7 +51,8 @@ export default function Maestros() {
           <Button
             className="standard-btn w-auto text-white"
             endContent={<AiOutlinePlus />}
-            onClick={handleOpenSettingSectionModal}
+            isDisabled={!canUse(user.role, CanUsePermission.addSectionMaster)}
+            onPress={handleOpenSettingSectionModal}
           >
             Agregar sección
           </Button>
@@ -96,7 +100,10 @@ export default function Maestros() {
                       <Button
                         className="standard-btn w-auto text-white"
                         endContent={<AiOutlinePlus />}
-                        onClick={() =>
+                        isDisabled={
+                          !canUse(user.role, CanUsePermission.addMaster)
+                        }
+                        onPress={() =>
                           handleMasterModalChange(masters, moduleName)
                         }
                       >

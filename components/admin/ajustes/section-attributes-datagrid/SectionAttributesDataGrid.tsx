@@ -8,10 +8,10 @@ import {
   TableCell,
   Tooltip,
 } from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import { EditIcon } from "@heroui/shared-icons";
 import { Chip } from "@heroui/chip";
 import { Button } from "@mui/material";
-import { AiOutlinePlus, AiOutlineSisternode } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import { SettingsIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -21,6 +21,8 @@ import {
   RowLayout,
 } from "@/app/dto/attribute-values/get-section-attributes.dto";
 import { sectionAttributesOptionColumns } from "@/components/admin/ajustes/section-attributes-datagrid/columns/section-attribute.columns";
+import useStore from "@/lib/store";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 
 export interface SectionAttributesDataGridProps {
   attributes: GetSectionAttributesDto[];
@@ -118,6 +120,8 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const { user } = useStore();
+  const canAdd = !canUse(user.role, CanUsePermission.addExtendedAttributes);
 
   const renderCell = useCallback(
     (item: GetSectionAttributesDto, columnKey: string | number) => {
@@ -127,47 +131,27 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
-              {item.dataType === DataType.LIST && (
-                <Tooltip content={"Configurar opciones"}>
+              {item.dataType === DataType.LIST &&
+                canUse(
+                  user.role,
+                  CanUsePermission.editExtendedAttributesOptions,
+                ) && (
+                  <Tooltip content={"Configurar opciones"}>
+                    <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                      <SettingsIcon
+                        size={18}
+                        onClick={() => selectedConfigureOption(item)}
+                      />
+                    </span>
+                  </Tooltip>
+                )}
+              {canUse(user.role, CanUsePermission.editExtendedAttributes) && (
+                <Tooltip content="Editar atributo">
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                    <SettingsIcon
-                      size={18}
-                      onClick={() => selectedConfigureOption(item)}
-                    />
+                    <EditIcon onClick={() => selectedAttribute(item)} />
                   </span>
                 </Tooltip>
               )}
-              <Tooltip content="Editar atributo">
-                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                  <EditIcon onClick={() => selectedAttribute(item)} />
-                </span>
-              </Tooltip>
-              {(item.dataType === DataType.INTEGER ||
-                item.dataType === DataType.TEXT ||
-                item.dataType === DataType.FLOAT) && (
-                <Tooltip content={"Configurar reglas y condiciones"}>
-                  <span
-                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                    role="presentation"
-                    onClick={() =>
-                      router.push(
-                        `${pathname}/reglas/${item.sectionAttributeId}?name=${item.label}&moduleId=${item.moduleId}`,
-                        {},
-                      )
-                    }
-                  >
-                    <AiOutlineSisternode size={18} />
-                  </span>
-                </Tooltip>
-              )}
-              <Tooltip
-                color="danger"
-                content={item.isActive ? "Desactivar opción" : "Activar opción"}
-              >
-                <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <DeleteIcon />
-                </span>
-              </Tooltip>
             </div>
           );
 
@@ -212,6 +196,7 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
               <div className="flex flex-row justify-end border border-b-0 border-l-0 border-r-0 border-t-gray-200 p-3">
                 <Button
                   className="text-cerulean-500 text-sm flex flex-row items-center !normal-case"
+                  disabled={canAdd}
                   endIcon={<AiOutlinePlus size={16} />}
                   onClick={onSectionAttributeModalOpenChange}
                 >
@@ -248,3 +233,24 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
 };
 
 export default SectionAttributesDataGrid;
+
+/*
+* {(item.dataType === DataType.INTEGER ||
+                item.dataType === DataType.TEXT ||
+                item.dataType === DataType.FLOAT) && (
+                <Tooltip content={"Configurar reglas y condiciones"}>
+                  <span
+                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    role="presentation"
+                    onClick={() =>
+                      router.push(
+                        `${pathname}/reglas/${item.sectionAttributeId}?name=${item.label}&moduleId=${item.moduleId}`,
+                        {},
+                      )
+                    }
+                  >
+                    <AiOutlineSisternode size={18} />
+                  </span>
+                </Tooltip>
+              )}
+* */

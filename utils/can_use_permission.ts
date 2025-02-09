@@ -10,7 +10,13 @@ export enum CanUsePermission {
   downloadWord = "downloadWord",
   viewMasters = "viewMasters",
   viewExtendedAttributes = "viewExtendedAttributes",
-  viewRoles = "viewExtendedAttributes",
+  addExtendedAttributes = "addExtendedAttributes",
+  editExtendedAttributes = "editExtendedAttributes",
+  addSectionExtendedAttributes = "addSectionExtendedAttributes",
+  editExtendedAttributesOptions = "editExtendedAttributesOptions",
+  addSectionMaster = "addSectionMaster",
+  addMaster = "addMaster",
+  viewRoles = "viewRoles",
 }
 
 const rolePermissions = {
@@ -25,12 +31,21 @@ const rolePermissions = {
     CanUsePermission.viewMasters,
     CanUsePermission.viewExtendedAttributes,
     CanUsePermission.viewRoles,
+    CanUsePermission.addSectionExtendedAttributes,
+    CanUsePermission.addExtendedAttributes,
+    CanUsePermission.editExtendedAttributes,
+    CanUsePermission.editExtendedAttributesOptions,
+    CanUsePermission.addMaster,
+    CanUsePermission.addSectionMaster,
   ],
   [Role.admin]: [
     CanUsePermission.viewDashboard,
     CanUsePermission.downloadExcel,
     CanUsePermission.downloadWord,
+    CanUsePermission.editTodo,
     CanUsePermission.viewMasters,
+    CanUsePermission.viewExtendedAttributes,
+    CanUsePermission.editExtendedAttributesOptions,
   ],
   [Role.visualizer]: [
     CanUsePermission.downloadExcel,
@@ -38,7 +53,7 @@ const rolePermissions = {
     CanUsePermission.addTodo,
     CanUsePermission.editTodo,
   ],
-  [Role.executor]: [CanUsePermission.downloadExcel],
+  [Role.executor]: [CanUsePermission.downloadExcel, CanUsePermission.editTodo],
 };
 
 export const canUse = (userRole: string, action: string): boolean => {

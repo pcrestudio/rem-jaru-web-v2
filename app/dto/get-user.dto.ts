@@ -1,11 +1,12 @@
 import { GetRoleDto } from "@/app/dto/role/get-role.dto";
 
 export interface GetUserDto {
-  firstName: string;
-  lastName: string;
-  email: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
   password?: string;
   authMethod?: string;
+  isLocked?: boolean;
   displayName?: string;
   createdAt?: Date;
   updatedAt?: Date;

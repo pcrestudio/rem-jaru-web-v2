@@ -6,6 +6,7 @@ import { GetTodosInstanceDto } from "@/app/dto/todos/get-todos-instance.dto";
 import { FilterType } from "@/lib/types/filter.type";
 import { IUser } from "@/app/admin/usuarios/interfaces";
 import { GetInstanceIncidenceDataDto } from "@/app/dto/instance/get-instance-incidence-data.dto";
+import format_date from "@/utils/format_date";
 
 interface AppState {
   stepData: Record<number, Partial<GetStepDataDto>>;
@@ -91,12 +92,15 @@ const useStore = create<AppState>((set) => ({
         (item) => item.title === title,
       );
 
+      const dateData: any = data.dateExpiration;
+
       if (existingIndex !== -1) {
         const updatedArray = [...state.stepTodos];
 
         updatedArray[existingIndex] = {
           ...updatedArray[existingIndex],
           ...data,
+          dateExpiration: format_date(dateData.toDate()),
         };
 
         return { stepTodos: updatedArray };
@@ -104,7 +108,12 @@ const useStore = create<AppState>((set) => ({
         return {
           stepTodos: [
             ...state.stepTodos,
-            { stepDataId, entityStepReference, ...data },
+            {
+              stepDataId,
+              entityStepReference,
+              ...data,
+              dateExpiration: format_date(dateData.toDate()),
+            },
           ],
         };
       }

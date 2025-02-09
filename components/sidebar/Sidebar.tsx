@@ -81,6 +81,9 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                 <Listbox
                   aria-label="Actions"
                   className="[&_ul]:gap-3"
+                  classNames={{
+                    emptyContent: `${isCollapsed ? "text-center text-xs" : ""}`,
+                  }}
                   emptyContent="Sin opciones."
                 >
                   {options.map(

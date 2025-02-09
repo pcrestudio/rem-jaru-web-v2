@@ -57,7 +57,7 @@ const TodoDataGrid = () => {
         cells={renderCell}
         columns={todoColumns}
         dataGridKey="id"
-        emptyContent="Sin tareas por completar."
+        emptyContent="Sin tareas asignadas."
         endpointUrl="todos?"
         onAddChange={handleAddChange}
       />

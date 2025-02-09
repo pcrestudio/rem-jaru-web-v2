@@ -66,7 +66,7 @@ export const menuOptions: MenuOptions[] = [
   {
     title: "To-Dos",
     redirectTo: "/admin/todos",
-    role: [...onlyAdmins, Role.visualizer],
+    role: [...onlyAdmins, Role.visualizer, Role.executor],
     Icon: (props) => <AiOutlineReconciliation {...props} />,
     group: group.general,
   },

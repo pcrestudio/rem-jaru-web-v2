@@ -44,10 +44,10 @@ export default function ProcesoJudicialSlug() {
       <BreadcrumbsPath pathname={pathname} />
       <ConfirmModal
         description={{
-          __html: `Estás seguro de realizar esta acción, este expediente no será eliminado y tampoco podrá utilizarse como medio de extracción para la plataforma <b>CEJ</b>.`,
+          __html: `Estás seguro de realizar esta acción, este expediente será eliminado de la plataforma y no será parte de la extracción de datos en la plataforma <b>CEJ</b>. Para recuperarlo debes contactarte con soporte.`,
         }}
         isOpen={confirm}
-        title={`${judicialProcess ? `¿Deseas ${judicialProcess.isActive ? "desactivar" : "activar"} el expediente?` : ""}`}
+        title={`¿Deseas eliminar el expediente?`}
         onClose={handleConfirmModalClose}
         onConfirm={toggleJudicialProcessHelper}
       />

@@ -3,6 +3,7 @@
 import React, { FC, useCallback, useState } from "react";
 import { Tooltip } from "@heroui/react";
 import { EditIcon } from "@heroui/shared-icons";
+import { AiOutlineUnlock } from "react-icons/ai";
 import { Chip } from "@heroui/chip";
 import toast from "react-hot-toast";
 
@@ -12,12 +13,14 @@ import { userColumns } from "@/app/admin/usuarios/components/user-datagrid/colum
 import { mappingRole } from "@/config/mapping_role";
 import UserModal from "@/app/admin/usuarios/components/UserModal";
 import { UpsertUserDto } from "@/app/dto/user/user-register.dto";
-import { upsertUser } from "@/app/api/user/user";
+import { togglerUser, upsertUser } from "@/app/api/user/user";
+import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 
 interface UserDataGridProps {}
 
 const UserDataGrid: FC<UserDataGridProps> = () => {
   const [user, setUser] = useState<GetUserDto>(null);
+  const [confirm, setConfirm] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const selectUser = (user: GetUserDto) => {
@@ -26,48 +29,6 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
     setUser({ ...user, roleId: roleId ?? null });
     setOpen(true);
   };
-
-  const renderCell = useCallback(
-    (item: GetUserDto, columnKey: string | number) => {
-      const cellValue = item[columnKey];
-
-      switch (columnKey) {
-        case "fullName":
-          return `${item.firstName} ${item.lastName}`;
-
-        case "role":
-          return item.UserRole.length > 0
-            ? mappingRole[item.UserRole[0]?.role.name]
-            : "Sin rol";
-
-        case "isActive":
-          return (
-            <Chip className={cellValue ? "bg-green-100 text-green-900" : ""}>
-              {cellValue ? "Activo" : "Inactivo"}
-            </Chip>
-          );
-
-        case "actions":
-          return (
-            <div className="relative flex items-center gap-2">
-              <Tooltip content="Editar usuario">
-                <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                  role="presentation"
-                  onClick={() => selectUser(item)}
-                >
-                  <EditIcon />
-                </span>
-              </Tooltip>
-            </div>
-          );
-
-        default:
-          return cellValue;
-      }
-    },
-    [],
-  );
 
   const handleClose = () => {
     setOpen(false);
@@ -84,6 +45,83 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
     }
   };
 
+  const toggleSelectedItem = (user: GetUserDto) => {
+    setUser(user);
+    setConfirm(true);
+  };
+
+  const toggleUserHelper = async () => {
+    const { data } = await togglerUser({
+      id: user.id,
+    });
+
+    if (data) {
+      toast.success("La sesión del usuario fue desbloqueado.");
+      setConfirm(false);
+    }
+  };
+
+  const handleConfirmModalClose = () => {
+    setUser(null);
+    setConfirm(false);
+  };
+
+  const renderCell = useCallback(
+    (item: GetUserDto, columnKey: string | number) => {
+      const cellValue = item[columnKey];
+
+      switch (columnKey) {
+        case "fullName":
+          return `${item.firstName} ${item.lastName}`;
+
+        case "role":
+          return item.UserRole.length > 0
+            ? mappingRole[item.UserRole[0]?.role.name]
+            : "Sin rol";
+
+        case "isLocked":
+          return (
+            <Chip
+              className={`${cellValue ? "bg-danger" : "bg-primary"} text-white text-xs`}
+            >
+              {cellValue ? "Bloqueado" : "No bloqueado"}
+            </Chip>
+          );
+
+        case "actions":
+          return (
+            <div className="relative flex items-center gap-2">
+              <Tooltip content="Editar usuario">
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  role="presentation"
+                  onClick={() => selectUser(item)}
+                >
+                  <EditIcon />
+                </span>
+              </Tooltip>
+
+              {item?.isLocked && (
+                <Tooltip content="Desbloquear sesión">
+                  <span
+                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    role="presentation"
+                    onClick={() => toggleSelectedItem(item)}
+                  >
+                    <AiOutlineUnlock />
+                  </span>
+                </Tooltip>
+              )}
+            </div>
+          );
+
+        default:
+          return cellValue;
+      }
+    },
+    [],
+  );
+
   return (
     <>
       <UserModal
@@ -92,6 +130,16 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
         title={user ? "Editar usuario" : "Nuevo usuario"}
         user={user}
         onCloseChange={handleClose}
+      />
+
+      <ConfirmModal
+        description={{
+          __html: `Por motivos de seguridad bloqueamos la sesión de un usuario que intentó muchas veces ingresar de manera incorrecta, asegúrate que sea un usuario registrado previamente.`,
+        }}
+        isOpen={confirm}
+        title={`¿Deseas desbloquear una sesión de usuario?`}
+        onClose={handleConfirmModalClose}
+        onConfirm={toggleUserHelper}
       />
 
       <CustomDataGrid<GetUserDto>

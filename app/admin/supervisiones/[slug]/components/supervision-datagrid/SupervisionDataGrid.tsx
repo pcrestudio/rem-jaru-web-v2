@@ -13,19 +13,27 @@ import useStore from "@/lib/store";
 import exportableExcel from "@/utils/exportable_excel";
 import { exportSupervisionExcel } from "@/app/api/supervision/supervision";
 import useCommonDossier from "@/app/admin/hooks/useCommonDossier";
+import { ModelType } from "@/config/model-type.config";
 
-interface SupervisionDataGrid {
+interface SupervisionDataGridProps {
+  toggleSelectedItem: (judicialProcess: GetSupervisionDto) => void;
   slug?: string;
 }
 
-const SupervisionDataGrid: FC<SupervisionDataGrid> = ({ slug }) => {
+const SupervisionDataGrid: FC<SupervisionDataGridProps> = ({
+  slug,
+  toggleSelectedItem,
+}) => {
   const router = useRouter();
   const { data } = useSWR<GetSupervisionDto[]>(
     `${environment.baseUrl}/supervisions?slug=${mappingRevertSubmodules[slug]}`,
     fetcher,
   );
   const { user } = useStore();
-  const { renderCell } = useCommonDossier();
+  const { renderCell } = useCommonDossier({
+    toggleSelectedItem,
+    modelType: ModelType.Supervision,
+  });
 
   const handleEditSupervision = (key: Key) => {
     const currentPath = window.location.pathname;

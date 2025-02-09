@@ -1,4 +1,5 @@
 export const todoColumns = [
+  { key: "actions", label: "Opciones" },
   {
     key: "fileCode",
     label: "Código de expediente",
@@ -39,5 +40,4 @@ export const todoColumns = [
     key: "check",
     label: "Completado",
   },
-  { key: "actions", label: "Opciones" },
 ];

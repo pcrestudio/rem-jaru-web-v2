@@ -1,7 +1,8 @@
-import React, { FC, Fragment, useCallback, useEffect } from "react";
+import React, { FC, Fragment } from "react";
 import { useFieldArray } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
+import { Accordion, AccordionItem, Divider } from "@heroui/react";
 
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
@@ -11,7 +12,6 @@ import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.con
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import debounce from "@/utils/custom_debounce";
 import { ContingencyLevelConfig } from "@/config/contingency-level.config";
-import { Accordion, AccordionItem, Divider } from "@heroui/react";
 
 const Reclaims: FC<ModularProps> = ({
   control,
@@ -134,7 +134,7 @@ const Reclaims: FC<ModularProps> = ({
       <AccordionItem title="Petitorios">
         <div className="col-span-12 flex flex-col gap-4">
           <div className="flex flex-row justify-between items-center">
-            <p></p>
+            <p />
             <Button
               className="standard-btn w-auto text-white"
               startContent={<AiOutlinePlus />}
@@ -228,11 +228,11 @@ const Reclaims: FC<ModularProps> = ({
               </Fragment>
             ))}
 
-            <p className="col-span-2"></p>
+            <p className="col-span-2" />
 
-            <Divider className="col-span-10"></Divider>
+            <Divider className="col-span-10" />
 
-            <p className="col-span-2"></p>
+            <p className="col-span-2" />
 
             <p className="col-span-4 border border-slate-200 p-4 rounded-xl text-xs flex items-center">
               <span className="font-bold">

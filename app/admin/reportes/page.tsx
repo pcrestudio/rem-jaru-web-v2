@@ -1,6 +1,5 @@
 "use client";
 
-
 import useStore from "@/lib/store";
 import ReportJudicialProcess from "@/app/admin/components/ReportJudicialProcess";
 
