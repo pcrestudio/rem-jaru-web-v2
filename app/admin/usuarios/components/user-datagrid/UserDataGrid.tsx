@@ -134,10 +134,10 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
 
       <ConfirmModal
         description={{
-          __html: `Por motivos de seguridad bloqueamos la sesión de un usuario que intentó muchas veces ingresar de manera incorrecta, asegúrate que sea un usuario registrado previamente.`,
+          __html: `Por razones de seguridad, hemos bloqueado la sesión de este usuario debido a múltiples intentos fallidos de inicio de sesión.`,
         }}
         isOpen={confirm}
-        title={`¿Deseas desbloquear una sesión de usuario?`}
+        title={`¿Deseas desbloquear el inicio de sesión de este usuario?`}
         onClose={handleConfirmModalClose}
         onConfirm={toggleUserHelper}
       />
