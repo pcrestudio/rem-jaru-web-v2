@@ -41,6 +41,11 @@ const ProvisionCheck: FC<ModularProps> = ({
     const percentage = (provisionAmount / amount) * 100;
 
     setValue(
+      `${ExtendedAttributeConfig.provisionAmount}`,
+      Number(provisionAmount).toFixed(2),
+    );
+
+    setValue(
       ExtendedAttributeConfig.provisionContingency,
       Math.round(percentage),
     );

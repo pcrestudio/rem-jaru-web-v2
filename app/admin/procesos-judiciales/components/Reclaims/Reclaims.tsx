@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useEffect } from "react";
 import { useFieldArray } from "react-hook-form";
 import { Button } from "@heroui/button";
 import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
@@ -39,11 +39,6 @@ const Reclaims: FC<ModularProps> = ({
     const provisionAmount = values?.reduce(
       (sum, item) => Number(item.provisionAmount) + sum,
       0,
-    );
-
-    setValue(
-      `${ExtendedAttributeConfig.provisionAmount}`,
-      Number(provisionAmount).toFixed(2),
     );
 
     return Number(provisionAmount).toFixed(2);
