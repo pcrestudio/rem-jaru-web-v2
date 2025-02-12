@@ -24,9 +24,7 @@ const exportableWord = async (response, entityReference: string) => {
 
     link.parentNode.removeChild(link);
     window.URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error("Error al descargar el archivo:", error);
-  }
+  } catch (error) {}
 };
 
 export default exportableWord;

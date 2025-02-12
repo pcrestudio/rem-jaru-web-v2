@@ -42,8 +42,7 @@ const ResumeDateForm: FC<ResumeDateFormProps> = ({
   });
   const inputRef = useRef<HTMLInputElement | null>(null);
   const datePickerRef = useRef<HTMLInputElement | null>(null);
-  const [parsedDateResume, setParsedDateResume] =
-    useState<ZonedDateTime | null>(null);
+  const [_, setParsedDateResume] = useState<ZonedDateTime | null>(null);
   const { updateStepDataArray } = useStore();
 
   const handleClick = () => {

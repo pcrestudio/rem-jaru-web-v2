@@ -13,7 +13,6 @@ import { Chip } from "@heroui/chip";
 import { Button } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
 import { SettingsIcon } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
 
 import {
   DataType,
@@ -118,8 +117,6 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
   selectedConfigureOption,
   sectionId,
 }) => {
-  const router = useRouter();
-  const pathname = usePathname();
   const { user } = useStore();
   const canAdd = !canUse(user.role, CanUsePermission.addExtendedAttributes);
 

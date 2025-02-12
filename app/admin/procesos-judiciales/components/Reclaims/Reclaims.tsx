@@ -1,7 +1,7 @@
-import React, { FC, Fragment, useEffect } from "react";
+import React, { FC, Fragment } from "react";
 import { useFieldArray } from "react-hook-form";
 import { Button } from "@heroui/button";
-import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import { Accordion, AccordionItem, Divider } from "@heroui/react";
 
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
@@ -12,6 +12,7 @@ import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.con
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import debounce from "@/utils/custom_debounce";
 import { ContingencyLevelConfig } from "@/config/contingency-level.config";
+import ReactiveField from "@/components/form/ReactiveField";
 
 const Reclaims: FC<ModularProps> = ({
   control,
@@ -20,7 +21,7 @@ const Reclaims: FC<ModularProps> = ({
   setValue,
   watch,
 }) => {
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append } = useFieldArray({
     control,
     name: "reclaims",
   });
@@ -39,6 +40,19 @@ const Reclaims: FC<ModularProps> = ({
     const provisionAmount = values?.reduce(
       (sum, item) => Number(item.provisionAmount) + sum,
       0,
+    );
+    const amount = values?.reduce((sum, item) => Number(item.amount) + sum, 0);
+
+    const percentage = (provisionAmount / amount) * 100;
+
+    setValue(
+      ExtendedAttributeConfig.provisionContingency,
+      Math.round(percentage),
+    );
+
+    setValue(
+      `${ExtendedAttributeConfig.provisionAmount}`,
+      Number(provisionAmount).toFixed(2),
     );
 
     return Number(provisionAmount).toFixed(2);
@@ -142,18 +156,24 @@ const Reclaims: FC<ModularProps> = ({
           <div className="grid grid-cols-12 gap-4">
             {fields.map((field, index) => (
               <Fragment key={field.id}>
-                {index > 0 ? (
-                  <Button
-                    className="bg-transparent col-span-2 flex items-center justify-center"
-                    endContent={<AiOutlineClose />}
-                    onPress={() => remove(index)}
-                  />
-                ) : (
-                  <div className="col-span-2" />
-                )}
+                <ReactiveField
+                  className="col-span-12 lg:col-span-2"
+                  control={control}
+                  errors={errors}
+                  label="Concepto"
+                  labelClassName="text-xs"
+                  name={`reclaims.${index}.concept`}
+                  onChange={(value) =>
+                    debounceChange(
+                      value,
+                      index,
+                      ExtendedAttributeConfig.concept,
+                    )
+                  }
+                />
 
                 <ReactiveNumericField
-                  className="col-span-2"
+                  className="col-span-12 lg:col-span-2"
                   control={control}
                   errors={errors}
                   label="Monto"
@@ -166,7 +186,7 @@ const Reclaims: FC<ModularProps> = ({
                 />
 
                 <ReactiveNumericField
-                  className="col-span-2 placeholder:text-xs text-xs"
+                  className="col-span-12 lg:col-span-2 placeholder:text-xs text-xs"
                   control={control}
                   errors={errors}
                   label="% de contingencia"
@@ -184,7 +204,7 @@ const Reclaims: FC<ModularProps> = ({
 
                 <DynamicAutocomplete
                   disabled
-                  className="col-span-2 nextui-input-nomodal"
+                  className="col-span-12 lg:col-span-2 nextui-input-nomodal"
                   control={control}
                   errors={errors}
                   label="Nv. de contigencia"
@@ -195,7 +215,7 @@ const Reclaims: FC<ModularProps> = ({
                 />
 
                 <ReactiveNumericField
-                  className="col-span-2 placeholder:text-xs text-xs"
+                  className="col-span-12 lg:col-span-2 placeholder:text-xs text-xs"
                   control={control}
                   errors={errors}
                   label="% de provisión"
@@ -212,7 +232,7 @@ const Reclaims: FC<ModularProps> = ({
                 />
 
                 <ReactiveNumericField
-                  className="col-span-2 placeholder:text-xs text-xs"
+                  className="col-span-12 lg:col-span-2 placeholder:text-xs text-xs"
                   control={control}
                   errors={errors}
                   label="Monto provisión"

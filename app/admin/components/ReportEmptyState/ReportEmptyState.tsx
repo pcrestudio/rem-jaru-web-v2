@@ -18,9 +18,9 @@ const ReportEmptyState = () => {
         </p>
       </div>
       <Button
-        className="bg-cerulean-200 text-cerulean-950 font-bold"
+        className="bg-cerulean-950 text-white font-bold"
         color="primary"
-        onClick={handleClearFilter}
+        onPress={handleClearFilter}
       >
         <span>Reintentar</span>
       </Button>

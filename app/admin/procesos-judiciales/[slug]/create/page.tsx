@@ -33,7 +33,6 @@ export default function ProcesosJudicialesSlugCreate() {
     const { data } = await createJudicialProcess(
       {
         ...payload,
-        plaintiff: (payload.plaintiff as unknown as number[]).join(", "),
       },
       slug,
     );

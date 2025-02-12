@@ -58,10 +58,6 @@ export default function ProcesosJudicialesSlugEdit() {
       const { data } = await editJudicialProcess(
         {
           ...payload,
-          plaintiff:
-            typeof payload.plaintiff === "string"
-              ? payload.plaintiff
-              : (payload.plaintiff as unknown as number[]).join(", "),
           id: Number(id),
         },
         slug,

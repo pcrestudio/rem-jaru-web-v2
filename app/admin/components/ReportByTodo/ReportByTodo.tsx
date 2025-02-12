@@ -60,15 +60,17 @@ const ReportByTodo: FC<ReportTabType> = ({ slug }) => {
   );
 
   return (
-    <HorizontalBarChart<GetReportStatesDto>
-      cells={renderBarChartCell}
-      chartData={todoStateChartData}
-      columns={reportByTodoHorizontalBarColumns}
-      dataGridKey="label"
-      items={data?.states}
-      title="N° de ToDo's"
-      yAxisData={todoStateYAxisData}
-    />
+    <div className="order-4">
+      <HorizontalBarChart<GetReportStatesDto>
+        cells={renderBarChartCell}
+        chartData={todoStateChartData}
+        columns={reportByTodoHorizontalBarColumns}
+        dataGridKey="label"
+        items={data?.states}
+        title="N° de ToDo's"
+        yAxisData={todoStateYAxisData}
+      />
+    </div>
   );
 };
 

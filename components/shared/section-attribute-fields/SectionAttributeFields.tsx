@@ -4,7 +4,6 @@ import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { Accordion, AccordionItem, DatePicker } from "@heroui/react";
 import { Input, Textarea } from "@heroui/input";
-import { format } from "date-fns";
 
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -19,7 +18,6 @@ import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 import { ModelType } from "@/config/model-type.config";
-import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
@@ -53,12 +51,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
     fetcher,
   );
 
-  const acceptUpdateLabel: string[] = [
-    ExtendedAttributeConfig.lastSituation,
-    ExtendedAttributeConfig.nextSituation,
-    ExtendedAttributeConfig.lastDate,
-  ];
-
   useEffect(() => {
     if (data) {
       const formValues = {};
@@ -90,14 +82,14 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
   }, [data]);
 
   return (
-    <div className="col-span-12">
+    <div className="col-span-12 grid grid-cols-12 gap-4">
       {data &&
         data.map(
           (section) =>
             section.collapsable && (
               <Accordion
                 key={`${section.label}`}
-                className="mb-4"
+                className={`col-span-12 order-${section.order}`}
                 itemClasses={{
                   title: "text-cerulean-950 font-bold text-lg",
                   base: "pb-4 shadow-none border border-slate-200",
@@ -207,26 +199,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               render={({ field }) => (
                                 <Textarea
                                   {...field}
-                                  description={
-                                    <>
-                                      {String(
-                                        acceptUpdateLabel
-                                          .includes(attribute.slug)
-                                          .valueOf(),
-                                      ) === "true" &&
-                                        attribute.values[0]?.createdAt && (
-                                          <span className="text-xs text-slate-500 font-semibold">
-                                            Actualizado el:{" "}
-                                            {format(
-                                              new Date(
-                                                attribute.values[0]?.createdAt,
-                                              ),
-                                              "MM/dd/yyyy",
-                                            )}
-                                          </span>
-                                        )}
-                                    </>
-                                  }
                                   label={`${attribute.label}`}
                                 />
                               )}

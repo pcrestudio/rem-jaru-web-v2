@@ -1,10 +1,8 @@
 export enum ExtendedAttributeConfig {
   amount = "amount",
-  supervisionAmount = "supervisionAmount",
+  concept = "concept",
   provisionContingency = "provisionContingency",
-  supervisionProvisionContingency = "supervisionProvisionContingency",
   provisionAmount = "provisionAmount",
-  supervisionProvisionAmount = "supervisionProvisionAmount",
   isProvisional = "isProvisional",
   contingencyLevel = "contingencyLevel",
   contingencyPercentage = "contingencyPercentage",

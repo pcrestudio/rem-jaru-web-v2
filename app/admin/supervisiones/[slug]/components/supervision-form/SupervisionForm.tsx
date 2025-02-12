@@ -15,7 +15,6 @@ import GlobalAttributeFields from "@/components/shared/global-attribute-fields/G
 import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
-import PlaintiffAutocomplete from "@/components/autocompletes/PlaintiffAutocomplete";
 import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 
@@ -84,14 +83,14 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             touched={touchedFields.demanded}
           />
 
-          <PlaintiffAutocomplete
-            isRequired
-            multiple
-            className="col-span-6 nextui-input-nomodal"
+          <ReactiveField
+            className="col-span-6"
             control={control}
             errors={errors}
+            isRequired={true}
             label="Demandante"
             name="plaintiff"
+            register={register}
             touched={touchedFields.plaintiff}
           />
 
@@ -126,10 +125,10 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
-            label="Materia controvertida"
+            label="Moneda"
             name="controversialMatter"
             optionValue="name"
-            slug={MasterOptionConfig.materia}
+            slug={MasterOptionConfig.moneda}
           />
 
           <ResponsibleAutocomplete

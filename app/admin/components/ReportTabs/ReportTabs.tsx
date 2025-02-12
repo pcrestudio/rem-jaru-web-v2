@@ -59,9 +59,9 @@ const ReportTabs = () => {
     <div className="flex w-full flex-col">
       <Tabs
         aria-label="Dynamic tabs"
+        color="primary"
         items={data ? data.masterOption : []}
         selectedKey={selected}
-        variant="underlined"
         onSelectionChange={handleSelectionChange}
       >
         {(item) => (

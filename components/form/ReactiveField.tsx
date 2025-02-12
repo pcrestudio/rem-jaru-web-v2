@@ -1,8 +1,9 @@
-import { FC, ReactNode } from "react";
+import { ChangeEvent, FC, InputHTMLAttributes, ReactNode } from "react";
 import { Input } from "@heroui/input";
 import { Control, Controller } from "react-hook-form";
 
-export interface ReactiveFieldProps {
+export interface ReactiveFieldProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   name?: string;
   label?: string;
   defaultValue?: string | number | any;
@@ -17,6 +18,7 @@ export interface ReactiveFieldProps {
   control?: Control<any>;
   disabled?: boolean;
   onBlur?: (value: any) => void;
+  onChange?: (value: any) => void;
   noModal?: boolean;
   endContent?: ReactNode;
   multiple?: boolean;
@@ -33,6 +35,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   className,
   control,
   onBlur,
+  onChange,
   endContent,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
@@ -49,6 +52,16 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               onBlur(field.value);
             }
             field.onBlur();
+          };
+
+          const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+            const value = e.target.value;
+
+            field.onChange(value);
+
+            if (onChange) {
+              onChange(value);
+            }
           };
 
           return (
@@ -68,7 +81,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               type={type}
               value={field.value || ""}
               onBlur={handleBlur}
-              onChange={(e) => field.onChange(e.target.value)}
+              onChange={handleChange}
             />
           );
         }}

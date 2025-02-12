@@ -51,8 +51,6 @@ const PreliminarForm: FC<PreeliminarFormProps> = ({
   const fileTwoRef = useRef<HTMLInputElement | null>(null);
   const fileThreeRef = useRef<HTMLInputElement | null>(null);
   const datePickerRef = useRef<HTMLInputElement | null>(null);
-  const [parsedDateResume, setParsedDateResume] =
-    useState<ZonedDateTime | null>(null);
   const { updateStepDataArray } = useStore();
   const { updateStepData } = useStore();
 

@@ -20,7 +20,6 @@ import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutoc
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import { ModelType } from "@/config/model-type.config";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
-import PlaintiffAutocomplete from "@/components/autocompletes/PlaintiffAutocomplete";
 import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
@@ -96,14 +95,14 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             touched={touchedFields.demanded}
           />
 
-          <PlaintiffAutocomplete
-            isRequired
-            multiple
-            className="col-span-6 nextui-input-nomodal"
+          <ReactiveField
+            className="col-span-6"
             control={control}
             errors={errors}
+            isRequired={true}
             label="Demandante"
             name="plaintiff"
+            register={register}
             touched={touchedFields.plaintiff}
           />
 
@@ -138,10 +137,10 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
-            label="Materia controvertida"
+            label="Moneda"
             name="controversialMatter"
             optionValue="name"
-            slug={MasterOptionConfig.materia}
+            slug={MasterOptionConfig.moneda}
           />
 
           <ResponsibleAutocomplete
@@ -201,6 +200,16 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 reset={reset}
               />
 
+              <SectionAttributeFields
+                control={control}
+                entityReference={judicialProcess?.entityReference}
+                getValues={getValues}
+                modelType={ModelType.JudicialProcess}
+                pathname={pathname}
+                register={register}
+                reset={reset}
+              />
+
               <Reclaims
                 control={control}
                 errors={errors}
@@ -210,16 +219,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 register={register}
                 setValue={setValue}
                 watch={watch}
-              />
-
-              <SectionAttributeFields
-                control={control}
-                entityReference={judicialProcess?.entityReference}
-                getValues={getValues}
-                modelType={ModelType.JudicialProcess}
-                pathname={pathname}
-                register={register}
-                reset={reset}
               />
 
               <div className="col-span-12">

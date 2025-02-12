@@ -30,14 +30,6 @@ const GenericForm: FC<GenericFormProps> = ({
     inputRef.current?.click();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    onChange(step.id, name, value);
-    updateStepData(step.id, { [name]: value });
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
 

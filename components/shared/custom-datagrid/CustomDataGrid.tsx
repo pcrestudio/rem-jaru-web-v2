@@ -55,6 +55,7 @@ const CustomDataGrid = <T extends object>({
     totalPages,
     total,
     onRowsPerPageChange,
+    headerColumns,
   } = useCustomDataGrid<T>({
     endpointUrl,
     hasAddButton,
@@ -64,11 +65,13 @@ const CustomDataGrid = <T extends object>({
     onExportableExcel,
     canUse,
     canUseExportable,
+    columns,
   });
 
   return (
     <div className="max-w-full">
       <Table
+        isHeaderSticky
         aria-labelledby={addButtonText}
         bottomContent={
           <div className="flex w-full justify-between">
@@ -109,7 +112,7 @@ const CustomDataGrid = <T extends object>({
         topContent={topContent}
         topContentPlacement="outside"
       >
-        <TableHeader columns={columns}>
+        <TableHeader columns={headerColumns}>
           {(column) => (
             <TableColumn
               key={column["key"]}

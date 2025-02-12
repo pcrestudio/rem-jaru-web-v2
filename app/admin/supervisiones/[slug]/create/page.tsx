@@ -31,7 +31,6 @@ export default function SupervisionesSlugCreate() {
     const { data } = await createSupervision(
       {
         ...payload,
-        plaintiff: (payload.plaintiff as unknown as number[]).join(", "),
       },
       slug,
     );

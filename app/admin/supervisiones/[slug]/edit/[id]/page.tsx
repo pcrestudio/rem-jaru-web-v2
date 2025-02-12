@@ -54,10 +54,6 @@ export default function SupervisionesSlugEdit() {
       const { data } = await editSupervision(
         {
           ...payload,
-          plaintiff:
-            typeof payload.plaintiff === "string"
-              ? payload.plaintiff
-              : (payload.plaintiff as unknown as number[]).join(", "),
           id: Number(id),
         },
         slug,

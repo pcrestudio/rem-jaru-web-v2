@@ -28,7 +28,7 @@ const TodoActivities: FC<TodoActivitiesProps> = ({ todo }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const placeholder = "Escribe un comentario";
-  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [_, setSelectedFile] = useState<string | null>(null);
   const [todoActivity, setTodoActivity] = useState<GetTodoActivityDto | null>(
     null,
   );

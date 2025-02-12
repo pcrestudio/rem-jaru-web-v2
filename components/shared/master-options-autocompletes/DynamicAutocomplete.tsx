@@ -31,7 +31,6 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
   noModal,
   filter,
   disabled,
-  labelClassName,
 }) => {
   const filterUrl = filter
     ? `${environment.baseUrl}/masters/options/autocomplete?slug=${slug}&slugSubmodule=${filter["slugSubmodule"]}`

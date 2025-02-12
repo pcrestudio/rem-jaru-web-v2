@@ -40,8 +40,6 @@ const EtapaSupervisionForm: FC<EtapaSupervisionFormProps> = ({
   });
   const inputRef = useRef<HTMLInputElement | null>(null);
   const datePickerRef = useRef<HTMLInputElement | null>(null);
-  const [parsedDateResume, setParsedDateResume] =
-    useState<ZonedDateTime | null>(null);
   const { updateStepDataArray } = useStore();
   const { updateStepData } = useStore();
 

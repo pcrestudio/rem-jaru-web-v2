@@ -4,4 +4,5 @@ export interface UpsertReclaimsDto {
   contingencyLevel: string;
   provisionContingency: number;
   provisionAmount: number;
+  concept: string;
 }

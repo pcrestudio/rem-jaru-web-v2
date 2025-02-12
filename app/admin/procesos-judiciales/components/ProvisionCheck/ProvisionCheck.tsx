@@ -19,13 +19,12 @@ const ProvisionCheck: FC<ModularProps> = ({
   setValue,
   watch,
 }) => {
-  const [isProvisional, setIsProvisional] = useState<boolean>(
-    provision?.isProvisional ?? false,
-  );
-
   const values = getValues();
-
   const reclaims = watch("reclaims");
+  const isProvisional = watch("isProvisional");
+  const [autoProvisional, setAutoProvisional] = useState(false);
+  const [shouldOverride, setShouldOverride] = useState(false);
+  const contingencyPercentage = watch("contingencyPercentage");
 
   const calculateProvisionPercentage = () => {
     const provisionAmount = reclaims?.reduce(
@@ -51,38 +50,33 @@ const ProvisionCheck: FC<ModularProps> = ({
     );
   };
 
-  const calculateContingencyLevel = () => {
-    const contingencyPercentage = Number(values?.contingencyPercentage) ?? 0;
+  const calculateContingencyLevel = (contingencyPercentage: number) => {
+    let newLevel = null;
+    let shouldBeProvisional = false;
 
     if (contingencyPercentage > 0 && contingencyPercentage < 10) {
-      setValue(
-        ExtendedAttributeConfig.contingencyLevel,
-        ContingencyLevelConfig.remoto,
-      );
+      newLevel = ContingencyLevelConfig.remoto;
+      shouldBeProvisional = false;
     } else if (contingencyPercentage >= 10 && contingencyPercentage < 50) {
-      setValue(
-        ExtendedAttributeConfig.contingencyLevel,
-        ContingencyLevelConfig.posible,
-      );
+      newLevel = ContingencyLevelConfig.posible;
+      shouldBeProvisional = true;
     } else if (contingencyPercentage >= 50 && contingencyPercentage < 90) {
-      setValue(
-        ExtendedAttributeConfig.contingencyLevel,
-        ContingencyLevelConfig.probable,
-      );
-      setValue(ExtendedAttributeConfig.isProvisional, true);
-      setIsProvisional(true);
+      newLevel = ContingencyLevelConfig.probable;
+      shouldBeProvisional = true;
     } else if (contingencyPercentage >= 90) {
-      setValue(
-        ExtendedAttributeConfig.contingencyLevel,
-        ContingencyLevelConfig.virtualmente,
-      );
-      setValue(ExtendedAttributeConfig.isProvisional, true);
-      setIsProvisional(true);
-    } else {
-      setValue(ExtendedAttributeConfig.contingencyLevel, null);
-      setValue(ExtendedAttributeConfig.isProvisional, false);
-      setIsProvisional(false);
+      newLevel = ContingencyLevelConfig.virtualmente;
     }
+
+    // Solo actualiza si el nivel cambió
+    if (watch(ExtendedAttributeConfig.contingencyLevel) !== newLevel) {
+      setValue(ExtendedAttributeConfig.contingencyLevel, newLevel);
+    }
+
+    if (!shouldOverride) {
+      setValue(ExtendedAttributeConfig.isProvisional, shouldBeProvisional);
+    }
+
+    setAutoProvisional(shouldBeProvisional);
   };
 
   const calculateProvision = () => {
@@ -99,29 +93,13 @@ const ProvisionCheck: FC<ModularProps> = ({
     }
   };
 
-  const calculatePlaintiff = () => {
-    const values = getValues();
-    const initPlaintiff: string = values?.plaintiff ?? "";
-
-    if (typeof initPlaintiff === "string") {
-      const plaintiff: number[] =
-        initPlaintiff.split(",").map((v) => Number(v)) ?? [];
-
-      if (plaintiff.length > 0) {
-        setValue(ExtendedAttributeConfig.plaintiff, plaintiff);
-      }
-    }
-  };
-
-  // Watch fields for changes
-  const watchFields = watch(["contingencyPercentage"]);
-
   useEffect(() => {
-    calculateContingencyLevel();
-    calculateProvision();
-    calculatePlaintiff();
-    calculateProvisionPercentage();
-  }, [watchFields]);
+    if (contingencyPercentage !== undefined) {
+      calculateContingencyLevel(contingencyPercentage);
+      calculateProvision();
+      calculateProvisionPercentage();
+    }
+  }, [contingencyPercentage]);
 
   return (
     <>
@@ -156,14 +134,19 @@ const ProvisionCheck: FC<ModularProps> = ({
       <ReactiveSwitch
         className="col-span-12"
         control={control}
-        isSelected={isProvisional}
-        label="¿Acepta provisión?"
+        isSelected={
+          isProvisional !== undefined ? isProvisional : autoProvisional
+        }
+        label="¿Se exceptúa de provisión?"
         name="isProvisional"
         register={register}
-        onValueChange={setIsProvisional}
+        onValueChange={(value) => {
+          setShouldOverride(true);
+          setValue(ExtendedAttributeConfig.isProvisional, value);
+        }}
       />
 
-      {isProvisional && (
+      {values?.isProvisional && (
         <>
           <ReactiveNumericField
             readOnly
@@ -199,16 +182,8 @@ const ProvisionCheck: FC<ModularProps> = ({
         </>
       )}
 
-      {!isProvisional && (
+      {!values?.isProvisional && (
         <>
-          <ReactiveFieldFile
-            className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
-            control={control}
-            defaultValue={provision?.guaranteeLetter ?? ""}
-            label="Adjuntar carta de fianza"
-            name="guaranteeLetter"
-          />
-
           <ReactiveTextArea
             className="col-span-12 nextui-textarea-nomodal"
             control={control}
@@ -216,6 +191,14 @@ const ProvisionCheck: FC<ModularProps> = ({
             label="Comentarios"
             name="comment"
             register={register}
+          />
+
+          <ReactiveFieldFile
+            className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
+            control={control}
+            defaultValue={provision?.guaranteeLetter ?? ""}
+            label="Adjuntar carta de fianza"
+            name="guaranteeLetter"
           />
         </>
       )}

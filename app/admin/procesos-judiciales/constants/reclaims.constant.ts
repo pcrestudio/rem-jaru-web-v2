@@ -7,6 +7,7 @@ const mockReclaims: UpsertReclaimsDto[] = [
     contingencyLevel: null,
     provisionContingency: null,
     provisionAmount: null,
+    concept: null,
   },
 ];
 
