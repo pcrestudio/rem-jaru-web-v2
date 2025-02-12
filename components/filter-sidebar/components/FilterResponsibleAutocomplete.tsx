@@ -4,12 +4,12 @@ import React, { FC, useRef } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import useSWR from "swr";
 
-import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
+import { ReactiveFieldProps } from "@/components/form/ReactiveTextArea";
 
 export interface FilterResponsibleAutocompleteProps extends ReactiveFieldProps {
   onChange: (event: any, value: string | number | object) => void;

@@ -4,11 +4,11 @@ import React, { FC, useRef } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 import useSWR from "swr";
 
-import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
+import { ReactiveFieldProps } from "@/components/form/ReactiveTextArea";
 
 export interface FilterSubmoduleAutocompleteProps extends ReactiveFieldProps {
   onChange: (event: any, value: string | number | object) => void;

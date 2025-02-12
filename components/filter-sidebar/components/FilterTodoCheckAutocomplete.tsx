@@ -3,9 +3,9 @@
 import React, { FC, useRef } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 
-import { ReactiveFieldProps } from "@/components/form/ReactiveField";
 import { autocompleteStyle } from "@/theme/autocompleteStyle";
 import { LocalAutocompleteOption } from "@/components/autocompletes/LocalAutocomplete";
+import { ReactiveFieldProps } from "@/components/form/ReactiveTextArea";
 
 export interface FilterTodoCheckAutocompleteProps extends ReactiveFieldProps {
   onChange: (event: any, value: string | number | object) => void;
