@@ -14,6 +14,7 @@ export interface GetSectionAttributesDto {
   sectionAttributeId: number;
   globalAttributeId?: number;
   createdAt?: Date;
+  updatedAt?: Date;
   isForReport?: boolean;
   isMultiple?: boolean;
   isRequired?: boolean;

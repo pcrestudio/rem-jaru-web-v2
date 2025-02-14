@@ -15,7 +15,6 @@ import GlobalAttributeFields from "@/components/shared/global-attribute-fields/G
 import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
-import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 
 interface SupervisionFormProps {
@@ -200,25 +199,17 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 reset={reset}
               />
 
-              <Reclaims
-                control={control}
-                errors={errors}
-                getValues={getValues}
-                pathname={pathname}
-                provision={supervision}
-                register={register}
-                setValue={setValue}
-                watch={watch}
-              />
-
               <SectionAttributeFields
                 control={control}
                 entityReference={supervision?.entityReference}
                 getValues={getValues}
                 modelType={ModelType.Supervision}
                 pathname={pathname}
+                provision={supervision}
                 register={register}
                 reset={reset}
+                setValue={setValue}
+                watch={watch}
               />
 
               <div className="col-span-12 mt-4">

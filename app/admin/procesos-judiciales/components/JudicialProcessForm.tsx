@@ -20,7 +20,6 @@ import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutoc
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import { ModelType } from "@/config/model-type.config";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
-import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
@@ -203,20 +202,13 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
               <SectionAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}
+                errors={errors}
                 getValues={getValues}
                 modelType={ModelType.JudicialProcess}
                 pathname={pathname}
-                register={register}
-                reset={reset}
-              />
-
-              <Reclaims
-                control={control}
-                errors={errors}
-                getValues={getValues}
-                pathname={pathname}
                 provision={judicialProcess}
                 register={register}
+                reset={reset}
                 setValue={setValue}
                 watch={watch}
               />

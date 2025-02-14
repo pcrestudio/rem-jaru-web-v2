@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
 
 export default function AzureAdCallbackPage() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function AzureAdCallbackPage() {
     // 2. Store token in localStorage (or cookies)
     if (token) {
       localStorage.setItem("token", token);
+
+      const decode = jwtDecode(token);
+
+      localStorage.setItem("user", JSON.stringify(decode["user"]));
     }
 
     // 3. Redirect to the final destination

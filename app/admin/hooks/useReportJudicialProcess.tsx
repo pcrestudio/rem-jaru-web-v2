@@ -47,6 +47,31 @@ interface UseReportJudicialProcessProps {
   totalJudicialProcess: number;
 }
 
+const semaphoreColor = (name: string) => {
+  switch (name) {
+    case "Virtualmente seguro":
+      return "bg-[#c20e4d] font-bold p-2 text-white";
+
+    case "Alto":
+      return "bg-[#c20e4d] font-bold p-2 text-white";
+
+    case "Significativo":
+      return "bg-[#c4841d] font-bold p-2";
+
+    case "Medio":
+      return "bg-[#c4841d] font-bold p-2";
+
+    case "Probable":
+      return "bg-[#c4841d] font-bold p-2";
+
+    case "Remoto":
+      return "bg-[#12a150] font-bold p-2";
+
+    default:
+      return "bg-[#f9c97c] font-bold p-2";
+  }
+};
+
 const useReportJudicialProcess = (
   filter: GlobalFilter,
 ): UseReportJudicialProcessProps => {
@@ -164,7 +189,7 @@ const useReportJudicialProcess = (
           return <p>{percent} %</p>;
 
         default:
-          return cellValue;
+          return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
       }
     },
     [totalContingencies],
@@ -188,7 +213,7 @@ const useReportJudicialProcess = (
           return <p>{percent} %</p>;
 
         default:
-          return cellValue;
+          return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
       }
     },
     [totalCriticalProcesses],

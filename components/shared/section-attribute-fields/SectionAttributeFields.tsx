@@ -1,9 +1,10 @@
-import { FC, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import useSWR from "swr";
 import { Controller } from "react-hook-form";
 import { Autocomplete, TextField } from "@mui/material";
 import { Accordion, AccordionItem, DatePicker } from "@heroui/react";
 import { Input, Textarea } from "@heroui/input";
+import { format } from "date-fns";
 
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
@@ -19,14 +20,23 @@ import { convertToZonedDateTime } from "@/utils/format_date";
 import ReactiveFieldFile from "@/components/form/ReactiveFieldFile";
 import { ModelType } from "@/config/model-type.config";
 import { GetSectionAttributeOptionDto } from "@/app/dto/attribute-values/get-section-attribute-option.dto";
+import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
+import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
+import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
+import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 
 export interface SectionAttributeFieldsProps extends ReactiveFieldProps {
   pathname: string;
   entityReference?: string;
   modelType?: string;
   touchedFields?: ReturnType<typeof useReactiveForm>["touchedFields"];
+  provision?: GetJudicialProcessDto | GetSupervisionDto;
   reset?: any;
   getValues?: any;
+  errors?: any;
+  register?: any;
+  setValue?: any;
+  watch?: any;
 }
 
 const mappingRowLayout: Record<RowLayout, string> = {
@@ -45,11 +55,21 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
   control,
   reset,
   getValues,
+  errors,
+  register,
+  watch,
+  setValue,
+  provision,
 }) => {
   const { data } = useSWR<GetSectionAttributesBySlugDto[]>(
     `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}&modelType=${modelType}`,
     fetcher,
   );
+
+  const acceptUpdateLabel: string[] = [
+    ExtendedAttributeConfig.lastSituation,
+    ExtendedAttributeConfig.nextSituation,
+  ];
 
   useEffect(() => {
     if (data) {
@@ -83,6 +103,17 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
   return (
     <div className="col-span-12 grid grid-cols-12 gap-4">
+      <Reclaims
+        control={control}
+        errors={errors}
+        getValues={getValues}
+        pathname={pathname}
+        provision={provision}
+        register={register}
+        setValue={setValue}
+        watch={watch}
+      />
+
       {data &&
         data.map(
           (section) =>
@@ -199,6 +230,26 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               render={({ field }) => (
                                 <Textarea
                                   {...field}
+                                  description={
+                                    <>
+                                      {String(
+                                        acceptUpdateLabel
+                                          .includes(attribute.slug)
+                                          .valueOf(),
+                                      ) === "true" &&
+                                        attribute.values[0]?.modifiedAt && (
+                                          <span className="text-xs text-slate-500 font-semibold">
+                                            Actualizado el:{" "}
+                                            {format(
+                                              new Date(
+                                                attribute.values[0]?.modifiedAt,
+                                              ),
+                                              "dd/MM/yyyy",
+                                            )}
+                                          </span>
+                                        )}
+                                    </>
+                                  }
                                   label={`${attribute.label}`}
                                 />
                               )}

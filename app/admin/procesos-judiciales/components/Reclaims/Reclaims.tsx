@@ -131,7 +131,7 @@ const Reclaims: FC<ModularProps> = ({
   return (
     <Accordion
       key="Petitorios"
-      className="col-span-12"
+      className="col-span-12 order-2"
       itemClasses={{
         title: "text-cerulean-950 font-bold text-lg",
         base: "pb-4 shadow-none border border-slate-200",

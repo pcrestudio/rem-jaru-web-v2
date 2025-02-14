@@ -3,10 +3,10 @@ import { GetSectionAttributesDto } from "@/app/dto/attribute-values/get-section-
 export interface GetSectionAttributesValuesDto {
   value: string;
   createdAt?: string;
+  modifiedAt?: string;
   createdBy?: string;
   entityReference?: number;
   modifiedBy?: string;
-  modifiedAt?: Date;
   sectionAttributeId?: number;
   sectionAttributeValueId?: number;
   attribute?: GetSectionAttributesDto;
