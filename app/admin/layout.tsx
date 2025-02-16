@@ -17,6 +17,9 @@ export default function Layout({ children }: { children: ReactNode }) {
     role: "admin",
     displayName: "Jaru",
     email: "pcusir@gmail.com",
+    studio: {
+      name: "Jaru,",
+    },
   });
 
   const { updateUser } = useStore();

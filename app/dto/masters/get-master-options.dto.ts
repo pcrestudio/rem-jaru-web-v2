@@ -1,6 +1,6 @@
 export interface GetMasterOptionsDto {
   name: string;
-  slug: string;
+  slug?: string;
   masterId?: number;
   isActive?: boolean;
   createdAt?: Date;

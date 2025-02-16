@@ -12,7 +12,7 @@ import { ReactiveFieldProps } from "@/components/form/ReactiveTextArea";
 
 export interface FilterSubmoduleAutocompleteProps extends ReactiveFieldProps {
   onChange: (event: any, value: string | number | object) => void;
-  moduleId: number;
+  modelName: string;
 }
 
 const FilterSubmoduleAutocomplete: FC<FilterSubmoduleAutocompleteProps> = ({
@@ -23,10 +23,10 @@ const FilterSubmoduleAutocomplete: FC<FilterSubmoduleAutocompleteProps> = ({
   disabled,
   noModal,
   onChange,
-  moduleId,
+  modelName,
 }) => {
   const { data } = useSWR<GetSubmoduleDto[]>(
-    `${environment.baseUrl}/modules/submodules/autocomplete/${moduleId ?? 0}`,
+    `${environment.baseUrl}/modules/submodules/autocomplete/${modelName ?? ""}`,
     fetcher,
   );
 

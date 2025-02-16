@@ -11,6 +11,8 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
+import useStore from "@/lib/store";
+import { Role } from "@/config/mapping_role";
 
 const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   name,
@@ -22,8 +24,15 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   disabled,
   noModal,
 }) => {
+  const { user } = useStore();
+
+  const filterByStudio =
+    user.role === Role["super-admin"] || user.role === Role.admin
+      ? null
+      : `studioId=${user.studioId}`;
+
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/users?`,
+    `${environment.baseUrl}/users?${filterByStudio}`,
     fetcher,
   );
 

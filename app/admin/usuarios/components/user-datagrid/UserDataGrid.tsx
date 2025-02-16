@@ -79,6 +79,15 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
             ? mappingRole[item.UserRole[0]?.role.name]
             : "Sin rol";
 
+        case "studio":
+          return item.studio ? (
+            <Chip className="text-xs" variant="faded">
+              {item.studio.name}
+            </Chip>
+          ) : (
+            "-"
+          );
+
         case "isLocked":
           return (
             <Chip

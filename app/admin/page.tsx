@@ -13,7 +13,10 @@ export default function Admin() {
   const { filter } = useStore();
   const pathname = usePathname();
   const { showFilterSidebar } = useLayoutSettings(pathname);
-  const isFilterEmpty = !filter.queryReport || filter.queryReport.trim() === "";
+  const isFilterEmpty =
+    !filter.queryReport ||
+    filter.queryReport.trim() === "" ||
+    /^\?cargoStudioId=\d+$/.test(filter.queryReport);
   const params = new URLSearchParams(filter.queryReport);
   const moduleId = params.get("moduleId");
   const submoduleId = params.get("submoduleId");

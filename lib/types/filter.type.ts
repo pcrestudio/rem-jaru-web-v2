@@ -2,6 +2,7 @@ export type GlobalFilter = {
   queryModule?: string;
   queryPagination?: string;
   queryReport?: string;
+  modelType?: string;
   search?: string;
 };
 

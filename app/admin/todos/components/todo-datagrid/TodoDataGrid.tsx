@@ -4,6 +4,8 @@ import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalFor
 import { todoColumns } from "@/app/admin/todos/components/todo-datagrid/columns/todoColumns";
 import useTodos from "@/app/admin/todos/states/useTodos";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import { Role } from "@/config/mapping_role";
+import useStore from "@/lib/store";
 
 const TodoDataGrid = () => {
   const {
@@ -21,6 +23,15 @@ const TodoDataGrid = () => {
     toggleDeleteHelper,
     handleConfirmClose,
   } = useTodos();
+
+  const { user } = useStore();
+
+  const filterByStudio =
+    user.role === Role["super-admin"]
+      ? null
+      : user.studioId
+        ? `cargoStudioId=${user.studioId}&`
+        : `cargoStudioId=0&`;
 
   return (
     <>
@@ -58,7 +69,7 @@ const TodoDataGrid = () => {
         columns={todoColumns}
         dataGridKey="id"
         emptyContent="Sin tareas asignadas."
-        endpointUrl="todos?"
+        endpointUrl={`todos?${filterByStudio}`}
         onAddChange={handleAddChange}
       />
     </>

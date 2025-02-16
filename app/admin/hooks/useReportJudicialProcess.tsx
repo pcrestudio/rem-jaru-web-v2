@@ -12,6 +12,7 @@ import { fetcher } from "@/config/axios.config";
 import { GlobalFilter } from "@/lib/types/filter.type";
 import { ChartData } from "@/app/admin/types/ChartDataType";
 import { GetExchangeDto } from "@/app/dto/report/get-exchange.dto";
+import { mappingModuleEN } from "@/config/mapping_submodules";
 
 interface UseReportJudicialProcessProps {
   data: GetInitReportDto;
@@ -87,10 +88,6 @@ const useReportJudicialProcess = (
     fetcher,
   );
 
-  const regex = /\?([^=&]+)=([^&]*)/;
-  const match = filter?.queryReport?.match(regex);
-  const moduleId = match[2];
-
   const studioYAxisData =
     data?.studio.report[0]?.masterOption?.map((option) => option.name) ?? [];
 
@@ -104,10 +101,7 @@ const useReportJudicialProcess = (
   const matterChartData =
     (data?.matters.report[0]?.Submodule.map((option) => ({
       name: option.name,
-      value:
-        moduleId === "2"
-          ? option._count.Supervision
-          : option._count.JudicialProcess,
+      value: option._count[mappingModuleEN[filter.modelType]],
     })) as ChartData[]) ?? [];
 
   const total = data?.studio.report[0]?.masterOption?.reduce(
@@ -135,11 +129,7 @@ const useReportJudicialProcess = (
   );
 
   const mattersTotal = data?.matters.report[0].Submodule.reduce(
-    (sum, item) =>
-      sum +
-      (moduleId === "2"
-        ? item?._count.Supervision
-        : item?._count.JudicialProcess || 0),
+    (sum, item) => sum + item?._count[mappingModuleEN[filter.modelType]] || 0,
     0,
   );
 
@@ -147,19 +137,11 @@ const useReportJudicialProcess = (
     (matter: GetMasterOptionReportDto, columnKey: string | number) => {
       const cellValue = matter[columnKey];
       const percent =
-        (moduleId === "2"
-          ? matter._count.Supervision
-          : matter._count.JudicialProcess / mattersTotal) * 100;
+        (matter._count[mappingModuleEN[filter.modelType]] / mattersTotal) * 100;
 
       switch (columnKey) {
         case "count":
-          return (
-            <p>
-              {moduleId === "2"
-                ? matter._count.Supervision
-                : matter._count.JudicialProcess}
-            </p>
-          );
+          return <p>{matter._count[mappingModuleEN[filter.modelType]]}</p>;
 
         case "percent":
           return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;

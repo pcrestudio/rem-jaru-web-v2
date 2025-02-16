@@ -14,6 +14,8 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetRoleDto } from "@/app/dto/role/get-role.dto";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
+import { MasterOptionConfig } from "@/config/master-option.config";
+import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 
 interface UserModalProps extends ModalProps {
   user?: GetUserDto;
@@ -122,6 +124,14 @@ const UserModal: FC<UserModalProps> = ({
             items={data ?? []}
             label="Roles"
             name="roleId"
+          />
+
+          <DynamicAutocomplete
+            className="col-span-12 nextui-input-nomodal"
+            control={control}
+            label="Estudio a cargo"
+            name="studioId"
+            slug={MasterOptionConfig.estudios}
           />
         </div>
       )}

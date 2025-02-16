@@ -115,15 +115,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
-            label="Estudio a cargo"
-            name="cargoStudioId"
-            slug={MasterOptionConfig.estudios}
-          />
-
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
             label="Moneda"
             name="controversialMatter"
             optionValue="name"
@@ -139,7 +130,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
           />
 
           <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-4 nextui-input-nomodal"
             control={control}
             filter={{
               slugSubmodule: mappingRevertSubmodules[slugSubmodule],
@@ -151,7 +142,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
           />
 
           <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
+            className="col-span-4 nextui-input-nomodal"
             control={control}
             isRequired={true}
             label="Situación"
@@ -162,7 +153,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
           {supervision && supervision?.entityReference && (
             <>
               <ReactiveNumericField
-                className="col-span-6"
+                className="col-span-4"
                 control={control}
                 endContent={
                   <div className="pointer-events-none flex items-center">
@@ -210,6 +201,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 reset={reset}
                 setValue={setValue}
                 watch={watch}
+                errors={errors}
               />
 
               <div className="col-span-12 mt-4">

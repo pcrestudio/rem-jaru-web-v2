@@ -1,3 +1,8 @@
+export const mappingModuleEN: Record<string, string> = {
+  "Procesos Judiciales": "JudicialProcess",
+  Supervisiones: "Supervision",
+};
+
 export const mappingSubmodules: Record<string, string> = {
   judicial_process_administrative: "procesos-judiciales-administrativos",
   judicial_process_labor_court: "procesos-judiciales-laborales",

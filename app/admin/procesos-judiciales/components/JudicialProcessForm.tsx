@@ -84,7 +84,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           />
 
           <ReactiveField
-            className="col-span-6"
+            className="col-span-4"
             control={control}
             errors={errors}
             isRequired={true}
@@ -95,7 +95,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           />
 
           <ReactiveField
-            className="col-span-6"
+            className="col-span-4"
             control={control}
             errors={errors}
             isRequired={true}
@@ -106,7 +106,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
           />
 
           <ReactiveField
-            className="col-span-6"
+            className="col-span-4"
             control={control}
             errors={errors}
             label="Co Demandado"
@@ -121,15 +121,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             label="Proyecto"
             name="projectId"
             slug={MasterOptionConfig.proyectosGeneral}
-          />
-
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Estudio a cargo"
-            name="cargoStudioId"
-            slug={MasterOptionConfig.estudios}
           />
 
           <DynamicAutocomplete
@@ -262,8 +253,8 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
               type="submit"
             >
               {judicialProcess && judicialProcess.entityReference
-                ? "Editar ficha"
-                : "Guardar ficha"}
+                ? "Editar expediente"
+                : "Guardar expediente"}
             </Button>
 
             {judicialProcess && judicialProcess?.entityReference && (

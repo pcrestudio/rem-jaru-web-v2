@@ -4,4 +4,5 @@ export interface CreateSupervisionDto {
   responsibleId: number;
   projectId: number;
   plaintiff: string;
+  cargoStudioId?: number;
 }

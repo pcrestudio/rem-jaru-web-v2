@@ -8,6 +8,7 @@ import { createJudicialProcess } from "@/app/api/judicial-process/judicial-proce
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import useStore from "@/lib/store";
 
 export default function ProcesosJudicialesSlugCreate() {
   const pathname: string = usePathname();
@@ -17,6 +18,7 @@ export default function ProcesosJudicialesSlugCreate() {
   const [judicialProcessId, setJudicialProcessId] = useState<number | null>(
     null,
   );
+  const { user } = useStore();
 
   const handleConfirmModalClose = () => setConfirm(false);
 
@@ -33,6 +35,7 @@ export default function ProcesosJudicialesSlugCreate() {
     const { data } = await createJudicialProcess(
       {
         ...payload,
+        cargoStudioId: user.studioId,
       },
       slug,
     );

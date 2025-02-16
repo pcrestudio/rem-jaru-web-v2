@@ -7,9 +7,9 @@ import judicialProcessColumns from "@/app/admin/procesos-judiciales/components/J
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import { exportJudicialProcessExcel } from "@/app/api/judicial-process/judicial-process";
 import exportableExcel from "@/utils/exportable_excel";
-import useStore from "@/lib/store";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useCommonDossier from "@/app/admin/hooks/useCommonDossier";
+import useStore from "@/lib/store";
 
 export interface JudicialProcessDataGridProps {
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
@@ -22,7 +22,11 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
 }) => {
   const router = useRouter();
   const { user } = useStore();
-  const { renderCell } = useCommonDossier({ toggleSelectedItem });
+  const { renderCell, filterByStudio } = useCommonDossier({
+    toggleSelectedItem,
+  });
+
+  console.log(filterByStudio);
 
   return (
     <CustomDataGrid<GetJudicialProcessDto>
@@ -34,7 +38,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
       cells={renderCell}
       columns={judicialProcessColumns}
       emptyContent="Sin procesos judiciales."
-      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&`}
+      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&${filterByStudio}`}
       onAddChange={() => {
         const currentPath = window.location.pathname;
 

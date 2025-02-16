@@ -1,4 +1,5 @@
 import { GetRoleDto } from "@/app/dto/role/get-role.dto";
+import { GetMasterOptionsDto } from "@/app/dto/masters/get-master-options.dto";
 
 export interface GetUserDto {
   firstName?: string;
@@ -12,6 +13,8 @@ export interface GetUserDto {
   updatedAt?: Date;
   id?: number;
   UserRole?: GetUserRoleDto[];
+  studio?: GetMasterOptionsDto;
+  studioId?: number;
   roleId?: number;
 }
 

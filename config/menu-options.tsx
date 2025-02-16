@@ -26,6 +26,7 @@ export interface MenuOptions {
 }
 
 const onlyAdmins: string[] = [Role["super-admin"], Role.admin];
+
 const allRoles: string[] = [
   Role["super-admin"],
   Role.admin,

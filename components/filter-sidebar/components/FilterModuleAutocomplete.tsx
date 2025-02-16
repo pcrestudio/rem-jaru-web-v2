@@ -47,7 +47,7 @@ const FilterModuleAutocomplete: FC<FilterModuleAutocompleteProps> = ({
       fullWidth
       className={className}
       getOptionLabel={(option) => `${option.name}` || ""}
-      isOptionEqualToValue={(option, value) => option.id === value.id}
+      isOptionEqualToValue={(option, value) => option.name === value.name}
       options={data ? data : []}
       readOnly={disabled}
       renderInput={(params) => (
@@ -64,7 +64,7 @@ const FilterModuleAutocomplete: FC<FilterModuleAutocompleteProps> = ({
         />
       )}
       sx={autocompleteStyle}
-      onChange={(_, newValue) => onAutocompleteChange(newValue?.id)}
+      onChange={(_, newValue) => onAutocompleteChange(newValue?.name)}
     />
   );
 };

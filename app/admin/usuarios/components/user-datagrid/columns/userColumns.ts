@@ -8,6 +8,10 @@ export const userColumns = [
     label: "Correo electrónico",
   },
   {
+    key: "studio",
+    label: "Estudio",
+  },
+  {
     key: "isLocked",
     label: "Sesión bloqueada",
   },

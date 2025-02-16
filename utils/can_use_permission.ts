@@ -50,8 +50,10 @@ const rolePermissions = {
   [Role.visualizer]: [
     CanUsePermission.downloadExcel,
     CanUsePermission.downloadWord,
+    CanUsePermission.downloadWord,
     CanUsePermission.addTodo,
-    CanUsePermission.editTodo,
+    CanUsePermission.addItem,
+    CanUsePermission.editItem,
   ],
   [Role.executor]: [CanUsePermission.downloadExcel, CanUsePermission.editTodo],
 };

@@ -14,12 +14,15 @@ import { DataGridKey } from "@/config/datagrid-key.config";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import { ModelType } from "@/config/model-type.config";
 import capitalizeFirstLetter from "@/utils/capitalize";
+import { Role } from "@/config/mapping_role";
+import useStore from "@/lib/store";
 
 interface UseCommonDossierProps {
   renderCell: (
     item: GetJudicialProcessDto | GetSupervisionDto,
     columnKey: string | number,
   ) => ReactNode;
+  filterByStudio: string;
 }
 
 interface UseCommonDossierParams {
@@ -33,6 +36,16 @@ const useCommonDossier = (
   params?: UseCommonDossierParams,
 ): UseCommonDossierProps => {
   const router = useRouter();
+  const { user, filter } = useStore();
+
+  console.log(filter);
+
+  const filterByStudio =
+    user.role === Role["super-admin"] || user.role === Role["admin"]
+      ? null
+      : user.studioId
+        ? `cargoStudioId=${user.studioId}&`
+        : `cargoStudioId=0&`;
 
   const getDataGridLabel = (
     dossier: GetJudicialProcessDto | GetSupervisionDto,
@@ -218,6 +231,7 @@ const useCommonDossier = (
 
   return {
     renderCell,
+    filterByStudio,
   };
 };
 

@@ -8,11 +8,13 @@ import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import SupervisionForm from "@/app/admin/supervisiones/[slug]/components/supervision-form/SupervisionForm";
 import { CreateSupervisionDto } from "@/app/dto/supervision/create-supervision.dto";
 import { createSupervision } from "@/app/api/supervision/supervision";
+import useStore from "@/lib/store";
 
 export default function SupervisionesSlugCreate() {
   const pathname: string = usePathname();
   const slug: string = pathname.split("/")[3];
   const [supervisionId, setSupervisionId] = useState<number | null>(null);
+  const { user } = useStore();
   const [confirm, setConfirm] = useState<boolean>(false);
   const handleConfirmModalClose = () => {
     setConfirm(false);
@@ -31,6 +33,7 @@ export default function SupervisionesSlugCreate() {
     const { data } = await createSupervision(
       {
         ...payload,
+        cargoStudioId: user.studioId,
       },
       slug,
     );

@@ -12,6 +12,8 @@ import {
 import { mappingRole } from "@/config/mapping_role";
 import httpClient from "@/lib/httpClient";
 import { IUser } from "@/app/admin/usuarios/interfaces";
+import { Chip } from "@heroui/chip";
+import useStore from "@/lib/store";
 
 interface AppBarUserProps {
   user: IUser;
@@ -19,11 +21,14 @@ interface AppBarUserProps {
 
 const AppBarUser: FC<AppBarUserProps> = ({ user }) => {
   const router = useRouter();
+  const { updateFilter } = useStore();
 
   const handleSignOut = async () => {
     await httpClient.post("/auth/logout", {}, { withCredentials: true });
 
     localStorage.removeItem("token");
+
+    updateFilter({ queryReport: "", search: null });
 
     router.push("/auth");
   };
@@ -32,12 +37,16 @@ const AppBarUser: FC<AppBarUserProps> = ({ user }) => {
     <Dropdown backdrop="blur">
       <DropdownTrigger>
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-white cursor-pointer">
+          <p className="text-md font-bold text-white cursor-pointer self-end">
             {user?.displayName}
           </p>
-          <p className="text-xs text-cerulean-200 cursor-pointer self-end">
-            {mappingRole[user?.role]}
-          </p>
+          <Chip
+            className="text-xs cursor-pointer text-white bg-transparent border border-cerulean-500 self-end"
+            variant="faded"
+          >
+            {mappingRole[user?.role]}{" "}
+            {user?.studio && <span>- {user?.studio.name}</span>}
+          </Chip>
         </div>
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">

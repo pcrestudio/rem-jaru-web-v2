@@ -16,6 +16,7 @@ import {
   alertOptions,
   checkOptions,
 } from "@/config/attribute_local_autocompletes";
+import { Role } from "@/config/mapping_role";
 
 export interface FilterSidebarProps {
   pathname: string;
@@ -23,8 +24,9 @@ export interface FilterSidebarProps {
 
 const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
   const { updateFilter, filter } = useStore();
-  const [moduleId, setModuleId] = useState<number>(0);
+  const [modelType, setModelType] = useState<string | null>(null);
   const currentPath = usePathname();
+  const { user } = useStore();
 
   const handleFilter = (event: any) => {
     const { name, value } = event.target;
@@ -42,15 +44,17 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
     updateFilter({
       queryReport: updatedQuery,
       search: name === "search" ? value : null,
+      modelType: name === "moduleId" ? value : null,
     });
 
     if (name === "moduleId") {
-      setModuleId(value);
+      setModelType(value);
     }
   };
 
   const isAdminPath: boolean = pathname === "/admin";
   const isTodoPath: boolean = pathname === "/admin/todos";
+  const isReportPath: boolean = pathname === "/admin/todos";
   const isSubmodulePath: boolean =
     pathname.includes("/admin/procesos-judiciales") ||
     pathname.includes("/admin/supervisiones");
@@ -60,6 +64,19 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
   useEffect(() => {
     updateFilter({ queryReport: "", search: null });
   }, [currentPath, updateFilter]);
+
+  useEffect(() => {
+    if (
+      user.studio &&
+      isAdminPath &&
+      user.role !== Role["super-admin"] &&
+      user.role !== Role.admin
+    ) {
+      updateFilter({
+        queryReport: `?cargoStudioId=${user.studioId}`,
+      });
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-col gap-6 shadow-lg p-6 bg-white w-full lg:max-w-[270px] max-h-screen overflow-y-auto">
@@ -93,9 +110,9 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
 
               <FilterSubmoduleAutocomplete
                 className="col-span-12 nextui-input-nomodal"
-                disabled={moduleId === 0}
+                disabled={modelType === null}
                 label="Submódulo"
-                moduleId={moduleId}
+                modelName={modelType}
                 name="submoduleId"
                 onChange={handleFilter}
               />
@@ -112,12 +129,15 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
               onChange={handleFilter}
             />
 
-            <FilterStudioAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Estudio a cargo"
-              name="cargoStudioId"
-              onChange={handleFilter}
-            />
+            {(user.role && user.role === Role["super-admin"]) ||
+              (user.role === Role.admin && (
+                <FilterStudioAutocomplete
+                  className="col-span-12 nextui-input-nomodal"
+                  label="Estudio a cargo"
+                  name="cargoStudioId"
+                  onChange={handleFilter}
+                />
+              ))}
           </>
         )}
 
