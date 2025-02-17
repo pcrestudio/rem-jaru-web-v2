@@ -46,24 +46,24 @@ const mappingRowLayout: Record<RowLayout, string> = {
 };
 
 const customFieldIndicator = (slug: string, type: string) =>
-  `${slug}-custom-${type}`;
+    `${slug}-custom-${type}`;
 
 const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
-  pathname,
-  entityReference,
-  modelType = ModelType.JudicialProcess,
-  control,
-  reset,
-  getValues,
-  errors,
-  register,
-  watch,
-  setValue,
-  provision,
-}) => {
+                                                                   pathname,
+                                                                   entityReference,
+                                                                   modelType = ModelType.JudicialProcess,
+                                                                   control,
+                                                                   reset,
+                                                                   getValues,
+                                                                   errors,
+                                                                   register,
+                                                                   watch,
+                                                                   setValue,
+                                                                   provision,
+                                                                 }) => {
   const { data } = useSWR<GetSectionAttributesBySlugDto[]>(
-    `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}&modelType=${modelType}`,
-    fetcher,
+      `${environment.baseUrl}/extended/section/attributes?slug=${pathname}&entityReference=${entityReference}&modelType=${modelType}`,
+      fetcher
   );
 
   const acceptUpdateLabel: string[] = [
@@ -82,11 +82,11 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
 
           if (attribute.dataType === "DATE" && attribute.values[0]?.value) {
             formValues[fieldName] = convertToZonedDateTime(
-              attribute.values[0]?.value,
+                attribute.values[0]?.value
             );
           } else if (
-            attribute.dataType === "DATE" &&
-            !attribute.values[0]?.value
+              attribute.dataType === "DATE" &&
+              !attribute.values[0]?.value
           ) {
             formValues[fieldName] = attribute.values[0]?.value || null;
           } else {
@@ -102,8 +102,8 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
   }, [data]);
 
   return (
-    <div className="col-span-12 grid grid-cols-12 gap-4">
-      <Reclaims
+      <div className="col-span-12 grid grid-cols-12 gap-4">
+        {/* <Reclaims
         control={control}
         errors={errors}
         getValues={getValues}
@@ -112,268 +112,268 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
         register={register}
         setValue={setValue}
         watch={watch}
-      />
+      /> */}
 
-      {data &&
-        data.map(
-          (section) =>
-            section.collapsable && (
-              <Accordion
-                key={`${section.label}`}
-                className={`col-span-12 order-${section.order}`}
-                itemClasses={{
-                  title: "text-cerulean-950 font-bold text-lg",
-                  base: "pb-4 shadow-none border border-slate-200",
-                  trigger: "border-b-red-500 pt-4 pb-1",
-                }}
-                selectionMode="single"
-                variant="splitted"
-              >
-                <AccordionItem title={section.label}>
-                  <div className="grid grid-cols-12 gap-4">
-                    {section.attributes
-                      .sort((a, b) => a.order - b.order)
-                      .map((attribute) => (
-                        <div
-                          key={attribute.slug}
-                          className={`${
-                            mappingRowLayout[attribute.rowLayout]
-                          } -order-${attribute.order}`}
+        {data &&
+            data.map(
+                (section) =>
+                    section.collapsable && (
+                        <Accordion
+                            key={`${section.label}`}
+                            className={`col-span-12 order-${section.order}`}
+                            itemClasses={{
+                              title: "text-cerulean-950 font-bold text-lg",
+                              base: "pb-4 shadow-none border border-slate-200",
+                              trigger: "border-b-red-500 pt-4 pb-1",
+                            }}
+                            selectionMode="single"
+                            variant="splitted"
                         >
-                          {attribute.dataType === DataType.TEXT && (
-                            <Controller
-                              control={control}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                              render={({ field }) => (
-                                <Input label={attribute.label} {...field} />
-                              )}
-                            />
-                          )}
+                          <AccordionItem title={section.label}>
+                            <div className="grid grid-cols-12 gap-4">
+                              {section.attributes
+                                  .sort((a, b) => a.order - b.order)
+                                  .map((attribute) => (
+                                      <div
+                                          key={attribute.slug}
+                                          className={`${
+                                              mappingRowLayout[attribute.rowLayout]
+                                          } -order-${attribute.order}`}
+                                      >
+                                        {attribute.dataType === DataType.TEXT && (
+                                            <Controller
+                                                control={control}
+                                                defaultValue={attribute.values[0]?.value ?? ""}
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                                render={({ field }) => (
+                                                    <Input label={attribute.label} {...field} />
+                                                )}
+                                            />
+                                        )}
 
-                          {attribute.dataType === DataType.FLOAT && (
-                            <Controller
-                              control={control}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                              render={({ field }) => (
-                                <Input
-                                  endContent={
-                                    <div className="pointer-events-none flex items-center">
+                                        {attribute.dataType === DataType.FLOAT && (
+                                            <Controller
+                                                control={control}
+                                                defaultValue={attribute.values[0]?.value ?? ""}
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                                render={({ field }) => (
+                                                    <Input
+                                                        endContent={
+                                                          <div className="pointer-events-none flex items-center">
                                       <span className="text-default-400 text-small">
                                         $
                                       </span>
-                                    </div>
-                                  }
-                                  label={attribute.label}
-                                  placeholder="0.0"
-                                  type="number"
-                                  {...field}
-                                />
-                              )}
-                            />
-                          )}
+                                                          </div>
+                                                        }
+                                                        label={attribute.label}
+                                                        placeholder="0.0"
+                                                        type="number"
+                                                        {...field}
+                                                    />
+                                                )}
+                                            />
+                                        )}
 
-                          {attribute.dataType === DataType.FILE && (
-                            <ReactiveFieldFile
-                              control={control}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              label={attribute.label}
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                            />
-                          )}
+                                        {attribute.dataType === DataType.FILE && (
+                                            <ReactiveFieldFile
+                                                control={control}
+                                                defaultValue={attribute.values[0]?.value ?? ""}
+                                                label={attribute.label}
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                            />
+                                        )}
 
-                          {attribute.dataType === DataType.INTEGER && (
-                            <Controller
-                              control={control}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                              render={({ field }) => (
-                                <Input
-                                  endContent={
-                                    <div className="pointer-events-none flex items-center">
+                                        {attribute.dataType === DataType.INTEGER && (
+                                            <Controller
+                                                control={control}
+                                                defaultValue={attribute.values[0]?.value ?? ""}
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                                render={({ field }) => (
+                                                    <Input
+                                                        endContent={
+                                                          <div className="pointer-events-none flex items-center">
                                       <span className="text-default-400 text-small">
                                         %
                                       </span>
-                                    </div>
-                                  }
-                                  label={attribute.label}
-                                  min={0}
-                                  placeholder="0.0"
-                                  type="number"
-                                  {...field}
-                                />
-                              )}
-                            />
-                          )}
-
-                          {attribute.dataType === DataType.TEXTAREA && (
-                            <Controller
-                              control={control}
-                              defaultValue={attribute.values[0]?.value ?? ""}
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                              render={({ field }) => (
-                                <Textarea
-                                  {...field}
-                                  description={
-                                    <>
-                                      {String(
-                                        acceptUpdateLabel
-                                          .includes(attribute.slug)
-                                          .valueOf(),
-                                      ) === "true" &&
-                                        attribute.values[0]?.modifiedAt && (
-                                          <span className="text-xs text-slate-500 font-semibold">
-                                            Actualizado el:{" "}
-                                            {format(
-                                              new Date(
-                                                attribute.values[0]?.modifiedAt,
-                                              ),
-                                              "dd/MM/yyyy",
-                                            )}
-                                          </span>
+                                                          </div>
+                                                        }
+                                                        label={attribute.label}
+                                                        min={0}
+                                                        placeholder="0.0"
+                                                        type="number"
+                                                        {...field}
+                                                    />
+                                                )}
+                                            />
                                         )}
-                                    </>
-                                  }
-                                  label={`${attribute.label}`}
-                                />
-                              )}
-                            />
-                          )}
 
-                          {attribute.dataType === DataType.DATE && (
-                            <Controller
-                              control={control}
-                              defaultValue={
-                                attribute.values[0]?.value
-                                  ? convertToZonedDateTime(
-                                      attribute.values[0]?.value,
-                                    )
-                                  : null
-                              }
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                              render={({ field }) => (
-                                <DatePicker
-                                  label={attribute.label}
-                                  {...field}
-                                  value={field.value}
-                                  onChange={(newValue) => {
-                                    field.onChange(newValue);
-                                  }}
-                                />
-                              )}
-                            />
-                          )}
+                                        {attribute.dataType === DataType.TEXTAREA && (
+                                            <Controller
+                                                control={control}
+                                                defaultValue={attribute.values[0]?.value ?? ""}
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                                render={({ field }) => (
+                                                    <Textarea
+                                                        {...field}
+                                                        description={
+                                                          <>
+                                                            {String(
+                                                                    acceptUpdateLabel
+                                                                        .includes(attribute.slug)
+                                                                        .valueOf()
+                                                                ) === "true" &&
+                                                                attribute.values[0]?.modifiedAt && (
+                                                                    <span className="text-xs text-slate-500 font-semibold">
+                                            Actualizado el:{" "}
+                                                                      {format(
+                                                                          new Date(
+                                                                              attribute.values[0]?.modifiedAt
+                                                                          ),
+                                                                          "dd/MM/yyyy"
+                                                                      )}
+                                          </span>
+                                                                )}
+                                                          </>
+                                                        }
+                                                        label={`${attribute.label}`}
+                                                    />
+                                                )}
+                                            />
+                                        )}
 
-                          {attribute.dataType === DataType.LIST && (
-                            <Controller
-                              control={control}
-                              defaultValue={attribute.values[0]?.value || ""}
-                              name={customFieldIndicator(
-                                attribute.slug,
-                                attribute.dataType,
-                              )}
-                              render={({ field: { onChange, value } }) => (
-                                <Autocomplete
-                                  fullWidth
-                                  getOptionLabel={(
-                                    option: GetSectionAttributeOptionDto,
-                                  ) => option.optionLabel || ""}
-                                  isOptionEqualToValue={(option, value) => {
-                                    if (attribute.isMultiple) {
-                                      return (
-                                        (option as GetSectionAttributeOptionDto)
-                                          .optionValue ===
-                                        (value as GetSectionAttributeOptionDto)
-                                          .optionValue
-                                      );
-                                    } else {
-                                      return (
-                                        (option as GetSectionAttributeOptionDto)
-                                          .optionValue ===
-                                        (value as GetSectionAttributeOptionDto)
-                                          .optionValue
-                                      );
-                                    }
-                                  }}
-                                  multiple={attribute.isMultiple}
-                                  options={attribute.options}
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      className="nextui-input"
-                                      label={attribute.label}
-                                      size="medium"
-                                      variant="filled"
-                                    />
-                                  )}
-                                  sx={autocompleteStyle}
-                                  value={
-                                    value && data
-                                      ? attribute.isMultiple
-                                        ? attribute.options.filter((option) =>
-                                            value.includes(option.optionValue),
-                                          )
-                                        : attribute.options.find(
-                                            (option) =>
-                                              option.optionValue === value,
-                                          )
-                                      : attribute.isMultiple
-                                        ? []
-                                        : null
-                                  }
-                                  onChange={(
-                                    _,
-                                    newValue:
-                                      | GetSectionAttributeOptionDto
-                                      | GetSectionAttributeOptionDto[],
-                                  ) => {
-                                    if (attribute.isMultiple) {
-                                      onChange(
-                                        Array.isArray(newValue)
-                                          ? newValue.map((v) => v.optionValue)
-                                          : [],
-                                      );
-                                    } else {
-                                      onChange(
-                                        newValue
-                                          ? (
-                                              newValue as GetSectionAttributeOptionDto
-                                            ).optionValue
-                                          : "",
-                                      );
-                                    }
-                                  }}
-                                />
-                              )}
-                            />
-                          )}
-                        </div>
-                      ))}
-                  </div>
-                </AccordionItem>
-              </Accordion>
-            ),
-        )}
-    </div>
+                                        {attribute.dataType === DataType.DATE && (
+                                            <Controller
+                                                control={control}
+                                                defaultValue={
+                                                  attribute.values[0]?.value
+                                                      ? convertToZonedDateTime(
+                                                          attribute.values[0]?.value
+                                                      )
+                                                      : null
+                                                }
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                                render={({ field }) => (
+                                                    <DatePicker
+                                                        label={attribute.label}
+                                                        {...field}
+                                                        value={field.value}
+                                                        onChange={(newValue) => {
+                                                          field.onChange(newValue);
+                                                        }}
+                                                    />
+                                                )}
+                                            />
+                                        )}
+
+                                        {attribute.dataType === DataType.LIST && (
+                                            <Controller
+                                                control={control}
+                                                defaultValue={attribute.values[0]?.value || ""}
+                                                name={customFieldIndicator(
+                                                    attribute.slug,
+                                                    attribute.dataType
+                                                )}
+                                                render={({ field: { onChange, value } }) => (
+                                                    <Autocomplete
+                                                        fullWidth
+                                                        getOptionLabel={(
+                                                            option: GetSectionAttributeOptionDto
+                                                        ) => option.optionLabel || ""}
+                                                        isOptionEqualToValue={(option, value) => {
+                                                          if (attribute.isMultiple) {
+                                                            return (
+                                                                (option as GetSectionAttributeOptionDto)
+                                                                    .optionValue ===
+                                                                (value as GetSectionAttributeOptionDto)
+                                                                    .optionValue
+                                                            );
+                                                          } else {
+                                                            return (
+                                                                (option as GetSectionAttributeOptionDto)
+                                                                    .optionValue ===
+                                                                (value as GetSectionAttributeOptionDto)
+                                                                    .optionValue
+                                                            );
+                                                          }
+                                                        }}
+                                                        multiple={attribute.isMultiple}
+                                                        options={attribute.options}
+                                                        renderInput={(params) => (
+                                                            <TextField
+                                                                {...params}
+                                                                className="nextui-input"
+                                                                label={attribute.label}
+                                                                size="medium"
+                                                                variant="filled"
+                                                            />
+                                                        )}
+                                                        sx={autocompleteStyle}
+                                                        value={
+                                                          value && data
+                                                              ? attribute.isMultiple
+                                                                  ? attribute.options.filter((option) =>
+                                                                      value.includes(option.optionValue)
+                                                                  )
+                                                                  : attribute.options.find(
+                                                                      (option) =>
+                                                                          option.optionValue === value
+                                                                  )
+                                                              : attribute.isMultiple
+                                                                  ? []
+                                                                  : null
+                                                        }
+                                                        onChange={(
+                                                            _,
+                                                            newValue:
+                                                                | GetSectionAttributeOptionDto
+                                                                | GetSectionAttributeOptionDto[]
+                                                        ) => {
+                                                          if (attribute.isMultiple) {
+                                                            onChange(
+                                                                Array.isArray(newValue)
+                                                                    ? newValue.map((v) => v.optionValue)
+                                                                    : []
+                                                            );
+                                                          } else {
+                                                            onChange(
+                                                                newValue
+                                                                    ? (
+                                                                        newValue as GetSectionAttributeOptionDto
+                                                                    ).optionValue
+                                                                    : ""
+                                                            );
+                                                          }
+                                                        }}
+                                                    />
+                                                )}
+                                            />
+                                        )}
+                                      </div>
+                                  ))}
+                            </div>
+                          </AccordionItem>
+                        </Accordion>
+                    )
+            )}
+      </div>
   );
 };
 

@@ -23,6 +23,7 @@ import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
+import Reclaims from "./Reclaims/Reclaims";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -32,126 +33,138 @@ interface JudicialProcessFormProps {
 }
 
 const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
-  judicialProcess,
-  pathname,
-  handleSubmit,
-  handleStepSubmit,
-}) => {
+                                                             judicialProcess,
+                                                             pathname,
+                                                             handleSubmit,
+                                                             handleStepSubmit,
+                                                           }) => {
   const { data } = useSWR<GetCejDossierDetailDto>(
-    `${environment.baseUrl}/cej/detail?fileCode=${judicialProcess?.fileCode}`,
-    fetcher,
+      `${environment.baseUrl}/cej/detail?fileCode=${judicialProcess?.fileCode}`,
+      fetcher
   );
   const router = useRouter();
   const { user } = useStore();
 
   return (
-    <ReactiveForm
-      formId="judicial-process-edit"
-      initialValues={{
-        ...judicialProcess,
-        reclaims:
-          judicialProcess?.reclaims?.length > 0
-            ? judicialProcess.reclaims
-            : mockReclaims,
-      }}
-      options={{
-        mode: "onTouched",
-      }}
-      validationSchema={judicialProcessSchema}
-      onSubmit={handleSubmit}
-    >
-      {({
-        register,
-        errors,
-        touchedFields,
-        control,
-        isValid,
-        reset,
-        getValues,
-        setValue,
-        watch,
-      }) => (
-        <div className="grid grid-cols-12 gap-4">
-          <ReactiveField
-            className="col-span-12"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Código de Expediente"
-            name="fileCode"
-            register={register}
-            touched={touchedFields.fileCode}
-          />
+      <ReactiveForm
+          formId="judicial-process-edit"
+          initialValues={{
+            ...judicialProcess,
+            reclaims:
+                judicialProcess?.reclaims?.length > 0
+                    ? judicialProcess.reclaims
+                    : mockReclaims,
+          }}
+          options={{
+            mode: "onTouched",
+          }}
+          validationSchema={judicialProcessSchema}
+          onSubmit={handleSubmit}
+      >
+        {({
+            register,
+            errors,
+            touchedFields,
+            control,
+            isValid,
+            reset,
+            getValues,
+            setValue,
+            watch,
+          }) => (
+            <div className="grid grid-cols-12 gap-4">
+              <ReactiveField
+                  className="col-span-12"
+                  control={control}
+                  errors={errors}
+                  isRequired={true}
+                  label="Código de Expediente"
+                  name="fileCode"
+                  register={register}
+                  touched={touchedFields.fileCode}
+              />
 
-          <ReactiveField
-            className="col-span-4"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Demandado"
-            name="demanded"
-            register={register}
-            touched={touchedFields.demanded}
-          />
+              <ReactiveField
+                  className="col-span-6"
+                  control={control}
+                  errors={errors}
+                  isRequired={true}
+                  label="Demandante"
+                  name="plaintiff"
+                  register={register}
+                  touched={touchedFields.plaintiff}
+              />
 
-          <ReactiveField
-            className="col-span-4"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Demandante"
-            name="plaintiff"
-            register={register}
-            touched={touchedFields.plaintiff}
-          />
+              <ReactiveField
+                  className="col-span-6"
+                  control={control}
+                  errors={errors}
+                  isRequired={true}
+                  label="Demandado"
+                  name="demanded"
+                  register={register}
+                  touched={touchedFields.demanded}
+              />
 
-          <ReactiveField
-            className="col-span-4"
-            control={control}
-            errors={errors}
-            label="Co Demandado"
-            name="coDefendant"
-            register={register}
-          />
+              <ReactiveField
+                  className="col-span-6"
+                  control={control}
+                  errors={errors}
+                  label="Co Demandado"
+                  name="coDefendant"
+                  register={register}
+              />
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Proyecto"
-            name="projectId"
-            slug={MasterOptionConfig.proyectosGeneral}
-          />
+              <DynamicAutocomplete
+                  className="col-span-6 nextui-input-nomodal"
+                  control={control}
+                  isRequired={true}
+                  label="Proyecto"
+                  name="projectId"
+                  slug={MasterOptionConfig.proyectosGeneral}
+              />
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Moneda"
-            name="controversialMatter"
-            optionValue="name"
-            slug={MasterOptionConfig.moneda}
-          />
+              <ResponsibleAutocomplete
+                  className={`nextui-input-nomodal ${!judicialProcess ? "col-span-6" : "col-span-6"}`}
+                  control={control}
+                  isRequired={true}
+                  label="Responsable principal"
+                  name="responsibleId"
+              />
 
-          <ResponsibleAutocomplete
-            className={`nextui-input-nomodal ${!judicialProcess ? "col-span-6" : "col-span-4"}`}
-            control={control}
-            isRequired={true}
-            label="Responsable principal"
-            name="responsibleId"
-          />
+              <ResponsibleAutocomplete
+                  className={`nextui-input-nomodal ${!judicialProcess ? "col-span-6" : "col-span-6"}`}
+                  control={control}
+                  isRequired={false}
+                  label="Responsable secundario"
+                  name="secondaryResponsibleId"
+              />
 
-          <ResponsibleAutocomplete
-            className={`nextui-input-nomodal ${!judicialProcess ? "col-span-6" : "col-span-4"}`}
-            control={control}
-            isRequired={false}
-            label="Responsable secundario"
-            name="secondaryResponsibleId"
-          />
+              <DynamicAutocomplete
+                  className="col-span-6 nextui-input-nomodal"
+                  control={control}
+                  isRequired={true}
+                  label="Moneda"
+                  name="controversialMatter"
+                  optionValue="name"
+                  slug={MasterOptionConfig.moneda}
+              />
 
-          {judicialProcess && judicialProcess?.entityReference && (
-            <>
-              <ReactiveNumericField
+              {judicialProcess && judicialProcess?.entityReference && (
+                  <>
+                    <div className="col-span-12 flex flex-col gap-4">
+                      <Reclaims
+                          control={control}
+                          errors={errors}
+                          getValues={getValues}
+                          pathname={pathname}
+                          provision={judicialProcess}
+                          register={register}
+                          setValue={setValue}
+                          watch={watch}
+                      />
+                    </div>
+                    {/* <ReactiveNumericField
                 readOnly
                 className="col-span-4"
                 control={control}
@@ -167,110 +180,110 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 register={register}
                 touched={touchedFields.amount}
                 type="number"
-              />
+              /> */}
 
-              <ProvisionCheck
-                control={control}
-                getValues={getValues}
-                pathname={pathname}
-                provision={judicialProcess as GetJudicialProcessDto}
-                register={register}
-                reset={reset}
-                setValue={setValue}
-                watch={watch}
-              />
+                    <ProvisionCheck
+                        control={control}
+                        getValues={getValues}
+                        pathname={pathname}
+                        provision={judicialProcess as GetJudicialProcessDto}
+                        register={register}
+                        reset={reset}
+                        setValue={setValue}
+                        watch={watch}
+                    />
 
-              <GlobalAttributeFields
-                control={control}
-                entityReference={judicialProcess?.entityReference}
-                getValues={getValues}
-                modelType={ModelType.JudicialProcess}
-                pathname={pathname}
-                register={register}
-                reset={reset}
-              />
+                    <GlobalAttributeFields
+                        control={control}
+                        entityReference={judicialProcess?.entityReference}
+                        getValues={getValues}
+                        modelType={ModelType.JudicialProcess}
+                        pathname={pathname}
+                        register={register}
+                        reset={reset}
+                    />
 
-              <SectionAttributeFields
-                control={control}
-                entityReference={judicialProcess?.entityReference}
-                errors={errors}
-                getValues={getValues}
-                modelType={ModelType.JudicialProcess}
-                pathname={pathname}
-                provision={judicialProcess}
-                register={register}
-                reset={reset}
-                setValue={setValue}
-                watch={watch}
-              />
+                    <SectionAttributeFields
+                        control={control}
+                        entityReference={judicialProcess?.entityReference}
+                        errors={errors}
+                        getValues={getValues}
+                        modelType={ModelType.JudicialProcess}
+                        pathname={pathname}
+                        provision={judicialProcess}
+                        register={register}
+                        reset={reset}
+                        setValue={setValue}
+                        watch={watch}
+                    />
 
-              <div className="col-span-12">
-                <Alert
-                  color={data?.updated ? "primary" : "warning"}
-                  description={data?.alternativeMessage}
-                  endContent={
-                    <div className="flex my-auto">
-                      <Button
-                        className="bg-transparent"
-                        color={data?.updated ? "primary" : "warning"}
-                        size="sm"
-                        variant="flat"
-                        onPress={() => {
-                          const currentPath = window.location.pathname;
-                          const cej_route = currentPath.replace(
-                            /edit\/\d+/,
-                            "cej",
-                          );
+                    <div className="col-span-12">
+                      <Alert
+                          color={data?.updated ? "primary" : "warning"}
+                          description={data?.alternativeMessage}
+                          endContent={
+                            <div className="flex my-auto">
+                              <Button
+                                  className="bg-transparent"
+                                  color={data?.updated ? "primary" : "warning"}
+                                  size="sm"
+                                  variant="flat"
+                                  onPress={() => {
+                                    const currentPath = window.location.pathname;
+                                    const cej_route = currentPath.replace(
+                                        /edit\/\d+/,
+                                        "cej"
+                                    );
 
-                          router.push(
-                            `${cej_route}/${judicialProcess?.fileCode}`,
-                          );
-                        }}
-                      >
-                        Ver detalle
-                      </Button>
+                                    router.push(
+                                        `${cej_route}/${judicialProcess?.fileCode}`
+                                    );
+                                  }}
+                              >
+                                Ver detalle
+                              </Button>
+                            </div>
+                          }
+                          title={data?.message}
+                      />
                     </div>
-                  }
-                  title={data?.message}
-                />
+
+                    <div className="col-span-12 mt-4">
+                      <DynamicStepper
+                          entityReference={judicialProcess?.entityReference}
+                          modelType={ModelType.JudicialProcess}
+                      />
+                    </div>
+                  </>
+              )}
+
+              <div className="col-span-12 flex flex-row gap-4">
+                <Button
+                    className="standard-btn bg-red-500 text-white w-fit"
+                    isDisabled={
+                        !isValid || !canUse(user.role, CanUsePermission.editItem)
+                    }
+                    type="submit"
+                >
+                  {judicialProcess && judicialProcess.entityReference
+                      ? "Editar ficha"
+                      : "Guardar ficha"}
+                </Button>
+
+                {judicialProcess && judicialProcess?.entityReference && (
+                    <Button
+                        className="word-btn bg-red-500 text-white w-fit"
+                        isDisabled={!canUse(user.role, CanUsePermission.editItem)}
+                        type="button"
+                        onPress={handleStepSubmit}
+                    >
+                      Guardar y continuar paso
+                    </Button>
+                )}
               </div>
-
-              <div className="col-span-12 mt-4">
-                <DynamicStepper
-                  entityReference={judicialProcess?.entityReference}
-                  modelType={ModelType.JudicialProcess}
-                />
-              </div>
-            </>
-          )}
-
-          <div className="col-span-12 flex flex-row gap-4">
-            <Button
-              className="standard-btn bg-red-500 text-white w-fit"
-              isDisabled={
-                !isValid || !canUse(user.role, CanUsePermission.editItem)
-              }
-              type="submit"
-            >
-              {judicialProcess && judicialProcess.entityReference
-                ? "Editar expediente"
-                : "Guardar expediente"}
-            </Button>
-
-            {judicialProcess && judicialProcess?.entityReference && (
-              <Button
-                className="word-btn bg-red-500 text-white w-fit"
-                isDisabled={!canUse(user.role, CanUsePermission.editItem)}
-                type="button"
-                onPress={handleStepSubmit}
-              >
-                Guardar y continuar paso
-              </Button>
-            )}
-          </div>
-        </div>
-      )}
-    </ReactiveForm>
+            </div>
+        )}
+      </ReactiveForm>
   );
 };
 
