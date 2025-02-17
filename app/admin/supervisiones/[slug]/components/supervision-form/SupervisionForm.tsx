@@ -16,6 +16,7 @@ import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
+import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -76,10 +77,10 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             control={control}
             errors={errors}
             isRequired={true}
-            label="Demandado"
-            name="demanded"
+            label="Demandante"
+            name="plaintiff"
             register={register}
-            touched={touchedFields.demanded}
+            touched={touchedFields.plaintiff}
           />
 
           <ReactiveField
@@ -87,10 +88,10 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             control={control}
             errors={errors}
             isRequired={true}
-            label="Demandante"
-            name="plaintiff"
+            label="Demandado"
+            name="demanded"
             register={register}
-            touched={touchedFields.plaintiff}
+            touched={touchedFields.demanded}
           />
 
           <ReactiveField
@@ -111,6 +112,14 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             slug={MasterOptionConfig.proyectosGeneral}
           />
 
+          <ResponsibleAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            isRequired={true}
+            label="Responsable principal"
+            name="responsibleId"
+          />
+
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -121,16 +130,8 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             slug={MasterOptionConfig.moneda}
           />
 
-          <ResponsibleAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Responsable principal"
-            name="responsibleId"
-          />
-
           <DynamicAutocomplete
-            className="col-span-4 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
             control={control}
             filter={{
               slugSubmodule: mappingRevertSubmodules[slugSubmodule],
@@ -142,7 +143,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
           />
 
           <DynamicAutocomplete
-            className="col-span-4 nextui-input-nomodal"
+            className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
             label="Situación"
@@ -152,12 +153,25 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
 
           {supervision && supervision?.entityReference && (
             <>
-              <ReactiveNumericField
+              <div className="col-span-12 flex flex-col gap-4">
+                <Reclaims
+                  control={control}
+                  errors={errors}
+                  getValues={getValues}
+                  pathname={pathname}
+                  provision={supervision}
+                  register={register}
+                  setValue={setValue}
+                  watch={watch}
+                />
+              </div>
+              {/* <ReactiveNumericField
+                readOnly
                 className="col-span-4"
                 control={control}
                 endContent={
                   <div className="pointer-events-none flex items-center">
-                    <span className="text-default-400 text-small">$</span>
+                    <span className="text-default-400 text-small" />
                   </div>
                 }
                 errors={errors}
@@ -167,7 +181,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 register={register}
                 touched={touchedFields.amount}
                 type="number"
-              />
+              /> */}
 
               <ProvisionCheck
                 control={control}
