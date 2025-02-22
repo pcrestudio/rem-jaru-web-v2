@@ -210,13 +210,14 @@ const GlobalAttributeFields: FC<GlobalAttributeFieldsProps> = ({
                 render={({ field: { onChange, value } }) => (
                   <Autocomplete
                     fullWidth
+                    className="nextui-input-nomodal"
                     getOptionLabel={(option) => option.optionLabel || ""}
                     isOptionEqualToValue={(option, value) => option === value}
                     options={global.options}
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        className="nextui-input-nomodal"
+                        className=""
                         label={global.label}
                         size="medium"
                         variant="filled"

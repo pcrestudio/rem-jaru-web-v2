@@ -90,7 +90,7 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
                 touched={touchedFields.slug}
               />
               <LocalAutocomplete
-                className="col-span-6"
+                className="col-span-6 nextui-input-nomodal"
                 control={control}
                 errors={errors}
                 isRequired={true}
@@ -100,7 +100,7 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
                 register={register}
               />
               <LocalAutocomplete
-                className="col-span-12"
+                className="col-span-12 nextui-input-nomodal"
                 control={control}
                 errors={errors}
                 isRequired={true}
@@ -177,7 +177,7 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
 
           {isSelectedSubmodule && (
             <AsyncAutocomplete
-              className="col-span-12 nextui-input"
+              className="col-span-12 nextui-input-nomodal"
               control={control}
               errors={errors}
               isRequired={true}

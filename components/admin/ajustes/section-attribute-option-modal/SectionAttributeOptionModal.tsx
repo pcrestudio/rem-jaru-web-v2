@@ -19,6 +19,7 @@ export interface SectionAttributeOptionModalProps {
   ) => void;
   handleSubmit?: (data: any, reset: () => void) => void;
   attributeId?: number;
+  optionType?: string;
   attributeOption?: GetSectionAttributeOptionDto;
 }
 
@@ -30,6 +31,7 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
   attributeId,
   selectedConfigureOption,
   attributeOption,
+  optionType,
 }) => {
   const { data } = useSWR<GetSectionAttributeOptionDto[]>(
     `${environment.baseUrl}/extended/options?attributeId=${attributeId}`,
@@ -55,9 +57,12 @@ const SectionAttributeOptionModal: FC<SectionAttributeOptionModalProps> = ({
               <div className="grid grid-cols-12 gap-4 px-6 min-w-[480px]">
                 <input
                   type="hidden"
-                  {...register("attributeId", { value: attributeId })}
+                  {...register(`${optionType}AttributeId`, {
+                    value: attributeId,
+                  })}
                   defaultValue={attributeId}
                 />
+
                 <input
                   type="hidden"
                   {...register("sectionAttributeOptionId")}

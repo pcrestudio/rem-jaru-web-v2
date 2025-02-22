@@ -5,3 +5,7 @@ export interface GetModuleDto {
   isActive?: boolean;
   id?: number;
 }
+
+export interface GetGroupedModuleDto {
+  [moduleName: string]: GetModuleDto;
+}

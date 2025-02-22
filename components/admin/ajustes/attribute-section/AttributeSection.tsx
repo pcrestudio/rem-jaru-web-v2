@@ -15,9 +15,12 @@ interface AttributeSectionProps {
   submoduleId?: number;
 }
 
-const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
+const AttributeSection: FC<AttributeSectionProps> = ({
+  moduleId,
+  submoduleId,
+}) => {
   const { data } = useSWR<GetSectionDto[]>(
-    `${environment.baseUrl}/extended/sections?moduleId=${moduleId}`,
+    `${environment.baseUrl}/extended/sections?moduleId=${moduleId}&submoduleId=${submoduleId}`,
     fetcher,
   );
   const {
@@ -47,6 +50,7 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
           attributeOption={attributeOption}
           handleSubmit={handleAttributeOptionSubmit}
           isOpen={isOpen}
+          optionType={!attribute?.sectionAttributeId ? "global" : "section"}
           selectedConfigureOption={selectedAttributeOption}
           title={`Configurar opciones`}
           onCloseChange={onSectionAttributeOptionModalClose}
@@ -66,9 +70,12 @@ const AttributeSection: FC<AttributeSectionProps> = ({ moduleId }) => {
         data.map((section) => (
           <Accordion
             key={`${section.label}`}
+            className="master-option-global-accordion"
             itemClasses={{
+              title:
+                "master-option-title text-cerulean-950 font-bold text-base",
               base: "mb-4",
-              title: "text-cerulean-950 font-semibold text-base",
+              trigger: "![&>span]:rotate-0",
             }}
             selectionMode="multiple"
             variant="splitted"

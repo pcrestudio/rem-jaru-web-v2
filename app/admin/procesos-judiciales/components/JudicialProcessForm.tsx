@@ -4,6 +4,7 @@ import { Alert } from "@heroui/alert";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 
+import Reclaims from "@/app/commons/components/Reclaims/Reclaims";
 import judicialProcessSchema from "@/app/validations/create-judicial-process.validation";
 import ReactiveField from "@/components/form/ReactiveField";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
@@ -19,17 +20,18 @@ import GlobalAttributeFields from "@/components/shared/global-attribute-fields/G
 import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
 import ProvisionCheck from "@/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck";
 import { ModelType } from "@/config/model-type.config";
-import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
-import Reclaims from "./Reclaims/Reclaims";
+import { labelConfig } from "@/config/label.config";
+import { SlugConfig } from "@/config/slug.config";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
   handleStepSubmit?: () => void;
   judicialProcess?: GetJudicialProcessDto;
   pathname?: string;
+  slug: string;
 }
 
 const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
@@ -37,6 +39,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
   pathname,
   handleSubmit,
   handleStepSubmit,
+  slug,
 }) => {
   const { data } = useSWR<GetCejDossierDetailDto>(
     `${environment.baseUrl}/cej/detail?fileCode=${judicialProcess?.fileCode}`,
@@ -77,7 +80,9 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             className="col-span-12"
             control={control}
             errors={errors}
-            isRequired={true}
+            isRequired={
+              slug === SlugConfig.judicial_process_criminal ? false : true
+            }
             label="Código de Expediente"
             name="fileCode"
             register={register}
@@ -89,7 +94,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             control={control}
             errors={errors}
             isRequired={true}
-            label="Demandante"
+            label={labelConfig[slug]["plaintiff"]}
             name="plaintiff"
             register={register}
             touched={touchedFields.plaintiff}
@@ -100,7 +105,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             control={control}
             errors={errors}
             isRequired={true}
-            label="Demandado"
+            label={labelConfig[slug]["demanded"]}
             name="demanded"
             register={register}
             touched={touchedFields.demanded}
@@ -110,7 +115,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             className="col-span-6"
             control={control}
             errors={errors}
-            label="Co Demandado"
+            label={labelConfig[slug]["coDefendant"]}
             name="coDefendant"
             register={register}
           />
@@ -119,7 +124,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
-            label="Proyecto"
+            label="Razón social"
             name="projectId"
             slug={MasterOptionConfig.proyectosGeneral}
           />
@@ -152,6 +157,16 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
 
           {judicialProcess && judicialProcess?.entityReference && (
             <>
+              <GlobalAttributeFields
+                control={control}
+                entityReference={judicialProcess?.entityReference}
+                getValues={getValues}
+                modelType={ModelType.JudicialProcess}
+                pathname={pathname}
+                register={register}
+                reset={reset}
+              />
+
               <div className="col-span-12 flex flex-col gap-4">
                 <Reclaims
                   control={control}
@@ -164,23 +179,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                   watch={watch}
                 />
               </div>
-              {/* <ReactiveNumericField
-                readOnly
-                className="col-span-4"
-                control={control}
-                endContent={
-                  <div className="pointer-events-none flex items-center">
-                    <span className="text-default-400 text-small" />
-                  </div>
-                }
-                errors={errors}
-                isRequired={true}
-                label="Cuantía"
-                name="amount"
-                register={register}
-                touched={touchedFields.amount}
-                type="number"
-              /> */}
 
               <ProvisionCheck
                 control={control}
@@ -191,16 +189,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 reset={reset}
                 setValue={setValue}
                 watch={watch}
-              />
-
-              <GlobalAttributeFields
-                control={control}
-                entityReference={judicialProcess?.entityReference}
-                getValues={getValues}
-                modelType={ModelType.JudicialProcess}
-                pathname={pathname}
-                register={register}
-                reset={reset}
               />
 
               <SectionAttributeFields

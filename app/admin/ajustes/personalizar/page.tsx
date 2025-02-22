@@ -9,7 +9,10 @@ import toast from "react-hot-toast";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import { GetModuleDto } from "@/app/dto/modules/get-module.dto";
+import {
+  GetGroupedModuleDto,
+  GetModuleDto,
+} from "@/app/dto/modules/get-module.dto";
 import AttributeSection from "@/components/admin/ajustes/attribute-section/AttributeSection";
 import SettingsSectionModal from "@/app/admin/ajustes/maestros/components/settings-section-modal/SettingsSectionModal";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
@@ -21,10 +24,11 @@ import useStore from "@/lib/store";
 export default function Personalizar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const { data } = useSWR<GetModuleDto[]>(
-    `${environment.baseUrl}/modules`,
+  const { data } = useSWR<GetGroupedModuleDto>(
+    `${environment.baseUrl}/modules/settings`,
     fetcher,
   );
+  const groupedData = data ? Object.entries(data) : [];
   const handleSubmit = async (
     payload: CreateSettingSectionDto & CreateSectionAttributeDto,
   ) => {
@@ -82,29 +86,33 @@ export default function Personalizar() {
             Agregar sección
           </Button>
         </div>
-        {data && (
-          <Accordion
-            itemClasses={{
-              title: "text-cerulean-950 font-bold text-lg",
-              trigger: "border-b-red-500",
-            }}
-            selectionMode="multiple"
-            variant="splitted"
-          >
-            {data.map((module) => (
-              <AccordionItem
-                key={module.id}
-                aria-label={`Accordion ${module.id}`}
-                title={module.name}
+        <div className="flex flex-col gap-2">
+          {groupedData.length > 0 &&
+            groupedData.map(([name, modules]) => (
+              <Accordion
+                key={name}
+                className="master-global-accordion"
+                itemClasses={{
+                  base: "-p-0",
+                  title: "master-title text-cerulean-950 font-bold text-lg",
+                  content: "master-accordion",
+                  trigger: "border-b-red-500",
+                }}
+                selectionMode="multiple"
+                variant="splitted"
               >
-                <AttributeSection
-                  key={`Section ${module.id}`}
-                  moduleId={module.id}
-                />
-              </AccordionItem>
+                <AccordionItem title={name}>
+                  <>
+                    <AttributeSection
+                      key={`Section ${modules.id}`}
+                      moduleId={Number(modules.id)}
+                      submoduleId={Number(modules.id)}
+                    />
+                  </>
+                </AccordionItem>
+              </Accordion>
             ))}
-          </Accordion>
-        )}
+        </div>
       </div>
     </>
   );

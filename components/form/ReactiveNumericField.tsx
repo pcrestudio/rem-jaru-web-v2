@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, InputHTMLAttributes, ReactNode } from "react";
+import React, { ChangeEvent, FC, InputHTMLAttributes, ReactNode } from "react";
 import { Input } from "@heroui/input";
 import { Control, Controller } from "react-hook-form";
 
@@ -17,6 +17,16 @@ export interface ReactiveFieldProps
   noModal?: boolean;
   endContent?: ReactNode;
 }
+
+interface SuffixNumericContentProps {
+  suffix: string;
+}
+
+export const suffixNumericContent = ({ suffix }: SuffixNumericContentProps) => (
+  <div className="pointer-events-none flex items-center">
+    <span className="text-default-400 text-small">{suffix}</span>
+  </div>
+);
 
 const ReactiveNumericField: FC<ReactiveFieldProps> = ({
   name,

@@ -2,9 +2,9 @@ import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 
 export interface ModularProps {
-  control: any;
   provision: GetJudicialProcessDto | GetSupervisionDto;
-  register: any;
+  control?: any;
+  register?: any;
   pathname?: string;
   getValues?: any;
   reset?: any;

@@ -18,9 +18,12 @@ interface UseReportJudicialProcessProps {
   data: GetInitReportDto;
   studioYAxisData: string[];
   instanceYAxisData: string[];
+  internalSpecialistYAxisData: string[];
   studioChartData: ChartData[];
   matterChartData: ChartData[];
+  criticalProcessesChartData: ChartData[];
   instanceChartData: ChartData[];
+  internalSpecialistData: ChartData[];
   handleExchange: () => void;
   exchange: GetExchangeDto;
   calculateTotal: (shouldBeDollar: boolean, amount: number) => string | number;
@@ -42,6 +45,10 @@ interface UseReportJudicialProcessProps {
     columnKey: string | number,
   ) => ReactNode;
   renderCriticalProcessesCell: (
+    item: GetMasterOptionReportDto,
+    columnKey: string | number,
+  ) => ReactNode;
+  renderInternalSpecialistBarChartCell: (
     item: GetMasterOptionReportDto,
     columnKey: string | number,
   ) => ReactNode;
@@ -90,6 +97,9 @@ const useReportJudicialProcess = (
 
   const studioYAxisData =
     data?.studio.report[0]?.masterOption?.map((option) => option.name) ?? [];
+
+  const internalSpecialistYAxisData =
+    data?.internalSpecialists.report.map((option) => option.name) ?? [];
 
   const studioChartData =
     (data?.studio.report[0]?.masterOption?.map((option) => ({
@@ -153,6 +163,12 @@ const useReportJudicialProcess = (
     [mattersTotal],
   );
 
+  const criticalProcessesChartData =
+    (data?.criticalProcesses.report.map((option) => ({
+      name: option.name,
+      value: option._count.group,
+    })) as ChartData[]) ?? [];
+
   const totalContingencies = data?.contingencies.report.reduce(
     (sum, item) => sum + (item.count || 0),
     0,
@@ -168,7 +184,7 @@ const useReportJudicialProcess = (
           return <p>{contingency.count}</p>;
 
         case "percent":
-          return <p>{percent} %</p>;
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
 
         default:
           return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
@@ -192,7 +208,7 @@ const useReportJudicialProcess = (
           return <p>{contingency._count.group}</p>;
 
         case "percent":
-          return <p>{percent} %</p>;
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
 
         default:
           return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
@@ -250,6 +266,37 @@ const useReportJudicialProcess = (
     return amount;
   };
 
+  const internalSpecialistData =
+    (data?.internalSpecialists.report.map((option) => ({
+      name: option.name,
+      type: "bar",
+      data: [option._count.group],
+    })) as ChartData[]) ?? [];
+
+  const totalInternalSpecialist = data?.internalSpecialists.report.reduce(
+    (sum, item) => sum + (item._count.group || 0),
+    0,
+  );
+
+  const renderInternalSpecialistBarChartCell = useCallback(
+    (report: GetMasterOptionReportDto, columnKey: string | number) => {
+      const cellValue = report[columnKey];
+      const percent = (report._count.group / totalInternalSpecialist) * 100;
+
+      switch (columnKey) {
+        case "count":
+          return <p>{report._count.group}</p>;
+
+        case "percent":
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+
+        default:
+          return cellValue;
+      }
+    },
+    [total],
+  );
+
   return {
     data,
     exchange,
@@ -259,6 +306,7 @@ const useReportJudicialProcess = (
     studioChartData,
     studioYAxisData,
     matterChartData,
+    criticalProcessesChartData,
     renderBarChartCell,
     renderPieChartCell,
     renderInstanceBarChartCell,
@@ -267,6 +315,9 @@ const useReportJudicialProcess = (
     totalJudicialProcess: total,
     instanceChartData,
     instanceYAxisData,
+    internalSpecialistYAxisData,
+    internalSpecialistData,
+    renderInternalSpecialistBarChartCell,
   };
 };
 

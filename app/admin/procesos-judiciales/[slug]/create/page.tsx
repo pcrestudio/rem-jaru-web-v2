@@ -9,6 +9,7 @@ import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/Judi
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import useStore from "@/lib/store";
+import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 
 export default function ProcesosJudicialesSlugCreate() {
   const pathname: string = usePathname();
@@ -67,7 +68,11 @@ export default function ProcesosJudicialesSlugCreate() {
         onConfirm={redirectToEdit}
       />
       <BreadcrumbsPath pathname={pathname} />
-      <JudicialProcessForm handleSubmit={onSubmit} pathname={pathname} />
+      <JudicialProcessForm
+        handleSubmit={onSubmit}
+        pathname={pathname}
+        slug={mappingRevertSubmodules[slug]}
+      />
     </div>
   );
 }

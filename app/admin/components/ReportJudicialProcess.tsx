@@ -22,6 +22,7 @@ import PieChart from "@/app/admin/components/pie/PieChart/PieChart";
 import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessPieBarColumns";
 import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessInstanceHorizontalBarColumns";
 import { convertFormatDistanceToNow } from "@/utils/format_date";
+import internalSpecialistColumns from "@/app/admin/components/ReportChartDataGrid/columns/internalSpecialistColumns";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;
@@ -37,6 +38,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     calculateTotal,
     isDollar,
     instanceChartData,
+    criticalProcessesChartData,
     renderContingenciesCell,
     renderCriticalProcessesCell,
     renderInstanceBarChartCell,
@@ -45,6 +47,9 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     studioYAxisData,
     instanceYAxisData,
     totalJudicialProcess,
+    internalSpecialistYAxisData,
+    internalSpecialistData,
+    renderInternalSpecialistBarChartCell,
   } = useReportJudicialProcess(filter);
 
   return (
@@ -79,7 +84,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
           currency={isDollar ? "$" : "S/. "}
-          title="Monto total"
+          title="Monto demandado"
           total={calculateTotal(isDollar, data?.amountSum?.report)}
         />
       </div>
@@ -108,11 +113,22 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         />
       </div>
       <div className="col-span-6">
-        <ReportChartDataGrid<GetMasterOptionReportDto>
+        <PieChart<GetMasterOptionReportDto>
           cells={renderCriticalProcessesCell}
+          chartData={criticalProcessesChartData}
           columns={judicialProcessCriticalProcessesColumns}
-          dataGridKey="name"
-          items={data ? data?.criticalProcesses.report : []}
+          items={data?.criticalProcesses.report}
+          title="N° de procesos judiciales por criticidad"
+        />
+      </div>
+      <div className="col-span-12">
+        <HorizontalBarChart<GetMasterOptionReportDto>
+          cells={renderInternalSpecialistBarChartCell}
+          chartData={internalSpecialistData}
+          columns={internalSpecialistColumns}
+          items={data?.internalSpecialists.report}
+          title="N° de procesos judiciales por especialista interno"
+          yAxisData={internalSpecialistYAxisData}
         />
       </div>
       <div className="col-span-12">
@@ -124,7 +140,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           title="N° de procesos judiciales por materias"
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-12">
         <HorizontalBarChart<GetInstancesReportDto>
           cells={renderInstanceBarChartCell}
           chartData={instanceChartData}
@@ -136,7 +152,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         />
       </div>
       {data && data?.studio.report[0]?.masterOption.length > 0 && (
-        <div className="col-span-6">
+        <div className="col-span-12">
           <HorizontalBarChart<GetMasterOptionReportDto>
             cells={renderBarChartCell}
             chartData={studioChartData}

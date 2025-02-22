@@ -13,7 +13,7 @@ export interface SidebarProps {
 }
 
 const mappingWidth: Record<string, string> = {
-  collapsed: "w-[140px]",
+  collapsed: "w-[110px] lg:w-[140px]",
   expanded: "w-[260px]",
 };
 

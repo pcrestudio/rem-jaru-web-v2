@@ -8,6 +8,9 @@ export interface GetInitReportDto {
   amountSum: {
     report: number;
   };
+  internalSpecialists: {
+    report: GetMasterOptionReportDto[];
+  };
   contingencies: {
     report: GetContingenciesReportDto[];
   };

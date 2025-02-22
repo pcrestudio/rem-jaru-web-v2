@@ -14,9 +14,8 @@ import ProvisionCheck from "@/app/admin/procesos-judiciales/components/Provision
 import GlobalAttributeFields from "@/components/shared/global-attribute-fields/GlobalAttributeFields";
 import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
-import ReactiveNumericField from "@/components/form/ReactiveNumericField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
-import Reclaims from "@/app/admin/procesos-judiciales/components/Reclaims/Reclaims";
+import Reclaims from "@/app/commons/components/Reclaims/Reclaims";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -107,7 +106,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             className="col-span-6 nextui-input-nomodal"
             control={control}
             isRequired={true}
-            label="Proyecto"
+            label="Razón social"
             name="projectId"
             slug={MasterOptionConfig.proyectosGeneral}
           />
@@ -207,6 +206,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
               <SectionAttributeFields
                 control={control}
                 entityReference={supervision?.entityReference}
+                errors={errors}
                 getValues={getValues}
                 modelType={ModelType.Supervision}
                 pathname={pathname}
@@ -215,7 +215,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 reset={reset}
                 setValue={setValue}
                 watch={watch}
-                errors={errors}
               />
 
               <div className="col-span-12 mt-4">

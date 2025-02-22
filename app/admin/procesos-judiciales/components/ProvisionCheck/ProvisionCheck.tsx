@@ -10,17 +10,15 @@ import { MasterOptionConfig } from "@/config/master-option.config";
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import { ContingencyLevelConfig } from "@/config/contingency-level.config";
-import Reclaims from "../Reclaims/Reclaims";
 
 const ProvisionCheck: FC<ModularProps> = ({
-                                            control,
-                                            register,
-                                            provision,
-                                            getValues,
-                                            setValue,
-                                            watch,
-                                            pathname,
-                                          }) => {
+  control,
+  register,
+  provision,
+  getValues,
+  setValue,
+  watch,
+}) => {
   const values = getValues();
   const reclaims = watch("reclaims");
   const isProvisional = watch("isProvisional");
@@ -30,25 +28,27 @@ const ProvisionCheck: FC<ModularProps> = ({
 
   const calculateProvisionPercentage = () => {
     const provisionAmount = reclaims?.reduce(
-        (sum, item) => Number(item.provisionAmount) + sum,
-        0
+      (sum, item) => sum + Number(item.provisionAmount),
+      0,
     );
 
     const amount = reclaims?.reduce(
-        (sum, item) => Number(item.amount) + sum,
-        0
+      (sum, item) => sum + Number(item.amount),
+      0,
     );
 
     const percentage = (provisionAmount / amount) * 100;
 
     setValue(
-        `${ExtendedAttributeConfig.provisionAmount}`,
-        Number(provisionAmount).toFixed(2)
+      `${ExtendedAttributeConfig.provisionAmount}`,
+      Number(provisionAmount).toFixed(2),
     );
 
+    setValue(`${ExtendedAttributeConfig.amount}`, Number(amount).toFixed(2));
+
     setValue(
-        ExtendedAttributeConfig.provisionContingency,
-        Math.round(percentage)
+      ExtendedAttributeConfig.provisionContingency,
+      Math.round(percentage),
     );
   };
 
@@ -69,7 +69,6 @@ const ProvisionCheck: FC<ModularProps> = ({
       newLevel = ContingencyLevelConfig.virtualmente;
     }
 
-    // Solo actualiza si el nivel cambió
     if (watch(ExtendedAttributeConfig.contingencyLevel) !== newLevel) {
       setValue(ExtendedAttributeConfig.contingencyLevel, newLevel);
     }
@@ -89,8 +88,8 @@ const ProvisionCheck: FC<ModularProps> = ({
       const provisionAmount = (amount * provisionContingency) / 100;
 
       setValue(
-          ExtendedAttributeConfig.provisionAmount,
-          provisionAmount.toFixed(2)
+        ExtendedAttributeConfig.provisionAmount,
+        provisionAmount.toFixed(2),
       );
     }
   };
@@ -104,62 +103,28 @@ const ProvisionCheck: FC<ModularProps> = ({
   }, [contingencyPercentage]);
 
   return (
-      <>
-        {values?.isProvisional && (
-            <>
-              <ReactiveNumericField
-                  readOnly
-                  className="col-span-4"
-                  control={control}
-                  endContent={
-                    <div className="pointer-events-none flex items-center">
-                      <span className="text-default-400 text-small" />
-                    </div>
-                  }
-                  errors={errors}
-                  isRequired={true}
-                  label="Cuantía"
-                  name="amount"
-                  register={register}
-                  //touched={touchedFields.amount}
-                  type="number"
-              />
-              <ReactiveNumericField
-                  readOnly
-                  className="col-span-4"
-                  control={control}
-                  endContent={
-                    <div className="pointer-events-none flex items-center">
-                      <span className="text-default-400 text-small">%</span>
-                    </div>
-                  }
-                  errors={errors}
-                  label="Provisión estimada"
-                  max={100}
-                  min={0}
-                  name="provisionContingency"
-                  register={register}
-              />
-
-              <ReactiveNumericField
-                  readOnly
-                  className="col-span-4"
-                  control={control}
-                  endContent={
-                    <div className="pointer-events-none flex items-center">
-                      <span className="text-default-400 text-small">S/.</span>
-                    </div>
-                  }
-                  errors={errors}
-                  label="Monto provisionado"
-                  name="provisionAmount"
-                  register={register}
-              />
-            </>
-        )}
-
-        <ReactiveNumericField
-            className="col-span-6"
+    <>
+      {values?.isProvisional && (
+        <>
+          <ReactiveNumericField
+            readOnly
+            className="col-span-4"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small" />
+              </div>
+            }
+            errors={errors}
+            isRequired={true}
+            label="Monto demandado"
+            name="amount"
+            register={register}
+            type="number"
+          />
+          <ReactiveNumericField
+            readOnly
+            className="col-span-4"
             control={control}
             endContent={
               <div className="pointer-events-none flex items-center">
@@ -167,61 +132,94 @@ const ProvisionCheck: FC<ModularProps> = ({
               </div>
             }
             errors={errors}
-            label="Porcentaje de contingencia estimado"
+            label="Provisión estimada"
             max={100}
             min={0}
-            name="contingencyPercentage"
+            name="provisionContingency"
             register={register}
-        />
+          />
 
-        <DynamicAutocomplete
-            disabled
-            className="col-span-6 nextui-input-nomodal"
+          <ReactiveNumericField
+            readOnly
+            className="col-span-4"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">S/.</span>
+              </div>
+            }
+            errors={errors}
+            label="Monto provisionado"
+            name="provisionAmount"
+            register={register}
+          />
+        </>
+      )}
+
+      <ReactiveNumericField
+        className="col-span-6"
+        control={control}
+        endContent={
+          <div className="pointer-events-none flex items-center">
+            <span className="text-default-400 text-small">%</span>
+          </div>
+        }
+        errors={errors}
+        label="Porcentaje de contingencia estimado"
+        max={100}
+        min={0}
+        name="contingencyPercentage"
+        register={register}
+      />
+
+      <DynamicAutocomplete
+        disabled
+        className="col-span-6 nextui-input-nomodal"
+        control={control}
+        errors={errors}
+        label="Nivel de contigencia"
+        name="contingencyLevel"
+        optionValue="slug"
+        register={register}
+        slug={MasterOptionConfig["nivel-contingencia"]}
+      />
+
+      <ReactiveSwitch
+        className="col-span-12"
+        control={control}
+        isSelected={
+          isProvisional !== undefined ? isProvisional : autoProvisional
+        }
+        label="¿Se exceptúa de provisión?"
+        name="isProvisional"
+        register={register}
+        onValueChange={(value) => {
+          setShouldOverride(true);
+          setValue(ExtendedAttributeConfig.isProvisional, value);
+        }}
+      />
+
+      {!values?.isProvisional && (
+        <>
+          <ReactiveTextArea
+            className="col-span-12 nextui-textarea-nomodal"
             control={control}
             errors={errors}
-            label="Nivel de contigencia"
-            name="contingencyLevel"
-            optionValue="slug"
+            label="Comentarios"
+            name="comment"
             register={register}
-            slug={MasterOptionConfig["nivel-contingencia"]}
-        />
+          />
 
-        <ReactiveSwitch
-            className="col-span-12"
+          <ReactiveFieldFile
+            className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
             control={control}
-            isSelected={
-              isProvisional !== undefined ? isProvisional : autoProvisional
-            }
-            label="¿Se exceptúa de provisión?"
-            name="isProvisional"
-            register={register}
-            onValueChange={(value) => {
-              setShouldOverride(true);
-              setValue(ExtendedAttributeConfig.isProvisional, value);
-            }}
-        />
-
-        {!values?.isProvisional && (
-            <>
-              <ReactiveTextArea
-                  className="col-span-12 nextui-textarea-nomodal"
-                  control={control}
-                  errors={errors}
-                  label="Comentarios"
-                  name="comment"
-                  register={register}
-              />
-
-              <ReactiveFieldFile
-                  className="col-span-12 [&_.custom-file-wrapper]:!border [&_.custom-file-wrapper]:!border-slate-200"
-                  control={control}
-                  defaultValue={provision?.guaranteeLetter ?? ""}
-                  label="Adjuntar carta de fianza"
-                  name="guaranteeLetter"
-              />
-            </>
-        )}
-      </>
+            defaultValue={provision?.guaranteeLetter ?? ""}
+            label="Adjuntar carta de fianza"
+            name="guaranteeLetter"
+          />
+        </>
+      )}
+    </>
   );
 };
 

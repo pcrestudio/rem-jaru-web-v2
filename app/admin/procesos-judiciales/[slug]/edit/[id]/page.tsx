@@ -32,7 +32,7 @@ import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
 import exportableWord from "@/utils/exportable_word";
 import { ModelType } from "@/config/model-type.config";
 import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
-import { upsertReclaims } from "@/app/api/reclaims/reclaims";
+import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
@@ -62,18 +62,6 @@ export default function ProcesosJudicialesSlugEdit() {
         },
         slug,
       );
-
-      if (payload.reclaims) {
-        const response = await upsertReclaims(
-          payload.reclaims,
-          data?.entityReference,
-          ModelType.JudicialProcess,
-        );
-
-        if (response.data) {
-          toast.success("Petitorios guardados.");
-        }
-      }
 
       if (data) {
         if (globalFields.length > 0) {
@@ -160,6 +148,7 @@ export default function ProcesosJudicialesSlugEdit() {
               }
         }
         pathname={pathname}
+        slug={mappingRevertSubmodules[slug]}
       />
     </div>
   );

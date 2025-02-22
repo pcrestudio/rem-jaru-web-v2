@@ -8,11 +8,11 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/react";
+import { Chip } from "@heroui/chip";
 
 import { mappingRole } from "@/config/mapping_role";
 import httpClient from "@/lib/httpClient";
 import { IUser } from "@/app/admin/usuarios/interfaces";
-import { Chip } from "@heroui/chip";
 import useStore from "@/lib/store";
 
 interface AppBarUserProps {
