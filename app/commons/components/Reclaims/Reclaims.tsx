@@ -53,7 +53,7 @@ const Reclaims: FC<ModularProps> = ({ provision }) => {
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
-              <Tooltip content="Editar To-Do">
+              <Tooltip content="Editar petitorio">
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
                   role="presentation"
@@ -63,7 +63,7 @@ const Reclaims: FC<ModularProps> = ({ provision }) => {
                 </span>
               </Tooltip>
 
-              <Tooltip content="Eliminar To-Do">
+              <Tooltip content="Eliminar petitorio">
                 <span
                   className="text-lg text-danger cursor-pointer active:opacity-50"
                   role="presentation"

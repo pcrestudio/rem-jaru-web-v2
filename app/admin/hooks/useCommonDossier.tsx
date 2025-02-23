@@ -36,9 +36,7 @@ const useCommonDossier = (
   params?: UseCommonDossierParams,
 ): UseCommonDossierProps => {
   const router = useRouter();
-  const { user, filter } = useStore();
-
-  console.log(filter);
+  const { user } = useStore();
 
   const filterByStudio =
     user.role === Role["super-admin"] || user.role === Role["admin"]

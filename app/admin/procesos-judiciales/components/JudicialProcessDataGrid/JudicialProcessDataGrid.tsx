@@ -26,8 +26,6 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
     toggleSelectedItem,
   });
 
-  console.log(filterByStudio);
-
   return (
     <CustomDataGrid<GetJudicialProcessDto>
       hasAddButton

@@ -14,6 +14,9 @@ export interface GetInitReportDto {
   contingencies: {
     report: GetContingenciesReportDto[];
   };
+  causes: {
+    report: GetMasterOptionReportDto[];
+  };
   criticalProcesses: {
     report: GetMasterOptionReportDto[];
   };

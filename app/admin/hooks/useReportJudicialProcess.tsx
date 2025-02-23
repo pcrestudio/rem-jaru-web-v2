@@ -24,6 +24,7 @@ interface UseReportJudicialProcessProps {
   criticalProcessesChartData: ChartData[];
   instanceChartData: ChartData[];
   internalSpecialistData: ChartData[];
+  causesChartData: ChartData[];
   handleExchange: () => void;
   exchange: GetExchangeDto;
   calculateTotal: (shouldBeDollar: boolean, amount: number) => string | number;
@@ -52,6 +53,10 @@ interface UseReportJudicialProcessProps {
     item: GetMasterOptionReportDto,
     columnKey: string | number,
   ) => ReactNode;
+  renderCausesCell: (
+    item: GetMasterOptionReportDto,
+    columnKey: string | number,
+  ) => ReactNode;
   totalJudicialProcess: number;
 }
 
@@ -61,22 +66,25 @@ const semaphoreColor = (name: string) => {
       return "bg-[#c20e4d] font-bold p-2 text-white";
 
     case "Alto":
-      return "bg-[#c20e4d] font-bold p-2 text-white";
+      return "bg-[#FF999A] font-bold p-2";
 
     case "Significativo":
       return "bg-[#c4841d] font-bold p-2";
 
     case "Medio":
-      return "bg-[#c4841d] font-bold p-2";
+      return "bg-[#FFF9CA] font-bold p-2";
+
+    case "Bajo":
+      return "bg-[#DFF0D9] font-bold p-2";
 
     case "Probable":
-      return "bg-[#c4841d] font-bold p-2";
+      return "bg-[#FF999A] font-bold p-2";
 
     case "Remoto":
-      return "bg-[#12a150] font-bold p-2";
+      return "bg-[#DFF0D9] font-bold p-2";
 
     default:
-      return "bg-[#f9c97c] font-bold p-2";
+      return "bg-[#FFF9CA] font-bold p-2";
   }
 };
 
@@ -297,6 +305,36 @@ const useReportJudicialProcess = (
     [total],
   );
 
+  const causesChartData =
+    (data?.causes.report.map((option) => ({
+      name: option.name,
+      value: option._count.group,
+    })) as ChartData[]) ?? [];
+
+  const totalCauses = data?.causes.report.reduce(
+    (sum, item) => sum + (item._count?.group || 0),
+    0,
+  );
+
+  const renderCausesCell = useCallback(
+    (causes: GetMasterOptionReportDto, columnKey: string | number) => {
+      const cellValue = causes[columnKey];
+      const percent = (causes._count.group / totalCauses) * 100;
+
+      switch (columnKey) {
+        case "count":
+          return <p>{causes._count.group}</p>;
+
+        case "percent":
+          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+
+        default:
+          return cellValue;
+      }
+    },
+    [totalCauses],
+  );
+
   return {
     data,
     exchange,
@@ -318,6 +356,8 @@ const useReportJudicialProcess = (
     internalSpecialistYAxisData,
     internalSpecialistData,
     renderInternalSpecialistBarChartCell,
+    causesChartData,
+    renderCausesCell,
   };
 };
 

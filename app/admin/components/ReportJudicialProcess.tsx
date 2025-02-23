@@ -23,6 +23,7 @@ import judicialProcessPieBarColumns from "@/app/admin/components/ReportChartData
 import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/ReportChartDataGrid/columns/judicialProcessInstanceHorizontalBarColumns";
 import { convertFormatDistanceToNow } from "@/utils/format_date";
 import internalSpecialistColumns from "@/app/admin/components/ReportChartDataGrid/columns/internalSpecialistColumns";
+import causesColumns from "@/app/admin/components/ReportChartDataGrid/columns/causesColumns";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;
@@ -38,7 +39,6 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     calculateTotal,
     isDollar,
     instanceChartData,
-    criticalProcessesChartData,
     renderContingenciesCell,
     renderCriticalProcessesCell,
     renderInstanceBarChartCell,
@@ -50,6 +50,8 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
     internalSpecialistYAxisData,
     internalSpecialistData,
     renderInternalSpecialistBarChartCell,
+    causesChartData,
+    renderCausesCell,
   } = useReportJudicialProcess(filter);
 
   return (
@@ -113,12 +115,20 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         />
       </div>
       <div className="col-span-6">
-        <PieChart<GetMasterOptionReportDto>
+        <ReportChartDataGrid<GetMasterOptionReportDto>
           cells={renderCriticalProcessesCell}
-          chartData={criticalProcessesChartData}
           columns={judicialProcessCriticalProcessesColumns}
-          items={data?.criticalProcesses.report}
-          title="N° de procesos judiciales por criticidad"
+          dataGridKey="name"
+          items={data ? data?.criticalProcesses.report : []}
+        />
+      </div>
+      <div className="col-span-12">
+        <PieChart<GetMasterOptionReportDto>
+          cells={renderCausesCell}
+          chartData={causesChartData}
+          columns={causesColumns}
+          items={data?.causes.report}
+          title="N° de procesos judiciales por causa/raíz"
         />
       </div>
       <div className="col-span-12">
