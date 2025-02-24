@@ -3,6 +3,22 @@ import { DataGridKey } from "@/config/datagrid-key.config";
 const judicialProcessColumns = [
   { key: "actions", label: "Opciones" },
   {
+    key: "responsible",
+    label: "Responsable principal",
+  },
+  {
+    key: "secondaryResponsible",
+    label: "Responsable secundario",
+  },
+  {
+    key: "project",
+    label: "Razón social",
+  },
+  {
+    key: "controversialMatter",
+    label: "Moneda",
+  },
+  {
     key: DataGridKey.connectLegal,
     label: "Código de Legal Connect",
   },

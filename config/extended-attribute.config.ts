@@ -1,5 +1,6 @@
 export enum ExtendedAttributeConfig {
   amount = "amount",
+  savingAmount = "savingAmount",
   concept = "concept",
   provisionContingency = "provisionContingency",
   provisionAmount = "provisionAmount",

@@ -10,6 +10,7 @@ import { MasterOptionConfig } from "@/config/master-option.config";
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import { ContingencyLevelConfig } from "@/config/contingency-level.config";
+import debounce from "@/utils/custom_debounce";
 
 const ProvisionCheck: FC<ModularProps> = ({
   control,
@@ -25,6 +26,24 @@ const ProvisionCheck: FC<ModularProps> = ({
   const [autoProvisional, setAutoProvisional] = useState(false);
   const [shouldOverride, setShouldOverride] = useState(false);
   const contingencyPercentage = watch("contingencyPercentage");
+
+  const handleChange = (value: number | string | object) => {
+    const amount = reclaims?.reduce(
+      (sum, item) => sum + Number(item.amount),
+      0,
+    );
+
+    if (value !== null) {
+      const savingAmount = amount - Number(value);
+
+      setValue(
+        `${ExtendedAttributeConfig.savingAmount}`,
+        Number(savingAmount).toFixed(2),
+      );
+    }
+  };
+
+  const debounceChange = debounce(handleChange, 300);
 
   const calculateProvisionPercentage = () => {
     const provisionAmount = reclaims?.reduce(
@@ -122,6 +141,7 @@ const ProvisionCheck: FC<ModularProps> = ({
             register={register}
             type="number"
           />
+
           <ReactiveNumericField
             readOnly
             className="col-span-4"
@@ -151,6 +171,36 @@ const ProvisionCheck: FC<ModularProps> = ({
             errors={errors}
             label="Monto provisionado"
             name="provisionAmount"
+            register={register}
+          />
+
+          <ReactiveNumericField
+            className="col-span-6"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">S/.</span>
+              </div>
+            }
+            errors={errors}
+            label="Monto pagado"
+            name="paidAmount"
+            register={register}
+            onChange={debounceChange}
+          />
+
+          <ReactiveNumericField
+            readOnly
+            className="col-span-6"
+            control={control}
+            endContent={
+              <div className="pointer-events-none flex items-center">
+                <span className="text-default-400 text-small">S/.</span>
+              </div>
+            }
+            errors={errors}
+            label="Ahorro generado"
+            name="savingAmount"
             register={register}
           />
         </>

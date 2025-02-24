@@ -148,6 +148,23 @@ const useCommonDossier = (
             </div>
           );
 
+        case "responsible":
+          return (
+            <p>{dossier.responsible ? dossier.responsible.displayName : "-"}</p>
+          );
+
+        case "secondaryResponsible":
+          return (
+            <p>
+              {dossier.secondaryResponsible
+                ? dossier.secondaryResponsible.displayName
+                : "-"}
+            </p>
+          );
+
+        case "project":
+          return <p>{dossier.project ? dossier.project.name : "-"}</p>;
+
         case DataGridKey.connectLegal:
           return <p>{getDataGridLabel(dossier, DataGridKey.connectLegal)}</p>;
 
