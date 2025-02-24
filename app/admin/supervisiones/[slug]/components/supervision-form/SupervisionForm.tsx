@@ -157,6 +157,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                   control={control}
                   errors={errors}
                   getValues={getValues}
+                  modelType={ModelType.Supervision}
                   pathname={pathname}
                   provision={supervision}
                   register={register}
@@ -164,23 +165,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                   watch={watch}
                 />
               </div>
-              {/* <ReactiveNumericField
-                readOnly
-                className="col-span-4"
-                control={control}
-                endContent={
-                  <div className="pointer-events-none flex items-center">
-                    <span className="text-default-400 text-small" />
-                  </div>
-                }
-                errors={errors}
-                isRequired={true}
-                label="Cuantía"
-                name="amount"
-                register={register}
-                touched={touchedFields.amount}
-                type="number"
-              /> */}
 
               <ProvisionCheck
                 control={control}

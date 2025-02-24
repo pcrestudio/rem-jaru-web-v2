@@ -172,6 +172,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                   control={control}
                   errors={errors}
                   getValues={getValues}
+                  modelType={ModelType.JudicialProcess}
                   pathname={pathname}
                   provision={judicialProcess}
                   register={register}

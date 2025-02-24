@@ -12,7 +12,7 @@ import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import reclaimsColumns from "@/app/commons/components/Reclaims/columns/reclaimsColumns";
 import capitalize from "@/utils/capitalize";
 
-const Reclaims: FC<ModularProps> = ({ provision }) => {
+const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [reclaim, setReclaim] = useState<UpsertReclaimDto | null>(null);
 
@@ -113,7 +113,7 @@ const Reclaims: FC<ModularProps> = ({ provision }) => {
               cells={renderCell}
               columns={reclaimsColumns}
               dataGridKey="reclaimId"
-              endpointUrl={"reclaims?"}
+              endpointUrl={`reclaims?entityReference=${provision.entityReference}&modelType=${modelType}`}
               totalItemsText="Petitorios totales:"
               onAddChange={() => setIsOpen(true)}
             />

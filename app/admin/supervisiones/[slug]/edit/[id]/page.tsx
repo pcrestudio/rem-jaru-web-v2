@@ -28,7 +28,6 @@ import {
   exportSupervisionWord,
 } from "@/app/api/supervision/supervision";
 import { ModelType } from "@/config/model-type.config";
-import { upsertReclaims } from "@/app/api/reclaims/reclaims";
 
 export default function SupervisionesSlugEdit() {
   const pathname = usePathname();
@@ -58,18 +57,6 @@ export default function SupervisionesSlugEdit() {
         },
         slug,
       );
-
-      if (payload.reclaims) {
-        const response = await upsertReclaims(
-          payload.reclaims,
-          data?.entityReference,
-          ModelType.Supervision,
-        );
-
-        if (response.data) {
-          toast.success("Petitorios guardados.");
-        }
-      }
 
       if (data) {
         if (globalFields.length > 0) {
