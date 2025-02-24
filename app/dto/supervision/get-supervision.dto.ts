@@ -14,6 +14,7 @@ export interface GetSupervisionDto {
   provisionContingency?: any;
   sectionAttributeValues?: GetSectionAttributesValuesDto[];
   reclaims?: UpsertReclaimDto[];
+  status?: GetMastersDto;
   authorityId: number;
   situationId: number;
   id?: number;

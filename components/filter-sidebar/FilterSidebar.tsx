@@ -17,6 +17,7 @@ import {
   checkOptions,
 } from "@/config/attribute_local_autocompletes";
 import { Role } from "@/config/mapping_role";
+import FilterStatusAutocomplete from "@/components/filter-sidebar/components/FilterStatusAutocomplete";
 
 export interface FilterSidebarProps {
   pathname: string;
@@ -54,7 +55,6 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
 
   const isAdminPath: boolean = pathname === "/admin";
   const isTodoPath: boolean = pathname === "/admin/todos";
-  const isReportPath: boolean = pathname === "/admin/todos";
   const isSubmodulePath: boolean =
     pathname.includes("/admin/procesos-judiciales") ||
     pathname.includes("/admin/supervisiones");
@@ -145,6 +145,13 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           className="col-span-12 nextui-input-nomodal"
           label="Responsable"
           name="responsibleId"
+          onChange={handleFilter}
+        />
+
+        <FilterStatusAutocomplete
+          className="col-span-12 nextui-input-nomodal"
+          label="Status"
+          name="statusId"
           onChange={handleFilter}
         />
 

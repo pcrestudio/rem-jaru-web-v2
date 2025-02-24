@@ -2,6 +2,7 @@ import { DataGridKey } from "@/config/datagrid-key.config";
 
 const judicialProcessColumns = [
   { key: "actions", label: "Opciones" },
+  { key: "statusId", label: "Status" },
   {
     key: "responsible",
     label: "Responsable principal",
@@ -19,8 +20,24 @@ const judicialProcessColumns = [
     label: "Moneda",
   },
   {
+    key: "paidAmount",
+    label: "Monto pagado",
+  },
+  {
+    key: "savingAmount",
+    label: "Monto ahorrado",
+  },
+  {
+    key: DataGridKey.resultProcess,
+    label: "Resultado del proceso",
+  },
+  {
     key: DataGridKey.connectLegal,
     label: "Código de Legal Connect",
+  },
+  {
+    key: DataGridKey.commentsForResult,
+    label: "Comentarios sobre el resultado",
   },
   {
     key: DataGridKey.sede,
@@ -114,12 +131,6 @@ const judicialProcessColumns = [
   {
     key: DataGridKey.risks,
     label: "Riesgos",
-    sortable: true,
-    width: 70,
-  },
-  {
-    key: DataGridKey.saving,
-    label: "Ahorro generado",
     sortable: true,
     width: 70,
   },

@@ -157,6 +157,15 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
 
           {judicialProcess && judicialProcess?.entityReference && (
             <>
+              <DynamicAutocomplete
+                className="col-span-6 nextui-input-nomodal"
+                control={control}
+                label="Status"
+                name="statusId"
+                optionValue="id"
+                slug={MasterOptionConfig.status}
+              />
+
               <GlobalAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}

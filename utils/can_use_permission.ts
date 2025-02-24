@@ -10,6 +10,7 @@ export enum CanUsePermission {
   downloadWord = "downloadWord",
   viewMasters = "viewMasters",
   viewExtendedAttributes = "viewExtendedAttributes",
+  viewInstances = "viewInstances",
   addExtendedAttributes = "addExtendedAttributes",
   editExtendedAttributes = "editExtendedAttributes",
   addSectionExtendedAttributes = "addSectionExtendedAttributes",
@@ -30,6 +31,7 @@ const rolePermissions = {
     CanUsePermission.editTodo,
     CanUsePermission.viewMasters,
     CanUsePermission.viewExtendedAttributes,
+    CanUsePermission.viewInstances,
     CanUsePermission.viewRoles,
     CanUsePermission.addSectionExtendedAttributes,
     CanUsePermission.addExtendedAttributes,
@@ -45,6 +47,7 @@ const rolePermissions = {
     CanUsePermission.editTodo,
     CanUsePermission.viewMasters,
     CanUsePermission.viewExtendedAttributes,
+    CanUsePermission.viewInstances,
     CanUsePermission.editExtendedAttributesOptions,
   ],
   [Role.visualizer]: [

@@ -81,8 +81,15 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           )}
         </div>
       </div>
-
-      <div className="col-span-12 md:col-span-4">
+      <div className="col-span-12 md:col-span-3">
+        <ReportProvisionAmountRecord
+          Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
+          currency={isDollar ? "$" : "S/. "}
+          title="Monto ahorrado"
+          total={calculateTotal(isDollar, data?.savingAmount?.report)}
+        />
+      </div>
+      <div className="col-span-12 md:col-span-3">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
           currency={isDollar ? "$" : "S/. "}
@@ -90,15 +97,15 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           total={calculateTotal(isDollar, data?.amountSum?.report)}
         />
       </div>
-      <div className="col-span-12 md:col-span-4">
+      <div className="col-span-12 md:col-span-3">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
           currency={isDollar ? "$" : "S/. "}
-          title="Monto provisionado total"
+          title="Monto provisionado"
           total={calculateTotal(isDollar, data?.provisionAmount.report)}
         />
       </div>
-      <div className="col-span-12 md:col-span-4">
+      <div className="col-span-12 md:col-span-3">
         <ReportCountRecord
           Icon={<RiAuctionLine className="text-cerulean-800" size={48} />}
           description="PROCESOS JUDICIALIZADOS"

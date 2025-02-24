@@ -152,6 +152,15 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
 
           {supervision && supervision?.entityReference && (
             <>
+              <DynamicAutocomplete
+                className="col-span-12 nextui-input-nomodal"
+                control={control}
+                label="Status"
+                name="statusId"
+                optionValue="id"
+                slug={MasterOptionConfig.status}
+              />
+
               <div className="col-span-12 flex flex-col gap-4">
                 <Reclaims
                   control={control}

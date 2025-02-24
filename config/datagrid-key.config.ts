@@ -18,4 +18,6 @@ export enum DataGridKey {
   principalLawyer = "principalLawyer",
   lawyerEmail = "lawyerEmail",
   internalSpecialist = "internalSpecialist",
+  resultProcess = "resultProcess",
+  commentsForResult = "commentsForResult",
 }

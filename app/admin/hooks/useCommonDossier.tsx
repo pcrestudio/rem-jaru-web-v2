@@ -73,6 +73,8 @@ const useCommonDossier = (
         : data?.value;
       const labels: string[] = [];
 
+      console.log(labels);
+
       if (Array.isArray(convertedValue)) {
         for (const converted of convertedValue) {
           const option = data?.attribute.options.find(
@@ -162,11 +164,17 @@ const useCommonDossier = (
             </p>
           );
 
+        case "statusId":
+          return <p>{dossier.status ? dossier.status.name : "-"}</p>;
+
         case "project":
           return <p>{dossier.project ? dossier.project.name : "-"}</p>;
 
         case DataGridKey.connectLegal:
           return <p>{getDataGridLabel(dossier, DataGridKey.connectLegal)}</p>;
+
+        case DataGridKey.resultProcess:
+          return <p>{getDataGridLabel(dossier, DataGridKey.resultProcess)}</p>;
 
         case DataGridKey.sede:
           return <p>{getDataGridLabel(dossier, DataGridKey.sede)}</p>;

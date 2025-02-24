@@ -31,6 +31,12 @@ export const settingsOptions: OptionCard[] = [
   },
   {
     order: 4,
+    path: "instancias",
+    name: "Personalizar instancias",
+    isDisabled: (user: IUser) => true,
+  },
+  {
+    order: 5,
     path: "roles",
     name: "Roles",
     isDisabled: (user: IUser) => !canUse(user.role, CanUsePermission.viewRoles),

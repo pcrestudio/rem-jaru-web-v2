@@ -9,4 +9,5 @@ export enum MasterOptionConfig {
   todoEstados = "todo-estados",
   autoridad = "autoridad",
   reportTabs = "reportes-tabs",
+  status = "status",
 }

@@ -16,6 +16,7 @@ export interface GetJudicialProcessDto {
   project?: GetMastersDto;
   sectionAttributeValues?: GetSectionAttributesValuesDto[];
   studio?: GetMastersDto;
+  status?: GetMastersDto;
   stepData?: GetStepDataDto[];
   responsibleId?: number;
   secondaryResponsibleId?: number;
