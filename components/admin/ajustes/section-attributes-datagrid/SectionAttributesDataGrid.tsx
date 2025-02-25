@@ -230,24 +230,3 @@ const SectionAttributesDataGrid: FC<SectionAttributesDataGridProps> = ({
 };
 
 export default SectionAttributesDataGrid;
-
-/*
-* {(item.dataType === DataType.INTEGER ||
-                item.dataType === DataType.TEXT ||
-                item.dataType === DataType.FLOAT) && (
-                <Tooltip content={"Configurar reglas y condiciones"}>
-                  <span
-                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                    role="presentation"
-                    onClick={() =>
-                      router.push(
-                        `${pathname}/reglas/${item.sectionAttributeId}?name=${item.label}&moduleId=${item.moduleId}`,
-                        {},
-                      )
-                    }
-                  >
-                    <AiOutlineSisternode size={18} />
-                  </span>
-                </Tooltip>
-              )}
-* */

@@ -100,7 +100,7 @@ const ProvisionCheck: FC<ModularProps> = ({
   };
 
   const calculateProvision = () => {
-    const amount = parseFloat(values?.amount) ?? 0;
+    const amount = parseFloat(values?.reclaims) ?? 0;
     const provisionContingency = Number(values?.provisionContingency) ?? 0;
 
     if (amount > 0 && provisionContingency > 0) {
@@ -121,13 +121,17 @@ const ProvisionCheck: FC<ModularProps> = ({
     }
   }, [contingencyPercentage]);
 
+  useEffect(() => {
+    calculateProvisionPercentage();
+  }, [reclaims]);
+
   return (
     <>
       {values?.isProvisional && (
         <>
           <ReactiveNumericField
             readOnly
-            className="col-span-4"
+            className="col-span-12 md:col-span-6"
             control={control}
             endContent={
               <div className="pointer-events-none flex items-center">
@@ -144,24 +148,7 @@ const ProvisionCheck: FC<ModularProps> = ({
 
           <ReactiveNumericField
             readOnly
-            className="col-span-4"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">%</span>
-              </div>
-            }
-            errors={errors}
-            label="Provisión estimada"
-            max={100}
-            min={0}
-            name="provisionContingency"
-            register={register}
-          />
-
-          <ReactiveNumericField
-            readOnly
-            className="col-span-4"
+            className="col-span-12 md:col-span-6"
             control={control}
             endContent={
               <div className="pointer-events-none flex items-center">
@@ -175,7 +162,7 @@ const ProvisionCheck: FC<ModularProps> = ({
           />
 
           <ReactiveNumericField
-            className="col-span-6"
+            className="col-span-12 md:col-span-6"
             control={control}
             endContent={
               <div className="pointer-events-none flex items-center">
@@ -191,7 +178,7 @@ const ProvisionCheck: FC<ModularProps> = ({
 
           <ReactiveNumericField
             readOnly
-            className="col-span-6"
+            className="col-span-12 md:col-span-6"
             control={control}
             endContent={
               <div className="pointer-events-none flex items-center">
@@ -207,7 +194,7 @@ const ProvisionCheck: FC<ModularProps> = ({
       )}
 
       <ReactiveNumericField
-        className="col-span-6"
+        className="col-span-12 md:col-span-6"
         control={control}
         endContent={
           <div className="pointer-events-none flex items-center">
@@ -224,7 +211,7 @@ const ProvisionCheck: FC<ModularProps> = ({
 
       <DynamicAutocomplete
         disabled
-        className="col-span-6 nextui-input-nomodal"
+        className="col-span-12 md:col-span-6 nextui-input-nomodal"
         control={control}
         errors={errors}
         label="Nivel de contigencia"

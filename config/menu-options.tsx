@@ -80,7 +80,7 @@ export const menuOptions: MenuOptions[] = [
   },
   {
     title: "Ajustes",
-    role: [...onlyAdmins],
+    role: [...onlyAdmins, Role.visualizer],
     redirectTo: "/admin/ajustes",
     Icon: (props) => <AiOutlineSetting {...props} />,
     group: group.configuration,

@@ -15,6 +15,7 @@ export interface InstanceStepDataDto {
   stepId: number;
   dateResume?: object;
   resume?: string;
+  title?: string;
   choice?: string;
   id?: number;
 }

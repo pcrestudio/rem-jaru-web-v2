@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState, useCallback } from "react";
-import { Textarea } from "@heroui/input";
+import { Input, Textarea } from "@heroui/input";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";
@@ -70,7 +70,15 @@ const InstanceForm: FC<InstanceFormProps> = ({
   }, [initialValues]);
 
   return (
-    <div className="grid grid-cols-12 gap-4">
+    <div className="grid grid-cols-12 gap-6">
+      <Input
+        className="col-span-12 nextui-input-nomodal"
+        label="Título de actuación"
+        name="title"
+        value={formData.title || ""}
+        onChange={handleInputChange}
+      />
+
       <div className={`col-span-12 custom-file-container`}>
         <label className="file-label self-start text-foreground" htmlFor="file">
           Documento

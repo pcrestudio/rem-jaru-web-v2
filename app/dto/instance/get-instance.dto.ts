@@ -44,3 +44,7 @@ export interface GetStepDataDto {
   fileFive?: string;
   step: GetStepDto;
 }
+
+export interface GetGroupedStepDto {
+  [instanceName: string]: GetInstanceDto[];
+}

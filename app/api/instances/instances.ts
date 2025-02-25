@@ -5,6 +5,7 @@ import {
   UpsertInstanceStepDataDto,
 } from "@/app/dto/instance/create-instance-stepdata.dto";
 import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
+import { UpsertInstanceStepDto } from "@/app/dto/instance/upsert-instance.dto";
 
 const apiUrl: string = `${environment.baseUrl}/instance`;
 const apiIncidentUrl: string = `${environment.baseUrl}/incident`;
@@ -30,6 +31,7 @@ export async function upsertInstanceStepData(
     formData.append(`stepData[${index}][comments]`, stepData.comments || "");
     formData.append(`stepData[${index}][choice]`, stepData.choice || "");
     formData.append(`stepData[${index}][resume]`, stepData.resume || "");
+    formData.append(`stepData[${index}][title]`, stepData.title || "");
     formData.append(
       `stepData[${index}][dateResume]`,
       JSON.stringify(stepData.dateResume) || "",
@@ -81,6 +83,14 @@ export async function upsertInstanceStepData(
 
 export async function upsertIncidentData(incidents: UpsertIncidentDataDto[]) {
   return api.post(`${apiIncidentUrl}/upsert/incidentData`, incidents);
+}
+
+export async function upsertInstanceStep(instanceStep: UpsertInstanceStepDto) {
+  return api.post(`${apiUrl}/upsert/step`, instanceStep);
+}
+
+export async function deleteInstanceStep(instanceStep: UpsertInstanceStepDto) {
+  return api.delete(`${apiUrl}/${instanceStep.id}`);
 }
 
 export async function exportDocument(fileName: string) {

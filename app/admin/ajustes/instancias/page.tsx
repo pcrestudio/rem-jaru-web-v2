@@ -20,11 +20,13 @@ import { createSettingSection } from "@/app/api/attribute-values/atrribute-value
 import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
+import { GetGroupedStepDto } from "@/app/dto/instance/get-instance.dto";
+import StepSection from "@/app/admin/ajustes/instancias/components/InstanceAccordion/InstanceAccordion";
 
 export default function Instancias() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const { data } = useSWR<GetGroupedModuleDto>(
+  const { data } = useSWR<GetGroupedStepDto>(
     `${environment.baseUrl}/instance/settings`,
     fetcher,
   );
@@ -73,21 +75,10 @@ export default function Instancias() {
               que logres tus objetivos esperados.
             </p>
           </div>
-
-          <Button
-            className="standard-btn w-auto text-white"
-            endContent={<AiOutlinePlus />}
-            isDisabled={
-              !canUse(user.role, CanUsePermission.addExtendedAttributes)
-            }
-            onPress={() => setIsOpen(true)}
-          >
-            Agregar instancia
-          </Button>
         </div>
         <div className="flex flex-col gap-2">
           {groupedData.length > 0 &&
-            groupedData.map(([name, modules]) => (
+            groupedData.map(([name, instances]) => (
               <Accordion
                 key={name}
                 className="master-global-accordion"
@@ -101,7 +92,7 @@ export default function Instancias() {
                 variant="splitted"
               >
                 <AccordionItem title={name}>
-                  <></>
+                  <StepSection instances={instances} />
                 </AccordionItem>
               </Accordion>
             ))}
