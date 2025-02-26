@@ -32,7 +32,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
     const response = await upsertReclaims(
       reclaims,
       provision?.entityReference,
-      ModelType.JudicialProcess,
+      modelType,
     );
 
     if (response.data) {
@@ -113,7 +113,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
               cells={renderCell}
               columns={reclaimsColumns}
               dataGridKey="reclaimId"
-              endpointUrl={`reclaims?entityReference=${provision.entityReference}&modelType=${modelType}`}
+              endpointUrl={`reclaims?entityReference=${provision.entityReference}&modelType=${modelType}&`}
               totalItemsText="Petitorios totales:"
               onAddChange={() => setIsOpen(true)}
             />
