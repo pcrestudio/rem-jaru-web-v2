@@ -25,6 +25,7 @@ import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
 import { labelConfig } from "@/config/label.config";
 import { SlugConfig } from "@/config/slug.config";
+import Incidences from "@/app/admin/procesos-judiciales/components/Incidences/Incidences";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -165,7 +166,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 optionValue="id"
                 slug={MasterOptionConfig.status}
               />
-
               <GlobalAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}
@@ -175,7 +175,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 register={register}
                 reset={reset}
               />
-
               <div className="col-span-12 flex flex-col gap-4">
                 <Reclaims
                   control={control}
@@ -189,7 +188,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                   watch={watch}
                 />
               </div>
-
               <ProvisionCheck
                 control={control}
                 getValues={getValues}
@@ -200,7 +198,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 setValue={setValue}
                 watch={watch}
               />
-
               <SectionAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}
@@ -214,6 +211,8 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 setValue={setValue}
                 watch={watch}
               />
+
+              {/*<Incidences entityReference={judicialProcess?.entityReference} />*/}
 
               <div className="col-span-12">
                 <Alert
@@ -245,7 +244,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                   title={data?.message}
                 />
               </div>
-
               <div className="col-span-12 mt-4">
                 <DynamicStepper
                   entityReference={judicialProcess?.entityReference}

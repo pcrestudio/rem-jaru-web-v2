@@ -9,19 +9,16 @@ import toast from "react-hot-toast";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import {
-  GetGroupedModuleDto,
-  GetModuleDto,
-} from "@/app/dto/modules/get-module.dto";
-import AttributeSection from "@/components/admin/ajustes/attribute-section/AttributeSection";
-import SettingsSectionModal from "@/app/admin/ajustes/maestros/components/settings-section-modal/SettingsSectionModal";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";
 import { createSettingSection } from "@/app/api/attribute-values/atrribute-values";
 import { CreateSettingSectionDto } from "@/app/dto/attribute-values/create-setting-section.dto";
-import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
 import { GetGroupedStepDto } from "@/app/dto/instance/get-instance.dto";
 import StepSection from "@/app/admin/ajustes/instancias/components/InstanceAccordion/InstanceAccordion";
+import InstanceSettingForm from "@/app/admin/ajustes/instancias/components/forms/InstanceSettingForm/InstanceSettingForm";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import { UpsertInstanceDto } from "@/app/dto/instance/upsert-instance.dto";
+import { upsertInstance } from "@/app/api/instances/instances";
 
 export default function Instancias() {
   const pathname = usePathname();
@@ -31,35 +28,26 @@ export default function Instancias() {
     fetcher,
   );
   const groupedData = data ? Object.entries(data) : [];
-  const handleSubmit = async (
-    payload: CreateSettingSectionDto & CreateSectionAttributeDto,
-  ) => {
-    const { data } = await createSettingSection({
-      ...payload,
-      isSection: Boolean(payload.isSection),
-      collapsable: payload.collapsable ?? false,
-      order: Number(payload.order),
-    });
+  const handleSubmit = async (payload: UpsertInstanceDto) => {
+    console.log(payload);
+
+    const { data } = await upsertInstance(payload);
 
     if (data) {
-      toast.success(
-        payload.isSection
-          ? "Sección creada con éxito"
-          : "Atributo plano creado con éxito",
-      );
+      toast.success("Instancia creada con éxito");
       setIsOpen(false);
     } else {
-      toast.error("Sucedió algo");
+      toast.error("No pudimos crear la instancia.");
     }
   };
   const { user } = useStore();
 
   return (
     <>
-      <SettingsSectionModal
+      <InstanceSettingForm
         handleSubmit={handleSubmit}
         isOpen={isOpen}
-        title={"Nueva sección"}
+        title={"Nueva instancia"}
         onCloseChange={() => setIsOpen(false)}
       />
 
@@ -75,7 +63,17 @@ export default function Instancias() {
               que logres tus objetivos esperados.
             </p>
           </div>
+
+          <Button
+            className="standard-btn w-auto text-white"
+            endContent={<AiOutlinePlus />}
+            isDisabled={!canUse(user.role, CanUsePermission.addInstances)}
+            onPress={() => setIsOpen(true)}
+          >
+            Agregar instancia
+          </Button>
         </div>
+
         <div className="flex flex-col gap-2">
           {groupedData.length > 0 &&
             groupedData.map(([name, instances]) => (

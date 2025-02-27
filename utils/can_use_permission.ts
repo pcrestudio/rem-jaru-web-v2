@@ -19,6 +19,7 @@ export enum CanUsePermission {
   addSectionMaster = "addSectionMaster",
   addMaster = "addMaster",
   viewRoles = "viewRoles",
+  addInstances = "addInstances",
 }
 
 const rolePermissions = {
@@ -52,6 +53,7 @@ const rolePermissions = {
     CanUsePermission.viewInstances,
     CanUsePermission.editExtendedAttributesOptions,
     CanUsePermission.addStep,
+    CanUsePermission.addInstances,
   ],
   [Role.visualizer]: [
     CanUsePermission.downloadExcel,
@@ -61,6 +63,7 @@ const rolePermissions = {
     CanUsePermission.addItem,
     CanUsePermission.editItem,
     CanUsePermission.addStep,
+    CanUsePermission.addInstances,
     CanUsePermission.viewInstances,
   ],
   [Role.executor]: [CanUsePermission.downloadExcel, CanUsePermission.editTodo],

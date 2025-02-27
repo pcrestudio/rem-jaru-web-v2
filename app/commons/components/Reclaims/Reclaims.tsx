@@ -7,7 +7,6 @@ import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps
 import ReclaimsModalForm from "@/app/commons/components/ReclaimsModalForm/ReclaimsModalForm";
 import { UpsertReclaimDto } from "@/app/dto/reclaims/upsert-reclaim.dto";
 import { upsertReclaims } from "@/app/api/reclaims/reclaims";
-import { ModelType } from "@/config/model-type.config";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import reclaimsColumns from "@/app/commons/components/Reclaims/columns/reclaimsColumns";
 import capitalize from "@/utils/capitalize";
@@ -41,6 +40,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
           ? "Petitorio editado correctamente."
           : "Petitorio guardado correctamente.",
       );
+      setReclaim(null);
       setIsOpen(false);
     }
   };
@@ -60,15 +60,6 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
                   onClick={() => selectItem(item)}
                 >
                   <EditIcon />
-                </span>
-              </Tooltip>
-
-              <Tooltip content="Eliminar petitorio">
-                <span
-                  className="text-lg text-danger cursor-pointer active:opacity-50"
-                  role="presentation"
-                >
-                  <DeleteIcon />
                 </span>
               </Tooltip>
             </div>

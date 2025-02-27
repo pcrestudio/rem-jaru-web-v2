@@ -5,7 +5,7 @@ import { ReactNode, useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
-import { UpsertInstanceStepDto } from "@/app/dto/instance/upsert-instance.dto";
+import { UpsertInstanceStepDto } from "@/app/dto/instance/upsert-instance-step.dto";
 import {
   deleteInstanceStep,
   upsertInstanceStep,

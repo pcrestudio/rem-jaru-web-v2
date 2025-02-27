@@ -19,7 +19,7 @@ const InstanceStepSettingForm: FC<ReclaimsModalFormProps> = ({
 }) => {
   return (
     <FormDialog
-      formId="reclaims-form"
+      formId="instance-step-form"
       initialValues={instanceStep || {}}
       isOpen={isOpen}
       stopEventPropagation={stopEventPropagation}

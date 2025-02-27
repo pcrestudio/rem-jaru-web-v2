@@ -15,7 +15,6 @@ import {
 import { ModelType } from "@/config/model-type.config";
 import SupervisionInstances from "@/app/admin/supervisiones/[slug]/components/SupervisionInstances/SupervisionInstances";
 import { InstanceConfig } from "@/config/instance.config";
-import IncidentsTabs from "@/app/admin/procesos-judiciales/components/IncidentsTabs/IncidentsTabs";
 
 interface DynamicStepperProps {
   entityReference?: string;
@@ -124,13 +123,6 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
       <div className="vertical-stepper-container">
         {data && data[activeStep] && (
           <>
-            {modelType === ModelType.JudicialProcess && (
-              <IncidentsTabs
-                entityReference={entityReference}
-                instance={data[activeStep]}
-              />
-            )}
-
             <Stepper
               activeStep={activeInnerSteps[activeStep] || 0}
               className="vertical-stepper mt-4"

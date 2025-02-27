@@ -1,6 +1,6 @@
-export interface UpsertInstanceDto {
+export interface UpsertInstanceStepDto {
   name: string;
-  isGlobal?: boolean;
+  instanceId?: number;
   moduleId?: number;
   submoduleId?: number;
   id?: number;

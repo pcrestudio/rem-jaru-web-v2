@@ -73,7 +73,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
     <div className="grid grid-cols-12 gap-6">
       <Input
         className="col-span-12 nextui-input-nomodal"
-        label="Título de actuación"
+        label="Código de referencia"
         name="title"
         value={formData.title || ""}
         onChange={handleInputChange}

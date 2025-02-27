@@ -5,7 +5,8 @@ import {
   UpsertInstanceStepDataDto,
 } from "@/app/dto/instance/create-instance-stepdata.dto";
 import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
-import { UpsertInstanceStepDto } from "@/app/dto/instance/upsert-instance.dto";
+import { UpsertInstanceStepDto } from "@/app/dto/instance/upsert-instance-step.dto";
+import { UpsertInstanceDto } from "@/app/dto/instance/upsert-instance.dto";
 
 const apiUrl: string = `${environment.baseUrl}/instance`;
 const apiIncidentUrl: string = `${environment.baseUrl}/incident`;
@@ -83,6 +84,10 @@ export async function upsertInstanceStepData(
 
 export async function upsertIncidentData(incidents: UpsertIncidentDataDto[]) {
   return api.post(`${apiIncidentUrl}/upsert/incidentData`, incidents);
+}
+
+export async function upsertInstance(instance: UpsertInstanceDto) {
+  return api.post(`${apiUrl}/upsert`, instance);
 }
 
 export async function upsertInstanceStep(instanceStep: UpsertInstanceStepDto) {
