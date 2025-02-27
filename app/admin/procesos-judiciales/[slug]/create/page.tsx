@@ -36,7 +36,8 @@ export default function ProcesosJudicialesSlugCreate() {
     const { data } = await createJudicialProcess(
       {
         ...payload,
-        cargoStudioId: user.studioId,
+        cargoStudioId:
+          user.studioId !== 0 ? user.studioId : payload.cargoStudioId,
       },
       slug,
     );

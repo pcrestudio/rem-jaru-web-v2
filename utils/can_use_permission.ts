@@ -42,6 +42,7 @@ const rolePermissions = {
     CanUsePermission.addMaster,
     CanUsePermission.addSectionMaster,
     CanUsePermission.addStep,
+    CanUsePermission.addInstances,
   ],
   [Role.admin]: [
     CanUsePermission.viewDashboard,

@@ -33,13 +33,14 @@ export default function SupervisionesSlugCreate() {
     const { data } = await createSupervision(
       {
         ...payload,
-        cargoStudioId: user.studioId,
+        cargoStudioId:
+          user.studioId !== 0 ? user.studioId : payload.cargoStudioId,
       },
       slug,
     );
 
     if (data) {
-      setSupervisionId(data["result"]["id"]);
+      setSupervisionId(data["id"]);
       setConfirm(true);
     }
   };

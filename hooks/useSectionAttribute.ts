@@ -73,12 +73,10 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
       attributeOption.attributeId ||
       attributeOption.globalAttributeOptionId
     ) {
-      console.log(JSON.stringify(payload));
-
       const { data } = await editSectionAttributeOption({
         ...payload,
         attributeId: Number(payload.attributeId),
-        sectionAttributeId: Number(payload.attributeId),
+        sectionAttributeId: Number(payload.sectionAttributeId),
       });
 
       if (data) {
@@ -94,7 +92,7 @@ const useSectionAttribute = (): UseSectionAttributeProps => {
     const { data } = await createSectionAttributeOption({
       ...payload,
       attributeId: Number(payload.attributeId),
-      sectionAttributeId: Number(payload.attributeId),
+      sectionAttributeId: Number(payload.sectionAttributeId),
     });
 
     if (data) {

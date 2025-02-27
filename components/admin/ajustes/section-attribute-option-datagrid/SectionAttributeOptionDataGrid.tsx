@@ -36,14 +36,6 @@ const SectionAttributeOptionDataGrid: FC<
                   <EditIcon onClick={() => selectedItem(item)} />
                 </span>
               </Tooltip>
-              <Tooltip
-                color="danger"
-                content={item.isActive ? "Desactivar opción" : "Activar opción"}
-              >
-                <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <DeleteIcon />
-                </span>
-              </Tooltip>
             </div>
           );
 

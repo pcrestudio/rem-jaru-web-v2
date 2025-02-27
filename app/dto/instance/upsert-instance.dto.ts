@@ -1,5 +1,5 @@
 export interface UpsertInstanceDto {
-  name: string;
+  title: string;
   isGlobal?: boolean;
   moduleId?: number;
   submoduleId?: number;

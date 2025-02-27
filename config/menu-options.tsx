@@ -25,7 +25,7 @@ export interface MenuOptions {
   onEvent?: () => Promise<void>;
 }
 
-const onlyAdmins: string[] = [Role["super-admin"], Role.admin];
+export const onlyAdmins: string[] = [Role["super-admin"], Role.admin];
 
 const allRoles: string[] = [
   Role["super-admin"],

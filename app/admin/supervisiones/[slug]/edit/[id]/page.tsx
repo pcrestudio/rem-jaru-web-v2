@@ -115,7 +115,18 @@ export default function SupervisionesSlugEdit() {
           onPress={async () => {
             const response = await exportSupervisionWord();
 
-            await exportableWord(response, data?.entityReference);
+            const wordResponse = await exportableWord(
+              response,
+              data?.entityReference,
+            );
+
+            if (wordResponse === "ok") {
+              toast.success("Proceso descargado.");
+            } else {
+              toast.success(
+                "No se pudo descargar el proceso, intente de nuevo.",
+              );
+            }
           }}
         >
           Exportar ficha

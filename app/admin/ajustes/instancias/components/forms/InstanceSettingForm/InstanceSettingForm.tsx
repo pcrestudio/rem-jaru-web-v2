@@ -33,9 +33,6 @@ const InstanceSettingForm: FC<InstanceSettingFormProps> = ({
   return (
     <FormDialog
       formId="instance-form"
-      initialValues={{
-        name: "",
-      }}
       isOpen={isOpen}
       stopEventPropagation={stopEventPropagation}
       title={title}
@@ -53,7 +50,7 @@ const InstanceSettingForm: FC<InstanceSettingFormProps> = ({
               register={register}
               label="Nombre de la instancia"
               labelClassName="text-xs"
-              name="name"
+              name="title"
             />
 
             <Switch

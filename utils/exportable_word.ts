@@ -24,6 +24,8 @@ const exportableWord = async (response, entityReference: string) => {
 
     link.parentNode.removeChild(link);
     window.URL.revokeObjectURL(url);
+
+    return "ok";
   } catch (error) {}
 };
 

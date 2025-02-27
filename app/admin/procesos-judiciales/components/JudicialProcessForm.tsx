@@ -26,6 +26,7 @@ import useStore from "@/lib/store";
 import { labelConfig } from "@/config/label.config";
 import { SlugConfig } from "@/config/slug.config";
 import Incidences from "@/app/admin/procesos-judiciales/components/Incidences/Incidences";
+import { onlyAdmins } from "@/config/menu-options";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -146,6 +147,18 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="secondaryResponsibleId"
           />
 
+          {onlyAdmins.includes(user?.role) && (
+            <DynamicAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              isRequired={true}
+              label="Estudio"
+              name="cargoStudioId"
+              optionValue="id"
+              slug={MasterOptionConfig.estudios}
+            />
+          )}
+
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -156,16 +169,17 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             slug={MasterOptionConfig.moneda}
           />
 
+          <DynamicAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            label="Status"
+            name="statusId"
+            optionValue="id"
+            slug={MasterOptionConfig.status}
+          />
+
           {judicialProcess && judicialProcess?.entityReference && (
             <>
-              <DynamicAutocomplete
-                className="col-span-6 nextui-input-nomodal"
-                control={control}
-                label="Status"
-                name="statusId"
-                optionValue="id"
-                slug={MasterOptionConfig.status}
-              />
               <GlobalAttributeFields
                 control={control}
                 entityReference={judicialProcess?.entityReference}

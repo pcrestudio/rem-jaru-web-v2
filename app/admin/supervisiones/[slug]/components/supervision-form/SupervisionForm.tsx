@@ -16,6 +16,8 @@ import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import Reclaims from "@/app/commons/components/Reclaims/Reclaims";
+import { onlyAdmins } from "@/config/menu-options";
+import useStore from "@/lib/store";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -32,6 +34,8 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
   handleStepSubmit,
   pathname,
 }) => {
+  const { user } = useStore();
+
   return (
     <ReactiveForm
       formId="supervision-edit"
@@ -119,6 +123,18 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             name="responsibleId"
           />
 
+          {onlyAdmins.includes(user?.role) && (
+            <DynamicAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              isRequired={true}
+              label="Estudio"
+              name="cargoStudioId"
+              optionValue="id"
+              slug={MasterOptionConfig.estudios}
+            />
+          )}
+
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
@@ -150,17 +166,17 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             slug={MasterOptionConfig.situacion}
           />
 
+          <DynamicAutocomplete
+            className="col-span-6 nextui-input-nomodal"
+            control={control}
+            label="Status"
+            name="statusId"
+            optionValue="id"
+            slug={MasterOptionConfig.status}
+          />
+
           {supervision && supervision?.entityReference && (
             <>
-              <DynamicAutocomplete
-                className="col-span-12 nextui-input-nomodal"
-                control={control}
-                label="Status"
-                name="statusId"
-                optionValue="id"
-                slug={MasterOptionConfig.status}
-              />
-
               <div className="col-span-12 flex flex-col gap-4">
                 <Reclaims
                   control={control}
