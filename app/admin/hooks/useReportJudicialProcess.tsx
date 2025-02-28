@@ -137,7 +137,9 @@ const useReportJudicialProcess = (
           return <p>{report._count.judicialStudios}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return cellValue;
@@ -268,10 +270,10 @@ const useReportJudicialProcess = (
     if (shouldBeDollar) {
       const conversion = amount / exchange?.value;
 
-      return Number(conversion).toFixed(2);
+      return !isNaN(conversion) ? Number(conversion).toFixed(2) : 0;
     }
 
-    return amount;
+    return !isNaN(amount) ? amount : Number(0).toFixed(2);
   };
 
   const internalSpecialistData =

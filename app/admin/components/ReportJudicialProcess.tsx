@@ -24,6 +24,7 @@ import judicialProcessInstanceHorizontalBarColumns from "@/app/admin/components/
 import { convertFormatDistanceToNow } from "@/utils/format_date";
 import internalSpecialistColumns from "@/app/admin/components/ReportChartDataGrid/columns/internalSpecialistColumns";
 import causesColumns from "@/app/admin/components/ReportChartDataGrid/columns/causesColumns";
+import { PieChartType } from "@/app/admin/types/ChartDataType";
 
 interface ReportJudicialProcess {
   filter: GlobalFilter;
@@ -108,7 +109,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
       <div className="col-span-12 md:col-span-3">
         <ReportCountRecord
           Icon={<RiAuctionLine className="text-cerulean-800" size={48} />}
-          description="PROCESOS JUDICIALIZADOS"
+          description="PROCESOS"
           title="N° de Expediente"
           total={totalJudicialProcess}
         />
@@ -135,7 +136,8 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           chartData={causesChartData}
           columns={causesColumns}
           items={data?.causes.report}
-          title="N° de procesos judiciales por causa/raíz"
+          type={PieChartType.column}
+          title="N° de procesos por causa/raíz"
         />
       </div>
       <div className="col-span-12">
@@ -144,7 +146,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           chartData={internalSpecialistData}
           columns={internalSpecialistColumns}
           items={data?.internalSpecialists.report}
-          title="N° de procesos judiciales por especialista interno"
+          title="N° de procesos por especialista interno"
           yAxisData={internalSpecialistYAxisData}
         />
       </div>
@@ -154,7 +156,8 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           chartData={matterChartData}
           columns={judicialProcessPieBarColumns}
           items={data?.matters.report[0]?.Submodule}
-          title="N° de procesos judiciales por materias"
+          type={PieChartType.column}
+          title="N° de procesos por materias"
         />
       </div>
       <div className="col-span-12">
@@ -164,7 +167,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           columns={judicialProcessInstanceHorizontalBarColumns}
           dataGridKey="instanceName"
           items={data?.instances?.report ?? []}
-          title="N° de procesos judiciales por instancia"
+          title="N° de procesos por instancia"
           yAxisData={instanceYAxisData}
         />
       </div>
@@ -175,7 +178,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
             chartData={studioChartData}
             columns={judicialProcessHorizontalBarColumns}
             items={data?.studio.report[0]?.masterOption}
-            title="N° de procesos judiciales por estudio"
+            title="N° de procesos por estudio"
             yAxisData={studioYAxisData}
           />
         </div>

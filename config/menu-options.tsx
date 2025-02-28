@@ -27,6 +27,12 @@ export interface MenuOptions {
 
 export const onlyAdmins: string[] = [Role["super-admin"], Role.admin];
 
+export const showAllDossiers: string[] = [
+  Role["super-admin"],
+  Role.admin,
+  Role.visualizer,
+];
+
 const allRoles: string[] = [
   Role["super-admin"],
   Role.admin,

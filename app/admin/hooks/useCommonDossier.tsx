@@ -14,8 +14,8 @@ import { DataGridKey } from "@/config/datagrid-key.config";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import { ModelType } from "@/config/model-type.config";
 import capitalizeFirstLetter from "@/utils/capitalize";
-import { Role } from "@/config/mapping_role";
 import useStore from "@/lib/store";
+import { showAllDossiers } from "@/config/menu-options";
 
 interface UseCommonDossierProps {
   renderCell: (
@@ -39,7 +39,7 @@ const useCommonDossier = (
   const { user } = useStore();
 
   const filterByStudio =
-    user.role === Role["super-admin"] || user.role === Role["admin"]
+    showAllDossiers.includes(user?.role) && user.studioId === 0
       ? null
       : user.studioId
         ? `cargoStudioId=${user.studioId}&`

@@ -16,7 +16,7 @@ import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import Reclaims from "@/app/commons/components/Reclaims/Reclaims";
-import { onlyAdmins } from "@/config/menu-options";
+import { onlyAdmins, showAllDossiers } from "@/config/menu-options";
 import useStore from "@/lib/store";
 
 interface SupervisionFormProps {
@@ -123,7 +123,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             name="responsibleId"
           />
 
-          {onlyAdmins.includes(user?.role) && (
+          {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
             <DynamicAutocomplete
               className="col-span-6 nextui-input-nomodal"
               control={control}

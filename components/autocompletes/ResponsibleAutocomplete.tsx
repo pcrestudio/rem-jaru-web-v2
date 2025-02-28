@@ -13,6 +13,7 @@ import { GetUserDto } from "@/app/dto/get-user.dto";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 import useStore from "@/lib/store";
 import { Role } from "@/config/mapping_role";
+import { showAllDossiers } from "@/config/menu-options";
 
 const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   name,
@@ -27,7 +28,7 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   const { user } = useStore();
 
   const filterByStudio =
-    user.role === Role["super-admin"] || user.role === Role.admin
+    showAllDossiers.includes(user?.role) && user?.studioId === 0
       ? null
       : `studioId=${user.studioId}`;
 

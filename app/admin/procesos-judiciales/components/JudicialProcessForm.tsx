@@ -26,7 +26,7 @@ import useStore from "@/lib/store";
 import { labelConfig } from "@/config/label.config";
 import { SlugConfig } from "@/config/slug.config";
 import Incidences from "@/app/admin/procesos-judiciales/components/Incidences/Incidences";
-import { onlyAdmins } from "@/config/menu-options";
+import { onlyAdmins, showAllDossiers } from "@/config/menu-options";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -147,7 +147,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="secondaryResponsibleId"
           />
 
-          {onlyAdmins.includes(user?.role) && (
+          {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
             <DynamicAutocomplete
               className="col-span-6 nextui-input-nomodal"
               control={control}

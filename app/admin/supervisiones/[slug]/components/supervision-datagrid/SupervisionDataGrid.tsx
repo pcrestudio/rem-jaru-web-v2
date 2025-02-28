@@ -30,7 +30,7 @@ const SupervisionDataGrid: FC<SupervisionDataGridProps> = ({
     fetcher,
   );
   const { user } = useStore();
-  const { renderCell } = useCommonDossier({
+  const { renderCell, filterByStudio } = useCommonDossier({
     toggleSelectedItem,
     modelType: ModelType.Supervision,
   });
@@ -51,7 +51,7 @@ const SupervisionDataGrid: FC<SupervisionDataGridProps> = ({
       cells={renderCell}
       columns={supervisionColumns}
       emptyContent="Sin supervisiones."
-      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}&`}
+      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}&${filterByStudio}`}
       items={data ?? []}
       onAddChange={() => {
         const currentPath = window.location.pathname;
