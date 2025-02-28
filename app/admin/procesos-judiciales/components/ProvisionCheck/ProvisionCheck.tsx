@@ -56,7 +56,11 @@ const ProvisionCheck: FC<ModularProps> = ({
       0,
     );
 
-    const percentage = (provisionAmount / amount) * 100;
+    const percentage =
+      reclaims?.reduce(
+        (acumulado, petitorio) => acumulado + petitorio.contingencyPercentage,
+        0,
+      ) / reclaims?.length;
 
     setValue(
       `${ExtendedAttributeConfig.provisionAmount}`,
@@ -66,8 +70,8 @@ const ProvisionCheck: FC<ModularProps> = ({
     setValue(`${ExtendedAttributeConfig.amount}`, Number(amount).toFixed(2));
 
     setValue(
-      ExtendedAttributeConfig.provisionContingency,
-      Math.round(percentage),
+      ExtendedAttributeConfig.contingencyPercentage,
+      Number(percentage).toFixed(2),
     );
   };
 

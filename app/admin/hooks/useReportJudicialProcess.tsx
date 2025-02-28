@@ -164,7 +164,9 @@ const useReportJudicialProcess = (
           return <p>{matter._count[mappingModuleEN[filter.modelType]]}</p>;
 
         case "percent":
-          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return cellValue;
@@ -194,7 +196,9 @@ const useReportJudicialProcess = (
           return <p>{contingency.count}</p>;
 
         case "percent":
-          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
@@ -213,12 +217,21 @@ const useReportJudicialProcess = (
       const cellValue = contingency[columnKey];
       const percent = (contingency._count.group / totalCriticalProcesses) * 100;
 
+      console.log(isNaN(percent));
+
       switch (columnKey) {
         case "count":
           return <p>{contingency._count.group}</p>;
 
         case "percent":
-          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
+          return (
+            <p>
+              {!isNaN(percent)
+                ? Number(percent).toFixed(2)
+                : Number(0).toFixed(2)}
+              %
+            </p>
+          );
 
         default:
           return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
@@ -253,7 +266,9 @@ const useReportJudicialProcess = (
           return <p>{report.count}</p>;
 
         case "percent":
-          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return cellValue;
@@ -266,6 +281,13 @@ const useReportJudicialProcess = (
     setIsDollar(!isDollar);
   };
 
+  const float = new Intl.NumberFormat(isDollar ? "en-EN" : "es-PE", {
+    style: "currency",
+    currency: isDollar ? "USD" : "PEN",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   const calculateTotal = (shouldBeDollar: boolean, amount: number) => {
     if (shouldBeDollar) {
       const conversion = amount / exchange?.value;
@@ -273,7 +295,7 @@ const useReportJudicialProcess = (
       return !isNaN(conversion) ? Number(conversion).toFixed(2) : 0;
     }
 
-    return !isNaN(amount) ? amount : Number(0).toFixed(2);
+    return !isNaN(amount) ? float.format(amount) : Number(0).toFixed(2);
   };
 
   const internalSpecialistData =
@@ -298,7 +320,9 @@ const useReportJudicialProcess = (
           return <p>{report._count.group}</p>;
 
         case "percent":
-          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return cellValue;
@@ -328,7 +352,9 @@ const useReportJudicialProcess = (
           return <p>{causes._count.group}</p>;
 
         case "percent":
-          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return cellValue;
