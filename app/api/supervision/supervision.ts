@@ -44,8 +44,8 @@ export async function editSupervision(
   );
 }
 
-export async function exportSupervisionWord() {
-  return api.get(`${apiUrl}/export/word`, {
+export async function exportSupervisionWord(entityReference: string) {
+  return api.get(`${apiUrl}/export/word?entityReference=${entityReference}`, {
     responseType: "arraybuffer",
   });
 }

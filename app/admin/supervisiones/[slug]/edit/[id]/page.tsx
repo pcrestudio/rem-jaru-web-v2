@@ -113,7 +113,7 @@ export default function SupervisionesSlugEdit() {
           className="word-btn"
           startContent={<AiOutlineFileWord />}
           onPress={async () => {
-            const response = await exportSupervisionWord();
+            const response = await exportSupervisionWord(data?.entityReference);
 
             const wordResponse = await exportableWord(
               response,
