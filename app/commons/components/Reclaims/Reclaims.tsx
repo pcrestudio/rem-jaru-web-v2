@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
 import toast from "react-hot-toast";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import { EditIcon } from "@heroui/shared-icons";
 
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import ReclaimsModalForm from "@/app/commons/components/ReclaimsModalForm/ReclaimsModalForm";
