@@ -67,7 +67,12 @@ const rolePermissions = {
     CanUsePermission.addInstances,
     CanUsePermission.viewInstances,
   ],
-  [Role.executor]: [CanUsePermission.downloadExcel, CanUsePermission.editTodo],
+  [Role.executor]: [
+    CanUsePermission.downloadExcel,
+    CanUsePermission.editTodo,
+    CanUsePermission.addItem,
+    CanUsePermission.editItem,
+  ],
 };
 
 export const canUse = (userRole: string, action: string): boolean => {

@@ -164,7 +164,7 @@ const useReportJudicialProcess = (
           return <p>{matter._count[mappingModuleEN[filter.modelType]]}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
 
         default:
           return cellValue;
@@ -194,7 +194,7 @@ const useReportJudicialProcess = (
           return <p>{contingency.count}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
 
         default:
           return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
@@ -218,7 +218,7 @@ const useReportJudicialProcess = (
           return <p>{contingency._count.group}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
 
         default:
           return <p className={semaphoreColor(cellValue)}>{cellValue}</p>;
@@ -253,7 +253,7 @@ const useReportJudicialProcess = (
           return <p>{report.count}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
 
         default:
           return cellValue;
@@ -298,7 +298,7 @@ const useReportJudicialProcess = (
           return <p>{report._count.group}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
 
         default:
           return cellValue;
@@ -328,7 +328,7 @@ const useReportJudicialProcess = (
           return <p>{causes._count.group}</p>;
 
         case "percent":
-          return <p>{!isNaN(percent) ? percent : Number(0)} %</p>;
+          <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>;
 
         default:
           return cellValue;
