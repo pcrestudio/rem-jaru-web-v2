@@ -80,12 +80,10 @@ const ProvisionCheck: FC<ModularProps> = ({
       shouldBeProvisional = false;
     } else if (contingencyPercentage >= 10 && contingencyPercentage < 50) {
       newLevel = ContingencyLevelConfig.posible;
-      shouldBeProvisional = true;
-    } else if (contingencyPercentage >= 50 && contingencyPercentage < 90) {
+      shouldBeProvisional = false;
+    } else if (contingencyPercentage >= 50 && contingencyPercentage <= 100) {
       newLevel = ContingencyLevelConfig.probable;
       shouldBeProvisional = true;
-    } else if (contingencyPercentage >= 90) {
-      newLevel = ContingencyLevelConfig.virtualmente;
     }
 
     if (watch(ExtendedAttributeConfig.contingencyLevel) !== newLevel) {
