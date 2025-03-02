@@ -6,10 +6,10 @@ import { EditIcon } from "@heroui/shared-icons";
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import ReclaimsModalForm from "@/app/commons/components/ReclaimsModalForm/ReclaimsModalForm";
 import { UpsertReclaimDto } from "@/app/dto/reclaims/upsert-reclaim.dto";
-import { upsertReclaims } from "@/app/api/reclaims/reclaims";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import reclaimsColumns from "@/app/commons/components/Reclaims/columns/reclaimsColumns";
 import capitalize from "@/utils/capitalize";
+import { upsertReclaims } from "@/app/api/reclaims/reclaims";
 
 const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,23 +25,53 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
     setIsOpen(false);
   };
 
-  const handleSubmit = async (payload: UpsertReclaimDto) => {
-    const reclaims: UpsertReclaimDto[] = [{ ...payload }];
-
-    const response = await upsertReclaims(
-      reclaims,
-      provision?.entityReference,
-      modelType,
+  const handleSubmit = async (payload: UpsertReclaimDto, reset: any) => {
+    let amount = provision?.reclaims.reduce(
+      (sum, provision) => sum + provision?.amount,
+      0,
     );
 
-    if (response.data) {
-      toast.success(
-        payload.reclaimId
-          ? "Petitorio editado correctamente."
-          : "Petitorio guardado correctamente.",
+    let amountValidation = 0;
+
+    if (payload.amount) {
+      amount = Number(payload.amount) + amount;
+    }
+
+    if (
+      payload.provisionAmount &&
+      payload.posibleAmount &&
+      payload.remoteAmount
+    ) {
+      amountValidation =
+        payload?.provisionAmount +
+        payload?.posibleAmount +
+        payload?.remoteAmount;
+    }
+
+    if (amountValidation > amount) {
+      toast.error(
+        `Los montos no coinciden, el monto demandado es: ${amount}, y el actual petitorio excede con una cantidad de: ${amountValidation}`,
       );
-      setReclaim(null);
-      setIsOpen(false);
+      return;
+    } else {
+      const reclaims: UpsertReclaimDto[] = [{ ...payload }];
+
+      const response = await upsertReclaims(
+        reclaims,
+        provision?.entityReference,
+        modelType,
+      );
+
+      if (response.data) {
+        toast.success(
+          payload.reclaimId
+            ? "Petitorio editado correctamente."
+            : "Petitorio guardado correctamente.",
+        );
+        setReclaim(null);
+        setIsOpen(false);
+        reset();
+      }
     }
   };
 

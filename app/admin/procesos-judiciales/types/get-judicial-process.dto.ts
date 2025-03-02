@@ -22,7 +22,6 @@ export interface GetJudicialProcessDto {
   secondaryResponsibleId?: number;
   contingencyPercentage?: number;
   contingencyLevel?: number;
-  provisionAmount?: number;
   provisionContingency?: number;
   reclaims?: UpsertReclaimDto[];
   isActive?: boolean;
@@ -32,5 +31,8 @@ export interface GetJudicialProcessDto {
   guaranteeLetter?: string;
   isProvisional?: boolean;
   entityReference?: string;
-  comment?: true;
+  comment?: string;
+  provisionAmount?: number;
+  paidAmount?: number;
+  savingAmount?: number;
 }

@@ -132,7 +132,11 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                 attribute.dataType,
                               )}
                               render={({ field }) => (
-                                <Input label={attribute.label} {...field} />
+                                <Input
+                                  isRequired={attribute.isRequired}
+                                  label={attribute.label}
+                                  {...field}
+                                />
                               )}
                             />
                           )}
@@ -154,6 +158,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                       </span>
                                     </div>
                                   }
+                                  isRequired={attribute.isRequired}
                                   label={attribute.label}
                                   placeholder="0.0"
                                   type="number"
@@ -185,6 +190,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               )}
                               render={({ field }) => (
                                 <Input
+                                  isRequired={attribute.isRequired}
                                   endContent={
                                     <div className="pointer-events-none flex items-center">
                                       <span className="text-default-400 text-small">
@@ -213,6 +219,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               render={({ field }) => (
                                 <Textarea
                                   {...field}
+                                  isRequired={attribute.isRequired}
                                   description={
                                     <>
                                       {String(

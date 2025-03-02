@@ -5,5 +5,7 @@ export interface UpsertReclaimDto {
   contingencyLevel: string;
   provisionContingency: number;
   provisionAmount: number;
+  remoteAmount?: number;
+  posibleAmount?: number;
   reclaimId?: number;
 }

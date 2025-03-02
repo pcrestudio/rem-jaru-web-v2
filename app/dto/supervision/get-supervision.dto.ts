@@ -10,7 +10,6 @@ export interface GetSupervisionDto {
   responsibleId: number;
   contingencyPercentage?: number;
   contingencyLevel?: number;
-  provisionAmount?: any;
   provisionContingency?: any;
   sectionAttributeValues?: GetSectionAttributesValuesDto[];
   reclaims?: UpsertReclaimDto[];
@@ -33,5 +32,8 @@ export interface GetSupervisionDto {
   guaranteeLetter?: string;
   isProvisional?: boolean;
   entityReference?: string;
-  comment?: true;
+  comment?: string;
+  provisionAmount?: number;
+  paidAmount?: number;
+  savingAmount?: number;
 }

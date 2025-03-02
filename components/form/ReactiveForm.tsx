@@ -66,14 +66,13 @@ const ReactiveForm: FC<ReactiveFormProps> = ({
   };
 
   useEffect(() => {
-    if (initialValues) {
+    if (Object.keys(initialValues || {}).length > 0) {
       reset(initialValues);
     }
-  }, [initialValues, reset]);
+  }, [initialValues]);
 
   return (
     <form
-      noValidate
       id={formId}
       onSubmit={handleSubmit((values, event) =>
         handleFormSubmit(values, event as React.FormEvent<HTMLFormElement>),

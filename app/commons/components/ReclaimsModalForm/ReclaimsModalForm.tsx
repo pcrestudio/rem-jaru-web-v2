@@ -12,6 +12,7 @@ import { MasterOptionConfig } from "@/config/master-option.config";
 import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import debounce from "@/utils/custom_debounce";
 import { ContingencyLevelConfig } from "@/config/contingency-level.config";
+import createReclaimSchema from "@/app/validations/create-reclaim.validation";
 
 interface ReclaimsModalFormProps extends ModalProps {
   reclaim: UpsertReclaimDto;
@@ -57,7 +58,7 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
       isOpen={isOpen}
       stopEventPropagation={stopEventPropagation}
       title={title}
-      validationSchema={null}
+      validationSchema={createReclaimSchema}
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
     >

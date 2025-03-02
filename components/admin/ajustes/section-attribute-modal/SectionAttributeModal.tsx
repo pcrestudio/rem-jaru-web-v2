@@ -128,6 +128,15 @@ const SectionAttributeModal: FC<SectionAttributeModalProps> = ({
                 name="isMultiple"
                 register={register}
               />
+
+              <ReactiveSwitch
+                className="col-span-12"
+                control={control}
+                isSelected={attribute?.isRequired ?? false}
+                label="¿Es obligatorio?"
+                name="isRequired"
+                register={register}
+              />
             </div>
           </>
         )}
