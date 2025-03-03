@@ -26,7 +26,9 @@ const exportableWord = async (response, entityReference: string) => {
     window.URL.revokeObjectURL(url);
 
     return "ok";
-  } catch (error) {}
+  } catch (error) {
+    return error.message;
+  }
 };
 
 export default exportableWord;

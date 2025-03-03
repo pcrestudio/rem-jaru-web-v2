@@ -73,8 +73,6 @@ const useCommonDossier = (
         : data?.value;
       const labels: string[] = [];
 
-      console.log(labels);
-
       if (Array.isArray(convertedValue)) {
         for (const converted of convertedValue) {
           const option = data?.attribute.options.find(

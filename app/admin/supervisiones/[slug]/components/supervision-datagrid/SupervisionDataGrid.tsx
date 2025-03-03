@@ -14,6 +14,7 @@ import exportableExcel from "@/utils/exportable_excel";
 import { exportSupervisionExcel } from "@/app/api/supervision/supervision";
 import useCommonDossier from "@/app/admin/hooks/useCommonDossier";
 import { ModelType } from "@/config/model-type.config";
+import toast from "react-hot-toast";
 
 interface SupervisionDataGridProps {
   toggleSelectedItem: (judicialProcess: GetSupervisionDto) => void;
@@ -59,9 +60,17 @@ const SupervisionDataGrid: FC<SupervisionDataGridProps> = ({
         router.push(`${currentPath}/create`);
       }}
       onExportableExcel={async () => {
-        const response = await exportSupervisionExcel();
+        const response = await exportSupervisionExcel(
+          mappingRevertSubmodules[slug],
+        );
 
-        exportableExcel(response);
+        const excelResponse = exportableExcel(response);
+
+        if (excelResponse === "ok") {
+          toast.success("Excel descargado.");
+        } else {
+          toast.error(`Sucedió un error ${excelResponse}`);
+        }
       }}
       onRowAction={handleEditSupervision}
     />

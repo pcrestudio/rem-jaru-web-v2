@@ -10,6 +10,7 @@ import exportableExcel from "@/utils/exportable_excel";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useCommonDossier from "@/app/admin/hooks/useCommonDossier";
 import useStore from "@/lib/store";
+import toast from "react-hot-toast";
 
 export interface JudicialProcessDataGridProps {
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;
@@ -43,9 +44,17 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
         router.push(`${currentPath}/create`);
       }}
       onExportableExcel={async () => {
-        const response = await exportJudicialProcessExcel();
+        const response = await exportJudicialProcessExcel(
+          mappingRevertSubmodules[slug],
+        );
 
-        exportableExcel(response);
+        const excelResponse = exportableExcel(response);
+
+        if (excelResponse === "ok") {
+          toast.success("Excel descargado.");
+        } else {
+          toast.error(`Sucedió un error ${excelResponse}`);
+        }
       }}
     />
   );

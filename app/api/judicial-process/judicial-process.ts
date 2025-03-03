@@ -51,8 +51,10 @@ export async function toggleJudicialProcess(
   return api.patch(`${apiUrl}/toggle`, judicialProcess);
 }
 
-export async function exportJudicialProcessExcel() {
-  return api.get(`${apiUrl}/export/excel`, { responseType: "blob" });
+export async function exportJudicialProcessExcel(slug: string) {
+  return api.get(`${apiUrl}/export/excel?slug=${slug}`, {
+    responseType: "blob",
+  });
 }
 
 export async function exportJudicialWord(entityReference: string) {

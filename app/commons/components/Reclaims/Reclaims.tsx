@@ -32,6 +32,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
     );
 
     let amountValidation = 0;
+    const validation = process.env.NEXT_PUBLIC_RECLAIMS_VALIDATION;
 
     if (payload.amount) {
       amount = Number(payload.amount) + amount;
@@ -48,9 +49,12 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
         payload?.remoteAmount;
     }
 
-    if (amountValidation > amount) {
+    if (amountValidation > amount && validation === "true") {
       toast.error(
-        `Los montos no coinciden, el monto demandado es: ${amount}, y el actual petitorio excede con una cantidad de: ${amountValidation}`,
+        `Los montos no coinciden, el monto demandado es: S/. ${amount}, y el actual petitorio excede con una cantidad de: S/. ${amountValidation}`,
+        {
+          duration: 7000,
+        },
       );
       return;
     } else {

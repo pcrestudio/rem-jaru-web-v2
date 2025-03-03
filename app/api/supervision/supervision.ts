@@ -50,8 +50,10 @@ export async function exportSupervisionWord(entityReference: string) {
   });
 }
 
-export async function exportSupervisionExcel() {
-  return api.get(`${apiUrl}/export/excel`, { responseType: "blob" });
+export async function exportSupervisionExcel(slug: string) {
+  return api.get(`${apiUrl}/export/excel?slug=${slug}`, {
+    responseType: "blob",
+  });
 }
 
 export async function toggleSupervision(supervision: ToggleJudicialProcessDto) {

@@ -29,8 +29,6 @@ export default function Instancias() {
   );
   const groupedData = data ? Object.entries(data) : [];
   const handleSubmit = async (payload: UpsertInstanceDto) => {
-    console.log(payload);
-
     const { data } = await upsertInstance(payload);
 
     if (data) {
