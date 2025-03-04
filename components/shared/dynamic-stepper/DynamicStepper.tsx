@@ -38,7 +38,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     data?.map(() => 0) || [],
   );
 
-  const { updateStepData, updateStepDataArray } = useStore();
+  const { updateStepData, updateStepDataArray, clearStepData } = useStore();
 
   const handleStepDataChange = (
     stepId: number,
@@ -73,22 +73,22 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   };
 
   useEffect(() => {
+    clearStepData();
+
     if (data) {
       data.forEach(({ steps }) => {
         steps.forEach((step) => {
           const initialValues = step.stepData?.[0] || {};
 
-          updateStepData(step.id, {
-            ...initialValues,
-            stepId: step.id,
-            entityReference,
-          });
-
-          updateStepDataArray(step.id, {
-            ...initialValues,
-            stepId: step.id,
-            entityReference,
-          });
+          updateStepDataArray(
+            step.id,
+            {
+              ...initialValues,
+              stepId: step.id,
+              entityReference,
+            },
+            initialValues["entityId"],
+          );
         });
       });
     }

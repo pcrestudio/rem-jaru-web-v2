@@ -20,7 +20,11 @@ interface AppState {
     entityReference: string,
     data: Partial<GetInstanceIncidenceDataDto>,
   ) => void;
-  updateStepDataArray: (stepId: number, data: Partial<GetStepDataDto>) => void;
+  updateStepDataArray: (
+    stepId: number,
+    data: Partial<GetStepDataDto>,
+    entityId?: string,
+  ) => void;
   clearStepData: () => void;
   updateStepTodos?: (
     title: string,
@@ -65,12 +69,10 @@ const useStore = create<AppState>((set) => ({
         },
       },
     })),
-  updateStepDataArray: (stepId, data) =>
+  updateStepDataArray: (stepId, data, entityId) =>
     set((state) => {
       const existingIndex = state.stepDataArray.findIndex(
-        (item) =>
-          item.stepId === stepId &&
-          item.entityReference === data.entityReference,
+        (item) => item.stepId === stepId && item.entityId === entityId,
       );
 
       if (existingIndex !== -1) {

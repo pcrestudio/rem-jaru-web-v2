@@ -217,8 +217,6 @@ const useReportJudicialProcess = (
       const cellValue = contingency[columnKey];
       const percent = (contingency._count.group / totalCriticalProcesses) * 100;
 
-      console.log(isNaN(percent));
-
       switch (columnKey) {
         case "count":
           return <p>{contingency._count.group}</p>;
