@@ -37,6 +37,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
   onBlur,
   onChange,
   endContent,
+  readOnly,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
@@ -78,6 +79,7 @@ const ReactiveField: FC<ReactiveFieldProps> = ({
               isRequired={isRequired}
               label={label}
               min={0}
+              readOnly={readOnly}
               type={type}
               value={field.value || ""}
               onBlur={handleBlur}

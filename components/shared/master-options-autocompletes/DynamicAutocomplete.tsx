@@ -47,6 +47,7 @@ const DynamicAutocomplete: FC<DynamicAutocompleteProps> = ({
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <Autocomplete
           fullWidth
+          suppressHydrationWarning
           className={className}
           disabled={disabled}
           getOptionLabel={(option: GetMasterOptionsDto) => option.name || ""}

@@ -53,7 +53,7 @@ const AppBarUser: FC<AppBarUserProps> = ({ user }) => {
         <DropdownItem
           key="delete"
           className="text-cerulean-950 data-[hover=true]:bg-cerulean-200"
-          onClick={handleSignOut}
+          onPress={handleSignOut}
         >
           Cerrar sesión
         </DropdownItem>

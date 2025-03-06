@@ -25,8 +25,8 @@ import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
 import { labelConfig } from "@/config/label.config";
 import { SlugConfig } from "@/config/slug.config";
-import Incidences from "@/app/admin/procesos-judiciales/components/Incidences/Incidences";
-import { onlyAdmins, showAllDossiers } from "@/config/menu-options";
+import Incidences from "@/app/commons/components/Incidences/Incidences";
+import { showAllDossiers } from "@/config/menu-options";
 
 interface JudicialProcessFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -82,9 +82,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             className="col-span-12"
             control={control}
             errors={errors}
-            isRequired={
-              slug === SlugConfig.judicial_process_criminal ? false : true
-            }
+            isRequired={slug !== SlugConfig.judicial_process_criminal}
             label="Código de Expediente"
             name="fileCode"
             register={register}
@@ -147,17 +145,19 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
             name="secondaryResponsibleId"
           />
 
-          {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
-            <DynamicAutocomplete
-              className="col-span-6 nextui-input-nomodal"
-              control={control}
-              isRequired={true}
-              label="Estudio"
-              name="cargoStudioId"
-              optionValue="id"
-              slug={MasterOptionConfig.estudios}
-            />
-          )}
+          {Object.keys.length > 0 &&
+            showAllDossiers.includes(user?.role) &&
+            user.studioId === 0 && (
+              <DynamicAutocomplete
+                className="col-span-6 nextui-input-nomodal"
+                control={control}
+                isRequired={true}
+                label="Estudio"
+                name="cargoStudioId"
+                optionValue="id"
+                slug={MasterOptionConfig.estudios}
+              />
+            )}
 
           <DynamicAutocomplete
             className="col-span-6 nextui-input-nomodal"
@@ -226,7 +226,10 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 watch={watch}
               />
 
-              {/*<Incidences entityReference={judicialProcess?.entityReference} />*/}
+              <Incidences
+                entityReference={judicialProcess?.entityReference}
+                modelType={ModelType.JudicialProcess}
+              />
 
               <div className="col-span-12">
                 <Alert

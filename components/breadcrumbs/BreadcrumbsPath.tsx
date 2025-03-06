@@ -21,7 +21,9 @@ const validRoutes = {
   create: false,
   edit: false,
   cej: false,
+  incidencias: false,
 };
+
 const generateBreadcrumbsPath = (pathname: string): BreadcrumbsPathState[] => {
   const breads = pathname
     .split("/")

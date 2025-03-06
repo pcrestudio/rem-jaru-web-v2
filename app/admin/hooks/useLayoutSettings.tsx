@@ -11,7 +11,8 @@ const UseLayoutSettings = (pathname: string): UseLayoutSettingsProps => {
     if (
       pathname.includes("create") ||
       pathname.includes("edit") ||
-      pathname.includes("cej")
+      pathname.includes("cej") ||
+      pathname.includes("incidencias")
     ) {
       setShowFilterSidebar(false);
     } else {

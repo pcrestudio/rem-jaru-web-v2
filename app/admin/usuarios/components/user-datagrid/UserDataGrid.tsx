@@ -3,7 +3,7 @@
 import React, { FC, useCallback, useState } from "react";
 import { Tooltip } from "@heroui/react";
 import { EditIcon } from "@heroui/shared-icons";
-import { AiOutlineUnlock } from "react-icons/ai";
+import { AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { Chip } from "@heroui/chip";
 import toast from "react-hot-toast";
 
@@ -15,18 +15,21 @@ import UserModal from "@/app/admin/usuarios/components/UserModal";
 import { UpsertUserDto } from "@/app/dto/user/user-register.dto";
 import { togglerUser, upsertUser } from "@/app/api/user/user";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import { onlyAdmins } from "@/config/menu-options";
+import useStore from "@/lib/store";
 
 interface UserDataGridProps {}
 
 const UserDataGrid: FC<UserDataGridProps> = () => {
-  const [user, setUser] = useState<GetUserDto>(null);
+  const [userGrid, setUser] = useState<GetUserDto>(null);
+  const { user } = useStore();
   const [confirm, setConfirm] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
-  const selectUser = (user: GetUserDto) => {
-    const roleId = user?.UserRole[0]?.roleId;
+  const selectUser = (getUser: GetUserDto) => {
+    const roleId = getUser?.UserRole[0]?.roleId;
 
-    setUser({ ...user, roleId: roleId ?? null });
+    setUser({ ...getUser, roleId: roleId ?? null });
     setOpen(true);
   };
 
@@ -45,14 +48,14 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
     }
   };
 
-  const toggleSelectedItem = (user: GetUserDto) => {
-    setUser(user);
+  const toggleSelectedItem = (getUser: GetUserDto) => {
+    setUser(getUser);
     setConfirm(true);
   };
 
   const toggleUserHelper = async () => {
     const { data } = await togglerUser({
-      id: user.id,
+      id: userGrid.id,
     });
 
     if (data) {
@@ -110,6 +113,18 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
                 </span>
               </Tooltip>
 
+              {onlyAdmins.includes(user?.role) && (
+                <Tooltip content="Cambiar contraseña">
+                  <span
+                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    role="presentation"
+                    onClick={() => selectUser(item)}
+                  >
+                    <AiOutlineLock />
+                  </span>
+                </Tooltip>
+              )}
+
               {item?.isLocked && (
                 <Tooltip content="Desbloquear sesión">
                   <span
@@ -136,8 +151,8 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
       <UserModal
         handleSubmit={onSubmit}
         isOpen={open}
-        title={user ? "Editar usuario" : "Nuevo usuario"}
-        user={user}
+        title={userGrid ? "Editar usuario" : "Nuevo usuario"}
+        user={userGrid}
         onCloseChange={handleClose}
       />
 

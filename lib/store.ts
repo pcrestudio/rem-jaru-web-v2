@@ -55,9 +55,17 @@ const useStore = create<AppState>((set) => ({
     }));
   },
   updateUser: (user: IUser) => {
-    set(() => ({
-      user: user,
-    }));
+    set((state) => {
+      const storedUser = localStorage.getItem("user");
+
+      if (storedUser) {
+        state.user = JSON.parse(storedUser);
+      }
+
+      return {
+        user,
+      };
+    });
   },
   updateStepData: (stepId, data) =>
     set((state) => ({
