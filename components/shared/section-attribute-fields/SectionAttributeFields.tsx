@@ -190,7 +190,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               )}
                               render={({ field }) => (
                                 <Input
-                                  isRequired={attribute.isRequired}
                                   endContent={
                                     <div className="pointer-events-none flex items-center">
                                       <span className="text-default-400 text-small">
@@ -198,6 +197,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                       </span>
                                     </div>
                                   }
+                                  isRequired={attribute.isRequired}
                                   label={attribute.label}
                                   min={0}
                                   placeholder="0.0"
@@ -219,7 +219,6 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                               render={({ field }) => (
                                 <Textarea
                                   {...field}
-                                  isRequired={attribute.isRequired}
                                   description={
                                     <>
                                       {String(
@@ -240,6 +239,7 @@ const SectionAttributeFields: FC<SectionAttributeFieldsProps> = ({
                                         )}
                                     </>
                                   }
+                                  isRequired={attribute.isRequired}
                                   label={`${attribute.label}`}
                                 />
                               )}

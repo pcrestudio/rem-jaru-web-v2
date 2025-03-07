@@ -1,11 +1,11 @@
 import React, { FC, useState } from "react";
+import { Switch } from "@heroui/switch";
+import useSWR from "swr";
 
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import { ModalProps } from "@/app/admin/types/ModalProps";
-import { Switch } from "@heroui/switch";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
-import useSWR from "swr";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import ReactiveSwitch from "@/components/form/ReactiveSwitch";
@@ -47,10 +47,10 @@ const InstanceSettingForm: FC<InstanceSettingFormProps> = ({
               className="col-span-12 lg:col-span-12"
               control={control}
               errors={errors}
-              register={register}
               label="Nombre de la instancia"
               labelClassName="text-xs"
               name="title"
+              register={register}
             />
 
             <Switch

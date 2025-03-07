@@ -16,7 +16,7 @@ import { ModelType } from "@/config/model-type.config";
 import ReactiveField from "@/components/form/ReactiveField";
 import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.constant";
 import Reclaims from "@/app/commons/components/Reclaims/Reclaims";
-import { onlyAdmins, showAllDossiers } from "@/config/menu-options";
+import { showAllDossiers } from "@/config/menu-options";
 import useStore from "@/lib/store";
 
 interface SupervisionFormProps {

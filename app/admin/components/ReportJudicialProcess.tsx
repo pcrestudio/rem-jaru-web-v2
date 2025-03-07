@@ -136,8 +136,8 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           chartData={causesChartData}
           columns={causesColumns}
           items={data?.causes.report}
-          type={PieChartType.column}
           title="N° de procesos por causa/raíz"
+          type={PieChartType.column}
         />
       </div>
       <div className="col-span-12">
@@ -156,8 +156,8 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           chartData={matterChartData}
           columns={judicialProcessPieBarColumns}
           items={data?.matters.report[0]?.Submodule}
-          type={PieChartType.column}
           title="N° de procesos por materias"
+          type={PieChartType.column}
         />
       </div>
       <div className="col-span-12">

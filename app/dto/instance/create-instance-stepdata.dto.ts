@@ -1,6 +1,8 @@
 export interface UpsertInstanceStepDataDto {
   stepData: InstanceStepDataDto[];
-  modelType: string;
+  modelType?: string;
+  isInstance?: boolean;
+  incidenceId?: number;
 }
 
 export interface InstanceStepDataDto {
@@ -18,5 +20,6 @@ export interface InstanceStepDataDto {
   resume?: string;
   title?: string;
   choice?: string;
+  incidenceId?: number;
   id?: number;
 }

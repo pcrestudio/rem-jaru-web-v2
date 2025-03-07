@@ -1,16 +1,16 @@
 import React, { FC, useCallback, useState } from "react";
 import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
 import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { SettingsIcon } from "lucide-react";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import { UpsertReclaimDto } from "@/app/dto/reclaims/upsert-reclaim.dto";
 import incidencesColumns from "@/app/commons/components/Incidences/incidencesColumns";
 import IncidencesForm from "@/app/commons/components/IncidencesForm/IncidencesForm";
 import { UpsertIncidenceDto } from "@/app/dto/incidences/upsert-incidence.dto";
 import { upsertIncidenceDto } from "@/app/api/incidences/incidences";
-import toast from "react-hot-toast";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
-import { useRouter } from "next/navigation";
 
 export interface IncidencesProps {
   entityReference?: string;
@@ -24,12 +24,14 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
   const [incidence, setIncidence] = useState<UpsertIncidenceDto | null>(null);
   const router = useRouter();
 
-  const navigateIfIncidenceExists = async () => {
-    if (id) {
-      const currentPath = window.location.pathname;
-      const incidences_route = currentPath.replace(/edit\/\d+/, "incidencias");
+  const navigateIfIncidenceExists = async (concatId?: string) => {
+    const currentPath = window.location.pathname;
+    const incidences_route = currentPath.replace(/edit\/\d+/, "incidencias");
 
+    if (id) {
       return router.push(`${incidences_route}/${id}`);
+    } else {
+      return router.push(`${incidences_route}/${concatId}`);
     }
   };
 
@@ -79,6 +81,18 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
                   onClick={() => selectItem(item)}
                 >
                   <EditIcon />
+                </span>
+              </Tooltip>
+
+              <Tooltip content="Configurar incidencia">
+                <span
+                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                  role="presentation"
+                  onClick={() =>
+                    navigateIfIncidenceExists(`${item.id}-${entityReference}`)
+                  }
+                >
+                  <SettingsIcon size={18} />
                 </span>
               </Tooltip>
 

@@ -34,6 +34,10 @@ export async function upsertInstanceStepData(
     formData.append(`stepData[${index}][resume]`, stepData.resume || "");
     formData.append(`stepData[${index}][title]`, stepData.title || "");
     formData.append(
+      `stepData[${index}][incidenceId]`,
+      stepData.incidenceId.toString() || "",
+    );
+    formData.append(
       `stepData[${index}][dateResume]`,
       JSON.stringify(stepData.dateResume) || "",
     );
@@ -73,7 +77,14 @@ export async function upsertInstanceStepData(
     }
   });
 
-  formData.append("modelType", instanceStepData.modelType);
+  if (instanceStepData.modelType) {
+    formData.append("modelType", instanceStepData.modelType);
+  }
+
+  if (instanceStepData.isInstance && instanceStepData.incidenceId) {
+    formData.append("isInstance", String(instanceStepData.isInstance));
+    formData.append("incidenceId", String(instanceStepData.incidenceId));
+  }
 
   return api.post(`${apiUrl}/upsert/step/record`, formData, {
     headers: {

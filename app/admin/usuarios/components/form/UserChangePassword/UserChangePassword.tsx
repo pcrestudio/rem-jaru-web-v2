@@ -3,14 +3,14 @@ import React, { FC } from "react";
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import { ModalProps } from "@/app/admin/types/ModalProps";
-import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
+import { GetUserDto } from "@/app/dto/get-user.dto";
 
-interface ReclaimsModalFormProps extends ModalProps {
-  instanceStep: GetStepDto;
+interface UserChangePasswordProps extends ModalProps {
+  user: GetUserDto;
 }
 
-const InstanceStepSettingForm: FC<ReclaimsModalFormProps> = ({
-  instanceStep,
+const UserChangePassword: FC<UserChangePasswordProps> = ({
+  user,
   isOpen,
   stopEventPropagation,
   title,
@@ -19,26 +19,27 @@ const InstanceStepSettingForm: FC<ReclaimsModalFormProps> = ({
 }) => {
   return (
     <FormDialog
-      formId="instance-step-form"
-      initialValues={instanceStep || {}}
+      formId="reclaims-form"
+      initialValues={user || {}}
       isOpen={isOpen}
       stopEventPropagation={stopEventPropagation}
       title={title}
-      validationSchema={null}
+      validationSchema={undefined}
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
     >
-      {({ register, errors, control, getValues, setValue }) => {
+      {({ register, errors, control }) => {
         return (
           <div className="grid grid-cols-12 gap-4 px-6">
             <ReactiveField
               className="col-span-12 lg:col-span-12"
               control={control}
               errors={errors}
-              label="Nombre del paso"
+              label="Concepto"
               labelClassName="text-xs"
-              name="name"
+              name="password"
               register={register}
+              type="password"
             />
           </div>
         );
@@ -47,4 +48,4 @@ const InstanceStepSettingForm: FC<ReclaimsModalFormProps> = ({
   );
 };
 
-export default InstanceStepSettingForm;
+export default UserChangePassword;

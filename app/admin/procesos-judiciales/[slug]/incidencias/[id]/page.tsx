@@ -1,25 +1,59 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-
 import React from "react";
+import useSWR from "swr";
+import { Button } from "@heroui/button";
+import toast from "react-hot-toast";
+
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import ReactiveForm from "@/components/form/ReactiveForm";
-import judicialProcessSchema from "@/app/validations/create-judicial-process.validation";
 import ReactiveField from "@/components/form/ReactiveField";
 import ReactiveTextArea from "@/components/form/ReactiveTextArea";
+import { environment } from "@/environment/environment";
+import { fetcher } from "@/config/axios.config";
+import { upsertIncidenceDataDto } from "@/app/api/incidences/incidences";
+import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
+import IncidenceInstances from "@/app/commons/components/IncidencesInstances/IncidencesInstances";
+import { upsertInstanceStepData } from "@/app/api/instances/instances";
+import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
+import useStore from "@/lib/store";
+import { ModelType } from "@/config/model-type.config";
 
 export default function IncidenciasProcesosJudiciales() {
   const pathname = usePathname();
   const param: string = pathname.split("/")[5];
   const slug: string = pathname.split("/")[3];
-  const instanceId: number = Number(param.split("-")[0]);
+  const incidenceId: number = Number(param.split("-")[0]);
   const fileCode: string = param.split("-")[1];
+  const { data } = useSWR<any>(
+    `${environment.baseUrl}/incident/data?incidenceId=${incidenceId}`,
+    fetcher,
+  );
+  const { stepDataArray } = useStore();
 
-  console.log(slug);
+  const handleSubmit = async (payload: UpsertIncidentDataDto) => {
+    const { data } = await upsertIncidenceDataDto({
+      ...payload,
+      instanceIncidentId: incidenceId,
+    });
 
-  const handleSubmit = (payload: any) => {
-    console.log(payload);
+    const instanceResponse = await upsertInstanceStepData({
+      stepData: stepDataArray as InstanceStepDataDto[],
+      modelType: ModelType.JudicialProcess,
+      isInstance: true,
+      incidenceId: incidenceId,
+    });
+
+    if (data) {
+      if (instanceResponse.data) {
+        toast.success("Instancias modificadas con éxito");
+      }
+
+      toast.success("Los datos de la incidencia fueron creados.");
+    } else {
+      toast.error("Oops. Pasó algo.");
+    }
   };
 
   return (
@@ -27,14 +61,12 @@ export default function IncidenciasProcesosJudiciales() {
       <BreadcrumbsPath pathname={pathname} />
 
       <ReactiveForm
-        formId="judicial-process-edit"
-        initialValues={{
-          fileCode,
-        }}
+        formId="incidence-data-edit"
+        initialValues={data ? data : { fileCode }}
         options={{
           mode: "onTouched",
         }}
-        validationSchema={judicialProcessSchema}
+        validationSchema={null}
         onSubmit={handleSubmit}
       >
         {({ register, errors, touchedFields, control, isValid }) => (
@@ -69,6 +101,21 @@ export default function IncidenciasProcesosJudiciales() {
               register={register}
               touched={touchedFields.comment}
             />
+
+            <div className="col-span-12">
+              <IncidenceInstances
+                entityReference={fileCode}
+                incidenceId={incidenceId}
+              />
+            </div>
+
+            <Button
+              className="standard-btn bg-red-500 text-white w-fit"
+              isDisabled={!isValid}
+              type="submit"
+            >
+              {data ? "Editar incidencia" : "Guardar incidencia"}
+            </Button>
           </div>
         )}
       </ReactiveForm>

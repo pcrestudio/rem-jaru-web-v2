@@ -1,5 +1,3 @@
-import useStore from "@/lib/store";
-import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import React, { FC } from "react";
 import {
   Table,
@@ -11,6 +9,9 @@ import {
 } from "@heroui/react";
 import { Button } from "@mui/material";
 import { AiOutlinePlus } from "react-icons/ai";
+
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import stepColumns from "@/app/admin/ajustes/instancias/components/InstanceStepDataGrid/columns/stepColumns";
 import InstanceStepSettingForm from "@/app/admin/ajustes/instancias/components/forms/InstanceStepSettingForm/InstanceStepSettingForm";
@@ -44,22 +45,22 @@ const InstanceStepDataGrid: FC<InstanceStepDataGridProps> = ({
   return (
     <>
       <ConfirmModal
-        isOpen={confirm}
-        onClose={handleToggleClose}
         description={{
           __html:
             "Por favor, verifique que no hay ningún expediente comprometido con este paso antes de eliminarlo.",
         }}
+        isOpen={confirm}
         title="¿Desea eliminar el paso de esta instancia?"
+        onClose={handleToggleClose}
         onConfirm={handleToggleConfirm}
       />
 
       <InstanceStepSettingForm
         handleSubmit={handleStepSettingSubmit}
-        isOpen={isOpen}
-        onCloseChange={handleCloseStepSettingForm}
         instanceStep={instanceStep}
+        isOpen={isOpen}
         title={instanceStep ? "Editar paso" : "Nuevo paso"}
+        onCloseChange={handleCloseStepSettingForm}
       />
 
       <Table

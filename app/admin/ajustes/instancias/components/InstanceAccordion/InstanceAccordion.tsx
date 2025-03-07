@@ -31,8 +31,8 @@ const StepSection: FC<AttributeSectionProps> = ({ instances }) => {
               title={`${instance.name}`}
             >
               <InstanceStepDataGrid
-                steps={instance.steps}
                 instanceId={instance.id}
+                steps={instance.steps}
               />
             </AccordionItem>
           </Accordion>

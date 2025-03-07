@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
@@ -10,7 +11,6 @@ import exportableExcel from "@/utils/exportable_excel";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useCommonDossier from "@/app/admin/hooks/useCommonDossier";
 import useStore from "@/lib/store";
-import toast from "react-hot-toast";
 
 export interface JudicialProcessDataGridProps {
   toggleSelectedItem: (judicialProcess: GetJudicialProcessDto) => void;

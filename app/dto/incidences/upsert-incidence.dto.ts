@@ -3,4 +3,5 @@ export class UpsertIncidenceDto {
   title?: string;
   entityReference?: string;
   modelType?: string;
+  id?: number;
 }

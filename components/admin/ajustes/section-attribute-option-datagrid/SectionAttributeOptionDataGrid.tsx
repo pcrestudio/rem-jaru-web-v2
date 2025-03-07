@@ -8,7 +8,7 @@ import {
   TableCell,
   Tooltip,
 } from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import { EditIcon } from "@heroui/shared-icons";
 import { Chip } from "@heroui/chip";
 
 import { sectionAttributeOptionColumns } from "@/components/admin/ajustes/section-attribute-option-datagrid/columns/section-attribute-option.columns";

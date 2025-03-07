@@ -12,7 +12,6 @@ import { fetcher } from "@/config/axios.config";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 import useStore from "@/lib/store";
-import { Role } from "@/config/mapping_role";
 import { showAllDossiers } from "@/config/menu-options";
 
 const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({

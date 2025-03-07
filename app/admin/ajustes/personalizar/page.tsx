@@ -9,10 +9,7 @@ import toast from "react-hot-toast";
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import {
-  GetGroupedModuleDto,
-  GetModuleDto,
-} from "@/app/dto/modules/get-module.dto";
+import { GetGroupedModuleDto } from "@/app/dto/modules/get-module.dto";
 import AttributeSection from "@/components/admin/ajustes/attribute-section/AttributeSection";
 import SettingsSectionModal from "@/app/admin/ajustes/maestros/components/settings-section-modal/SettingsSectionModal";
 import { CreateSectionAttributeDto } from "@/app/dto/attribute-values/create-section-attribute.dto";

@@ -3,6 +3,8 @@
 import { usePathname } from "next/navigation";
 import { ReactNode, useCallback, useState } from "react";
 import toast from "react-hot-toast";
+import { Tooltip } from "@heroui/react";
+import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import { UpsertInstanceStepDto } from "@/app/dto/instance/upsert-instance-step.dto";
@@ -10,8 +12,6 @@ import {
   deleteInstanceStep,
   upsertInstanceStep,
 } from "@/app/api/instances/instances";
-import { Tooltip } from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
 
 interface UseInstanceSettingHookProps {
   isOpen: boolean;
@@ -69,6 +69,7 @@ const useInstanceSetting = (): UseInstanceSettingHookProps => {
     if (data) {
       toast.success("Paso eliminado.");
       setInstanceStep(null);
+
       return setConfirm(false);
     }
   };

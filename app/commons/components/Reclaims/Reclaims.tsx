@@ -56,6 +56,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
           duration: 7000,
         },
       );
+
       return;
     } else {
       const reclaims: UpsertReclaimDto[] = [{ ...payload }];

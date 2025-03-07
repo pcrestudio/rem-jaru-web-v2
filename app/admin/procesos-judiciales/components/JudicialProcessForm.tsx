@@ -25,7 +25,6 @@ import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
 import { labelConfig } from "@/config/label.config";
 import { SlugConfig } from "@/config/slug.config";
-import Incidences from "@/app/commons/components/Incidences/Incidences";
 import { showAllDossiers } from "@/config/menu-options";
 
 interface JudicialProcessFormProps {
@@ -224,11 +223,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 reset={reset}
                 setValue={setValue}
                 watch={watch}
-              />
-
-              <Incidences
-                entityReference={judicialProcess?.entityReference}
-                modelType={ModelType.JudicialProcess}
               />
 
               <div className="col-span-12">
