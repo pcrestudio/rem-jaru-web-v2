@@ -141,7 +141,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
         />
       </div>
       <div className="col-span-12">
-        <HorizontalBarChart<GetMasterOptionReportDto>
+        <HorizontalBarChart<GetContingenciesReportDto>
           cells={renderInternalSpecialistBarChartCell}
           chartData={internalSpecialistData}
           columns={internalSpecialistColumns}

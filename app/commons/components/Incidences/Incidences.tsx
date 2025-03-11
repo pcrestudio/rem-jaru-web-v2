@@ -1,12 +1,9 @@
-import React, { FC, useCallback, useState } from "react";
-import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
-import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
+import React, { FC, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { SettingsIcon } from "lucide-react";
+import { Button } from "@heroui/button";
+import { AiOutlinePlus } from "react-icons/ai";
 
-import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
-import incidencesColumns from "@/app/commons/components/Incidences/incidencesColumns";
 import IncidencesForm from "@/app/commons/components/IncidencesForm/IncidencesForm";
 import { UpsertIncidenceDto } from "@/app/dto/incidences/upsert-incidence.dto";
 import { upsertIncidenceDto } from "@/app/api/incidences/incidences";
@@ -58,61 +55,13 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
     });
 
     if (data) {
-      setConfirm(true);
       setIsOpen(false);
       setId(`${data?.id}-${entityReference}`);
+      toast.success("Incidencia creada");
     } else {
       toast.error("La incidencia no se pudo crear.");
     }
   };
-
-  const renderCell = useCallback(
-    (item: UpsertIncidenceDto, columnKey: string | number) => {
-      const cellValue = item[columnKey];
-
-      switch (columnKey) {
-        case "actions":
-          return (
-            <div className="relative flex items-center gap-2">
-              <Tooltip content="Editar incidencia">
-                <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                  role="presentation"
-                  onClick={() => selectItem(item)}
-                >
-                  <EditIcon />
-                </span>
-              </Tooltip>
-
-              <Tooltip content="Configurar incidencia">
-                <span
-                  className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                  role="presentation"
-                  onClick={() =>
-                    navigateIfIncidenceExists(`${item.id}-${entityReference}`)
-                  }
-                >
-                  <SettingsIcon size={18} />
-                </span>
-              </Tooltip>
-
-              <Tooltip content="Eliminar incidencia">
-                <span
-                  className="text-lg text-danger cursor-pointer active:opacity-50"
-                  role="presentation"
-                >
-                  <DeleteIcon />
-                </span>
-              </Tooltip>
-            </div>
-          );
-
-        default:
-          return cellValue;
-      }
-    },
-    [],
-  );
 
   return (
     <>
@@ -134,34 +83,14 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
         onCloseChange={handleIncidenceClose}
       />
 
-      <div className="col-span-12">
-        <Accordion
-          key="Incidencias"
-          className="col-span-12 order-2"
-          itemClasses={{
-            title: "text-cerulean-950 font-bold text-lg",
-            base: "pb-4 shadow-none border border-slate-200",
-            trigger: "border-b-red-500 pt-4 pb-1",
-          }}
-          selectionMode="single"
-          variant="splitted"
+      <div className="col-span-12 self-end">
+        <Button
+          className="standard-btn w-auto text-white"
+          startContent={<AiOutlinePlus />}
+          onPress={() => setIsOpen(true)}
         >
-          <AccordionItem title="Incidencias">
-            <div className="flex flex-col gap-4">
-              <CustomDataGrid<UpsertIncidenceDto>
-                hasAddButton
-                addButtonText="Nueva incidencia"
-                cells={renderCell}
-                columns={incidencesColumns}
-                dataGridKey="id"
-                emptyContent="Sin incidencias."
-                endpointUrl={`incident?modelType=${modelType}&entityReference=${entityReference}&`}
-                totalItemsText="Incidencias totales:"
-                onAddChange={() => setIsOpen(true)}
-              />
-            </div>
-          </AccordionItem>
-        </Accordion>
+          Agregar incidencia
+        </Button>
       </div>
     </>
   );

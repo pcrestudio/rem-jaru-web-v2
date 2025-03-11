@@ -43,6 +43,8 @@ export interface GetStepDataDto {
   fileFour?: string;
   fileFive?: string;
   step: GetStepDto;
+  instanceId?: number;
+  incidenceId?: string;
 }
 
 export interface GetGroupedStepDto {

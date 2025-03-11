@@ -1,5 +1,5 @@
 import Stepper from "@mui/material/Stepper";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, Key, useEffect, useState } from "react";
 import { IconButton, Step, StepContent, StepLabel } from "@mui/material";
 import useSWR from "swr";
 import { Tabs, Tab } from "@heroui/react";
@@ -19,6 +19,7 @@ import { InstanceConfig } from "@/config/instance.config";
 import { UpsertIncidenceDto } from "@/app/dto/incidences/upsert-incidence.dto";
 import IncidenceInstances from "@/app/commons/components/IncidencesInstances/IncidencesInstances";
 import { AiFillCloseCircle } from "react-icons/ai";
+import Incidences from "@/app/commons/components/Incidences/Incidences";
 
 interface DynamicStepperProps {
   entityReference?: string;
@@ -35,6 +36,9 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     `${environment.baseUrl}/instance?entityReference=${entityReference}&modelType=${modelType}`,
     fetcher,
   );
+
+  const [selected, setSelected] = useState<any>("1");
+
   const { data: incidences } = useSWR<UpsertIncidenceDto[]>(
     `${environment.baseUrl}/incident?modelType=${modelType}&entityReference=${entityReference}`,
     fetcher,
@@ -43,6 +47,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   const tabs: UpsertIncidenceDto[] = [
     {
       name: "Expediente principal",
+      id: 0,
     },
   ];
 
@@ -98,6 +103,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
             step.id,
             {
               ...initialValues,
+              incidenceId: undefined,
               stepId: step.id,
               entityReference,
             },
@@ -106,7 +112,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
         });
       });
     }
-  }, [data, entityReference, updateStepData, instanceName]);
+  }, [data, entityReference, updateStepData, instanceName, selected]);
 
   const index = data?.findIndex(
     (instance) => instance.name === InstanceConfig.INSPECTIVA,
@@ -116,7 +122,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     ? incidences.map((incidence) => ({ ...incidence, name: incidence.name }))
     : [];
 
-  const renderTab = (name: string, incidence: UpsertIncidenceDto) => {
+  const renderTab = (name: string, incidenceId: string) => {
     switch (name) {
       case "Expediente principal":
         return (
@@ -213,7 +219,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
         return (
           <IncidenceInstances
             entityReference={entityReference}
-            incidenceId={incidence.id}
+            incidenceId={Number(incidenceId)}
             modelType={modelType}
           />
         );
@@ -221,14 +227,18 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   };
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between gap-6">
+      <Incidences entityReference={entityReference} modelType={modelType} />
+
       <Tabs
         aria-label="Dynamic tabs"
         items={incidences ? [...tabs, ...concatTabs] : tabs}
+        selectedKey={selected}
+        onSelectionChange={setSelected}
       >
         {(incidence) => (
           <Tab
-            key={incidence.name}
+            key={incidence.id}
             title={
               <div className="flex flex-row gap-4 items-center">
                 <span>{incidence.name}</span>
@@ -244,7 +254,7 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
               </div>
             }
           >
-            {renderTab(incidence.name, incidence)}
+            {renderTab(incidence.name, selected)}
           </Tab>
         )}
       </Tabs>

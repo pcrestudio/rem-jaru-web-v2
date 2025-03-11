@@ -104,11 +104,9 @@ export default function ProcesosJudicialesSlugEdit() {
         modelType: ModelType.JudicialProcess,
       });
 
-      const incidentDataResponse = await upsertIncidentData(
-        stepInstanceIncidenceData as UpsertIncidentDataDto[],
-      );
+      console.log(stepDataArray);
 
-      if (instanceResponse.data || incidentDataResponse.data) {
+      if (instanceResponse.data) {
         toast.success("Instancias modificadas con éxito");
       }
     }

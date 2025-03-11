@@ -12,7 +12,7 @@ export interface GetInitReportDto {
     report: number;
   };
   internalSpecialists: {
-    report: GetMasterOptionReportDto[];
+    report: GetContingenciesReportDto[];
   };
   contingencies: {
     report: GetContingenciesReportDto[];

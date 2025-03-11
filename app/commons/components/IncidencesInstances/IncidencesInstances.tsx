@@ -86,6 +86,7 @@ const IncidenceInstances: FC<IncidenceInstancesProps> = ({
             step.id,
             {
               ...initialValues,
+              incidenceId: incidenceId.toString(),
               stepId: step.id,
               entityReference,
             },
@@ -94,7 +95,7 @@ const IncidenceInstances: FC<IncidenceInstancesProps> = ({
         });
       });
     }
-  }, [data, entityReference, updateStepData, instanceName]);
+  }, [data, entityReference, updateStepData, instanceName, incidenceId]);
 
   const index = data?.findIndex(
     (instance) => instance.name === InstanceConfig.INSPECTIVA,

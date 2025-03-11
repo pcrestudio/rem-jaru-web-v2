@@ -26,10 +26,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
   };
 
   const handleSubmit = async (payload: UpsertReclaimDto, reset: any) => {
-    let amount = provision?.reclaims.reduce(
-      (sum, provision) => sum + provision?.amount,
-      0,
-    );
+    let amount = 0;
 
     let amountValidation = 0;
     const validation = process.env.NEXT_PUBLIC_RECLAIMS_VALIDATION;
@@ -51,7 +48,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
 
     if (amountValidation > amount && validation === "true") {
       toast.error(
-        `Los montos no coinciden, el monto demandado es: S/. ${amount}, y el actual petitorio excede con una cantidad de: S/. ${amountValidation}`,
+        `Los montos no coinciden, el monto petitorio demandado es: S/. ${amount}, y el actual petitorio excede con una cantidad de: S/. ${amountValidation}`,
         {
           duration: 7000,
         },

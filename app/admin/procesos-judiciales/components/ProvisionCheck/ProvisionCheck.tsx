@@ -56,6 +56,10 @@ const ProvisionCheck: FC<ModularProps> = ({
       0,
     );
 
+    if (amount > 0) {
+      setValue(`${ExtendedAttributeConfig.amount}`, Number(amount).toFixed(2));
+    }
+
     const percentage =
       reclaims?.reduce(
         (acumulado, petitorio) => acumulado + petitorio.contingencyPercentage,
@@ -66,8 +70,6 @@ const ProvisionCheck: FC<ModularProps> = ({
       `${ExtendedAttributeConfig.provisionAmount}`,
       Number(provisionAmount).toFixed(2),
     );
-
-    setValue(`${ExtendedAttributeConfig.amount}`, Number(amount).toFixed(2));
 
     setValue(
       ExtendedAttributeConfig.contingencyPercentage,
@@ -129,7 +131,7 @@ const ProvisionCheck: FC<ModularProps> = ({
 
   return (
     <>
-      {values?.isProvisional && (
+      {!values?.isProvisional && (
         <>
           <ReactiveNumericField
             readOnly
@@ -238,7 +240,7 @@ const ProvisionCheck: FC<ModularProps> = ({
         }}
       />
 
-      {!values?.isProvisional && (
+      {values?.isProvisional && (
         <>
           <ReactiveTextArea
             className="col-span-12 nextui-textarea-nomodal"

@@ -50,7 +50,7 @@ interface UseReportJudicialProcessProps {
     columnKey: string | number,
   ) => ReactNode;
   renderInternalSpecialistBarChartCell: (
-    item: GetMasterOptionReportDto,
+    item: GetContingenciesReportDto,
     columnKey: string | number,
   ) => ReactNode;
   renderCausesCell: (
@@ -300,22 +300,22 @@ const useReportJudicialProcess = (
     (data?.internalSpecialists.report.map((option) => ({
       name: option.name,
       type: "bar",
-      data: [option._count.group],
+      data: [option.count],
     })) as ChartData[]) ?? [];
 
   const totalInternalSpecialist = data?.internalSpecialists.report.reduce(
-    (sum, item) => sum + (item._count.group || 0),
+    (sum, item) => sum + (item.count || 0),
     0,
   );
 
   const renderInternalSpecialistBarChartCell = useCallback(
-    (report: GetMasterOptionReportDto, columnKey: string | number) => {
+    (report: GetContingenciesReportDto, columnKey: string | number) => {
       const cellValue = report[columnKey];
-      const percent = (report._count.group / totalInternalSpecialist) * 100;
+      const percent = (report.count / totalInternalSpecialist) * 100;
 
       switch (columnKey) {
         case "count":
-          return <p>{report._count.group}</p>;
+          return <p>{report.count}</p>;
 
         case "percent":
           return (

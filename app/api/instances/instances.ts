@@ -33,10 +33,14 @@ export async function upsertInstanceStepData(
     formData.append(`stepData[${index}][choice]`, stepData.choice || "");
     formData.append(`stepData[${index}][resume]`, stepData.resume || "");
     formData.append(`stepData[${index}][title]`, stepData.title || "");
-    formData.append(
-      `stepData[${index}][incidenceId]`,
-      stepData.incidenceId.toString() || "",
-    );
+
+    if (stepData.incidenceId) {
+      formData.append(
+        `stepData[${index}][incidenceId]`,
+        stepData.incidenceId.toString() || "",
+      );
+    }
+
     formData.append(
       `stepData[${index}][dateResume]`,
       JSON.stringify(stepData.dateResume) || "",
