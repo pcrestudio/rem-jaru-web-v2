@@ -3,14 +3,11 @@ import React, { FC } from "react";
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
 import { ModalProps } from "@/app/admin/types/ModalProps";
-import { GetUserDto } from "@/app/dto/get-user.dto";
+import PasswordHints from "@/app/auth/components/PasswordHints";
 
-interface UserChangePasswordProps extends ModalProps {
-  user: GetUserDto;
-}
+interface UserChangePasswordProps extends ModalProps {}
 
 const UserChangePassword: FC<UserChangePasswordProps> = ({
-  user,
   isOpen,
   stopEventPropagation,
   title,
@@ -20,7 +17,7 @@ const UserChangePassword: FC<UserChangePasswordProps> = ({
   return (
     <FormDialog
       formId="reclaims-form"
-      initialValues={user || {}}
+      initialValues={{}}
       isOpen={isOpen}
       stopEventPropagation={stopEventPropagation}
       title={title}
@@ -28,19 +25,25 @@ const UserChangePassword: FC<UserChangePasswordProps> = ({
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
     >
-      {({ register, errors, control }) => {
+      {({ register, errors, control, watch }) => {
+        const passwordValue = watch("password", "");
+
         return (
           <div className="grid grid-cols-12 gap-4 px-6">
             <ReactiveField
               className="col-span-12 lg:col-span-12"
               control={control}
               errors={errors}
-              label="Concepto"
+              label="Contraseña"
               labelClassName="text-xs"
               name="password"
               register={register}
               type="password"
             />
+
+            <div className="col-span-12">
+              <PasswordHints passwordValue={passwordValue} />
+            </div>
           </div>
         );
       }}

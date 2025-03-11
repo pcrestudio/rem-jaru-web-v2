@@ -28,7 +28,7 @@ const InstanceStepSettingForm: FC<ReclaimsModalFormProps> = ({
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
     >
-      {({ register, errors, control, getValues, setValue }) => {
+      {({ register, errors, control }) => {
         return (
           <div className="grid grid-cols-12 gap-4 px-6">
             <ReactiveField

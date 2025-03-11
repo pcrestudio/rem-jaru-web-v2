@@ -89,12 +89,16 @@ const useStore = create<AppState>((set) => ({
         updatedArray[existingIndex] = {
           ...updatedArray[existingIndex],
           ...data,
+          incidenceId: Number(data.incidenceId),
         };
 
         return { stepDataArray: updatedArray };
       } else {
         return {
-          stepDataArray: [...state.stepDataArray, { stepId, ...data }],
+          stepDataArray: [
+            ...state.stepDataArray,
+            { stepId, ...data, incidenceId: Number(data.incidenceId) },
+          ],
         };
       }
     }),

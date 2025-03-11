@@ -32,11 +32,6 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
     }
   };
 
-  const selectItem = (incidence: UpsertIncidenceDto) => {
-    setIncidence(incidence);
-    setIsOpen(true);
-  };
-
   const handleIncidenceClose = () => {
     setIncidence(incidence);
     setIsOpen(false);

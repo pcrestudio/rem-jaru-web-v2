@@ -2,7 +2,7 @@ import React from "react";
 
 function PasswordHints({ passwordValue }: { passwordValue: string }) {
   // Feel free to tailor these checks to your actual validation rules
-  const hasMinLength = passwordValue.length >= 8;
+  const hasMinLength = passwordValue.length >= 12;
   const hasUpperCase = /[A-Z]/.test(passwordValue);
   const hasNumber = /[0-9]/.test(passwordValue);
   const hasSpecialChar = /[^a-zA-Z0-9]/.test(passwordValue);
@@ -10,7 +10,7 @@ function PasswordHints({ passwordValue }: { passwordValue: string }) {
   return (
     <ul className="text-sm text-gray-600 mt-1 space-y-1">
       <li className={hasMinLength ? "text-green-600" : "text-red-600"}>
-        * Mínimo 8 caracteres
+        * Mínimo 12 caracteres
       </li>
       <li className={hasUpperCase ? "text-green-600" : "text-red-600"}>
         * Al menos una mayúscula

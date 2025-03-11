@@ -14,3 +14,7 @@ export async function upsertIncidenceDataDto(
 ) {
   return api.post(`${apiUrl}/upsert/data`, incidenceData);
 }
+
+export async function deleteIncidence(id: string) {
+  return api.delete(`${apiUrl}/${id}`);
+}

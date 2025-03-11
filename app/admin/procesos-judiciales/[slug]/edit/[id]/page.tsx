@@ -23,15 +23,11 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/get-judicial-process.dto";
 import useStore from "@/lib/store";
-import {
-  upsertIncidentData,
-  upsertInstanceStepData,
-} from "@/app/api/instances/instances";
+import { upsertInstanceStepData } from "@/app/api/instances/instances";
 import { InstanceStepDataDto } from "@/app/dto/instance/create-instance-stepdata.dto";
 import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
 import exportableWord from "@/utils/exportable_word";
 import { ModelType } from "@/config/model-type.config";
-import { UpsertIncidentDataDto } from "@/app/dto/instance/upsert-incident-data.dto";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 
 export default function ProcesosJudicialesSlugEdit() {
@@ -44,7 +40,7 @@ export default function ProcesosJudicialesSlugEdit() {
     fetcher,
   );
 
-  const { stepDataArray, stepInstanceIncidenceData } = useStore();
+  const { stepDataArray } = useStore();
 
   const onSubmit = async (
     payload: EditJudicialProcessDto,
@@ -103,8 +99,6 @@ export default function ProcesosJudicialesSlugEdit() {
         stepData: stepDataArray as InstanceStepDataDto[],
         modelType: ModelType.JudicialProcess,
       });
-
-      console.log(stepDataArray);
 
       if (instanceResponse.data) {
         toast.success("Instancias modificadas con éxito");

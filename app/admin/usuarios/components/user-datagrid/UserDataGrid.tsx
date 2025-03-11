@@ -17,6 +17,8 @@ import { togglerUser, upsertUser } from "@/app/api/user/user";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import { onlyAdmins } from "@/config/menu-options";
 import useStore from "@/lib/store";
+import UserChangePassword from "@/app/admin/usuarios/components/form/UserChangePassword/UserChangePassword";
+import httpClient from "@/lib/httpClient";
 
 interface UserDataGridProps {}
 
@@ -25,6 +27,7 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
   const { user } = useStore();
   const [confirm, setConfirm] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+  const [openPassword, setOpenPassword] = useState<boolean>(false);
 
   const selectUser = (getUser: GetUserDto) => {
     const roleId = getUser?.UserRole[0]?.roleId;
@@ -33,8 +36,20 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
     setOpen(true);
   };
 
+  const selectUserPassword = (getUser: GetUserDto) => {
+    const roleId = getUser?.UserRole[0]?.roleId;
+
+    setUser({ ...getUser, roleId: roleId ?? null });
+    setOpenPassword(true);
+  };
+
   const handleClose = () => {
     setOpen(false);
+    setUser(null);
+  };
+
+  const handlePasswordClose = () => {
+    setOpenPassword(false);
     setUser(null);
   };
 
@@ -118,7 +133,7 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
                   <span
                     className="text-lg text-default-400 cursor-pointer active:opacity-50"
                     role="presentation"
-                    onClick={() => selectUser(item)}
+                    onClick={() => selectUserPassword(item)}
                   >
                     <AiOutlineLock />
                   </span>
@@ -146,6 +161,21 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
     [],
   );
 
+  const onSubmitPassword = async ({ password }: { password: string }) => {
+    const { data } = await httpClient.post("/auth/reset-password/admin", {
+      email: userGrid.email,
+      password,
+    });
+
+    if (data) {
+      handlePasswordClose();
+
+      toast.success(
+        "La contraseña fue modificada, por favor notificar a su usuario.",
+      );
+    }
+  };
+
   return (
     <>
       <UserModal
@@ -154,6 +184,13 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
         title={userGrid ? "Editar usuario" : "Nuevo usuario"}
         user={userGrid}
         onCloseChange={handleClose}
+      />
+
+      <UserChangePassword
+        handleSubmit={onSubmitPassword}
+        isOpen={openPassword}
+        title="Editar contraseña"
+        onCloseChange={handlePasswordClose}
       />
 
       <ConfirmModal

@@ -1,8 +1,10 @@
 import Stepper from "@mui/material/Stepper";
-import React, { FC, Key, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { IconButton, Step, StepContent, StepLabel } from "@mui/material";
 import useSWR from "swr";
 import { Tabs, Tab } from "@heroui/react";
+import { AiFillCloseCircle } from "react-icons/ai";
+import toast from "react-hot-toast";
 
 import { GetInstanceDto } from "@/app/dto/instance/get-instance.dto";
 import { environment } from "@/environment/environment";
@@ -18,8 +20,9 @@ import SupervisionInstances from "@/app/admin/supervisiones/[slug]/components/Su
 import { InstanceConfig } from "@/config/instance.config";
 import { UpsertIncidenceDto } from "@/app/dto/incidences/upsert-incidence.dto";
 import IncidenceInstances from "@/app/commons/components/IncidencesInstances/IncidencesInstances";
-import { AiFillCloseCircle } from "react-icons/ai";
 import Incidences from "@/app/commons/components/Incidences/Incidences";
+import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import { deleteIncidence } from "@/app/api/incidences/incidences";
 
 interface DynamicStepperProps {
   entityReference?: string;
@@ -121,6 +124,8 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   const concatTabs = incidences
     ? incidences.map((incidence) => ({ ...incidence, name: incidence.name }))
     : [];
+
+  const [confirm, setConfirm] = useState(false);
 
   const renderTab = (name: string, incidenceId: string) => {
     switch (name) {
@@ -226,39 +231,63 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     }
   };
 
+  const handleConfirmClose = () => {
+    setConfirm(false);
+  };
+
+  const handleConfirmToggle = async () => {
+    const { data } = await deleteIncidence(selected);
+
+    if (data) {
+      handleConfirmClose();
+
+      toast.success("Expediente eliminado.");
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-between gap-6">
-      <Incidences entityReference={entityReference} modelType={modelType} />
+    <>
+      <ConfirmModal
+        description={{
+          __html:
+            "Si elimina la incidencia, será eliminado cualquier dato incluido a ello.",
+        }}
+        isOpen={confirm}
+        title="¿Está seguro de eliminar esta incidencia?"
+        onClose={handleConfirmClose}
+        onConfirm={handleConfirmToggle}
+      />
 
-      <Tabs
-        aria-label="Dynamic tabs"
-        items={incidences ? [...tabs, ...concatTabs] : tabs}
-        selectedKey={selected}
-        onSelectionChange={setSelected}
-      >
-        {(incidence) => (
-          <Tab
-            key={incidence.id}
-            title={
-              <div className="flex flex-row gap-4 items-center">
-                <span>{incidence.name}</span>
+      <div className="flex flex-col justify-between gap-6">
+        <Incidences entityReference={entityReference} modelType={modelType} />
 
-                {incidence.name !== "Expediente principal" && (
-                  <IconButton
-                    type="button"
-                    onClick={() => console.log("click")}
-                  >
-                    <AiFillCloseCircle className="text-red-300" />
-                  </IconButton>
-                )}
-              </div>
-            }
-          >
-            {renderTab(incidence.name, selected)}
-          </Tab>
-        )}
-      </Tabs>
-    </div>
+        <Tabs
+          aria-label="Dynamic tabs"
+          items={incidences ? [...tabs, ...concatTabs] : tabs}
+          selectedKey={selected}
+          onSelectionChange={setSelected}
+        >
+          {(incidence) => (
+            <Tab
+              key={incidence.id}
+              title={
+                <div className="flex flex-row gap-4 items-center">
+                  <span>{incidence.name}</span>
+
+                  {incidence.name !== "Expediente principal" && (
+                    <IconButton type="button" onClick={() => setConfirm(true)}>
+                      <AiFillCloseCircle className="text-red-300" />
+                    </IconButton>
+                  )}
+                </div>
+              }
+            >
+              {renderTab(incidence.name, selected)}
+            </Tab>
+          )}
+        </Tabs>
+      </div>
+    </>
   );
 };
 
