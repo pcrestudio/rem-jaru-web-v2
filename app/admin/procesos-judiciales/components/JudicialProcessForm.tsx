@@ -284,7 +284,7 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 type="button"
                 onPress={handleStepSubmit}
               >
-                Guardar y continuar paso
+                Guardar actuaciones
               </Button>
             )}
           </div>

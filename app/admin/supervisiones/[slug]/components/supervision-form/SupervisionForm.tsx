@@ -252,7 +252,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 type="button"
                 onPress={handleStepSubmit}
               >
-                Guardar y continuar paso
+                Guardar actuaciones
               </Button>
             )}
           </div>
