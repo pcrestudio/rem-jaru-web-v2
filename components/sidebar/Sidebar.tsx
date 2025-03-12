@@ -1,5 +1,5 @@
 import { Listbox, ListboxItem } from "@heroui/listbox";
-import { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AiOutlineArrowsAlt } from "react-icons/ai";
 import { Tooltip, IconButton } from "@mui/material";
@@ -56,6 +56,14 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
     <aside
       className={`${minWidth} sidebar-transition bg-cerulean-950 px-8 py-4 h-screen flex flex-col relative transition-all`}
     >
+      <img
+        alt="Jaru Software"
+        className="mx-auto relative"
+        height={40}
+        src="/jaru.svg"
+        width={120}
+      />
+
       <div
         className="bg-cerulean-50 shadow-inner rounded-full absolute -right-3 top-2 flex items-center justify-center p-2 cursor-pointer"
         role="presentation"

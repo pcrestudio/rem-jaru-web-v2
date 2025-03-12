@@ -131,71 +131,69 @@ const ProvisionCheck: FC<ModularProps> = ({
 
   return (
     <>
-      {!values?.isProvisional && (
-        <>
-          <ReactiveNumericField
-            readOnly
-            className="col-span-12 md:col-span-6"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small" />
-              </div>
-            }
-            errors={errors}
-            isRequired={true}
-            label="Monto demandado"
-            name="amount"
-            register={register}
-            type="number"
-          />
+      <>
+        <ReactiveNumericField
+          readOnly
+          className="col-span-12 md:col-span-6"
+          control={control}
+          endContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small" />
+            </div>
+          }
+          errors={errors}
+          isRequired={true}
+          label="Monto demandado"
+          name="amount"
+          register={register}
+          type="number"
+        />
 
-          <ReactiveNumericField
-            readOnly
-            className="col-span-12 md:col-span-6"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">S/.</span>
-              </div>
-            }
-            errors={errors}
-            label="Monto provisionado"
-            name="provisionAmount"
-            register={register}
-          />
+        <ReactiveNumericField
+          readOnly
+          className="col-span-12 md:col-span-6"
+          control={control}
+          endContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">S/.</span>
+            </div>
+          }
+          errors={errors}
+          label="Monto provisionado"
+          name="provisionAmount"
+          register={register}
+        />
 
-          <ReactiveNumericField
-            className="col-span-12 md:col-span-6"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">S/.</span>
-              </div>
-            }
-            errors={errors}
-            label="Monto pagado"
-            name="paidAmount"
-            register={register}
-            onChange={debounceChange}
-          />
+        <ReactiveNumericField
+          className="col-span-12 md:col-span-6"
+          control={control}
+          endContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">S/.</span>
+            </div>
+          }
+          errors={errors}
+          label="Monto pagado"
+          name="paidAmount"
+          register={register}
+          onChange={debounceChange}
+        />
 
-          <ReactiveNumericField
-            readOnly
-            className="col-span-12 md:col-span-6"
-            control={control}
-            endContent={
-              <div className="pointer-events-none flex items-center">
-                <span className="text-default-400 text-small">S/.</span>
-              </div>
-            }
-            errors={errors}
-            label="Ahorro generado"
-            name="savingAmount"
-            register={register}
-          />
-        </>
-      )}
+        <ReactiveNumericField
+          readOnly
+          className="col-span-12 md:col-span-6"
+          control={control}
+          endContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">S/.</span>
+            </div>
+          }
+          errors={errors}
+          label="Ahorro generado"
+          name="savingAmount"
+          register={register}
+        />
+      </>
 
       <ReactiveNumericField
         className="col-span-12 md:col-span-6"

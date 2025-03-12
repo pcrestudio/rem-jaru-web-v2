@@ -20,7 +20,7 @@ export const settingsOptions: OptionCard[] = [
     order: 2,
     path: "terminos",
     name: "Términos y Condiciones",
-    isDisabled: () => false,
+    isDisabled: () => true,
   },
   {
     order: 3,

@@ -1,12 +1,13 @@
 import { Card, CardBody } from "@heroui/card";
 import { FC, ReactNode } from "react";
 import {
-  AiOutlineCopyright,
   AiOutlineReconciliation,
   AiOutlineFileDone,
   AiOutlineArrowRight,
   AiOutlineSecurityScan,
 } from "react-icons/ai";
+import { TbForms } from "react-icons/tb";
+import { MdOutlineSecurity } from "react-icons/md";
 import Link from "next/link";
 
 import { OptionCard } from "@/config/settings-options";
@@ -21,8 +22,9 @@ export interface OptionsCardProps {
 const renderIcon: Record<number, ReactNode> = {
   1: <AiOutlineReconciliation className="text-cerulean-950" size="64" />,
   2: <AiOutlineFileDone className="text-cerulean-950" size="64" />,
-  3: <AiOutlineCopyright className="text-cerulean-950" size="64" />,
+  3: <TbForms className="text-cerulean-950" size="64" />,
   4: <AiOutlineSecurityScan className="text-cerulean-950" size="64" />,
+  5: <MdOutlineSecurity className="text-cerulean-950" size="64" />,
 };
 
 const OptionsCard: FC<OptionsCardProps> = ({ option, pathname }) => {

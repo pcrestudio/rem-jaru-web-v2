@@ -25,6 +25,8 @@ export default function Layout({ children }: { children: ReactNode }) {
   const { updateUser } = useStore();
 
   useEffect(() => {
+    //console.log("Re renderizado");
+
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
 

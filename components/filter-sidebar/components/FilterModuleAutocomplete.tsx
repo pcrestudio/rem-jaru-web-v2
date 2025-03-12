@@ -24,7 +24,7 @@ const FilterModuleAutocomplete: FC<FilterModuleAutocompleteProps> = ({
   onChange,
 }) => {
   const { data } = useSWR<GetModuleDto[]>(
-    `${environment.baseUrl}/modules`,
+    `${environment.baseUrl}/modules?isActive=true`,
     fetcher,
   );
 

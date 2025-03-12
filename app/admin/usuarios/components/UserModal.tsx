@@ -30,6 +30,10 @@ const authMethods: LocalAutocompleteOption[] = [
     label: "Local",
     value: AuthMethod.local,
   },
+  {
+    label: "Azure SSO",
+    value: AuthMethod.azure,
+  },
 ];
 
 const UserModal: FC<UserModalProps> = ({

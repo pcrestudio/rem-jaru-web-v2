@@ -69,7 +69,7 @@ const semaphoreColor = (name: string) => {
       return "bg-[#FF999A] font-bold p-2";
 
     case "Significativo":
-      return "bg-[#c4841d] font-bold p-2";
+      return "bg-[#F90] font-bold p-2";
 
     case "Medio":
       return "bg-[#FFF9CA] font-bold p-2";

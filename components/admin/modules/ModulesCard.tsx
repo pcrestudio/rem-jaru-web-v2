@@ -1,8 +1,13 @@
 import { Card, CardBody } from "@heroui/card";
 import { FC, ReactNode } from "react";
+import { PiTree } from "react-icons/pi";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { TbUserStar } from "react-icons/tb";
 import { RiAuctionLine } from "react-icons/ri";
+import { TbMatrix } from "react-icons/tb";
 import { RiEye2Line } from "react-icons/ri";
+import { FaRegHandshake } from "react-icons/fa6";
+import { LuFileCheck } from "react-icons/lu";
 import Link from "next/link";
 
 import { GetSubmoduleDto } from "@/app/dto/modules/get-submodule.dto";
@@ -40,6 +45,11 @@ const renderSVG: Record<string, ReactNode> = {
 const renderIcon: Record<number, ReactNode> = {
   1: <RiAuctionLine className="text-cerulean-950" size="64" />,
   2: <RiEye2Line className="text-cerulean-950" size="64" />,
+  3: <PiTree className="text-cerulean-950" size="64" />,
+  4: <TbUserStar className="text-cerulean-950" size="64" />,
+  5: <TbMatrix className="text-cerulean-950" size="64" />,
+  6: <FaRegHandshake className="text-cerulean-950" size="64" />,
+  7: <LuFileCheck className="text-cerulean-950" size="64" />,
 };
 
 const ModulesCard: FC<ModulesCardProps> = ({
@@ -49,10 +59,13 @@ const ModulesCard: FC<ModulesCardProps> = ({
 }) => {
   return (
     <Link
-      href={`${isSubmodule ? `${pathname}/${mappingSubmodules[module?.slug]}` : `/admin/${module.slug}`}`}
+      href={`${module.isActive ? (isSubmodule ? `${pathname}/${mappingSubmodules[module?.slug]}` : `/admin/${module.slug}`) : ""}`}
     >
       {isSubmodule ? (
-        <Card className="min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
+        <Card
+          className={`min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition ${!module.isActive ? "cursor-not-allowed hover:border-red-600 hover:bg-red-50" : "cursor-pointer hover:border-cerulean-600 hover:bg-cerulean-50"}`}
+          isDisabled={!module.isActive}
+        >
           <CardBody className="flex flex-col gap-2 items-center justify-between transition">
             <div className="flex flex-col gap-4 items-center lg:max-w-[180px] p-1">
               <div className="flex justify-center">
@@ -66,7 +79,10 @@ const ModulesCard: FC<ModulesCardProps> = ({
           </CardBody>
         </Card>
       ) : (
-        <Card className="min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition hover:border-cerulean-600 hover:bg-cerulean-50">
+        <Card
+          className={`min-h-[138px] cursor-pointer shadow-none border border-slate-200 motion-reduce:transition ${!module.isActive ? "cursor-not-allowed hover:border-red-600 hover:bg-red-50" : "cursor-pointer hover:border-cerulean-600 hover:bg-cerulean-50"}`}
+          isDisabled={!module.isActive}
+        >
           <CardBody className="flex flex-row gap-2 items-center justify-between transition">
             <div className="flex flex-col gap-4 lg:max-w-[180px] p-1">
               <h1 className="text-cerulean-950 font-bold">{module?.name}</h1>
