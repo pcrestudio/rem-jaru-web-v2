@@ -47,9 +47,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         }}
       >
         <JaruProvider>
-          <main className="flex overflow-hidden items-stretch flex-1 bg-jaruColor-white">
+          <main className="flex flex-col overflow-hidden items-stretch flex-1 bg-jaruColor-white lg:flex-row">
             <Sidebar user={clientUser} />
-            <div className="flex-1 flex flex-col items-stretch min-w-0">
+            <div className="flex-1 flex flex-col items-stretch min-w-0 order-2 lg:order-2">
               <AppBar user={clientUser} />
               <div className="flex-1 flex flex-col overflow-auto">
                 <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>

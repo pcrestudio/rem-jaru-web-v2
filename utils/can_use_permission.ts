@@ -20,6 +20,8 @@ export enum CanUsePermission {
   addMaster = "addMaster",
   viewRoles = "viewRoles",
   addInstances = "addInstances",
+  addIncidences = "addIncidences",
+  deleteIncidences = "deleteIncidences",
 }
 
 const rolePermissions = {
@@ -43,6 +45,8 @@ const rolePermissions = {
     CanUsePermission.addSectionMaster,
     CanUsePermission.addStep,
     CanUsePermission.addInstances,
+    CanUsePermission.addIncidences,
+    CanUsePermission.deleteIncidences,
   ],
   [Role.admin]: [
     CanUsePermission.viewDashboard,
@@ -55,6 +59,8 @@ const rolePermissions = {
     CanUsePermission.editExtendedAttributesOptions,
     CanUsePermission.addStep,
     CanUsePermission.addInstances,
+    CanUsePermission.addIncidences,
+    CanUsePermission.deleteIncidences,
   ],
   [Role.visualizer]: [
     CanUsePermission.downloadExcel,
@@ -66,12 +72,15 @@ const rolePermissions = {
     CanUsePermission.addStep,
     CanUsePermission.addInstances,
     CanUsePermission.viewInstances,
+    CanUsePermission.addIncidences,
+    CanUsePermission.deleteIncidences,
   ],
   [Role.executor]: [
     CanUsePermission.downloadExcel,
     CanUsePermission.editTodo,
     CanUsePermission.addItem,
     CanUsePermission.editItem,
+    CanUsePermission.addIncidences,
   ],
 };
 

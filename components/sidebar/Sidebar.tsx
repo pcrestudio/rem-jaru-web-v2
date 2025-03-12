@@ -13,8 +13,8 @@ export interface SidebarProps {
 }
 
 const mappingWidth: Record<string, string> = {
-  collapsed: "w-[110px] lg:w-[140px]",
-  expanded: "w-[260px]",
+  collapsed: "lg:w-[110px] lg:w-[140px]",
+  expanded: "lg:w-[260px]",
 };
 
 const Sidebar: FC<SidebarProps> = ({ user }) => {
@@ -54,14 +54,14 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
 
   return (
     <aside
-      className={`${minWidth} sidebar-transition bg-cerulean-950 px-8 py-4 h-screen flex flex-col relative transition-all`}
+      className={`order-1 ${minWidth} sidebar-transition bg-cerulean-950 ${isCollapsed ? "px-4" : "px-8"} py-4 flex flex-col relative transition-all lg:order-1 lg:h-screen`}
     >
       <img
         alt="Jaru Software"
         className="mx-auto relative"
         height={40}
         src="/jaru.svg"
-        width={120}
+        width={70}
       />
 
       <div
@@ -73,15 +73,15 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
       </div>
 
       <div className="flex-grow mt-4 overflow-y-auto scrollbar-none py-4">
-        <div className="flex flex-col gap-6">
+        <div className="flex gap-6 flex-row lg:flex-col">
           {grouped.map(([groupName, options]: [string, Array<MenuOptions>]) => (
             <Fragment key={groupName}>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-row gap-2 lg:flex-col">
                 {!isCollapsed && options.length > 0 && (
                   <p
                     className={`text-medium text-jaruColor-white ${
                       isCollapsed ? "text-center" : ""
-                    } uppercase font-bold`}
+                    } uppercase font-bold hidden md:visible`}
                   >
                     {groupName}
                   </p>
@@ -99,7 +99,7 @@ const Sidebar: FC<SidebarProps> = ({ user }) => {
                       role.includes(user?.role) && (
                         <ListboxItem
                           key={title}
-                          className={`${isCollapsed ? "flex-col" : "flex-row"} gap-4 text-white ${
+                          className={`${isCollapsed ? "flex-row lg:flex-col" : "lg:flex-row"} gap-4 text-white ${
                             validatePathname(pathname, redirectTo)
                               ? "bg-cerulean-500 text-white"
                               : "data-[hover=true]:bg-transparent"

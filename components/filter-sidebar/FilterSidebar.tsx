@@ -79,10 +79,10 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
   }, [user]);
 
   return (
-    <div className="flex flex-col gap-6 shadow-lg p-6 bg-white w-full lg:max-w-[270px] max-h-screen overflow-y-auto">
+    <div className="flex flex-col gap-6 shadow-lg p-6 bg-white w-full lg:max-w-[270px] md:max-h-screen overflow-y-auto">
       {!isAdminPath && (
         <Input
-          className="nextui-input-filter bg-white"
+          className="nextui-input-filter "
           classNames={{
             inputWrapper:
               "bg-white shadow-none data-[focus=true]:!bg-white data-[hover=true]:bg-transparent",

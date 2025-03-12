@@ -23,6 +23,7 @@ import IncidenceInstances from "@/app/commons/components/IncidencesInstances/Inc
 import Incidences from "@/app/commons/components/Incidences/Incidences";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import { deleteIncidence } from "@/app/api/incidences/incidences";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 
 interface DynamicStepperProps {
   entityReference?: string;
@@ -39,6 +40,8 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
     `${environment.baseUrl}/instance?entityReference=${entityReference}&modelType=${modelType}`,
     fetcher,
   );
+
+  const { user } = useStore();
 
   const [selected, setSelected] = useState<any>("1");
 
@@ -275,7 +278,14 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
                   <span>{incidence.name}</span>
 
                   {incidence.name !== "Expediente principal" && (
-                    <IconButton type="button" onClick={() => setConfirm(true)}>
+                    <IconButton
+                      className="disabled:cursor-not-allowed"
+                      disabled={
+                        !canUse(user?.role, CanUsePermission.deleteIncidences)
+                      }
+                      type="button"
+                      onClick={() => setConfirm(true)}
+                    >
                       <AiFillCloseCircle className="text-red-300" />
                     </IconButton>
                   )}

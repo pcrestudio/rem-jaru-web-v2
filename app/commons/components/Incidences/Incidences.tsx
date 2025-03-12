@@ -8,6 +8,8 @@ import IncidencesForm from "@/app/commons/components/IncidencesForm/IncidencesFo
 import { UpsertIncidenceDto } from "@/app/dto/incidences/upsert-incidence.dto";
 import { upsertIncidenceDto } from "@/app/api/incidences/incidences";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
+import useStore from "@/lib/store";
 
 export interface IncidencesProps {
   entityReference?: string;
@@ -20,6 +22,7 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
   const [id, setId] = useState<string | null>(null);
   const [incidence, setIncidence] = useState<UpsertIncidenceDto | null>(null);
   const router = useRouter();
+  const { user } = useStore();
 
   const navigateIfIncidenceExists = async (concatId?: string) => {
     const currentPath = window.location.pathname;
@@ -81,6 +84,7 @@ const Incidences: FC<IncidencesProps> = ({ entityReference, modelType }) => {
       <div className="col-span-12 self-end">
         <Button
           className="standard-btn w-auto text-white"
+          isDisabled={!canUse(user?.role, CanUsePermission.addIncidences)}
           startContent={<AiOutlinePlus />}
           onPress={() => setIsOpen(true)}
         >

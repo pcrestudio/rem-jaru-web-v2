@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           />
           <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
             <Suspense fallback={<div>Loading...</div>}>
-              <div className="flex flex-col h-screen overflow-hidden w-full relative bg-cerulean-50/[.45]">
+              <div className="flex flex-col w-full relative bg-cerulean-50/[.45] lg:h-screen lg:overflow-hidden">
                 {children}
               </div>
             </Suspense>

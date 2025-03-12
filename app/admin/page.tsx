@@ -23,7 +23,7 @@ export default function Admin() {
   const isModuleSelected = moduleId && !submoduleId;
 
   return (
-    <div className="flex flex-row gap-2 h-screen overflow-hidden">
+    <div className="flex flex-row gap-2 lg:overflow-hidden lg:h-screen">
       {showFilterSidebar && <FilterSidebar pathname={pathname} />}
       <div
         className={`flex-grow page-settings h-[calc(100vh-72px)] overflow-y-auto ${showFilterSidebar ? "" : "max-w-[960px] mx-auto"}`}

@@ -47,7 +47,12 @@ const IncidenceInstances: FC<IncidenceInstancesProps> = ({
     fieldName: string,
     value: string,
   ) => {
-    const newData = { [fieldName]: value, stepId, entityReference };
+    const newData = {
+      [fieldName]: value,
+      stepId,
+      incidenceId: incidenceId.toString(),
+      entityReference,
+    };
 
     updateStepData(stepId, newData);
     updateStepDataArray(stepId, newData);
