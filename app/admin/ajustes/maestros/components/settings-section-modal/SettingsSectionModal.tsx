@@ -16,6 +16,7 @@ import {
   options,
   rowLayoutOptions,
 } from "@/config/attribute_local_autocompletes";
+import { GetModuleDto } from "@/app/dto/modules/get-module.dto";
 
 interface AttributeSectionModalProps extends ModalProps {
   attributeSection?: GetSectionAttributesDto;
@@ -32,8 +33,8 @@ const SettingsSectionModal: FC<AttributeSectionModalProps> = ({
   const [isSelectedModule, setIsSelectedModule] = useState(false);
   const [isSelectedSubmodule, setIsSelectedSubmodule] = useState(false);
   const [isSection, setIsSection] = useState(true);
-  const { data: modules } = useSWR<any>(
-    `${environment.baseUrl}/modules`,
+  const { data: modules } = useSWR<GetModuleDto[]>(
+    `${environment.baseUrl}/modules?isActive=false`,
     fetcher,
   );
   const { data: submodules } = useSWR<any>(

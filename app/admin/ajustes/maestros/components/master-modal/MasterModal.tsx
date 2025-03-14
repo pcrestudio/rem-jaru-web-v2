@@ -32,7 +32,7 @@ const MasterModal: FC<MasterModalProps> = ({
   const [isSelectedModule, setIsSelectedModule] = useState(false);
   const [isSelectedSubmodule, setIsSelectedSubmodule] = useState(false);
   const { data: modules } = useSWR<any>(
-    `${environment.baseUrl}/modules`,
+    `${environment.baseUrl}/modules?isActive=true`,
     fetcher,
   );
   const { data: submodules } = useSWR<any>(

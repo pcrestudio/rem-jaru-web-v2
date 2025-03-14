@@ -54,6 +54,12 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
   };
 
   const onSubmit = async (payload: UpsertUserDto) => {
+    if (payload.studioId === "") {
+      delete payload.studioId;
+    } else {
+      Number(payload.studioId);
+    }
+
     const { data } = await upsertUser(payload);
 
     if (data) {

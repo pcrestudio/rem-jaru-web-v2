@@ -6,4 +6,5 @@ export interface UpsertUserDto {
   displayName: string;
   roleId: number;
   id?: number;
+  studioId?: string | number;
 }

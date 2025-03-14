@@ -6,6 +6,7 @@ import useTodos from "@/app/admin/todos/states/useTodos";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import { Role } from "@/config/mapping_role";
 import useStore from "@/lib/store";
+import { showAllDossiers } from "@/config/menu-options";
 
 const TodoDataGrid = () => {
   const {
@@ -27,7 +28,7 @@ const TodoDataGrid = () => {
   const { user } = useStore();
 
   const filterByStudio =
-    user.role === Role["super-admin"]
+    showAllDossiers.includes(user?.role) && user.studioId === 0
       ? null
       : user.studioId
         ? `cargoStudioId=${user.studioId}&`
@@ -69,7 +70,7 @@ const TodoDataGrid = () => {
         columns={todoColumns}
         dataGridKey="id"
         emptyContent="Sin tareas asignadas."
-        endpointUrl={`todos?${filterByStudio}`}
+        endpointUrl={`todos?${filterByStudio ?? ""}`}
         onAddChange={handleAddChange}
       />
     </>

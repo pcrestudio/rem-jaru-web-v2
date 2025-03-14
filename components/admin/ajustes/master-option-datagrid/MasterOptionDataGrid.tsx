@@ -39,7 +39,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
     `${environment.baseUrl}/masters/options?id=${masterId}`,
     fetcher,
   );
-  const { isOpen, onOpenChange } = useDisclosure();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
   const [masterOption, setMasterOption] = useState<GetMasterOptionsDto | null>(
     null,
@@ -47,7 +47,12 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
 
   const selectedItem = (option: GetMasterOptionsDto) => {
     setMasterOption(option);
-    onOpenChange();
+    setIsOpen(true);
+  };
+
+  const handleCloseMasterOptionModal = () => {
+    setMasterOption(null);
+    setIsOpen(false);
   };
 
   const toggleSelectedItem = (masterOption: GetMasterOptionsDto) => {
@@ -75,7 +80,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
         case "actions":
           return (
             <div className="relative flex items-center gap-2">
-              <Tooltip content="Editar expediente">
+              <Tooltip content="Editar opción">
                 <span
                   className="text-lg text-default-400 cursor-pointer active:opacity-50"
                   role="presentation"
@@ -122,7 +127,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
 
       if (data) {
         toast.success("El maestro se editó correctamente.");
-        onOpenChange();
+
         setMasterOption(null);
       }
 
@@ -136,7 +141,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
 
     if (data) {
       toast.success("El maestro se creó correctamente.");
-      onOpenChange();
+      handleCloseMasterOptionModal();
     }
 
     return data;
@@ -164,7 +169,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
         masterId={masterId}
         masterOption={masterOption}
         title={masterOption ? "Editar opción" : "Nueva opción"}
-        onClose={onOpenChange}
+        onClose={handleCloseMasterOptionModal}
       />
       <Table
         bottomContent={
@@ -172,7 +177,7 @@ const MasterOptionDataGrid: FC<MasterOptionDataGridProps> = ({ masterId }) => {
             <Button
               className="text-cerulean-500 text-sm flex flex-row gap-1"
               endIcon={<AiOutlinePlus />}
-              onClick={onOpenChange}
+              onClick={() => setIsOpen(true)}
             >
               Agregar opción
             </Button>

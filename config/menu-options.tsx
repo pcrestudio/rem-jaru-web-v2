@@ -64,7 +64,7 @@ export const menuOptions: MenuOptions[] = [
   },
   {
     title: "Módulos",
-    role: [...onlyAdmins, Role.visualizer],
+    role: allRoles,
     redirectTo: "/admin/modulos",
     isSubmodule: true,
     Icon: (props) => <AiOutlineContainer {...props} />,
@@ -73,7 +73,7 @@ export const menuOptions: MenuOptions[] = [
   {
     title: "To-Dos",
     redirectTo: "/admin/todos",
-    role: [...onlyAdmins, Role.visualizer, Role.executor],
+    role: allRoles,
     Icon: (props) => <AiOutlineReconciliation {...props} />,
     group: group.general,
   },
@@ -93,7 +93,7 @@ export const menuOptions: MenuOptions[] = [
   },
   {
     title: "Cerrar sesión",
-    role: [...allRoles],
+    role: allRoles,
     redirectTo: undefined,
     Icon: (props) => <RiShutDownLine {...props} />,
     group: group.other,
