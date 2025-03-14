@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useSWR from "swr";
 import React from "react";
 import toast from "react-hot-toast";
@@ -33,6 +33,7 @@ export default function SupervisionesSlugEdit() {
   const pathname = usePathname();
   const slug: string = pathname.split("/")[3];
   const id: string = pathname.split("/")[5];
+  const router = useRouter();
 
   const { data } = useSWR<GetSupervisionDto>(
     `${environment.baseUrl}/supervisions/${id}`,
@@ -59,49 +60,45 @@ export default function SupervisionesSlugEdit() {
       );
 
       if (data) {
-        if (globalFields.length > 0) {
-          const response = await createGlobalAttributeValue({
+        if (
+          globalFields.length > 0 ||
+          stepDataArray.length > 0 ||
+          customFields.length > 0 ||
+          data
+        ) {
+          const globalAttributeResponse = await createGlobalAttributeValue({
             attributes: globalFields,
             entityReference: data?.entityReference,
             modelType: ModelType.Supervision,
           });
 
-          if (response.data) {
-            toast.success("Atributos planos modificado con éxito");
-          }
-        } else {
-          toast.success("Atributos planos con éxito");
-        }
+          const instanceResponse = await upsertInstanceStepData({
+            stepData: stepDataArray as InstanceStepDataDto[],
+            modelType: ModelType.Supervision,
+          });
 
-        if (customFields.length > 0) {
-          const response = await createSectionAttributeValue({
+          const sectionAttributeResponse = await createSectionAttributeValue({
             attributes: customFields,
             entityReference: data?.entityReference,
             modelType: ModelType.Supervision,
           });
 
-          if (response.data) {
-            toast.success("Atributos extendidos modificado con éxito");
+          if (
+            instanceResponse.data ||
+            globalAttributeResponse.data ||
+            sectionAttributeResponse.data ||
+            data
+          ) {
+            toast.success("Ficha modificada.");
+
+            router.back();
+          } else {
+            toast.error(`No se pudo modificar la ficha ${data}.`);
           }
-        } else {
-          toast.success("Atributos extendidos modificado con éxito");
         }
       }
 
       return data;
-    }
-  };
-
-  const handleStepSubmit = async () => {
-    if (stepDataArray.length > 0) {
-      const instanceResponse = await upsertInstanceStepData({
-        stepData: stepDataArray as InstanceStepDataDto[],
-        modelType: ModelType.Supervision,
-      });
-
-      if (instanceResponse.data) {
-        toast.success("Instancias guardada con éxito");
-      }
     }
   };
 
@@ -136,7 +133,6 @@ export default function SupervisionesSlugEdit() {
       <BreadcrumbsPath pathname={pathname} />
 
       <SupervisionForm
-        handleStepSubmit={handleStepSubmit}
         handleSubmit={handleSubmit}
         pathname={pathname}
         slugSubmodule={slug}

@@ -50,8 +50,11 @@ const useStore = create<AppState>((set) => ({
     queryPagination: "",
   },
   updateFilter: (filter: FilterType) => {
-    set(() => ({
-      filter,
+    set((state) => ({
+      filter: {
+        ...state.filter,
+        ...filter,
+      },
     }));
   },
   updateUser: (user: IUser) => {

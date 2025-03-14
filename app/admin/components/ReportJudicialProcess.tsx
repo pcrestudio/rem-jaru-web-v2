@@ -85,7 +85,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
       <div className="col-span-12 md:col-span-3">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
-          currency={isDollar ? "$" : ""}
+          currency={isDollar ? "" : ""}
           title="Monto ahorrado"
           total={calculateTotal(isDollar, data?.savingAmount?.report)}
         />
@@ -93,7 +93,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
       <div className="col-span-12 md:col-span-3">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
-          currency={isDollar ? "$" : ""}
+          currency={isDollar ? "" : ""}
           title="Monto demandado"
           total={calculateTotal(isDollar, data?.amountSum?.report)}
         />
@@ -101,7 +101,7 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
       <div className="col-span-12 md:col-span-3">
         <ReportProvisionAmountRecord
           Icon={<PiHandCoins className="text-cerulean-800" size={64} />}
-          currency={isDollar ? "$" : ""}
+          currency={isDollar ? "" : ""}
           title="Monto provisionado"
           total={calculateTotal(isDollar, data?.provisionAmount.report)}
         />

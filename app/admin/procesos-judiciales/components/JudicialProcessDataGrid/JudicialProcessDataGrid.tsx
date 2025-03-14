@@ -37,7 +37,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
       cells={renderCell}
       columns={judicialProcessColumns}
       emptyContent="Sin procesos judiciales."
-      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&${filterByStudio}`}
+      endpointUrl={`judicial_processes?slug=${mappingRevertSubmodules[slug]}&${filterByStudio ?? ""}`}
       onAddChange={() => {
         const currentPath = window.location.pathname;
 

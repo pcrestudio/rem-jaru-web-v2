@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import useSWR from "swr";
 import { AiOutlineFileWord } from "react-icons/ai";
@@ -34,6 +34,7 @@ export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
   const slug: string = pathname.split("/")[3];
   const id: string = pathname.split("/")[5];
+  const router = useRouter();
 
   const { data } = useSWR<GetJudicialProcessDto>(
     `${environment.baseUrl}/judicial_processes/${id}`,
@@ -60,49 +61,47 @@ export default function ProcesosJudicialesSlugEdit() {
       );
 
       if (data) {
-        if (globalFields.length > 0) {
-          const response = await createGlobalAttributeValue({
+        if (
+          globalFields.length > 0 ||
+          stepDataArray.length > 0 ||
+          customFields.length > 0 ||
+          data
+        ) {
+          const globalAttributeResponse = await createGlobalAttributeValue({
             attributes: globalFields,
             entityReference: data?.entityReference,
             modelType: ModelType.JudicialProcess,
           });
 
-          if (response.data) {
-            toast.success("Atributos planos modificado con éxito");
-          }
-        } else {
-          toast.success("Atributos planos con éxito");
-        }
+          const instanceResponse = await upsertInstanceStepData({
+            stepData: stepDataArray as InstanceStepDataDto[],
+            modelType: ModelType.JudicialProcess,
+          });
 
-        if (customFields.length > 0) {
-          const response = await createSectionAttributeValue({
+          const sectionAttributeResponse = await createSectionAttributeValue({
             attributes: customFields,
             entityReference: data?.entityReference,
             modelType: ModelType.JudicialProcess,
           });
 
-          if (response.data) {
-            toast.success("Atributos extendidos modificado con éxito");
+          if (
+            instanceResponse.data ||
+            globalAttributeResponse.data ||
+            sectionAttributeResponse.data ||
+            data
+          ) {
+            toast.success("Ficha modificada.");
+
+            router.back();
+          } else {
+            toast.error(
+              `No se pudo modificar la ficha ${data || instanceResponse.data || globalAttributeResponse.data || sectionAttributeResponse.data}.`,
+            );
           }
-        } else {
-          toast.success("Atributos extendidos modificado con éxito");
         }
       }
 
       return data;
-    }
-  };
-
-  const handleStepSubmit = async () => {
-    if (stepDataArray.length > 0) {
-      const instanceResponse = await upsertInstanceStepData({
-        stepData: stepDataArray as InstanceStepDataDto[],
-        modelType: ModelType.JudicialProcess,
-      });
-
-      if (instanceResponse.data) {
-        toast.success("Instancias modificadas con éxito");
-      }
     }
   };
 
@@ -137,7 +136,6 @@ export default function ProcesosJudicialesSlugEdit() {
       <BreadcrumbsPath pathname={pathname} />
 
       <JudicialProcessForm
-        handleStepSubmit={handleStepSubmit}
         handleSubmit={onSubmit}
         judicialProcess={
           data

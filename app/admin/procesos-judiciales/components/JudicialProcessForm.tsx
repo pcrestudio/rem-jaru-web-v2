@@ -276,17 +276,6 @@ const JudicialProcessForm: FC<JudicialProcessFormProps> = ({
                 ? "Editar ficha"
                 : "Guardar ficha"}
             </Button>
-
-            {judicialProcess && judicialProcess?.entityReference && (
-              <Button
-                className="word-btn bg-red-500 text-white w-fit"
-                isDisabled={!canUse(user.role, CanUsePermission.editItem)}
-                type="button"
-                onPress={handleStepSubmit}
-              >
-                Guardar actuaciones
-              </Button>
-            )}
           </div>
         </div>
       )}

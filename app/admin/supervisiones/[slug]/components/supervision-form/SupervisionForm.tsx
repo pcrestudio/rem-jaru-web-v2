@@ -21,7 +21,6 @@ import useStore from "@/lib/store";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
-  handleStepSubmit?: () => void;
   supervision?: GetSupervisionDto;
   slugSubmodule?: string;
   pathname?: string;
@@ -31,7 +30,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
   supervision,
   slugSubmodule,
   handleSubmit,
-  handleStepSubmit,
   pathname,
 }) => {
   const { user } = useStore();
@@ -245,16 +243,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
                 ? "Editar ficha"
                 : "Guardar ficha"}
             </Button>
-
-            {supervision && supervision?.entityReference && (
-              <Button
-                className="word-btn bg-red-500 text-white w-fit"
-                type="button"
-                onPress={handleStepSubmit}
-              >
-                Guardar actuaciones
-              </Button>
-            )}
           </div>
         </div>
       )}

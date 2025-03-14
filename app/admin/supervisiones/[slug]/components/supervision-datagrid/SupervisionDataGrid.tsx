@@ -52,7 +52,7 @@ const SupervisionDataGrid: FC<SupervisionDataGridProps> = ({
       cells={renderCell}
       columns={supervisionColumns}
       emptyContent="Sin supervisiones."
-      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}&${filterByStudio}`}
+      endpointUrl={`supervisions?slug=${mappingRevertSubmodules[slug]}&${filterByStudio ?? ""}`}
       items={data ?? []}
       onAddChange={() => {
         const currentPath = window.location.pathname;

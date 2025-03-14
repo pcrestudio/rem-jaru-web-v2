@@ -50,7 +50,9 @@ const ReportByTodo: FC<ReportTabType> = ({ slug }) => {
           );
 
         case "percent":
-          return <p>{percent.toFixed(2)} %</p>;
+          return (
+            <p>{!isNaN(percent) ? Number(percent).toFixed(2) : Number(0)} %</p>
+          );
 
         default:
           return cellValue;

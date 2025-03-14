@@ -45,7 +45,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
     updateFilter({
       queryReport: updatedQuery,
       search: name === "search" ? value : null,
-      modelType: name === "moduleId" ? value : null,
+      modelType: name === "moduleId" ? value : filter.modelType,
     });
 
     if (name === "moduleId") {

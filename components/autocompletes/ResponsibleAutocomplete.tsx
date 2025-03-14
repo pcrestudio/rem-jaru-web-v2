@@ -32,7 +32,7 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
       : `studioId=${user.studioId}`;
 
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/users?${filterByStudio}`,
+    `${environment.baseUrl}/users?${filterByStudio ?? ""}`,
     fetcher,
   );
 
