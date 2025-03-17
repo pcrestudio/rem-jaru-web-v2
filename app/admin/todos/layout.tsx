@@ -12,7 +12,12 @@ const TodosLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="flex flex-col gap-2 h-screen lg:overflow-hidden lg:flex-row">
-      {showFilterSidebar && <FilterSidebar pathname={pathname} />}
+      {showFilterSidebar && (
+        <FilterSidebar
+          pathname={pathname}
+          searchTitle="Buscar por código de expediente"
+        />
+      )}
       <div
         className={`flex-grow page-settings ${showFilterSidebar ? "" : "max-w-[960px] mx-auto"} md:h-[calc(100vh-72px)] md:overflow-y-auto`}
       >

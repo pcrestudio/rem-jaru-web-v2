@@ -11,6 +11,7 @@ import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import { ContingencyLevelConfig } from "@/config/contingency-level.config";
 import debounce from "@/utils/custom_debounce";
+import isArrayNull from "@/utils/is_array_null";
 
 const ProvisionCheck: FC<ModularProps> = ({
   control,
@@ -28,17 +29,16 @@ const ProvisionCheck: FC<ModularProps> = ({
   const contingencyPercentage = watch("contingencyPercentage");
 
   const handleChange = (value: number | string | object) => {
-    const amount = reclaims?.reduce(
-      (sum, item) => sum + Number(item.amount),
-      0,
-    );
+    const amount = !isArrayNull(reclaims)
+      ? reclaims?.reduce((sum, item) => sum + Number(item.amount), 0)
+      : provision.amount;
 
     if (value !== null) {
       const savingAmount = amount - Number(value);
 
       setValue(
         `${ExtendedAttributeConfig.savingAmount}`,
-        Number(savingAmount).toFixed(2),
+        Math.max(savingAmount, 0).toFixed(2),
       );
     }
   };
@@ -196,6 +196,7 @@ const ProvisionCheck: FC<ModularProps> = ({
       </>
 
       <ReactiveNumericField
+        readOnly
         className="col-span-12 md:col-span-6"
         control={control}
         endContent={

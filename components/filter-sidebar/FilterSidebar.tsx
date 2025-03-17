@@ -21,9 +21,10 @@ import FilterStatusAutocomplete from "@/components/filter-sidebar/components/Fil
 
 export interface FilterSidebarProps {
   pathname: string;
+  searchTitle?: string;
 }
 
-const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
+const FilterSidebar: FC<FilterSidebarProps> = ({ pathname, searchTitle }) => {
   const { updateFilter, filter } = useStore();
   const [modelType, setModelType] = useState<string | null>(null);
   const currentPath = usePathname();
@@ -90,7 +91,7 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           }}
           endContent={<AiOutlineSearch size={24} />}
           name="search"
-          placeholder="Buscar coincidencias..."
+          placeholder={searchTitle ?? "Buscar coincidencias..."}
           onChange={(event) => debouncedSearch(event)}
         />
       )}
@@ -148,12 +149,14 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname }) => {
           onChange={handleFilter}
         />
 
-        <FilterStatusAutocomplete
-          className="col-span-12 nextui-input-nomodal"
-          label="Status"
-          name="statusId"
-          onChange={handleFilter}
-        />
+        {!isTodoPath && (
+          <FilterStatusAutocomplete
+            className="col-span-12 nextui-input-nomodal"
+            label="Status"
+            name="statusId"
+            onChange={handleFilter}
+          />
+        )}
 
         {isTodoPath && (
           <>

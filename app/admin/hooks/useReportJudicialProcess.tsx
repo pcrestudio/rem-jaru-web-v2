@@ -376,7 +376,7 @@ const useReportJudicialProcess = (
     renderInstanceBarChartCell,
     renderContingenciesCell,
     renderCriticalProcessesCell,
-    totalJudicialProcess: total,
+    totalJudicialProcess: data ? data.total : 0,
     instanceChartData,
     instanceYAxisData,
     internalSpecialistYAxisData,
