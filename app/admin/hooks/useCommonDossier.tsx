@@ -172,7 +172,11 @@ const useCommonDossier = (
           return <p>{getDataGridLabel(dossier, DataGridKey.connectLegal)}</p>;
 
         case DataGridKey.resultProcess:
-          return <p>{getDataGridLabel(dossier, DataGridKey.resultProcess)}</p>;
+          return (
+            <p className="overflow-hidden truncate w-56">
+              {getDataGridLabel(dossier, DataGridKey.resultProcess)}
+            </p>
+          );
 
         case DataGridKey.sede:
           return <p>{getDataGridLabel(dossier, DataGridKey.sede)}</p>;
@@ -191,7 +195,11 @@ const useCommonDossier = (
           );
 
         case DataGridKey.risks:
-          return <p>{getDataGridLabel(dossier, DataGridKey.risks)}</p>;
+          return (
+            <p className="overflow-hidden truncate w-56">
+              {getDataGridLabel(dossier, DataGridKey.risks)}
+            </p>
+          );
 
         case DataGridKey.saving:
           return <p>{getDataGridLabel(dossier, DataGridKey.saving)}</p>;
@@ -244,7 +252,7 @@ const useCommonDossier = (
           );
 
         default:
-          return cellValue;
+          return <p className="overflow-hidden truncate w-56">{cellValue}</p>;
       }
     },
     [],

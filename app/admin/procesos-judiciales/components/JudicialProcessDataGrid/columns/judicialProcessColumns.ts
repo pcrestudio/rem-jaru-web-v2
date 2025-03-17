@@ -22,38 +22,47 @@ const judicialProcessColumns = [
   {
     key: "paidAmount",
     label: "Monto pagado",
+    width: 70,
   },
   {
     key: "savingAmount",
     label: "Monto ahorrado",
+    width: 70,
   },
   {
     key: DataGridKey.resultProcess,
     label: "Resultado del proceso",
+    width: 70,
   },
   {
     key: DataGridKey.connectLegal,
     label: "Código de Legal Connect",
+    width: 70,
   },
   {
     key: DataGridKey.commentsForResult,
     label: "Comentarios sobre el resultado",
+    width: 70,
   },
   {
     key: DataGridKey.sede,
     label: "Sede",
+    width: 70,
   },
   {
     key: "fileCode",
     label: "Código de Expediente",
+    width: 70,
   },
   {
     key: DataGridKey.cause,
     label: "Causa / Raíz",
+    width: 70,
   },
   {
     key: DataGridKey.startDate,
     label: "Fecha de inicio del proceso",
+    width: 70,
   },
   {
     key: "demanded",

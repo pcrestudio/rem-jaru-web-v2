@@ -70,13 +70,13 @@ const ReportJudicialProcess: FC<ReportJudicialProcess> = ({ filter }) => {
           </Switch>
 
           <Chip className="text-foreground text-xs" variant="faded">
-            <span>Tipo de cambio: {exchange?.value}</span>
+            <span>Tipo de cambio de referencial: {exchange?.value}</span>
           </Chip>
 
           {exchange?.updatedAt && (
             <Chip className="text-foreground text-xs" variant="flat">
               <span>
-                Actualizado: {convertFormatDistanceToNow(exchange?.createdAt)}
+                Actualizado: {convertFormatDistanceToNow(exchange?.updatedAt)}
               </span>
             </Chip>
           )}

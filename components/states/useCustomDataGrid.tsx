@@ -53,7 +53,7 @@ const useCustomDataGrid = <T extends object>(
 ): UseCustomDataGridProps<T> => {
   const { filter } = useStore();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const onRowsPerPageChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       setPageSize(Number(e.target.value));
