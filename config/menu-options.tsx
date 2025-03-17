@@ -9,6 +9,7 @@ import { signOut } from "next-auth/react";
 import { RiShutDownLine } from "react-icons/ri";
 
 import { Role } from "@/config/mapping_role";
+import httpClient from "@/lib/httpClient";
 
 export interface IconProps {
   size: number;
@@ -41,10 +42,9 @@ const allRoles: string[] = [
 ];
 
 const logout = async () => {
-  await signOut({
-    redirect: true,
-    callbackUrl: "/auth",
-  });
+  await httpClient.post("/auth/logout", {}, { withCredentials: true });
+
+  localStorage.removeItem("token");
 };
 
 const group = {
