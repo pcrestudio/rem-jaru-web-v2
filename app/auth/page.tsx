@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import CredentialsForm from "./components/CredentialsForm";
 import Step from "./components/Step";
 
 import httpClient from "@/lib/httpClient";
+import { deleteCookie, getCookie } from "cookies-next";
 
 export default function Auth() {
   const router = useRouter();
@@ -87,6 +88,14 @@ export default function Auth() {
       redirect,
     )}`;
   };
+
+  useEffect(() => {
+    const sid = getCookie("connect.sid")?.toString();
+
+    if (sid) {
+      deleteCookie("connect.sid");
+    }
+  }, []);
 
   return (
     <Suspense fallback={<p>Loading...</p>}>

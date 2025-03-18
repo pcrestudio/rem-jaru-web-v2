@@ -45,6 +45,8 @@ const logout = async () => {
   await httpClient.post("/auth/logout", {}, { withCredentials: true });
 
   localStorage.removeItem("token");
+
+  window.location.href = "/auth";
 };
 
 const group = {
