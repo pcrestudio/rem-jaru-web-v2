@@ -89,20 +89,23 @@ const TodoModal: FC<TodoModalProps> = ({
         ) : undefined
       }
       modalEndContent={
-        (todo && !todo.alert) ||
+        (todo && !todo.alert && todo.check) ||
         (todo &&
           todo.check &&
           todo.state.slug === MasterTodosStates.lessThanTwoWeeks) ||
-        (showAllDossiers.includes(user?.role) && user.studioId === 0 && (
-          <Button
-            color="warning"
-            type="button"
-            variant="flat"
-            onClick={endContentOnChange}
-          >
-            Alertar
-          </Button>
-        ))
+        (showAllDossiers.includes(user?.role) &&
+          user.studioId === 0 &&
+          todo &&
+          !todo.alert && (
+            <Button
+              color="warning"
+              type="button"
+              variant="flat"
+              onClick={endContentOnChange}
+            >
+              Alertar
+            </Button>
+          ))
       }
       stopEventPropagation={stopEventPropagation}
       title={title}

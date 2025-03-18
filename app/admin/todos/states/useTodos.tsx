@@ -26,7 +26,11 @@ interface UseTodosProps {
   onSubmit: (payload: UpsertTodoDto, reset: any, event: any) => void;
 }
 
-const useTodos = (): UseTodosProps => {
+interface UseTodosParams {
+  isTodoPath?: boolean;
+}
+
+const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
   const [todo, setTodo] = useState<GetTodoDto>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
@@ -102,15 +106,17 @@ const useTodos = (): UseTodosProps => {
                 </span>
               </Tooltip>
 
-              <Tooltip content="Eliminar To-Do">
-                <span
-                  className="text-lg text-danger cursor-pointer active:opacity-50"
-                  role="presentation"
-                  onClick={() => handleDeleteTodo(item)}
-                >
-                  <DeleteIcon />
-                </span>
-              </Tooltip>
+              {isTodoPath && (
+                <Tooltip content="Eliminar To-Do">
+                  <span
+                    className="text-lg text-danger cursor-pointer active:opacity-50"
+                    role="presentation"
+                    onClick={() => handleDeleteTodo(item)}
+                  >
+                    <DeleteIcon />
+                  </span>
+                </Tooltip>
+              )}
             </div>
           );
 

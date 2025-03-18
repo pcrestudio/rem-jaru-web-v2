@@ -22,7 +22,7 @@ const TodoDataGrid = () => {
     toggleAlertHelper,
     toggleDeleteHelper,
     handleConfirmClose,
-  } = useTodos();
+  } = useTodos({ isTodoPath: true });
 
   const { user } = useStore();
 

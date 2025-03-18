@@ -37,7 +37,7 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
     confirm,
     toggleAlertHelper,
     handleConfirmClose,
-  } = useTodos();
+  } = useTodos({ isTodoPath: false });
 
   const onSubmit = async (payload: UpsertTodoDto) => {
     if (stepDataId) {
