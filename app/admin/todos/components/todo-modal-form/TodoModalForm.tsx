@@ -16,6 +16,7 @@ import ReactiveCheckbox from "@/components/form/ReactiveCheckbox";
 import ReactiveTextArea from "@/components/form/ReactiveTextArea";
 import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 import useStore from "@/lib/store";
+import { showAllDossiers } from "@/config/menu-options";
 
 export interface TodoModalProps extends ModalProps {
   todo?: GetTodoDto;
@@ -88,9 +89,11 @@ const TodoModal: FC<TodoModalProps> = ({
         ) : undefined
       }
       modalEndContent={
-        todo &&
-        !todo.alert &&
-        todo.state.slug === MasterTodosStates.lessThanTwoWeeks && (
+        (todo && !todo.alert) ||
+        (todo &&
+          todo.check &&
+          todo.state.slug === MasterTodosStates.lessThanTwoWeeks) ||
+        (showAllDossiers.includes(user?.role) && user.studioId === 0 && (
           <Button
             color="warning"
             type="button"
@@ -99,7 +102,7 @@ const TodoModal: FC<TodoModalProps> = ({
           >
             Alertar
           </Button>
-        )
+        ))
       }
       stopEventPropagation={stopEventPropagation}
       title={title}
