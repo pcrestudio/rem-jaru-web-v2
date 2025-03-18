@@ -25,7 +25,7 @@ const FilterResponsibleAutocomplete: FC<FilterResponsibleAutocompleteProps> = ({
   onChange,
 }) => {
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/users`,
+    `${environment.baseUrl}/users?pageSize=50`,
     fetcher,
   );
 
