@@ -130,15 +130,12 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname, searchTitle }) => {
               onChange={handleFilter}
             />
 
-            {(user.role && user.role === Role["super-admin"]) ||
-              (user.role === Role.admin && (
-                <FilterStudioAutocomplete
-                  className="col-span-12 nextui-input-nomodal"
-                  label="Estudio a cargo"
-                  name="cargoStudioId"
-                  onChange={handleFilter}
-                />
-              ))}
+            <FilterStudioAutocomplete
+              className="col-span-12 nextui-input-nomodal"
+              label="Estudio a cargo"
+              name="cargoStudioId"
+              onChange={handleFilter}
+            />
           </>
         )}
 
