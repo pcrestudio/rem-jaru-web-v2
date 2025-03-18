@@ -14,6 +14,7 @@ import { mappingRole } from "@/config/mapping_role";
 import httpClient from "@/lib/httpClient";
 import { IUser } from "@/app/admin/usuarios/interfaces";
 import useStore from "@/lib/store";
+import { deleteCookie, getCookie } from "cookies-next";
 
 interface AppBarUserProps {
   user: IUser;
@@ -25,6 +26,11 @@ const AppBarUser: FC<AppBarUserProps> = ({ user }) => {
 
   const handleSignOut = async () => {
     await httpClient.post("/auth/logout", {}, { withCredentials: true });
+    const sid = getCookie("connect.sid")?.toString();
+
+    if (sid) {
+      deleteCookie("connect.sid");
+    }
 
     localStorage.removeItem("token");
 
