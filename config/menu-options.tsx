@@ -5,7 +5,6 @@ import {
   AiOutlineHome,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { signOut } from "next-auth/react";
 import { RiShutDownLine } from "react-icons/ri";
 
 import { Role } from "@/config/mapping_role";

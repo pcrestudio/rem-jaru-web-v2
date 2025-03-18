@@ -1,5 +1,6 @@
 import { FC, useCallback } from "react";
 import { Button } from "@heroui/button";
+import toast from "react-hot-toast";
 
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import { GetCEJHistoricalDto } from "@/app/dto/cej/get-cej-historical.dto";
@@ -14,15 +15,22 @@ const JudicialProcessCEJDataGrid: FC<JudicialProcessDataGridProps> = ({
   fileCode,
 }) => {
   const handleDownloadDossier = async (fileName: string) => {
-    const response = await exportCEJDossier(fileName);
+    try {
+      const response = await exportCEJDossier(fileName);
 
-    const url = window.URL.createObjectURL(new Blob([response.data]));
-    const link = document.createElement("a");
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
 
-    link.href = url;
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link);
-    link.click();
+      link.href = url;
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Error al descargar el archivo.";
+
+      toast.error(errorMessage);
+    }
   };
 
   const renderCell = useCallback(
@@ -36,7 +44,7 @@ const JudicialProcessCEJDataGrid: FC<JudicialProcessDataGridProps> = ({
           );
 
         case "resolucion_archivo":
-          return cellValue !== null ? (
+          return cellValue !== null && cellValue !== "error descarga" ? (
             <Button
               className="bg-transparent"
               color="primary"

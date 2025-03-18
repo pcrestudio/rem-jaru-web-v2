@@ -11,8 +11,6 @@ import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
-import useStore from "@/lib/store";
-import { showAllDossiers } from "@/config/menu-options";
 
 const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   name,
@@ -24,15 +22,8 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   disabled,
   noModal,
 }) => {
-  const { user } = useStore();
-
-  const filterByStudio =
-    showAllDossiers.includes(user?.role) && user?.studioId === 0
-      ? null
-      : `studioId=${user.studioId}`;
-
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/users?${filterByStudio ?? ""}`,
+    `${environment.baseUrl}/users`,
     fetcher,
   );
 

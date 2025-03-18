@@ -7,7 +7,6 @@ import {
   TableRow,
   TableCell,
   Tooltip,
-  useDisclosure,
 } from "@heroui/react";
 import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
 import { Chip } from "@heroui/chip";

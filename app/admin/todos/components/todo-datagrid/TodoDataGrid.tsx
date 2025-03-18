@@ -4,7 +4,6 @@ import TodoModal from "@/app/admin/todos/components/todo-modal-form/TodoModalFor
 import { todoColumns } from "@/app/admin/todos/components/todo-datagrid/columns/todoColumns";
 import useTodos from "@/app/admin/todos/states/useTodos";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
-import { Role } from "@/config/mapping_role";
 import useStore from "@/lib/store";
 import { showAllDossiers } from "@/config/menu-options";
 

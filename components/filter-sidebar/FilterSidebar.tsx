@@ -18,6 +18,7 @@ import {
 } from "@/config/attribute_local_autocompletes";
 import { Role } from "@/config/mapping_role";
 import FilterStatusAutocomplete from "@/components/filter-sidebar/components/FilterStatusAutocomplete";
+import { showAllDossiers } from "@/config/menu-options";
 
 export interface FilterSidebarProps {
   pathname: string;
@@ -130,12 +131,14 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname, searchTitle }) => {
               onChange={handleFilter}
             />
 
-            <FilterStudioAutocomplete
-              className="col-span-12 nextui-input-nomodal"
-              label="Estudio a cargo"
-              name="cargoStudioId"
-              onChange={handleFilter}
-            />
+            {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
+              <FilterStudioAutocomplete
+                className="col-span-12 nextui-input-nomodal"
+                label="Estudio a cargo"
+                name="cargoStudioId"
+                onChange={handleFilter}
+              />
+            )}
           </>
         )}
 

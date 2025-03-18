@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { deleteCookie, getCookie } from "cookies-next";
 
 import { CredentialsType } from "./types";
 import LoginForm from "./components/LoginForm";
@@ -11,7 +12,6 @@ import CredentialsForm from "./components/CredentialsForm";
 import Step from "./components/Step";
 
 import httpClient from "@/lib/httpClient";
-import { deleteCookie, getCookie } from "cookies-next";
 
 export default function Auth() {
   const router = useRouter();
