@@ -62,6 +62,7 @@ const SupervisionDataGrid: FC<SupervisionDataGridProps> = ({
       onExportableExcel={async () => {
         const response = await exportSupervisionExcel(
           mappingRevertSubmodules[slug],
+          user?.studioId,
         );
 
         const excelResponse = exportableExcel(response);

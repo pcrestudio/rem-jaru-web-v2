@@ -50,10 +50,16 @@ export async function exportSupervisionWord(entityReference: string) {
   });
 }
 
-export async function exportSupervisionExcel(slug: string) {
-  return api.get(`${apiUrl}/export/excel?slug=${slug}`, {
-    responseType: "blob",
-  });
+export async function exportSupervisionExcel(
+  slug: string,
+  cargoStudioId: number,
+) {
+  return api.get(
+    `${apiUrl}/export/excel?slug=${slug}${cargoStudioId ? `&cargoStudioId=${cargoStudioId}` : ""}`,
+    {
+      responseType: "blob",
+    },
+  );
 }
 
 export async function toggleSupervision(supervision: ToggleJudicialProcessDto) {

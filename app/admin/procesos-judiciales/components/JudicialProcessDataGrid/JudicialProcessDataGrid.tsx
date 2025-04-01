@@ -27,6 +27,8 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
     toggleSelectedItem,
   });
 
+  console.log(filterByStudio);
+
   return (
     <CustomDataGrid<GetJudicialProcessDto>
       hasAddButton
@@ -46,6 +48,7 @@ const JudicialProcessDataGrid: FC<JudicialProcessDataGridProps> = ({
       onExportableExcel={async () => {
         const response = await exportJudicialProcessExcel(
           mappingRevertSubmodules[slug],
+          user?.studioId,
         );
 
         const excelResponse = exportableExcel(response);
