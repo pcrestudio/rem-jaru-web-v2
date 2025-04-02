@@ -92,7 +92,10 @@ export default function ProcesosJudicialesSlugEdit() {
           ) {
             toast.success("Ficha modificada.");
 
-            router.back();
+            const currentPath = window.location.pathname;
+            const submodule = currentPath.replace(/edit\/\d+/, "cej");
+
+            router.push(submodule.replace("/cej", ""));
           } else {
             toast.error(
               `No se pudo modificar la ficha ${data || instanceResponse.data || globalAttributeResponse.data || sectionAttributeResponse.data}.`,

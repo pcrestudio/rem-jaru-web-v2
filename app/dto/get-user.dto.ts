@@ -16,6 +16,7 @@ export interface GetUserDto {
   studio?: GetMasterOptionsDto;
   studioId?: number;
   roleId?: number;
+  isSpecialist?: boolean;
 }
 
 export interface GetUserRoleDto {

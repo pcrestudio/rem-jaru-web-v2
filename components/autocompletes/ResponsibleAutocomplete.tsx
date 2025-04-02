@@ -12,7 +12,11 @@ import { fetcher } from "@/config/axios.config";
 import { GetUserDto } from "@/app/dto/get-user.dto";
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 
-const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
+interface ResponsibleAutocompleteProps extends ReactiveFieldProps {
+  filter?: string;
+}
+
+const ResponsibleAutocomplete: FC<ResponsibleAutocompleteProps> = ({
   name,
   label,
   className,
@@ -21,9 +25,10 @@ const ResponsibleAutocomplete: FC<ReactiveFieldProps> = ({
   defaultValue,
   disabled,
   noModal,
+  filter,
 }) => {
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/users?pageSize=50`,
+    `${environment.baseUrl}/users?pageSize=50${filter ?? ""}`,
     fetcher,
   );
 

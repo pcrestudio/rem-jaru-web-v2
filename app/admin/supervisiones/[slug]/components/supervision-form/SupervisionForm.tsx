@@ -116,6 +116,7 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
           <ResponsibleAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
+            filter="&isSpecialist=yes"
             isRequired={true}
             label="Responsable principal"
             name="responsibleId"

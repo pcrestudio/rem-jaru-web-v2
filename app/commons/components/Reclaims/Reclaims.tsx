@@ -36,8 +36,8 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
     }
 
     if (
-      payload.provisionAmount &&
-      payload.posibleAmount &&
+      payload.provisionAmount ||
+      payload.posibleAmount ||
       payload.remoteAmount
     ) {
       amountValidation =

@@ -13,6 +13,7 @@ import { ReactiveFieldProps } from "@/components/form/ReactiveTextArea";
 
 export interface FilterResponsibleAutocompleteProps extends ReactiveFieldProps {
   onChange: (event: any, value: string | number | object) => void;
+  filter?: string;
 }
 
 const FilterResponsibleAutocomplete: FC<FilterResponsibleAutocompleteProps> = ({
@@ -23,9 +24,10 @@ const FilterResponsibleAutocomplete: FC<FilterResponsibleAutocompleteProps> = ({
   disabled,
   noModal,
   onChange,
+  filter,
 }) => {
   const { data } = useSWR<CustomDataGridPagination<GetUserDto>>(
-    `${environment.baseUrl}/users?pageSize=50`,
+    `${environment.baseUrl}/users?pageSize=200${filter ?? ""}`,
     fetcher,
   );
 

@@ -16,6 +16,7 @@ import { GetRoleDto } from "@/app/dto/role/get-role.dto";
 import AsyncAutocomplete from "@/components/autocompletes/AsyncAutocomplete";
 import { MasterOptionConfig } from "@/config/master-option.config";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
+import ReactiveSwitch from "@/components/form/ReactiveSwitch";
 
 interface UserModalProps extends ModalProps {
   user?: GetUserDto;
@@ -107,7 +108,7 @@ const UserModal: FC<UserModalProps> = ({
           />
 
           <LocalAutocomplete
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-12 lg:col-span-6 nextui-input-nomodal"
             control={control}
             errors={errors}
             isRequired={true}
@@ -119,7 +120,7 @@ const UserModal: FC<UserModalProps> = ({
           />
 
           <AsyncAutocomplete
-            className="col-span-12 nextui-input-nomodal"
+            className="col-span-12 lg:col-span-6 nextui-input-nomodal"
             control={control}
             errors={errors}
             isRequired={true}
@@ -136,6 +137,15 @@ const UserModal: FC<UserModalProps> = ({
             label="Estudio a cargo"
             name="studioId"
             slug={MasterOptionConfig.estudios}
+          />
+
+          <ReactiveSwitch
+            className="col-span-12"
+            control={control}
+            isSelected={user?.isSpecialist ?? false}
+            label="¿Es un especialista interno?"
+            name="isSpecialist"
+            register={register}
           />
         </div>
       )}

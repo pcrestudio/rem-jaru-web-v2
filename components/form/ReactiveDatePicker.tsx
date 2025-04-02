@@ -19,6 +19,7 @@ export interface ReactiveFieldProps {
   control?: Control<any>;
   disabled?: boolean;
   onBlur?: (value: any) => void;
+  isReadOnly?: boolean;
 }
 
 const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
@@ -29,6 +30,7 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
   touched,
   className,
   control,
+  isReadOnly,
 }) => {
   const errorMessage = touched && errors[name] ? errors[name].message : "";
 
@@ -51,6 +53,7 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
             className={className}
             errorMessage={errorMessage}
             isRequired={isRequired}
+            isReadOnly={isReadOnly}
             label={label}
             value={parseValueToZonedDateTime(field.value) as any}
             onChange={(newValue) => {
