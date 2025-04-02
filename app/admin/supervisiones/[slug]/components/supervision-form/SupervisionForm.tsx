@@ -18,6 +18,12 @@ import mockReclaims from "@/app/admin/procesos-judiciales/constants/reclaims.con
 import Reclaims from "@/app/commons/components/Reclaims/Reclaims";
 import { showAllDossiers } from "@/config/menu-options";
 import useStore from "@/lib/store";
+import { StatusConfig } from "@/config/status.config";
+import ReactiveDatePicker from "@/components/form/ReactiveDatePicker";
+import useSWR from "swr";
+import { GetMasterOptionsDto } from "@/app/dto/masters/get-master-options.dto";
+import { environment } from "@/environment/environment";
+import { fetcher } from "@/config/axios.config";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -60,193 +66,213 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
         getValues,
         watch,
         setValue,
-      }) => (
-        <div className="grid grid-cols-12 gap-4">
-          <ReactiveField
-            className="col-span-12"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Código de Expediente"
-            name="fileCode"
-            register={register}
-            touched={touchedFields.fileCode}
-          />
+      }) => {
+        const statusId = watch("statusId");
 
-          <ReactiveField
-            className="col-span-6"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Demandante"
-            name="plaintiff"
-            register={register}
-            touched={touchedFields.plaintiff}
-          />
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const { data: masterOption } = useSWR<GetMasterOptionsDto>(
+          `${environment.baseUrl}/masters/option?id=${statusId}`,
+          fetcher,
+        );
 
-          <ReactiveField
-            className="col-span-6"
-            control={control}
-            errors={errors}
-            isRequired={true}
-            label="Demandado"
-            name="demanded"
-            register={register}
-            touched={touchedFields.demanded}
-          />
+        return (
+          <div className="grid grid-cols-12 gap-4">
+            <ReactiveField
+              className="col-span-12"
+              control={control}
+              errors={errors}
+              isRequired={true}
+              label="Código de Expediente"
+              name="fileCode"
+              register={register}
+              touched={touchedFields.fileCode}
+            />
 
-          <ReactiveField
-            className="col-span-6"
-            control={control}
-            errors={errors}
-            label="Co Demandado"
-            name="coDefendant"
-            register={register}
-          />
+            <ReactiveField
+              className="col-span-6"
+              control={control}
+              errors={errors}
+              isRequired={true}
+              label="Demandante"
+              name="plaintiff"
+              register={register}
+              touched={touchedFields.plaintiff}
+            />
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Razón social"
-            name="projectId"
-            slug={MasterOptionConfig.proyectosGeneral}
-          />
+            <ReactiveField
+              className="col-span-6"
+              control={control}
+              errors={errors}
+              isRequired={true}
+              label="Demandado"
+              name="demanded"
+              register={register}
+              touched={touchedFields.demanded}
+            />
 
-          <ResponsibleAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            filter="&isSpecialist=yes"
-            isRequired={true}
-            label="Responsable principal"
-            name="responsibleId"
-          />
+            <ReactiveField
+              className="col-span-6"
+              control={control}
+              errors={errors}
+              label="Co Demandado"
+              name="coDefendant"
+              register={register}
+            />
 
-          {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
             <DynamicAutocomplete
               className="col-span-6 nextui-input-nomodal"
               control={control}
               isRequired={true}
-              label="Estudio"
-              name="cargoStudioId"
-              optionValue="id"
-              slug={MasterOptionConfig.estudios}
+              label="Razón social"
+              name="projectId"
+              slug={MasterOptionConfig.proyectosGeneral}
             />
-          )}
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Moneda"
-            name="controversialMatter"
-            optionValue="name"
-            slug={MasterOptionConfig.moneda}
-          />
+            <ResponsibleAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              filter="&isSpecialist=yes"
+              isRequired={true}
+              label="Responsable principal"
+              name="responsibleId"
+            />
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            filter={{
-              slugSubmodule: mappingRevertSubmodules[slugSubmodule],
-            }}
-            isRequired={true}
-            label="Autoridad"
-            name="authorityId"
-            slug={`${MasterOptionConfig.autoridad}-${slugSubmodule}`}
-          />
+            {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
+              <DynamicAutocomplete
+                className="col-span-6 nextui-input-nomodal"
+                control={control}
+                isRequired={true}
+                label="Estudio"
+                name="cargoStudioId"
+                optionValue="id"
+                slug={MasterOptionConfig.estudios}
+              />
+            )}
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            isRequired={true}
-            label="Situación"
-            name="situationId"
-            slug={MasterOptionConfig.situacion}
-          />
+            <DynamicAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              isRequired={true}
+              label="Moneda"
+              name="controversialMatter"
+              optionValue="name"
+              slug={MasterOptionConfig.moneda}
+            />
 
-          <DynamicAutocomplete
-            className="col-span-6 nextui-input-nomodal"
-            control={control}
-            label="Status"
-            name="statusId"
-            optionValue="id"
-            slug={MasterOptionConfig.status}
-          />
+            <DynamicAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              filter={{
+                slugSubmodule: mappingRevertSubmodules[slugSubmodule],
+              }}
+              isRequired={true}
+              label="Autoridad"
+              name="authorityId"
+              slug={`${MasterOptionConfig.autoridad}-${slugSubmodule}`}
+            />
 
-          {supervision && supervision?.entityReference && (
-            <>
-              <div className="col-span-12 flex flex-col gap-4">
-                <Reclaims
+            <DynamicAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              isRequired={true}
+              label="Situación"
+              name="situationId"
+              slug={MasterOptionConfig.situacion}
+            />
+
+            <DynamicAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              label="Status"
+              name="statusId"
+              optionValue="id"
+              slug={MasterOptionConfig.status}
+            />
+
+            {masterOption && masterOption.slug === StatusConfig.concluido && (
+              <ReactiveDatePicker
+                className="col-span-12 nextui-input-nomodal"
+                control={control}
+                label="Fecha de conclusión"
+                name="endDateConclusion"
+                register={register}
+              />
+            )}
+
+            {supervision && supervision?.entityReference && (
+              <>
+                <div className="col-span-12 flex flex-col gap-4">
+                  <Reclaims
+                    control={control}
+                    errors={errors}
+                    getValues={getValues}
+                    modelType={ModelType.Supervision}
+                    pathname={pathname}
+                    provision={supervision}
+                    register={register}
+                    setValue={setValue}
+                    watch={watch}
+                  />
+                </div>
+
+                <ProvisionCheck
                   control={control}
+                  getValues={getValues}
+                  pathname={pathname}
+                  provision={supervision as GetSupervisionDto}
+                  register={register}
+                  reset={reset}
+                  setValue={setValue}
+                  watch={watch}
+                />
+
+                <GlobalAttributeFields
+                  control={control}
+                  entityReference={supervision?.entityReference}
+                  getValues={getValues}
+                  modelType={ModelType.Supervision}
+                  pathname={pathname}
+                  register={register}
+                  reset={reset}
+                />
+
+                <SectionAttributeFields
+                  control={control}
+                  entityReference={supervision?.entityReference}
                   errors={errors}
                   getValues={getValues}
                   modelType={ModelType.Supervision}
                   pathname={pathname}
                   provision={supervision}
                   register={register}
+                  reset={reset}
                   setValue={setValue}
                   watch={watch}
                 />
-              </div>
 
-              <ProvisionCheck
-                control={control}
-                getValues={getValues}
-                pathname={pathname}
-                provision={supervision as GetSupervisionDto}
-                register={register}
-                reset={reset}
-                setValue={setValue}
-                watch={watch}
-              />
+                <div className="col-span-12 mt-4">
+                  <DynamicStepper
+                    entityReference={supervision?.entityReference}
+                    modelType={ModelType.Supervision}
+                  />
+                </div>
+              </>
+            )}
 
-              <GlobalAttributeFields
-                control={control}
-                entityReference={supervision?.entityReference}
-                getValues={getValues}
-                modelType={ModelType.Supervision}
-                pathname={pathname}
-                register={register}
-                reset={reset}
-              />
-
-              <SectionAttributeFields
-                control={control}
-                entityReference={supervision?.entityReference}
-                errors={errors}
-                getValues={getValues}
-                modelType={ModelType.Supervision}
-                pathname={pathname}
-                provision={supervision}
-                register={register}
-                reset={reset}
-                setValue={setValue}
-                watch={watch}
-              />
-
-              <div className="col-span-12 mt-4">
-                <DynamicStepper
-                  entityReference={supervision?.entityReference}
-                  modelType={ModelType.Supervision}
-                />
-              </div>
-            </>
-          )}
-
-          <div className="col-span-12 flex flex-row gap-4">
-            <Button
-              className="standard-btn bg-red-500 text-white w-fit"
-              disabled={!isValid}
-              type="submit"
-            >
-              {supervision && supervision.entityReference
-                ? "Editar ficha"
-                : "Guardar ficha"}
-            </Button>
+            <div className="col-span-12 flex flex-row gap-4">
+              <Button
+                className="standard-btn bg-red-500 text-white w-fit"
+                disabled={!isValid}
+                type="submit"
+              >
+                {supervision && supervision.entityReference
+                  ? "Editar ficha"
+                  : "Guardar ficha"}
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
+        );
+      }}
     </ReactiveForm>
   );
 };

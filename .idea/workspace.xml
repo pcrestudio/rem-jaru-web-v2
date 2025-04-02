@@ -4,50 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1bc1fb2b-b621-42eb-863f-1eedaade3b81" name="Changes" comment="feat: added numeric field">
-      <change afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/Reclaims/Reclaims.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/ModularProps.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/upsert-reclaims.dto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/autocompletes/PlaintiffAutocomplete.tsx" afterDir="false" />
+    <list default="true" id="1bc1fb2b-b621-42eb-863f-1eedaade3b81" name="Changes" comment="SJ-11: Update changes from ticket/observation AAQSA.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/cej/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/cej/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/create/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/create/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/edit/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/edit/[id]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/InstanceForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/InstanceForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/ProvisionCheck/ProvisionCheck.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-cej-datagrid/JudicialProcessCEJDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessCEJDataGrid/JudicialProcessCEJDataGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-cej-datagrid/columns/judicialProcessCEJColumns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessCEJDataGrid/columns/judicialProcessCEJColumns.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-datagrid/JudicialProcessDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessDataGrid/JudicialProcessDataGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/judicial-process-datagrid/columns/judicialProcessColumns.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/components/JudicialProcessDataGrid/columns/judicialProcessColumns.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/admin/procesos-judiciales/constants/judicial-process-fields.constant.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/constants/reclaims.constant.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/instances/instances.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/instances/instances.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/judicial-process/judicial-process.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/judicial-process/judicial-process.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/components/CredentialsForm copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/components/CredentialsForm copy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/components/LoginForm copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/components/LoginForm copy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/components/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/components/LoginForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/page copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/page copy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/reset-password/page copy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/reset-password/page copy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/auth/reset-password/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/auth/reset-password/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/create-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/create-judicial-process.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/edit-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/edit-judicial-process.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/get-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/get-judicial-process.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dto/submodule/judicial_process/toggle-judicial-process.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/procesos-judiciales/types/toggle-judicial-process.dto.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/provider/JaruProvider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/provider/JaruProvider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/validations/create-judicial-process.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/validations/create-judicial-process.validation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/validations/create-supervision.validation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/validations/create-supervision.validation.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/form/ReactiveField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/form/ReactiveField.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/form/ReactiveForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/form/ReactiveForm.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/form/ReactiveNumericField.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/form/ReactiveNumericField.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shared/custom-datagrid/CustomDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/custom-datagrid/CustomDataGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/shared/master-options-autocompletes/DynamicAutocomplete.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/shared/master-options-autocompletes/DynamicAutocomplete.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/sidebar/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sidebar/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/states/useCustomDataGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/states/useCustomDataGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/extended-attribute.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/extended-attribute.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/master-option.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/config/master-option.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/admin/supervisiones/[slug]/components/supervision-form/SupervisionForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/admin/supervisiones/[slug]/components/supervision-form/SupervisionForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,12 +17,19 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript JSX File" />
+        <option value="tsconfig.json" />
         <option value="TypeScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -73,24 +39,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/PCR/Workspace/rem-jaru-web-v2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/Users/dev.pierci/Workspace/rem-jaru-web-v2/node_modules/prettier",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Users/dev.pierci/Workspace/rem-jaru-web-v2/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/dev.pierci/Workspace/rem-jaru-web-v2/app/admin/procesos-judiciales/[slug]/incidencias/[id]&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/Users/dev.pierci/Workspace/rem-jaru-web-v2/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/dev.pierci/Workspace/rem-jaru-web-v2/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/admin/procesos-judiciales/[slug]/incidencias/[id]" />
+      <recent name="$PROJECT_DIR$/app/dto/instance" />
+      <recent name="$PROJECT_DIR$/app/admin/ajustes/instancias" />
+      <recent name="$PROJECT_DIR$/components/filter-sidebar/components" />
+      <recent name="$PROJECT_DIR$/app/admin/components/ReportChartDataGrid/columns" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/commons/components/IncidencesForm" />
+      <recent name="$PROJECT_DIR$/app/commons/components" />
+      <recent name="$PROJECT_DIR$/app/admin/ajustes/instancias/components/InstanceAccordion" />
       <recent name="$PROJECT_DIR$/app/admin/procesos-judiciales/types" />
     </key>
   </component>
@@ -113,7 +89,54 @@
       <workItem from="1737383368071" duration="2959000" />
       <workItem from="1737663917331" duration="2251000" />
       <workItem from="1737913637729" duration="1006000" />
-      <workItem from="1738000014439" duration="29811000" />
+      <workItem from="1738000014439" duration="32748000" />
+      <workItem from="1738593119717" duration="14462000" />
+      <workItem from="1738635124158" duration="257000" />
+      <workItem from="1738635392168" duration="1746000" />
+      <workItem from="1738707194851" duration="21429000" />
+      <workItem from="1738905571215" duration="64000" />
+      <workItem from="1739118918092" duration="16563000" />
+      <workItem from="1739195047480" duration="11811000" />
+      <workItem from="1739391867690" duration="18785000" />
+      <workItem from="1739746811389" duration="602000" />
+      <workItem from="1739750779514" duration="1415000" />
+      <workItem from="1740075564270" duration="725000" />
+      <workItem from="1740088392448" duration="16966000" />
+      <workItem from="1740171736332" duration="478000" />
+      <workItem from="1740248367563" duration="9712000" />
+      <workItem from="1740276837936" duration="3387000" />
+      <workItem from="1740369256520" duration="5711000" />
+      <workItem from="1740407750425" duration="14880000" />
+      <workItem from="1740522084909" duration="2019000" />
+      <workItem from="1740548189746" duration="334000" />
+      <workItem from="1740582449059" duration="20385000" />
+      <workItem from="1740709585027" duration="2239000" />
+      <workItem from="1740715886264" duration="369000" />
+      <workItem from="1740893340194" duration="3265000" />
+      <workItem from="1741015825523" duration="4478000" />
+      <workItem from="1741097090699" duration="2911000" />
+      <workItem from="1741109699849" duration="1799000" />
+      <workItem from="1741183679693" duration="1248000" />
+      <workItem from="1741274080589" duration="10860000" />
+      <workItem from="1741574064579" duration="956000" />
+      <workItem from="1741575396096" duration="1640000" />
+      <workItem from="1741583320301" duration="1830000" />
+      <workItem from="1741627503024" duration="8910000" />
+      <workItem from="1741702649647" duration="4739000" />
+      <workItem from="1741752690594" duration="684000" />
+      <workItem from="1741788606299" duration="12541000" />
+      <workItem from="1742231193501" duration="7221000" />
+      <workItem from="1742260170690" duration="2890000" />
+      <workItem from="1742275517439" duration="1766000" />
+      <workItem from="1742280682593" duration="951000" />
+      <workItem from="1742305995090" duration="4834000" />
+      <workItem from="1742567726506" duration="599000" />
+      <workItem from="1742662925990" duration="3000" />
+      <workItem from="1742714529217" duration="430000" />
+      <workItem from="1742715447552" duration="28000" />
+      <workItem from="1743485205219" duration="1001000" />
+      <workItem from="1743529988571" duration="1742000" />
+      <workItem from="1743612427988" duration="11115000" />
     </task>
     <task id="LOCAL-00001" summary="feat: super fix">
       <option name="closed" value="true" />
@@ -147,17 +170,398 @@
       <option name="project" value="LOCAL" />
       <updated>1737375653656</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: added reclaims in judicial process">
+      <option name="closed" value="true" />
+      <created>1738287788977</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738287788977</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: reclaims in supervision and judicial process">
+      <option name="closed" value="true" />
+      <created>1738784420696</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738784420696</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: fix reclaims automatic calc">
+      <option name="closed" value="true" />
+      <created>1738791847071</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738791847071</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: fix report provision amount and init report">
+      <option name="closed" value="true" />
+      <created>1738905615166</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738905615166</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: last changes to angloamerican">
+      <option name="closed" value="true" />
+      <created>1739140843144</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1739140843144</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: fix confirm modal in user datagrid">
+      <option name="closed" value="true" />
+      <created>1739149483673</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1739149483673</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: fix reclaims and provision check form">
+      <option name="closed" value="true" />
+      <created>1739201894862</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1739201894862</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: update changes from meet 10/01/2025">
+      <option name="closed" value="true" />
+      <created>1739400657540</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1739400657540</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: fix filter props">
+      <option name="closed" value="true" />
+      <created>1739401560021</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1739401560021</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat: update componente reclaim, and added fix from studio">
+      <option name="closed" value="true" />
+      <created>1739745702788</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1739745702788</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: update supervision form order">
+      <option name="closed" value="true" />
+      <created>1739751618939</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1739751618939</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: update from metting 21/02/2025">
+      <option name="closed" value="true" />
+      <created>1740258754460</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740258754460</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: update from metting 21/02/2025, report and grid">
+      <option name="closed" value="true" />
+      <created>1740282232352</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1740282232352</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat: update grid columns and added new amount from ProvisionCheck.tsx">
+      <option name="closed" value="true" />
+      <created>1740375793248</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1740375793248</updated>
+    </task>
+    <task id="LOCAL-00019" summary="feat: delete reclaims payload from submodule form">
+      <option name="closed" value="true" />
+      <created>1740378958403</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1740378958403</updated>
+    </task>
+    <task id="LOCAL-00020" summary="feat: still instances configuration dependent">
+      <option name="closed" value="true" />
+      <created>1740412343528</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1740412343528</updated>
+    </task>
+    <task id="LOCAL-00021" summary="feat: update from meeting 24/02/2025">
+      <option name="closed" value="true" />
+      <created>1740456860889</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1740456860889</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat: modify modelType in Reclaims">
+      <option name="closed" value="true" />
+      <created>1740546688727</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1740546688727</updated>
+    </task>
+    <task id="LOCAL-00023" summary="feat: new features from judicialProcess and permission from instances">
+      <option name="closed" value="true" />
+      <created>1740684461315</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1740684461315</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat: fix errors from admin/super admin, added messages to word exportables">
+      <option name="closed" value="true" />
+      <created>1740697688284</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1740697688284</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat: put columns report and fix labels, added view for supervisor that not contains studioId">
+      <option name="closed" value="true" />
+      <created>1740707721703</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1740707721703</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat: fix can use for judicialprocess">
+      <option name="closed" value="true" />
+      <created>1740709727757</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1740709727757</updated>
+    </task>
+    <task id="LOCAL-00027" summary="feat: fix exportable word">
+      <option name="closed" value="true" />
+      <created>1740715573202</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1740715573202</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feat: provision check fix">
+      <option name="closed" value="true" />
+      <created>1740716090677</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1740716090677</updated>
+    </task>
+    <task id="LOCAL-00029" summary="feat: fix component from required forms and reclaims validation before update.">
+      <option name="closed" value="true" />
+      <created>1740896602131</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1740896602131</updated>
+    </task>
+    <task id="LOCAL-00030" summary="feat: last modifies for Angloamerican">
+      <option name="closed" value="true" />
+      <created>1741022641673</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1741022641673</updated>
+    </task>
+    <task id="LOCAL-00031" summary="feat: FIX CREATE TODO IN STEP WITHOUT DATA AND FIX INITIAL VALUES FROM STEP.">
+      <option name="closed" value="true" />
+      <created>1741099386959</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1741099386959</updated>
+    </task>
+    <task id="LOCAL-00032" summary="feat: Added incidence and probably instances relation">
+      <option name="closed" value="true" />
+      <created>1741303531948</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1741303531948</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feat: Added incidence in dynamic stepper">
+      <option name="closed" value="true" />
+      <created>1741653532194</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1741653532194</updated>
+    </task>
+    <task id="LOCAL-00034" summary="feat: super fix build, added modal and deleted confirm incidences">
+      <option name="closed" value="true" />
+      <created>1741704916244</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1741704916244</updated>
+    </task>
+    <task id="LOCAL-00035" summary="feat: Added azure ad option, modify provision check filter, added modules inactive in page, fix user store">
+      <option name="closed" value="true" />
+      <created>1741791572155</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1741791572155</updated>
+    </task>
+    <task id="LOCAL-00036" summary="feat: fix reponsive todo, fix layout, fix grid and fix instances">
+      <option name="closed" value="true" />
+      <created>1741803365917</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1741803365918</updated>
+    </task>
+    <task id="LOCAL-00037" summary="feat: Fix label from incidences">
+      <option name="closed" value="true" />
+      <created>1741812544762</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1741812544762</updated>
+    </task>
+    <task id="LOCAL-00038" summary="feat: Fix width in columns and pageSize">
+      <option name="closed" value="true" />
+      <created>1742231469189</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1742231469189</updated>
+    </task>
+    <task id="LOCAL-00039" summary="feat: Fix logout from session">
+      <option name="closed" value="true" />
+      <created>1742232751065</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1742232751065</updated>
+    </task>
+    <task id="LOCAL-00040" summary="feat: Fix filter sidebar, block filter and total from report">
+      <option name="closed" value="true" />
+      <created>1742250411289</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1742250411289</updated>
+    </task>
+    <task id="LOCAL-00041" summary="feat: Added studio sidebar autocomplete filter">
+      <option name="closed" value="true" />
+      <created>1742268945314</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1742268945314</updated>
+    </task>
+    <task id="LOCAL-00042" summary="feat: Added cookie">
+      <option name="closed" value="true" />
+      <created>1742271850784</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1742271850784</updated>
+    </task>
+    <task id="LOCAL-00043" summary="feat: Superfix in filter sidebar, cej download and logout">
+      <option name="closed" value="true" />
+      <created>1742279314037</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1742279314037</updated>
+    </task>
+    <task id="LOCAL-00044" summary="feat: page size in responsible autocomplete and filter">
+      <option name="closed" value="true" />
+      <created>1742281623071</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1742281623071</updated>
+    </task>
+    <task id="LOCAL-00045" summary="feat: disable alert when is an user with studio">
+      <option name="closed" value="true" />
+      <created>1742306570715</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1742306570715</updated>
+    </task>
+    <task id="LOCAL-00046" summary="feat: Hide delete icon from step in tododatagrid, and fixed alert button">
+      <option name="closed" value="true" />
+      <created>1742311067068</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1742311067068</updated>
+    </task>
+    <task id="LOCAL-00047" summary="feat: Added signout and delete cookies">
+      <option name="closed" value="true" />
+      <created>1742313991594</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1742313991594</updated>
+    </task>
+    <task id="LOCAL-00048" summary="feat: Exportable excel with studio">
+      <option name="closed" value="true" />
+      <created>1743530884316</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1743530884316</updated>
+    </task>
+    <task id="LOCAL-00049" summary="SJ-11: Update changes from ticket/observation AAQSA.">
+      <option name="closed" value="true" />
+      <created>1743626011473</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1743626011473</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: super fix" />
-    <MESSAGE value="feat: delete file code validation" />
-    <MESSAGE value="feat: delete is required in attributes" />
-    <MESSAGE value="feat: added numeric field" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: added numeric field" />
+    <MESSAGE value="feat: put columns report and fix labels, added view for supervisor that not contains studioId" />
+    <MESSAGE value="feat: fix can use for judicialprocess" />
+    <MESSAGE value="feat: fix exportable word" />
+    <MESSAGE value="feat: provision check fix" />
+    <MESSAGE value="feat: fix component from required forms and reclaims validation before update." />
+    <MESSAGE value="feat: last modifies for Angloamerican" />
+    <MESSAGE value="feat: FIX CREATE TODO IN STEP WITHOUT DATA AND FIX INITIAL VALUES FROM STEP." />
+    <MESSAGE value="feat: Added incidence and probably instances relation" />
+    <MESSAGE value="feat: Added incidence in dynamic stepper" />
+    <MESSAGE value="feat: super fix build, added modal and deleted confirm incidences" />
+    <MESSAGE value="feat: Added azure ad option, modify provision check filter, added modules inactive in page, fix user store" />
+    <MESSAGE value="feat: fix reponsive todo, fix layout, fix grid and fix instances" />
+    <MESSAGE value="feat: Fix label from incidences" />
+    <MESSAGE value="feat: Fix width in columns and pageSize" />
+    <MESSAGE value="feat: Fix logout from session" />
+    <MESSAGE value="feat: Fix filter sidebar, block filter and total from report" />
+    <MESSAGE value="feat: Added studio sidebar autocomplete filter" />
+    <MESSAGE value="feat: Added cookie" />
+    <MESSAGE value="feat: Superfix in filter sidebar, cej download and logout" />
+    <MESSAGE value="feat: page size in responsible autocomplete and filter" />
+    <MESSAGE value="feat: disable alert when is an user with studio" />
+    <MESSAGE value="feat: Hide delete icon from step in tododatagrid, and fixed alert button" />
+    <MESSAGE value="feat: Added signout and delete cookies" />
+    <MESSAGE value="feat: Exportable excel with studio" />
+    <MESSAGE value="SJ-11: Update changes from ticket/observation AAQSA." />
+    <option name="LAST_COMMIT_MESSAGE" value="SJ-11: Update changes from ticket/observation AAQSA." />
   </component>
 </project>
