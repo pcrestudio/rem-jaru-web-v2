@@ -290,7 +290,7 @@ const useReportJudicialProcess = (
     if (shouldBeDollar) {
       const conversion = amount / exchange?.value;
 
-      return !isNaN(conversion) ? float.format(amount) : 0;
+      return !isNaN(conversion) ? float.format(conversion) : 0;
     }
 
     return !isNaN(amount) ? float.format(amount) : Number(0).toFixed(2);
