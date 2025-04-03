@@ -47,7 +47,12 @@ const IncidenceInstances: FC<IncidenceInstancesProps> = ({
     fieldName: string,
     value: string,
   ) => {
+    const storeState = useStore.getState();
+    const existingData =
+      storeState.stepDataArray.find((item) => item.stepId === stepId) || {};
+
     const newData = {
+      ...existingData,
       [fieldName]: value,
       stepId,
       incidenceId: incidenceId.toString(),
