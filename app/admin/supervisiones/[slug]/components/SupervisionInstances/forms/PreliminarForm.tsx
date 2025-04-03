@@ -171,6 +171,7 @@ const PreliminarForm: FC<PreeliminarFormProps> = ({
         {formData.file?.name && (
           <button
             className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+            type="button"
             onClick={() => handleDownloadDocument(formData.file?.name)}
           >
             Visualizar archivo
@@ -222,6 +223,7 @@ const PreliminarForm: FC<PreeliminarFormProps> = ({
         {formData.fileTwo?.name && (
           <button
             className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+            type="button"
             onClick={() => handleDownloadDocument(formData.fileTwo?.name)}
           >
             Visualizar archivo
@@ -273,6 +275,7 @@ const PreliminarForm: FC<PreeliminarFormProps> = ({
         {formData.fileThree?.name && (
           <button
             className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+            type="button"
             onClick={() => handleDownloadDocument(formData.fileThree?.name)}
           >
             Visualizar archivo

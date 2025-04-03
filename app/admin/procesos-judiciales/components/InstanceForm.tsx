@@ -109,6 +109,7 @@ const InstanceForm: FC<InstanceFormProps> = ({
         {formData.file?.name && (
           <button
             className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+            type="button"
             onClick={() => handleDownloadDocument(formData.file?.name)}
           >
             Visualizar archivo
