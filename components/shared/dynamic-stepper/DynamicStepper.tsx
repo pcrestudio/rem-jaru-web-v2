@@ -81,7 +81,10 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
       entityReference,
     };
 
+    // @ts-ignore
     updateStepData(stepId, newData);
+
+    // @ts-ignore
     updateStepDataArray(stepId, newData);
   };
 
