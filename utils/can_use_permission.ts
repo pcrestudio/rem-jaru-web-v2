@@ -52,6 +52,8 @@ const rolePermissions = {
     CanUsePermission.viewDashboard,
     CanUsePermission.downloadExcel,
     CanUsePermission.downloadWord,
+    CanUsePermission.addItem,
+    CanUsePermission.editItem,
     CanUsePermission.editTodo,
     CanUsePermission.viewMasters,
     CanUsePermission.viewExtendedAttributes,
