@@ -6,7 +6,7 @@ const createReclaimSchema = Yup.object().shape({
   contingencyPercentage: Yup.string().required(
     "El % de contingencia es requerido.",
   ),
-  provisionAmount: Yup.number().required("El monto de provisión es requerido."),
+  provisionAmount: Yup.number().optional(),
   posibleAmount: Yup.number().required("El monto posible es requerido."),
   remoteAmount: Yup.number().required("El monto remoto es requerido."),
 });
