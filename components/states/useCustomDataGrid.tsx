@@ -7,7 +7,11 @@ import React, {
   useState,
 } from "react";
 import { Button } from "@heroui/button";
-import { AiOutlineFileExcel, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlineFileExcel,
+  AiOutlinePlus,
+  AiOutlineSearch,
+} from "react-icons/ai";
 import {
   Dropdown,
   DropdownItem,
@@ -16,12 +20,14 @@ import {
 } from "@heroui/dropdown";
 import { ChevronDownIcon } from "@heroui/shared-icons";
 import { SharedSelection } from "@heroui/system";
+import { Input } from "@heroui/input";
 
 import { CustomDataGridPagination } from "@/app/admin/types/CustomDataGridPagination";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
 import useStore from "@/lib/store";
 import { ICustomColumnDataGrid } from "@/app/admin/types/CustomColumnDataGrid";
+import debounce from "@/utils/custom_debounce";
 
 interface UseCustomDataGridProps<T extends object> {
   items: T[];
@@ -46,12 +52,14 @@ interface UseCustomDataGridParams {
   canUseExportable?: boolean;
   columns?: ICustomColumnDataGrid[];
   initialVisibleColumns?: string[];
+  searchTitle?: string;
+  showSearch?: boolean;
 }
 
 const useCustomDataGrid = <T extends object>(
   params: UseCustomDataGridParams,
 ): UseCustomDataGridProps<T> => {
-  const { filter } = useStore();
+  const { filter, updateFilter } = useStore();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const onRowsPerPageChange = useCallback(
@@ -88,12 +96,36 @@ const useCustomDataGrid = <T extends object>(
     }
   };
 
+  const handleFilter = (event: any) => {
+    const { name, value } = event.target;
+
+    updateFilter({
+      search: name === "search" ? value : null,
+    });
+  };
+
+  const debouncedSearch = debounce(handleFilter, 700);
+
   const topContent = useMemo(() => {
     return (
       params.hasAddButton && (
         <div className="flex flex-col gap-1">
           <div className="flex justify-between gap-3 items-end">
-            <p />
+            {params.showSearch ? (
+              <Input
+                classNames={{
+                  inputWrapper:
+                    "bg-white data-[focus=true]:!bg-white data-[hover=true]:bg-white",
+                  base: "!bg-transparent",
+                }}
+                endContent={<AiOutlineSearch size={24} />}
+                name="search"
+                placeholder={params.searchTitle ?? "Buscar coincidencias..."}
+                onChange={(event) => debouncedSearch(event)}
+              />
+            ) : (
+              <p />
+            )}
             <div className="flex flex-row gap-3">
               {params.hasExcelButton && (
                 <Button

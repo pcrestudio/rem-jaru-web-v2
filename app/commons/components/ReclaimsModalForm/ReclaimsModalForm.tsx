@@ -127,13 +127,13 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
             <ReactiveNumericField
               className="col-span-4 lg:col-span-4 placeholder:text-xs text-xs"
               control={control}
-              readOnly={!canProvision}
               endContent={suffixNumericContent({ suffix: "S/." })}
               errors={errors}
               label="Monto provisión"
               labelClassName="text-xs"
               min={0}
               name="provisionAmount"
+              readOnly={!canProvision}
             />
 
             <ReactiveNumericField

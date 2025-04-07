@@ -83,6 +83,7 @@ const rolePermissions = {
     CanUsePermission.addItem,
     CanUsePermission.editItem,
     CanUsePermission.addIncidences,
+    CanUsePermission.deleteIncidences,
   ],
 };
 

@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 import { CreateJudicialProcessDto } from "@/app/admin/procesos-judiciales/types/create-judicial-process.dto";
 import { createJudicialProcess } from "@/app/api/judicial-process/judicial-process";
@@ -10,6 +11,7 @@ import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import useStore from "@/lib/store";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
+import BackdropLoading from "@/app/commons/components/BackdropLoading/BackdropLoading";
 
 export default function ProcesosJudicialesSlugCreate() {
   const pathname: string = usePathname();
@@ -20,6 +22,7 @@ export default function ProcesosJudicialesSlugCreate() {
     null,
   );
   const { user } = useStore();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleConfirmModalClose = () => setConfirm(false);
 
@@ -33,21 +36,29 @@ export default function ProcesosJudicialesSlugCreate() {
   };
 
   const onSubmit = async (payload: CreateJudicialProcessDto) => {
-    const { data } = await createJudicialProcess(
-      {
-        ...payload,
-        cargoStudioId:
-          user.studioId !== 0 ? user.studioId : payload.cargoStudioId,
-      },
-      slug,
-    );
+    try {
+      setLoading(true);
 
-    if (data) {
-      setJudicialProcessId(Number(data["id"]));
-      setConfirm(true);
+      const { data } = await createJudicialProcess(
+        {
+          ...payload,
+          cargoStudioId:
+            user.studioId !== 0 ? user.studioId : payload.cargoStudioId,
+        },
+        slug,
+      );
+
+      if (data) {
+        setJudicialProcessId(Number(data["id"]));
+        setConfirm(true);
+      }
+
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
-
-    return data;
   };
 
   useEffect(() => {
@@ -57,23 +68,27 @@ export default function ProcesosJudicialesSlugCreate() {
   }, [judicialProcessId]);
 
   return (
-    <div className="short-form-layout">
-      <h1 className="text-2xl font-bold">Nuevo Proceso Judicial</h1>
-      <ConfirmModal
-        description={{
-          __html: `El expediente ha sido agregado con éxito. ¿Deseas configurar algunos datos extras?`,
-        }}
-        isOpen={confirm}
-        title="Expediente agregado."
-        onClose={handleConfirmModalClose}
-        onConfirm={redirectToEdit}
-      />
-      <BreadcrumbsPath pathname={pathname} />
-      <JudicialProcessForm
-        handleSubmit={onSubmit}
-        pathname={pathname}
-        slug={mappingRevertSubmodules[slug]}
-      />
-    </div>
+    <>
+      <BackdropLoading loading={loading} />
+
+      <div className="short-form-layout">
+        <h1 className="text-2xl font-bold">Nuevo Proceso Judicial</h1>
+        <ConfirmModal
+          description={{
+            __html: `El expediente ha sido agregado con éxito. ¿Deseas configurar algunos datos extras?`,
+          }}
+          isOpen={confirm}
+          title="Expediente agregado."
+          onClose={handleConfirmModalClose}
+          onConfirm={redirectToEdit}
+        />
+        <BreadcrumbsPath pathname={pathname} />
+        <JudicialProcessForm
+          handleSubmit={onSubmit}
+          pathname={pathname}
+          slug={mappingRevertSubmodules[slug]}
+        />
+      </div>
+    </>
   );
 }

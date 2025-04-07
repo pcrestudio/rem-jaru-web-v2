@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
 
@@ -11,6 +11,7 @@ import { UpsertTodoDto } from "@/app/dto/todos/upsert-todo-instance.dto";
 import { upsertTodo } from "@/app/api/todo/todo";
 import useTodos from "@/app/admin/todos/states/useTodos";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
+import BackdropLoading from "@/app/commons/components/BackdropLoading/BackdropLoading";
 
 interface TodoStepDataGridProps {
   stepDataId: number;
@@ -38,35 +39,44 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
     toggleAlertHelper,
     handleConfirmClose,
   } = useTodos({ isTodoPath: false });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async (payload: UpsertTodoDto) => {
-    if (stepDataId) {
-      const { data } = await upsertTodo({
-        title: payload.title,
-        description: payload.description,
-        entityStepReference: entityStepReference,
-        entityReference: entityReference,
-        responsibleId: Number(payload.responsibleId),
-        dateExpiration: payload.dateExpiration,
-        check: payload.check,
-        id: todo ? todo.id : 0,
-      });
+    try {
+      setLoading(true);
 
-      if (data) {
-        toast.success("Todo agregado con éxito");
+      if (stepDataId) {
+        const { data } = await upsertTodo({
+          title: payload.title,
+          description: payload.description,
+          entityStepReference: entityStepReference,
+          entityReference: entityReference,
+          responsibleId: Number(payload.responsibleId),
+          dateExpiration: payload.dateExpiration,
+          check: payload.check,
+          id: todo ? todo.id : 0,
+        });
+
+        if (data) {
+          toast.success("Todo agregado con éxito");
+          handleTodoClose();
+        }
+      } else {
+        updateStepTodos(payload.title, stepDataId, entityStepReference, {
+          title: payload.title,
+          description: payload.description,
+          dateExpiration: payload.dateExpiration,
+          entityReference: entityReference,
+          responsibleId: Number(payload.responsibleId),
+          id: 0,
+        });
+
         handleTodoClose();
       }
-    } else {
-      updateStepTodos(payload.title, stepDataId, entityStepReference, {
-        title: payload.title,
-        description: payload.description,
-        dateExpiration: payload.dateExpiration,
-        entityReference: entityReference,
-        responsibleId: Number(payload.responsibleId),
-        id: 0,
-      });
-
-      handleTodoClose();
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,6 +89,8 @@ const TodoStepDataGrid: FC<TodoStepDataGridProps> = ({
 
   return (
     <>
+      <BackdropLoading loading={loading} />
+
       {createPortal(
         <TodoModal
           endContentOnChange={handleEndContentChange}

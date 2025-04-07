@@ -24,6 +24,7 @@ interface UseTodosProps {
   toggleDeleteHelper: (todoId: number) => Promise<void>;
   renderCell: any;
   onSubmit: (payload: UpsertTodoDto, reset: any, event: any) => void;
+  loading: boolean;
 }
 
 interface UseTodosParams {
@@ -34,6 +35,7 @@ const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
   const [todo, setTodo] = useState<GetTodoDto>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
   const handleTodoClose = () => {
     setOpen(false);
@@ -129,22 +131,32 @@ const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
 
   const onSubmit = async (payload: UpsertTodoDto, _: any, event: any) => {
     if (event.target.id === "todo-form") {
-      const { data } = await upsertTodo({
-        title: payload.title,
-        description: payload.description,
-        entityReference: todo.entityReference,
-        entityStepReference: todo.entityStepReference,
-        todoStateId: Number(payload.todoStateId),
-        responsibleId: Number(payload.responsibleId),
-        dateExpiration: payload.dateExpiration,
-        check: payload.check,
-        id: todo ? todo.id : 0,
-      });
+      try {
+        setLoading(true);
 
-      if (data) {
-        toast.success("Todo modificado con éxito");
+        const { data } = await upsertTodo({
+          title: payload.title,
+          description: payload.description,
+          entityReference: todo.entityReference,
+          entityStepReference: todo.entityStepReference,
+          todoStateId: Number(payload.todoStateId),
+          responsibleId: Number(payload.responsibleId),
+          dateExpiration: payload.dateExpiration,
+          check: payload.check,
+          id: todo ? todo.id : 0,
+        });
 
-        return setOpen(false);
+        if (data) {
+          toast.success("Todo modificado con éxito");
+
+          return setOpen(false);
+        }
+
+        return data;
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -160,12 +172,21 @@ const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
   };
 
   const toggleAlertHelper = async (todoId: number) => {
-    const { data } = await alertTodo(todoId);
+    try {
+      const { data } = await alertTodo(todoId);
+      setLoading(true);
 
-    if (data) {
-      toast.success("El todo ha sido alertado.");
-      setConfirm(false);
-      setTodo(null);
+      if (data) {
+        toast.success("El todo ha sido alertado.");
+        setConfirm(false);
+        setTodo(null);
+      }
+
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -175,12 +196,22 @@ const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
   };
 
   const toggleDeleteHelper = async (todoId: number) => {
-    const { data } = await deleteTodo(todoId);
+    try {
+      setLoading(true);
 
-    if (data) {
-      toast.success("El todo ha sido eliminado.");
-      setDeleteConfirm(false);
-      setTodo(null);
+      const { data } = await deleteTodo(todoId);
+
+      if (data) {
+        toast.success("El todo ha sido eliminado.");
+        setDeleteConfirm(false);
+        setTodo(null);
+      }
+
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -198,6 +229,7 @@ const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
     handleDeleteConfirmClose,
     confirm,
     deleteConfirm,
+    loading,
   };
 };
 

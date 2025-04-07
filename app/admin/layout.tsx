@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode, Suspense, useEffect, useState } from "react";
 import { SWRConfig } from "swr";
+import { usePathname } from "next/navigation";
 
 import { IUser } from "./usuarios/interfaces";
 
@@ -22,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     },
   });
 
-  const { updateUser } = useStore();
+  const { updateUser, clearFilter } = useStore();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -34,6 +35,12 @@ export default function Layout({ children }: { children: ReactNode }) {
       }
     }
   }, []);
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    clearFilter();
+  }, [pathname]);
 
   return (
     <>

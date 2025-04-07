@@ -24,7 +24,7 @@ interface UserDataGridProps {}
 
 const UserDataGrid: FC<UserDataGridProps> = () => {
   const [userGrid, setUser] = useState<GetUserDto>(null);
-  const { user } = useStore();
+  const { user, filter } = useStore();
   const [confirm, setConfirm] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [openPassword, setOpenPassword] = useState<boolean>(false);
@@ -211,12 +211,14 @@ const UserDataGrid: FC<UserDataGridProps> = () => {
 
       <CustomDataGrid<GetUserDto>
         hasAddButton
+        showSearch
         addButtonText="Nuevo usuario"
         cells={renderCell}
         columns={userColumns}
         dataGridKey="id"
         emptyContent="Sin usuarios."
-        endpointUrl={`users?`}
+        endpointUrl={`users?${filter.search ? `search=${filter.search}&` : ""}`}
+        searchTitle="Buscar usuario"
         totalItemsText="Usuarios totales:"
         onAddChange={() => setOpen(true)}
       />

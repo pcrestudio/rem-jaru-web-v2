@@ -145,9 +145,9 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname, searchTitle }) => {
         {!user.studio && !isSubmodulePath && !isAdminPath && isTodoPath && (
           <FilterResponsibleAutocomplete
             className="col-span-12 nextui-input-nomodal"
+            filter="&isSpecialist=no"
             label="Responsable"
             name="responsibleId"
-            filter="&isSpecialist=no"
             onChange={handleFilter}
           />
         )}
@@ -155,9 +155,9 @@ const FilterSidebar: FC<FilterSidebarProps> = ({ pathname, searchTitle }) => {
         {!isTodoPath && (
           <FilterResponsibleAutocomplete
             className="col-span-12 nextui-input-nomodal"
+            filter="&isSpecialist=yes"
             label="Por especialista"
             name="responsibleId"
-            filter="&isSpecialist=yes"
             onChange={handleFilter}
           />
         )}

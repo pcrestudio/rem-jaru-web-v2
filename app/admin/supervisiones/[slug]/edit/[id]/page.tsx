@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import useSWR from "swr";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "@heroui/button";
 import { AiOutlineFileWord } from "react-icons/ai";
@@ -28,12 +28,14 @@ import {
   exportSupervisionWord,
 } from "@/app/api/supervision/supervision";
 import { ModelType } from "@/config/model-type.config";
+import BackdropLoading from "@/app/commons/components/BackdropLoading/BackdropLoading";
 
 export default function SupervisionesSlugEdit() {
   const pathname = usePathname();
   const slug: string = pathname.split("/")[3];
   const id: string = pathname.split("/")[5];
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { data } = useSWR<GetSupervisionDto>(
     `${environment.baseUrl}/supervisions/${id}`,
@@ -48,106 +50,120 @@ export default function SupervisionesSlugEdit() {
     event: any,
   ) => {
     if (event.target.id === "supervision-edit") {
-      const customFields = getSectionAttributesSlug(payload);
-      const globalFields = getGlobalAttributesSlug(payload);
+      try {
+        const customFields = getSectionAttributesSlug(payload);
+        const globalFields = getGlobalAttributesSlug(payload);
 
-      const { data } = await editSupervision(
-        {
-          ...payload,
-          id: Number(id),
-        },
-        slug,
-      );
+        setLoading(true);
 
-      if (data) {
-        if (
-          globalFields.length > 0 ||
-          stepDataArray.length > 0 ||
-          customFields.length > 0 ||
-          data
-        ) {
-          const globalAttributeResponse = await createGlobalAttributeValue({
-            attributes: globalFields,
-            entityReference: data?.entityReference,
-            modelType: ModelType.Supervision,
-          });
+        const { data } = await editSupervision(
+          {
+            ...payload,
+            id: Number(id),
+          },
+          slug,
+        );
 
-          const instanceResponse = await upsertInstanceStepData({
-            stepData: stepDataArray as InstanceStepDataDto[],
-            modelType: ModelType.Supervision,
-          });
-
-          const sectionAttributeResponse = await createSectionAttributeValue({
-            attributes: customFields,
-            entityReference: data?.entityReference,
-            modelType: ModelType.Supervision,
-          });
-
+        if (data) {
           if (
-            instanceResponse.data ||
-            globalAttributeResponse.data ||
-            sectionAttributeResponse.data ||
+            globalFields.length > 0 ||
+            stepDataArray.length > 0 ||
+            customFields.length > 0 ||
             data
           ) {
-            toast.success("Ficha modificada.");
+            const globalAttributeResponse = await createGlobalAttributeValue({
+              attributes: globalFields,
+              entityReference: data?.entityReference,
+              modelType: ModelType.Supervision,
+            });
 
-            const currentPath = window.location.pathname;
-            const submodule = currentPath.replace(/edit\/\d+/, "cej");
+            const instanceResponse = await upsertInstanceStepData({
+              stepData: stepDataArray as InstanceStepDataDto[],
+              modelType: ModelType.Supervision,
+            });
 
-            router.push(submodule.replace("/cej", ""));
-          } else {
-            toast.error(`No se pudo modificar la ficha ${data}.`);
+            const sectionAttributeResponse = await createSectionAttributeValue({
+              attributes: customFields,
+              entityReference: data?.entityReference,
+              modelType: ModelType.Supervision,
+            });
+
+            if (
+              instanceResponse.data ||
+              globalAttributeResponse.data ||
+              sectionAttributeResponse.data ||
+              data
+            ) {
+              toast.success("Ficha modificada.");
+
+              const currentPath = window.location.pathname;
+              const submodule = currentPath.replace(/edit\/\d+/, "cej");
+
+              router.push(submodule.replace("/cej", ""));
+            } else {
+              toast.error(`No se pudo modificar la ficha ${data}.`);
+            }
           }
         }
-      }
 
-      return data;
+        return data;
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
-    <div className="short-form-layout">
-      <div className="flex flex-row justify-between items-center">
-        <h1 className="text-2xl font-bold">Editar Supervisión</h1>
-        <Button
-          className="word-btn"
-          startContent={<AiOutlineFileWord />}
-          onPress={async () => {
-            const response = await exportSupervisionWord(data?.entityReference);
+    <>
+      <BackdropLoading loading={loading} />
 
-            const wordResponse = await exportableWord(
-              response,
-              data?.entityReference,
-            );
-
-            if (wordResponse === "ok") {
-              toast.success("Proceso descargado.");
-            } else {
-              toast.success(
-                "No se pudo descargar el proceso, intente de nuevo.",
+      <div className="short-form-layout">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-2xl font-bold">Editar Supervisión</h1>
+          <Button
+            className="word-btn"
+            startContent={<AiOutlineFileWord />}
+            onPress={async () => {
+              const response = await exportSupervisionWord(
+                data?.entityReference,
               );
+
+              const wordResponse = await exportableWord(
+                response,
+                data?.entityReference,
+              );
+
+              if (wordResponse === "ok") {
+                toast.success("Proceso descargado.");
+              } else {
+                toast.success(
+                  "No se pudo descargar el proceso, intente de nuevo.",
+                );
+              }
+            }}
+          >
+            Exportar ficha
+          </Button>
+        </div>
+
+        <BreadcrumbsPath pathname={pathname} />
+
+        <SupervisionForm
+          handleSubmit={handleSubmit}
+          pathname={pathname}
+          slugSubmodule={slug}
+          supervision={
+            data ?? {
+              projectId: 0,
+              responsibleId: 0,
+              authorityId: 0,
+              situationId: 0,
             }
-          }}
-        >
-          Exportar ficha
-        </Button>
-      </div>
-
-      <BreadcrumbsPath pathname={pathname} />
-
-      <SupervisionForm
-        handleSubmit={handleSubmit}
-        pathname={pathname}
-        slugSubmodule={slug}
-        supervision={
-          data ?? {
-            projectId: 0,
-            responsibleId: 0,
-            authorityId: 0,
-            situationId: 0,
           }
-        }
-      />
-    </div>
+        />
+      </div>
+    </>
   );
 }

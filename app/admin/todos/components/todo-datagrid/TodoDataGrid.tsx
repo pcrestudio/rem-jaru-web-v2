@@ -6,6 +6,7 @@ import useTodos from "@/app/admin/todos/states/useTodos";
 import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 import useStore from "@/lib/store";
 import { showAllDossiers } from "@/config/menu-options";
+import BackdropLoading from "@/app/commons/components/BackdropLoading/BackdropLoading";
 
 const TodoDataGrid = () => {
   const {
@@ -22,6 +23,7 @@ const TodoDataGrid = () => {
     toggleAlertHelper,
     toggleDeleteHelper,
     handleConfirmClose,
+    loading,
   } = useTodos({ isTodoPath: true });
 
   const { user } = useStore();
@@ -35,6 +37,8 @@ const TodoDataGrid = () => {
 
   return (
     <>
+      <BackdropLoading loading={loading} />
+
       <TodoModal
         endContentOnChange={handleEndContentChange}
         handleSubmit={onSubmit}

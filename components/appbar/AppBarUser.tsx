@@ -9,12 +9,12 @@ import {
   DropdownTrigger,
 } from "@heroui/react";
 import { Chip } from "@heroui/chip";
+import { deleteCookie, getCookie } from "cookies-next";
 
 import { mappingRole } from "@/config/mapping_role";
 import httpClient from "@/lib/httpClient";
 import { IUser } from "@/app/admin/usuarios/interfaces";
 import useStore from "@/lib/store";
-import { deleteCookie, getCookie } from "cookies-next";
 
 interface AppBarUserProps {
   user: IUser;

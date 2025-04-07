@@ -52,8 +52,8 @@ const ReactiveDatePicker: FC<ReactiveFieldProps> = ({
             {...field}
             className={className}
             errorMessage={errorMessage}
-            isRequired={isRequired}
             isReadOnly={isReadOnly}
+            isRequired={isRequired}
             label={label}
             value={parseValueToZonedDateTime(field.value) as any}
             onChange={(newValue) => {

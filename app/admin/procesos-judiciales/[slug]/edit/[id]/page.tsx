@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import useSWR from "swr";
 import { AiOutlineFileWord } from "react-icons/ai";
 import { Button } from "@heroui/button";
-import React from "react";
+import React, { useState } from "react";
 
 import BreadcrumbsPath from "@/components/breadcrumbs/BreadcrumbsPath";
 import JudicialProcessForm from "@/app/admin/procesos-judiciales/components/JudicialProcessForm";
@@ -29,12 +29,14 @@ import getGlobalAttributesSlug from "@/utils/get_global_attributes_slug";
 import exportableWord from "@/utils/exportable_word";
 import { ModelType } from "@/config/model-type.config";
 import { mappingRevertSubmodules } from "@/config/mapping_submodules";
+import BackdropLoading from "@/app/commons/components/BackdropLoading/BackdropLoading";
 
 export default function ProcesosJudicialesSlugEdit() {
   const pathname = usePathname();
   const slug: string = pathname.split("/")[3];
   const id: string = pathname.split("/")[5];
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { data } = useSWR<GetJudicialProcessDto>(
     `${environment.baseUrl}/judicial_processes/${id}`,
@@ -52,108 +54,120 @@ export default function ProcesosJudicialesSlugEdit() {
       const customFields = getSectionAttributesSlug(payload);
       const globalFields = getGlobalAttributesSlug(payload);
 
-      const { data } = await editJudicialProcess(
-        {
-          ...payload,
-          id: Number(id),
-        },
-        slug,
-      );
+      setLoading(true);
 
-      if (data) {
-        if (
-          globalFields.length > 0 ||
-          stepDataArray.length > 0 ||
-          customFields.length > 0 ||
-          data
-        ) {
-          const globalAttributeResponse = await createGlobalAttributeValue({
-            attributes: globalFields,
-            entityReference: data?.entityReference,
-            modelType: ModelType.JudicialProcess,
-          });
+      try {
+        const { data } = await editJudicialProcess(
+          {
+            ...payload,
+            id: Number(id),
+          },
+          slug,
+        );
 
-          const instanceResponse = await upsertInstanceStepData({
-            stepData: stepDataArray as InstanceStepDataDto[],
-            modelType: ModelType.JudicialProcess,
-          });
-
-          const sectionAttributeResponse = await createSectionAttributeValue({
-            attributes: customFields,
-            entityReference: data?.entityReference,
-            modelType: ModelType.JudicialProcess,
-          });
-
+        if (data) {
           if (
-            instanceResponse.data ||
-            globalAttributeResponse.data ||
-            sectionAttributeResponse.data ||
+            globalFields.length > 0 ||
+            stepDataArray.length > 0 ||
+            customFields.length > 0 ||
             data
           ) {
-            toast.success("Ficha modificada.");
+            const globalAttributeResponse = await createGlobalAttributeValue({
+              attributes: globalFields,
+              entityReference: data?.entityReference,
+              modelType: ModelType.JudicialProcess,
+            });
 
-            const currentPath = window.location.pathname;
-            const submodule = currentPath.replace(/edit\/\d+/, "cej");
+            const instanceResponse = await upsertInstanceStepData({
+              stepData: stepDataArray as InstanceStepDataDto[],
+              modelType: ModelType.JudicialProcess,
+            });
 
-            router.push(submodule.replace("/cej", ""));
-          } else {
-            toast.error(
-              `No se pudo modificar la ficha ${data || instanceResponse.data || globalAttributeResponse.data || sectionAttributeResponse.data}.`,
-            );
+            const sectionAttributeResponse = await createSectionAttributeValue({
+              attributes: customFields,
+              entityReference: data?.entityReference,
+              modelType: ModelType.JudicialProcess,
+            });
+
+            if (
+              instanceResponse.data ||
+              globalAttributeResponse.data ||
+              sectionAttributeResponse.data ||
+              data
+            ) {
+              toast.success("Ficha modificada.");
+
+              const currentPath = window.location.pathname;
+              const submodule = currentPath.replace(/edit\/\d+/, "cej");
+
+              router.push(submodule.replace("/cej", ""));
+            } else {
+              toast.error(
+                `No se pudo modificar la ficha ${data || instanceResponse.data || globalAttributeResponse.data || sectionAttributeResponse.data}.`,
+              );
+            }
           }
         }
-      }
 
-      return data;
+        return data;
+      } catch (error) {
+        toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
-    <div className="short-form-layout">
-      <div className="flex flex-row justify-between items-center">
-        <h1 className="text-2xl font-bold">Editar Proceso Judicial</h1>
-        <Button
-          className="word-btn"
-          startContent={<AiOutlineFileWord />}
-          onPress={async () => {
-            const response = await exportJudicialWord(data?.entityReference);
+    <>
+      <BackdropLoading loading={loading} />
 
-            const wordResponse = await exportableWord(
-              response,
-              data?.entityReference,
-            );
+      <div className="short-form-layout">
+        <div className="flex flex-row justify-between items-center">
+          <h1 className="text-2xl font-bold">Editar Proceso Judicial</h1>
+          <Button
+            className="word-btn"
+            startContent={<AiOutlineFileWord />}
+            onPress={async () => {
+              const response = await exportJudicialWord(data?.entityReference);
 
-            if (wordResponse === "ok") {
-              toast.success("Proceso descargado.");
-            } else {
-              toast.success(
-                "No se pudo descargar el proceso, intente de nuevo.",
+              const wordResponse = await exportableWord(
+                response,
+                data?.entityReference,
               );
-            }
-          }}
-        >
-          Exportar ficha
-        </Button>
-      </div>
 
-      <BreadcrumbsPath pathname={pathname} />
-
-      <JudicialProcessForm
-        handleSubmit={onSubmit}
-        judicialProcess={
-          data
-            ? data
-            : {
-                entityReference: "",
-                coDefendant: "",
-                demanded: "",
-                fileCode: "",
-                plaintiff: "",
+              if (wordResponse === "ok") {
+                toast.success("Proceso descargado.");
+              } else {
+                toast.success(
+                  "No se pudo descargar el proceso, intente de nuevo.",
+                );
               }
-        }
-        pathname={pathname}
-        slug={mappingRevertSubmodules[slug]}
-      />
-    </div>
+            }}
+          >
+            Exportar ficha
+          </Button>
+        </div>
+
+        <BreadcrumbsPath pathname={pathname} />
+
+        <JudicialProcessForm
+          handleSubmit={onSubmit}
+          judicialProcess={
+            data
+              ? data
+              : {
+                  entityReference: "",
+                  coDefendant: "",
+                  demanded: "",
+                  fileCode: "",
+                  plaintiff: "",
+                }
+          }
+          pathname={pathname}
+          slug={mappingRevertSubmodules[slug]}
+        />
+      </div>
+    </>
   );
 }

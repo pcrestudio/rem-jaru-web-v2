@@ -28,6 +28,8 @@ interface CustomDataGridProps<T extends object> {
   totalItemsText?: string;
   items?: T[];
   storeItems?: T[];
+  searchTitle?: string;
+  showSearch?: boolean;
 }
 
 const CustomDataGrid = <T extends object>({
@@ -45,6 +47,8 @@ const CustomDataGrid = <T extends object>({
   canUse = true,
   canUseExportable = true,
   storeItems = [],
+  searchTitle,
+  showSearch,
 }: CustomDataGridProps<T>) => {
   const {
     items,
@@ -66,6 +70,8 @@ const CustomDataGrid = <T extends object>({
     canUse,
     canUseExportable,
     columns,
+    showSearch,
+    searchTitle,
   });
 
   return (
