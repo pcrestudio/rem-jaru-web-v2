@@ -72,7 +72,10 @@ const DynamicStepper: FC<DynamicStepperProps> = ({
   ) => {
     const storeState = useStore.getState();
     const existingData =
-      storeState.stepDataArray.find((item) => item.stepId === stepId) || {};
+      storeState.stepDataArray.find(
+        (item) =>
+          item.stepId === stepId && item.entityReference === entityReference,
+      ) || {};
 
     const newData = {
       ...existingData,

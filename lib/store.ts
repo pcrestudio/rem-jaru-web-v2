@@ -74,14 +74,20 @@ const useStore = create<AppState>((set) => ({
     })),
   updateStepDataArray: (stepId, data, entityId) =>
     set((state) => {
+      console.log(data);
+
       const existingIndex = state.stepDataArray.findIndex(
-        (item) => item.stepId === stepId && item.entityId === entityId,
+        (item) =>
+          item.stepId === stepId &&
+          item.entityReference === data.entityReference,
       );
 
       if (existingIndex !== -1) {
         const updatedArray = [...state.stepDataArray];
+        const existing = updatedArray[existingIndex];
 
         updatedArray[existingIndex] = {
+          ...existing,
           ...updatedArray[existingIndex],
           ...data,
           incidenceId: Number(data.incidenceId),
