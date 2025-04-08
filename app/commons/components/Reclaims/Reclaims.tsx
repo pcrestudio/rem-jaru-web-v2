@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 import { Accordion, AccordionItem, Tooltip } from "@heroui/react";
 import toast from "react-hot-toast";
-import { EditIcon } from "@heroui/shared-icons";
+import { DeleteIcon, EditIcon } from "@heroui/shared-icons";
 
 import { ModularProps } from "@/app/admin/procesos-judiciales/types/ModularProps";
 import ReclaimsModalForm from "@/app/commons/components/ReclaimsModalForm/ReclaimsModalForm";
@@ -9,11 +9,16 @@ import { UpsertReclaimDto } from "@/app/dto/reclaims/upsert-reclaim.dto";
 import CustomDataGrid from "@/components/shared/custom-datagrid/CustomDataGrid";
 import reclaimsColumns from "@/app/commons/components/Reclaims/columns/reclaimsColumns";
 import capitalize from "@/utils/capitalize";
-import { upsertReclaims } from "@/app/api/reclaims/reclaims";
+import { deleteReclaim, upsertReclaims } from "@/app/api/reclaims/reclaims";
+import useStore from "@/lib/store";
+import { onlyAdmins } from "@/config/menu-options";
+import ConfirmModal from "@/components/confirm-modal/ConfirmModal";
 
 const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [reclaim, setReclaim] = useState<UpsertReclaimDto | null>(null);
+  const { user } = useStore();
 
   const selectItem = (item: UpsertReclaimDto) => {
     setReclaim(item);
@@ -77,6 +82,30 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
     }
   };
 
+  const handleDeleteReclaim = (reclaim: UpsertReclaimDto) => {
+    setReclaim(reclaim);
+    setConfirm(true);
+  };
+
+  const toggleDeleteHelper = async () => {
+    try {
+      await deleteReclaim(reclaim);
+      toast.success("Petitorio eliminado.");
+    } catch (error) {
+      toast.error(error.message);
+      setReclaim(null);
+      setConfirm(false);
+    } finally {
+      setReclaim(null);
+      setConfirm(false);
+    }
+  };
+
+  const handleDeleteConfirmClose = () => {
+    setConfirm(false);
+    setReclaim(null);
+  };
+
   const renderCell = useCallback(
     (item: UpsertReclaimDto, columnKey: string | number) => {
       const cellValue = item[columnKey];
@@ -94,6 +123,18 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
                   <EditIcon />
                 </span>
               </Tooltip>
+
+              {user && onlyAdmins.includes(user.role) && (
+                <Tooltip content="Eliminar petitorio">
+                  <span
+                    className="text-lg text-danger cursor-pointer active:opacity-50"
+                    role="presentation"
+                    onClick={() => handleDeleteReclaim(item)}
+                  >
+                    <DeleteIcon />
+                  </span>
+                </Tooltip>
+              )}
             </div>
           );
 
@@ -109,6 +150,16 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
 
   return (
     <>
+      <ConfirmModal
+        description={{
+          __html: `¿Desea eliminar este petitorio? Esta acción no se podrá revertir.`,
+        }}
+        isOpen={confirm}
+        title={`Eliminar Petitorio`}
+        onClose={handleDeleteConfirmClose}
+        onConfirm={() => toggleDeleteHelper()}
+      />
+
       <ReclaimsModalForm
         handleSubmit={handleSubmit}
         isOpen={isOpen}
@@ -136,6 +187,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
               cells={renderCell}
               columns={reclaimsColumns}
               dataGridKey="reclaimId"
+              emptyContent="Sin petitorios."
               endpointUrl={`reclaims?entityReference=${provision.entityReference}&modelType=${modelType}&`}
               totalItemsText="Petitorios totales:"
               onAddChange={() => setIsOpen(true)}

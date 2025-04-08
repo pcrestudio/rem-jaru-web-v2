@@ -14,3 +14,7 @@ export async function upsertReclaims(
     reclaims,
   );
 }
+
+export async function deleteReclaim(reclaim: UpsertReclaimDto) {
+  return api.delete(`${apiUrl}/${reclaim.reclaimId}`);
+}

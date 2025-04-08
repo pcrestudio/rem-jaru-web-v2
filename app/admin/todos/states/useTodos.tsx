@@ -174,6 +174,7 @@ const useTodos = ({ isTodoPath }: UseTodosParams): UseTodosProps => {
   const toggleAlertHelper = async (todoId: number) => {
     try {
       const { data } = await alertTodo(todoId);
+
       setLoading(true);
 
       if (data) {
