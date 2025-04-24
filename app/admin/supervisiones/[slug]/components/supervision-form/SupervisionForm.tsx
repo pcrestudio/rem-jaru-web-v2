@@ -24,6 +24,7 @@ import ReactiveDatePicker from "@/components/form/ReactiveDatePicker";
 import { GetMasterOptionsDto } from "@/app/dto/masters/get-master-options.dto";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
+import {canUse, CanUsePermission} from "@/utils/can_use_permission";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -136,6 +137,15 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
               label="Responsable principal"
               name="responsibleId"
             />
+
+              <ResponsibleAutocomplete
+                  className="col-span-6 nextui-input-nomodal"
+                  control={control}
+                  filter="&isSpecialist=yes"
+                  isRequired={true}
+                  label="Responsable secundario"
+                  name="secondaryResponsibleId"
+              />
 
             {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
               <DynamicAutocomplete
@@ -262,7 +272,9 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
             <div className="col-span-12 flex flex-row gap-4">
               <Button
                 className="standard-btn bg-red-500 text-white w-fit"
-                disabled={!isValid}
+                isDisabled={
+                  !isValid || !canUse(user.role, CanUsePermission.editItem)
+                }
                 type="submit"
               >
                 {supervision && supervision.entityReference

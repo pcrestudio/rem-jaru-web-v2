@@ -65,12 +65,12 @@ const judicialProcessColumns = [
     width: 70,
   },
   {
-    key: "demanded",
+    key: "plaintiff",
     label: "Demandante",
     sortable: true,
   },
   {
-    key: "plaintiff",
+    key: "demanded",
     label: "Demandado",
     sortable: true,
   },
