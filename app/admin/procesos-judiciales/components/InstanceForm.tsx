@@ -39,7 +39,6 @@ const InstanceForm: FC<InstanceFormProps> = ({
     [formData, onChange, step?.id],
   );
 
-  // Handle file change
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { name, files } = e.target;
@@ -47,8 +46,8 @@ const InstanceForm: FC<InstanceFormProps> = ({
       if (files && files.length > 0) {
         const file = files[0];
 
-        // Only update state if the file has changed
-        if (formData[name] !== file) {
+        // Solo actualizar el estado si el archivo ha cambiado
+        if (formData[name]?.name !== file.name) {
           setFormData((prev) => ({ ...prev, [name]: file }));
           onChange(step?.id || 0, name, file);
         }
@@ -56,6 +55,15 @@ const InstanceForm: FC<InstanceFormProps> = ({
     },
     [formData, onChange, step?.id],
   );
+
+  const handleDeleteFile = (fileName: string) => {
+    if (formData && formData.file.name === fileName) {
+      setFormData((prev) => ({
+        ...prev,
+        file: "",
+      }));
+    }
+  };
 
   useEffect(() => {
     if (initialValues) {
@@ -107,13 +115,23 @@ const InstanceForm: FC<InstanceFormProps> = ({
         />
 
         {formData.file?.name && (
-          <button
-            className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
-            type="button"
-            onClick={() => handleDownloadDocument(formData.file?.name)}
-          >
-            Visualizar archivo
-          </button>
+          <div className="flex flex-row gap-4">
+            <button
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
+              onClick={() => handleDownloadDocument(formData.file?.name)}
+            >
+              Visualizar archivo
+            </button>
+
+            <button
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
+              onClick={() => handleDeleteFile(formData.file?.name)}
+            >
+              Eliminar archivo
+            </button>
+          </div>
         )}
       </div>
 

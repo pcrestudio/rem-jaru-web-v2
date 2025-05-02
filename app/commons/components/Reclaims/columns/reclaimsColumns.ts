@@ -8,14 +8,6 @@ const reclaimsColumns = [
     label: "Concepto",
   },
   {
-    key: "contingencyLevel",
-    label: "Nivel de contingencia",
-  },
-  {
-    key: "contingencyPercentage",
-    label: "% de contingencia",
-  },
-  {
     key: "amount",
     label: "Monto demandado",
   },

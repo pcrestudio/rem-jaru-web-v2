@@ -152,7 +152,6 @@ const TodoModal: FC<TodoModalProps> = ({
           <ResponsibleAutocomplete
             className="col-span-6 nextui-input-nomodal"
             control={control}
-            filter="&isSpecialist=no"
             isRequired={true}
             label="Responsable principal"
             name="responsibleId"

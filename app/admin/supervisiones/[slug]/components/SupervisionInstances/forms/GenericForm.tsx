@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { GetStepDto } from "@/app/dto/instance/get-instance.dto";
 import TodoStepDataGrid from "@/app/admin/todos/components/todo-step-datagrid/TodoStepDataGrid";
 import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
-import useStore from "@/lib/store";
 
 export interface GenericFormProps {
   onChange: (stepId: number, fieldName: string, value: any) => void;
@@ -24,21 +23,34 @@ const GenericForm: FC<GenericFormProps> = ({
 }) => {
   const [formData, setFormData] = useState(initialValues);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const { updateStepData } = useStore();
 
   const handleClick = () => {
     inputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, files } = e.target;
 
-    if (files && files.length > 0) {
-      const file = files[0];
+      if (files && files.length > 0) {
+        const file = files[0];
 
-      setFormData((prev) => ({ ...prev, [name]: file }));
-      onChange(step?.id || 0, name, file);
-      updateStepData(step.id, { [name]: file });
+        // Solo actualizar el estado si el archivo ha cambiado
+        if (formData[name]?.name !== file.name) {
+          setFormData((prev) => ({ ...prev, [name]: file }));
+          onChange(step?.id || 0, name, file);
+        }
+      }
+    },
+    [formData, onChange, step?.id],
+  );
+
+  const handleDeleteFile = (fileName: string) => {
+    if (formData && formData.file.name === fileName) {
+      setFormData((prev) => ({
+        ...prev,
+        file: "",
+      }));
     }
   };
 
@@ -84,13 +96,23 @@ const GenericForm: FC<GenericFormProps> = ({
         />
 
         {formData.file?.name && (
-          <button
-            className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
-            type="button"
-            onClick={() => handleDownloadDocument(formData.file?.name)}
-          >
-            Visualizar archivo
-          </button>
+          <div className="flex flex-row gap-4">
+            <button
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
+              onClick={() => handleDownloadDocument(formData.file?.name)}
+            >
+              Visualizar archivo
+            </button>
+
+            <button
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
+              onClick={() => handleDeleteFile(formData.file?.name)}
+            >
+              Eliminar archivo
+            </button>
+          </div>
         )}
       </div>
 

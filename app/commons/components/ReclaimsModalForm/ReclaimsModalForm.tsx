@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 
 import ReactiveField from "@/components/form/ReactiveField";
 import FormDialog from "@/components/shared/form-dialog/FormDialog";
@@ -7,12 +7,11 @@ import { ModalProps } from "@/app/admin/types/ModalProps";
 import ReactiveNumericField, {
   suffixNumericContent,
 } from "@/components/form/ReactiveNumericField";
-import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
-import { MasterOptionConfig } from "@/config/master-option.config";
-import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 import debounce from "@/utils/custom_debounce";
-import { ContingencyLevelConfig } from "@/config/contingency-level.config";
 import createReclaimSchema from "@/app/validations/create-reclaim.validation";
+import { ReclaimConfig } from "@/config/reclaim.config";
+import { ContingencyLevelConfig } from "@/config/contingency-level.config";
+import { ExtendedAttributeConfig } from "@/config/extended-attribute.config";
 
 interface ReclaimsModalFormProps extends ModalProps {
   reclaim: UpsertReclaimDto;
@@ -26,46 +25,39 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
   onCloseChange,
   handleSubmit,
 }) => {
-  const [canProvision, setCanProvision] = useState<boolean>(false);
+  const handleChange = (
+    value: number | string | object,
+    key: string,
+    setValue: any,
+    getValues: any,
+  ) => {
+    setValue(key, value);
 
-  const handleChange = (value: number | string | object, setValue: any) => {
-    const percentage = Number(value);
+    const formValues = getValues();
 
-    setCanProvision(false);
+    const provisionAmount = Number(formValues.provisionAmount || 0);
+    const posibleAmount = Number(formValues.posibleAmount || 0);
+    const remoteAmount = Number(formValues.remoteAmount || 0);
 
-    if (percentage > 0 && percentage < 10) {
-      setValue(
-        ExtendedAttributeConfig.contingencyLevel,
-        ContingencyLevelConfig.remoto,
-      );
-      setCanProvision(false);
-    } else if (percentage >= 10 && percentage < 50) {
-      setValue(
-        ExtendedAttributeConfig.contingencyLevel,
-        ContingencyLevelConfig.posible,
-      );
-      setCanProvision(false);
-    } else if (percentage >= 50 && percentage <= 100) {
+    if (provisionAmount > 0) {
       setValue(
         ExtendedAttributeConfig.contingencyLevel,
         ContingencyLevelConfig.probable,
       );
-
-      setCanProvision(true);
+    } else if (posibleAmount > 0) {
+      setValue(
+        ExtendedAttributeConfig.contingencyLevel,
+        ContingencyLevelConfig.posible,
+      );
     } else {
-      setValue(ExtendedAttributeConfig.contingencyLevel, null);
+      setValue(
+        ExtendedAttributeConfig.contingencyLevel,
+        ContingencyLevelConfig.remoto,
+      );
     }
   };
 
   const debounceChange = debounce(handleChange, 300);
-
-  useEffect(() => {
-    if (reclaim && reclaim.contingencyPercentage < 50) {
-      setCanProvision(false);
-    } else {
-      setCanProvision(true);
-    }
-  }, [reclaim]);
 
   return (
     <FormDialog
@@ -75,10 +67,13 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
       stopEventPropagation={stopEventPropagation}
       title={title}
       validationSchema={createReclaimSchema}
+      options={{
+        mode: "onTouched",
+      }}
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
     >
-      {({ register, errors, control, setValue, watch }) => {
+      {({ errors, control, setValue, getValues }) => {
         return (
           <div className="grid grid-cols-12 gap-4 px-6">
             <ReactiveField
@@ -102,30 +97,7 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
             />
 
             <ReactiveNumericField
-              className="col-span-12 lg:col-span-6 placeholder:text-xs text-xs"
-              control={control}
-              errors={errors}
-              label="% de contingencia"
-              labelClassName="text-xs"
-              min={0}
-              name="contingencyPercentage"
-              onChange={(value) => debounceChange(value, setValue)}
-            />
-
-            <DynamicAutocomplete
-              disabled
-              className={`col-span-12 nextui-input-nomodal lg:col-span-12`}
-              control={control}
-              errors={errors}
-              label="Nv. de contigencia"
-              name="contingencyLevel"
-              optionValue="slug"
-              register={register}
-              slug={MasterOptionConfig["nivel-contingencia"]}
-            />
-
-            <ReactiveNumericField
-              className="col-span-4 lg:col-span-4 placeholder:text-xs text-xs"
+              className="col-span-4 lg:col-span-6 placeholder:text-xs text-xs"
               control={control}
               endContent={suffixNumericContent({ suffix: "S/." })}
               errors={errors}
@@ -133,11 +105,18 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
               labelClassName="text-xs"
               min={0}
               name="provisionAmount"
-              readOnly={!canProvision}
+              onChange={(value) =>
+                debounceChange(
+                  value,
+                  ReclaimConfig.provisionAmount,
+                  setValue,
+                  getValues,
+                )
+              }
             />
 
             <ReactiveNumericField
-              className="col-span-4 lg:col-span-4 placeholder:text-xs text-xs"
+              className="col-span-4 lg:col-span-6 placeholder:text-xs text-xs"
               control={control}
               endContent={suffixNumericContent({ suffix: "S/." })}
               errors={errors}
@@ -145,10 +124,18 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
               labelClassName="text-xs"
               min={0}
               name="posibleAmount"
+              onChange={(value) =>
+                debounceChange(
+                  value,
+                  ReclaimConfig.posibleAmount,
+                  setValue,
+                  getValues,
+                )
+              }
             />
 
             <ReactiveNumericField
-              className="col-span-4 lg:col-span-4 placeholder:text-xs text-xs"
+              className="col-span-4 lg:col-span-6 placeholder:text-xs text-xs"
               control={control}
               endContent={suffixNumericContent({ suffix: "S/." })}
               errors={errors}
@@ -156,6 +143,14 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
               labelClassName="text-xs"
               min={0}
               name="remoteAmount"
+              onChange={(value) =>
+                debounceChange(
+                  value,
+                  ReclaimConfig.remoteAmount,
+                  setValue,
+                  getValues,
+                )
+              }
             />
           </div>
         );

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { DatePicker } from "@heroui/react";
 import { ZonedDateTime } from "@internationalized/date";
 import { Textarea } from "@heroui/input";
@@ -66,17 +66,22 @@ const PreliminarForm: FC<PreeliminarFormProps> = ({
     updateStepData(step.id, { [name]: value });
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, files } = e.target;
 
-    if (files && files.length > 0) {
-      const file = files[0];
+      if (files && files.length > 0) {
+        const file = files[0];
 
-      setFormData((prev) => ({ ...prev, [name]: file }));
-      onChange(step?.id || 0, name, file);
-      updateStepData(step.id, { [name]: file });
-    }
-  };
+        // Solo actualizar el estado si el archivo ha cambiado
+        if (formData[name]?.name !== file.name) {
+          setFormData((prev) => ({ ...prev, [name]: file }));
+          onChange(step?.id || 0, name, file);
+        }
+      }
+    },
+    [formData, onChange, step?.id],
+  );
 
   const handlePickerChange = (value: any) => {
     const textField = datePickerRef.current;
@@ -92,11 +97,9 @@ const PreliminarForm: FC<PreeliminarFormProps> = ({
     if (parsedDate) {
       setFormData((prev) => ({ ...prev, [target.name]: parsedDate }));
       onChange(step.id, target.name, parsedDate);
-      updateStepDataArray(step.id, { [target.name]: parsedDate });
     } else {
       setFormData((prev) => ({ ...prev, [target.name]: value }));
       onChange(step.id, target.name, target.value);
-      updateStepDataArray(step.id, { [target.name]: target.value });
     }
   };
 

@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Textarea } from "@heroui/input";
 import { Radio, RadioGroup } from "@heroui/react";
 
 import { handleDownloadDocument } from "@/app/helpers/downloadDocumentHelper";
 import { GenericFormProps } from "@/app/admin/supervisiones/[slug]/components/SupervisionInstances/forms/GenericForm";
-import useStore from "@/lib/store";
 
 export interface ResumeDateFormProps extends GenericFormProps {
   textAreaLabel?: string;
@@ -16,50 +15,70 @@ const ResumeDateOptionForm: FC<ResumeDateFormProps> = ({
   step,
   initialValues,
   onChange,
-  entityReference,
-  entityStepReference,
-  stepDataId,
   textAreaLabel,
   fileLabel,
   radioGroupLabel,
 }) => {
-  const [formData, setFormData] = useState(initialValues);
+  const [formData, setFormData] = useState(initialValues || {});
   const inputRef = useRef<HTMLInputElement | null>(null);
   const datePickerRef = useRef<HTMLInputElement | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const { updateStepData } = useStore();
 
   const handleClick = () => {
     inputRef.current?.click();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    onChange(step.id, name, value);
-    updateStepData(step.id, { [name]: value });
+      if (formData[name] !== value) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        onChange(step?.id || 0, name, value);
+      }
+    },
+    [formData, onChange, step?.id],
+  );
+
+  // Handle file change
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, files } = e.target;
+
+      if (files && files.length > 0) {
+        const file = files[0];
+
+        // Only update state if the file has changed
+        if (formData[name] !== file) {
+          setFormData((prev) => ({ ...prev, [name]: file }));
+          onChange(step?.id || 0, name, file);
+        }
+      }
+    },
+    [formData, onChange, step?.id],
+  );
+
+  const handleChoiceChange = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      ["choice"]: value,
+    }));
+    onChange(step.id, "choice", value);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-
-    if (files && files.length > 0) {
-      const file = files[0];
-
-      setFormData((prev) => ({ ...prev, [name]: file }));
-      onChange(step?.id || 0, name, file);
-      updateStepData(step.id, { [name]: file });
+  const handleDeleteFile = (fileName: string) => {
+    if (formData && formData.file.name === fileName) {
+      // @ts-ignore
+      setFormData((prev) => ({
+        ...prev,
+        file: null,
+      }));
     }
   };
 
-  const handleChoiceChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, ["choice"]: value }));
-    onChange(step.id, "choice", value);
-    updateStepData(step.id, { ["choice"]: value });
-  };
-
   useEffect(() => {
+    console.log(initialValues);
+
     if (initialValues) {
       setFormData((prev) => ({
         ...prev,
@@ -101,13 +120,23 @@ const ResumeDateOptionForm: FC<ResumeDateFormProps> = ({
         />
 
         {formData.file?.name && (
-          <button
-            className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
-            type="button"
-            onClick={() => handleDownloadDocument(formData.file?.name)}
-          >
-            Visualizar archivo
-          </button>
+          <div className="flex flex-row gap-4">
+            <button
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
+              onClick={() => handleDownloadDocument(formData.file?.name)}
+            >
+              Visualizar archivo
+            </button>
+
+            <button
+              className="text-xs mt-2 text-cerulean-950 cursor-pointer w-fit underline"
+              type="button"
+              onClick={() => handleDeleteFile(formData.file?.name)}
+            >
+              Eliminar archivo
+            </button>
+          </div>
         )}
       </div>
 

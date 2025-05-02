@@ -1,4 +1,4 @@
-import { ZonedDateTime } from "@internationalized/date";
+import { parseZonedDateTime, ZonedDateTime } from "@internationalized/date";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -42,6 +42,18 @@ export function convertToZonedDateTime(
       utcDate.getUTCMinutes(),
       utcDate.getUTCSeconds(),
     );
+  }
+
+  return null;
+}
+
+export function convertToZonedDateTimeForInstance(
+  dateString: string,
+): ZonedDateTime | null {
+  const date = new Date(dateString);
+
+  if (date instanceof Date && !isNaN(date.getTime())) {
+    return parseZonedDateTime(new Date(dateString).toISOString());
   }
 
   return null;

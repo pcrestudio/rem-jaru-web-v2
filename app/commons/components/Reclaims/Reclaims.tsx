@@ -141,6 +141,15 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
         case "contingencyLevel":
           return <span>{capitalize(item.contingencyLevel)}</span>;
 
+        case "provisionAmount":
+          return <span>{item.provisionAmount ? item.posibleAmount : 0}</span>;
+
+        case "posibleAmount":
+          return <span>{item.posibleAmount ? item.posibleAmount : 0}</span>;
+
+        case "remoteAmount":
+          return <span>{item.remoteAmount ? item.remoteAmount : 0}</span>;
+
         default:
           return cellValue;
       }

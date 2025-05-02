@@ -7,7 +7,6 @@ import { MasterOptionConfig } from "@/config/master-option.config";
 import DynamicAutocomplete from "@/components/shared/master-options-autocompletes/DynamicAutocomplete";
 import { GetSupervisionDto } from "@/app/dto/supervision/get-supervision.dto";
 import createSupervisionSchema from "@/app/validations/create-supervision.validation";
-import { mappingRevertSubmodules } from "@/config/mapping_submodules";
 import SectionAttributeFields from "@/components/shared/section-attribute-fields/SectionAttributeFields";
 import DynamicStepper from "@/components/shared/dynamic-stepper/DynamicStepper";
 import ResponsibleAutocomplete from "@/components/autocompletes/ResponsibleAutocomplete";
@@ -24,7 +23,7 @@ import ReactiveDatePicker from "@/components/form/ReactiveDatePicker";
 import { GetMasterOptionsDto } from "@/app/dto/masters/get-master-options.dto";
 import { environment } from "@/environment/environment";
 import { fetcher } from "@/config/axios.config";
-import {canUse, CanUsePermission} from "@/utils/can_use_permission";
+import { canUse, CanUsePermission } from "@/utils/can_use_permission";
 
 interface SupervisionFormProps {
   handleSubmit?: (data: any, reset: any, event: any) => void;
@@ -35,7 +34,6 @@ interface SupervisionFormProps {
 
 const SupervisionForm: FC<SupervisionFormProps> = ({
   supervision,
-  slugSubmodule,
   handleSubmit,
   pathname,
 }) => {
@@ -138,14 +136,13 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
               name="responsibleId"
             />
 
-              <ResponsibleAutocomplete
-                  className="col-span-6 nextui-input-nomodal"
-                  control={control}
-                  filter="&isSpecialist=yes"
-                  isRequired={true}
-                  label="Responsable secundario"
-                  name="secondaryResponsibleId"
-              />
+            <ResponsibleAutocomplete
+              className="col-span-6 nextui-input-nomodal"
+              control={control}
+              filter="&isSpecialist=yes"
+              label="Responsable secundario"
+              name="secondaryResponsibleId"
+            />
 
             {showAllDossiers.includes(user?.role) && user.studioId === 0 && (
               <DynamicAutocomplete
@@ -167,27 +164,6 @@ const SupervisionForm: FC<SupervisionFormProps> = ({
               name="controversialMatter"
               optionValue="name"
               slug={MasterOptionConfig.moneda}
-            />
-
-            <DynamicAutocomplete
-              className="col-span-6 nextui-input-nomodal"
-              control={control}
-              filter={{
-                slugSubmodule: mappingRevertSubmodules[slugSubmodule],
-              }}
-              isRequired={true}
-              label="Autoridad"
-              name="authorityId"
-              slug={`${MasterOptionConfig.autoridad}-${slugSubmodule}`}
-            />
-
-            <DynamicAutocomplete
-              className="col-span-6 nextui-input-nomodal"
-              control={control}
-              isRequired={true}
-              label="Situación"
-              name="situationId"
-              slug={MasterOptionConfig.situacion}
             />
 
             <DynamicAutocomplete

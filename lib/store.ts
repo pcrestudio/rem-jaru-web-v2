@@ -74,8 +74,6 @@ const useStore = create<AppState>((set) => ({
     })),
   updateStepDataArray: (stepId, data, entityId) =>
     set((state) => {
-      console.log(data);
-
       const existingIndex = state.stepDataArray.findIndex(
         (item) =>
           item.stepId === stepId &&
