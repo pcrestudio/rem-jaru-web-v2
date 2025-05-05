@@ -37,7 +37,6 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
 
     const provisionAmount = Number(formValues.provisionAmount || 0);
     const posibleAmount = Number(formValues.posibleAmount || 0);
-    const remoteAmount = Number(formValues.remoteAmount || 0);
 
     if (provisionAmount > 0) {
       setValue(
@@ -64,12 +63,12 @@ const ReclaimsModalForm: FC<ReclaimsModalFormProps> = ({
       formId="reclaims-form"
       initialValues={reclaim || {}}
       isOpen={isOpen}
-      stopEventPropagation={stopEventPropagation}
-      title={title}
-      validationSchema={createReclaimSchema}
       options={{
         mode: "onTouched",
       }}
+      stopEventPropagation={stopEventPropagation}
+      title={title}
+      validationSchema={createReclaimSchema}
       onCloseChange={onCloseChange}
       onSubmit={handleSubmit}
     >

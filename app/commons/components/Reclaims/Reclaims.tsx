@@ -45,13 +45,19 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
       payload.posibleAmount ||
       payload.remoteAmount
     ) {
+      const provisionAmount = payload.provisionAmount ?? 0;
+      const posibleAmount = payload.posibleAmount ?? 0;
+      const remoteAmount = payload.remoteAmount ?? 0;
+
+      console.log({ provisionAmount, posibleAmount, remoteAmount });
+
       amountValidation =
-        payload?.provisionAmount +
-        payload?.posibleAmount +
-        payload?.remoteAmount;
+        Number(remoteAmount) + Number(posibleAmount) + Number(provisionAmount);
     }
 
-    if (amountValidation > amount && validation === "true") {
+    console.log({ amount, amountValidation });
+
+    if (Number(amountValidation) > Number(amount) && validation === "true") {
       toast.error(
         `Los montos no coinciden, el monto petitorio demandado es: S/. ${amount}, y el actual petitorio excede con una cantidad de: S/. ${amountValidation}`,
         {
@@ -142,7 +148,7 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
           return <span>{capitalize(item.contingencyLevel)}</span>;
 
         case "provisionAmount":
-          return <span>{item.provisionAmount ? item.posibleAmount : 0}</span>;
+          return <span>{item.provisionAmount ? item.provisionAmount : 0}</span>;
 
         case "posibleAmount":
           return <span>{item.posibleAmount ? item.posibleAmount : 0}</span>;
