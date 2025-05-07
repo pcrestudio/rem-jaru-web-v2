@@ -31,60 +31,53 @@ const Reclaims: FC<ModularProps> = ({ provision, modelType }) => {
   };
 
   const handleSubmit = async (payload: UpsertReclaimDto, reset: any) => {
-    let amount = 0;
-
-    let amountValidation = 0;
     const validation = process.env.NEXT_PUBLIC_RECLAIMS_VALIDATION;
 
-    if (payload.amount) {
-      amount = Number(payload.amount) + amount;
-    }
+    const amount = Number(payload.amount ?? 0);
 
-    if (
-      payload.provisionAmount ||
-      payload.posibleAmount ||
-      payload.remoteAmount
-    ) {
-      const provisionAmount = payload.provisionAmount ?? 0;
-      const posibleAmount = payload.posibleAmount ?? 0;
-      const remoteAmount = payload.remoteAmount ?? 0;
+    const provisionAmount = Number(payload.provisionAmount ?? 0);
+    const posibleAmount = Number(payload.posibleAmount ?? 0);
+    const remoteAmount = Number(payload.remoteAmount ?? 0);
 
-      console.log({ provisionAmount, posibleAmount, remoteAmount });
+    const amountValidation = provisionAmount + posibleAmount + remoteAmount;
+    const difference = amountValidation - amount;
 
-      amountValidation =
-        Number(remoteAmount) + Number(posibleAmount) + Number(provisionAmount);
-    }
+    if (validation === "true" && amountValidation !== amount) {
+      const mensaje =
+        difference > 0
+          ? `excede en S/. ${difference}`
+          : `es menor por S/. ${Math.abs(difference)}`;
 
-    console.log({ amount, amountValidation });
-
-    if (Number(amountValidation) > Number(amount) && validation === "true") {
       toast.error(
-        `Los montos no coinciden, el monto petitorio demandado es: S/. ${amount}, y el actual petitorio excede con una cantidad de: S/. ${amountValidation}`,
-        {
-          duration: 7000,
-        },
+        `La suma de los montos ingresados ${mensaje} respecto al monto demandado (S/. ${amount}).
+         
+          Detalle:
+          - Provisión: S/. ${provisionAmount}
+          - Posible: S/. ${posibleAmount}
+          - Remoto: S/. ${remoteAmount}
+          - Total ingresado: S/. ${amountValidation}`,
+        { duration: 8000 },
       );
-
       return;
-    } else {
-      const reclaims: UpsertReclaimDto[] = [{ ...payload }];
+    }
 
-      const response = await upsertReclaims(
-        reclaims,
-        provision?.entityReference,
-        modelType,
+    const reclaims: UpsertReclaimDto[] = [{ ...payload }];
+
+    const response = await upsertReclaims(
+      reclaims,
+      provision?.entityReference,
+      modelType,
+    );
+
+    if (response.data) {
+      toast.success(
+        payload.reclaimId
+          ? "Petitorio editado correctamente."
+          : "Petitorio guardado correctamente.",
       );
-
-      if (response.data) {
-        toast.success(
-          payload.reclaimId
-            ? "Petitorio editado correctamente."
-            : "Petitorio guardado correctamente.",
-        );
-        setReclaim(null);
-        setIsOpen(false);
-        reset();
-      }
+      setReclaim(null);
+      setIsOpen(false);
+      reset();
     }
   };
 
